@@ -1,0 +1,105 @@
+package ordanel.ednom.libreria;
+
+import android.util.Log;
+
+import org.apache.http.HttpEntity;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.json.JSONArray;
+
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.util.ArrayList;
+
+
+/**
+ * Created by OrdNael on 24/10/2014.
+ */
+public class HttpPostAux {
+
+    InputStream inputStream = null;
+    String result = "";
+
+    public JSONArray getServerData(ArrayList<NameValuePair> parameters, String urlWebServer){
+
+        httpPostConnect(parameters, urlWebServer);
+
+        if (inputStream != null)
+        {
+            getPostResponse();
+            return getJsonArray();
+        }
+        else {
+            return null;
+        }
+
+    }
+
+    private void httpPostConnect(ArrayList<NameValuePair> parameters, String urlWebServer){
+
+        try
+        {
+            HttpClient httpClient = new DefaultHttpClient();
+            HttpPost httpPost = new HttpPost(urlWebServer);
+
+            httpPost.setEntity(new UrlEncodedFormEntity(parameters));
+
+            HttpResponse httpResponse = httpClient.execute(httpPost);
+            HttpEntity httpEntity = httpResponse.getEntity();
+
+            inputStream = httpEntity.getContent();
+        }
+        catch (Exception e)
+        {
+            Log.e("LOG_TAG", "Error in the connection : " + e.toString() );
+        }
+
+    }
+
+    public void getPostResponse(){
+
+        try
+        {
+            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"), 8);
+            StringBuilder stringBuilder = new StringBuilder();
+            String line = null;
+
+            while ( (line = bufferedReader.readLine()) != null )
+            {
+                stringBuilder.append(line + "\n");
+            }
+
+            bufferedReader.close();
+
+            result = stringBuilder.toString();
+
+            Log.e("LOG_TAG", "result = " + stringBuilder.toString());
+        }
+        catch (Exception e)
+        {
+            Log.e("LOG_TAG", "Error converting result : " + e.toString());
+        }
+
+    }
+
+    public JSONArray getJsonArray(){
+
+        try
+        {
+            JSONArray jsonArray = new JSONArray(result);
+
+            return jsonArray;
+        }
+        catch (Exception e)
+        {
+            Log.e("LOG_TAG", "Error parsing data : " + e.toString());
+            return null;
+        }
+    }
+
+}
