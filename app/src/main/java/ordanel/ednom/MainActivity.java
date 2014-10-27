@@ -2,6 +2,7 @@ package ordanel.ednom;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.SystemClock;
@@ -13,14 +14,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import org.apache.http.NameValuePair;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+
 import ordanel.ednom.libreria.HttpPostAux;
 
 public class MainActivity extends Activity {
@@ -30,10 +29,8 @@ public class MainActivity extends Activity {
     Button btnLogin;
     HttpPostAux posteo;
 
-    String IP_Server = "localhost";
+    String IP_Server = "192.168.1.21";
     String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";
-
-    Boolean result_back;
 
     private ProgressDialog dialog;
 
@@ -55,7 +52,7 @@ public class MainActivity extends Activity {
                 String usuario = txtUsuario.getText().toString();
                 String password = txtPassword.getText().toString();
 
-                if ( !password.equals("") || !usuario.equals("") )
+                if ( checkLoginData( usuario, password ) == true )
                 {
                     new asynclogin().execute(usuario, password);
                 }
@@ -68,6 +65,19 @@ public class MainActivity extends Activity {
 
     }
 
+    public boolean checkLoginData(String userName, String password){
+
+        if ( userName.equals("") || password.equals("") )
+        {
+            Log.e("Login UI", "check login data user or pass error!");
+            return false;
+        }
+        else
+        {
+            return true;
+        }
+    }
+
     public void err_login(){
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate(200);
@@ -75,57 +85,49 @@ public class MainActivity extends Activity {
         toast.show();
     }
 
-    public boolean loginstatus(String usuario, String password){
+    public boolean loginStatus(String usuario, String password){
 
         int logstatus = -1;
 
-        try {
-            ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
+        ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
 
-            parametersPost.add(new BasicNameValuePair("usuario", usuario));
-            parametersPost.add(new BasicNameValuePair("password", password));
+        parametersPost.add(new BasicNameValuePair("usuario", usuario));
+        parametersPost.add(new BasicNameValuePair("password", password));
 
-            JSONArray jsonArray = posteo.getServerData(parametersPost, URL_Connect);
+        JSONArray jsonArray = posteo.getServerData(parametersPost, URL_Connect);
 
-            SystemClock.sleep(950);
+        SystemClock.sleep(950);
 
-            if (jsonArray != null && jsonArray.length() > 0)
+        if (jsonArray != null && jsonArray.length() > 0)
+        {
+            JSONObject jsonObject;
+
+            try
             {
-                JSONObject jsonObject;
+                jsonObject = jsonArray.getJSONObject(0);
+                logstatus = jsonObject.getInt("logstatus");
 
-                try
-                {
-                    jsonObject = jsonArray.getJSONObject(0);
-                    logstatus = jsonObject.getInt("logstatus");
+                Log.e("Login Status", "logstatus = " + logstatus);
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
 
-                    Log.e("loginstatus", "logstatus = " + logstatus);
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-
-                if (logstatus == 0)
-                {
-                    Log.e("loginstatus", "invalido");
-                    return  false;
-                }
-                else
-                {
-                    Log.e("loginstatus", "valido");
-                    return  true;
-                }
+            if (logstatus == 0)
+            {
+                Log.e("Login Status", "invalido");
+                return  false;
             }
             else
             {
-                Log.e("JSON", "ERROR");
-                return false;
+                Log.e("Login Status", "valido");
+                return  true;
             }
-
         }
-        catch (Exception e)
+        else
         {
-            Log.e("Login Status = ", "genero error");
+            Log.e("JSON", "ERROR");
             return false;
         }
 
@@ -153,7 +155,7 @@ public class MainActivity extends Activity {
             usuario = params[0];
             password = params[1];
 
-            if (loginstatus(usuario, password) == true)
+            if (loginStatus(usuario, password) == true)
             {
                 return "ok";
             }
@@ -172,8 +174,9 @@ public class MainActivity extends Activity {
 
             if ( result.equals("ok") )
             {
-                Toast msgToast = Toast.makeText( getApplicationContext(), "El logeo fue correcto", Toast.LENGTH_SHORT );
-                msgToast.show();
+                Intent intent = new Intent(MainActivity.this, HiScreen.class);
+                intent.putExtra("user", usuario);
+                startActivity(intent);
             }
             else
             {

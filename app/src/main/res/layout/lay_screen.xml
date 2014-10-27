@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#21610B"
+        android:layout_marginTop="15dp"
+        android:text="Bienvenido!"
+        android:textSize="25dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txvUserName"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#FF4000"
+        android:layout_marginTop="45dp"
+        android:textSize="22dp"
+        android:gravity="center" />
+
+    <TextView
+        android:id="@+id/txvLogOff"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textColor="#B40404"
+        android:layout_marginTop="45dp"
+        android:text="Cerrar Sesión"
+        android:textSize="22dp"
+        android:gravity="center"/>
+
+</LinearLayout>
