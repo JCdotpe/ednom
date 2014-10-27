@@ -29,8 +29,11 @@ public class MainActivity extends Activity {
     Button btnLogin;
     HttpPostAux posteo;
 
-    String IP_Server = "192.168.1.21";
-    String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";
+//    String IP_Server = "192.168.1.21";
+//    String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";
+
+    String IP_Server = "jc.pe";
+    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";
 
     private ProgressDialog dialog;
 
@@ -174,7 +177,7 @@ public class MainActivity extends Activity {
 
             if ( result.equals("ok") )
             {
-                Intent intent = new Intent(MainActivity.this, HiScreen.class);
+                Intent intent = new Intent(MainActivity.this, UbigeoVerify.class);
                 intent.putExtra("user", usuario);
                 startActivity(intent);
             }

@@ -17,6 +17,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".HiScreen" />
+        <activity android:name=".UbigeoVerify" />
+        <activity android:name=".ObtainCensus" />
 
     </application>
 

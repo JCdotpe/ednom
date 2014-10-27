@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Departamento"
+        android:textSize="20dp"
+        android:layout_marginTop="10dp"/>
+
+    <TextView
+        android:id="@+id/txvDepartamento"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Provincia"
+        android:textSize="20dp"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:id="@+id/txvProvincia"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Distrito"
+        android:textSize="20dp"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:id="@+id/txvDistrito"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Local de Aplicación"
+        android:textSize="20dp"
+        android:layout_marginTop="25dp"/>
+
+    <TextView
+        android:id="@+id/txvLocal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:layout_marginTop="5dp"/>
+
+    <Button
+        android:id="@+id/btnCorrecto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Son Correctos"
+        android:onClick="clickCorrecto"/>
+
+    <Button
+        android:id="@+id/btnIncorrecto"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="No son los Datos"
+        android:onClick="clickIncorrecto"/>
+
+</LinearLayout>
