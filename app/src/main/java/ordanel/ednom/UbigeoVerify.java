@@ -3,10 +3,15 @@ package ordanel.ednom;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.ArrayList;
+
+import ordanel.ednom.Entity.Ubigeo;
 
 /**
  * Created by Leandro on 27/10/2014.
@@ -26,10 +31,18 @@ public class UbigeoVerify extends Activity {
         txvDistrito = (TextView) findViewById(R.id.txvDistrito);
         txvLocal = (TextView) findViewById(R.id.txvLocal);
 
-        Departamento = "AMAZONAS";
-        Provincia = "CHACHAPOYAS";
-        Distrito = "CHACHAPOYAS";
-        Local = "I.E. 0019";
+        ArrayList<Ubigeo> arrayList = (ArrayList<Ubigeo>) getIntent().getSerializableExtra("listUbigeo");
+
+        Integer count = arrayList.size();
+        Log.e("CreateActivity : ", count.toString());
+
+        for (int i = 0; i < arrayList.size(); i++)
+        {
+            Departamento = arrayList.get(i).getDepartamento();
+            Provincia = arrayList.get(i).getProvincia();
+            Distrito = arrayList.get(i).getDistrito();
+            Local = arrayList.get(i).getLocal();
+        }
 
         txvDepartamento.setText(Departamento);
         txvProvincia.setText(Provincia);

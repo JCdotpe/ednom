@@ -1,9 +1,11 @@
 package ordanel.ednom.Entity;
 
+import java.io.Serializable;
+
 /**
  * Created by Leandro on 27/10/2014.
  */
-public class Ubigeo {
+public class Ubigeo implements Serializable {
 
     private String Departamento;
 
