@@ -20,6 +20,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import ordanel.ednom.Entity.Ubigeo;
 import ordanel.ednom.libreria.HttpPostAux;
 
 public class MainActivity extends Activity {
@@ -29,11 +30,11 @@ public class MainActivity extends Activity {
     Button btnLogin;
     HttpPostAux posteo;
 
-//    String IP_Server = "192.168.1.21";
-//    String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";
+    String IP_Server = "192.168.1.21";
+    String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";
 
-    String IP_Server = "jc.pe";
-    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";
+//    String IP_Server = "jc.pe";
+//    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";
 
     private ProgressDialog dialog;
 
@@ -107,8 +108,23 @@ public class MainActivity extends Activity {
 
             try
             {
+                /*
                 jsonObject = jsonArray.getJSONObject(0);
                 logstatus = jsonObject.getInt("logstatus");
+                */
+
+                for (int i = 0; i < jsonArray.length(); i++)
+                {
+                    jsonObject =(JSONObject) jsonArray.get(i);
+
+                    Ubigeo ubigeo =  new Ubigeo();
+                    ubigeo.setDepartamento(jsonObject.getString("Departamento"));
+                    ubigeo.setProvincia(jsonObject.getString("Provincia"));
+                    ubigeo.setDistrito(jsonObject.getString("Distrito"));
+                    ubigeo.setLocal(jsonObject.getString("Local"));
+
+                    logstatus = jsonObject.getInt("logstatus");
+                }
 
                 Log.e("Login Status", "logstatus = " + logstatus);
             }
