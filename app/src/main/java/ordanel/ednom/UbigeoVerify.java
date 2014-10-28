@@ -31,7 +31,7 @@ public class UbigeoVerify extends Activity {
         txvDistrito = (TextView) findViewById(R.id.txvDistrito);
         txvLocal = (TextView) findViewById(R.id.txvLocal);
 
-        ArrayList<Ubigeo> arrayList = (ArrayList<Ubigeo>) getIntent().getSerializableExtra("listUbigeo");
+        ArrayList<Ubigeo> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" );
 
         Integer count = arrayList.size();
         Log.e("CreateActivity : ", count.toString());
@@ -48,7 +48,6 @@ public class UbigeoVerify extends Activity {
         txvProvincia.setText(Provincia);
         txvDistrito.setText(Distrito);
         txvLocal.setText(Local);
-
     }
 
     public void clickCorrecto(View view){

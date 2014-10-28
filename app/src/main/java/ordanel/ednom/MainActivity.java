@@ -19,7 +19,6 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-import java.util.List;
 
 import ordanel.ednom.Entity.Ubigeo;
 import ordanel.ednom.libreria.HttpPostAux;
@@ -30,6 +29,8 @@ public class MainActivity extends Activity {
     EditText txtPassword;
     Button btnLogin;
     HttpPostAux posteo;
+
+    ArrayList<Ubigeo> arrayList;
 
     String IP_Server = "172.16.100.45";
     String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";
@@ -59,8 +60,7 @@ public class MainActivity extends Activity {
 
                 if ( checkLoginData( usuario, password ) == true )
                 {
-                    // new asynclogin().execute(usuario, password);
-                    new asyn2Login().execute(usuario, password);
+                    new asyncLogin().execute(usuario, password);
                 }
                 else
                 {
@@ -91,123 +91,52 @@ public class MainActivity extends Activity {
         toast.show();
     }
 
-    public boolean loginStatus(String usuario, String password){
 
-        int logstatus = -1;
+    public ArrayList<Ubigeo>loginStatus(String usuario, String password){
 
         ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
+        parametersPost.add( new BasicNameValuePair("usuario", usuario) );
+        parametersPost.add( new BasicNameValuePair("password", password) );
 
-        parametersPost.add(new BasicNameValuePair("usuario", usuario));
-        parametersPost.add(new BasicNameValuePair("password", password));
+        JSONArray jsonArray = posteo.getServerData( parametersPost, URL_Connect );
 
-        JSONArray jsonArray = posteo.getServerData(parametersPost, URL_Connect);
+        SystemClock.sleep(950); // luego retirar
 
-        SystemClock.sleep(950);
-
-        if (jsonArray != null && jsonArray.length() > 0)
+        if ( jsonArray != null && jsonArray.length() > 0 )
         {
+            arrayList = new ArrayList<Ubigeo>();
             JSONObject jsonObject;
 
             try
             {
-                /*
-                jsonObject = jsonArray.getJSONObject(0);
-                logstatus = jsonObject.getInt("logstatus");
-                */
-
-                for (int i = 0; i < jsonArray.length(); i++)
+                for ( int i = 0; i < jsonArray.length(); i++ )
                 {
-                    jsonObject =(JSONObject) jsonArray.get(i);
+                    jsonObject = (JSONObject) jsonArray.get(i);
 
-                    Ubigeo ubigeo =  new Ubigeo();
-                    ubigeo.setDepartamento(jsonObject.getString("Departamento"));
-                    ubigeo.setProvincia(jsonObject.getString("Provincia"));
-                    ubigeo.setDistrito(jsonObject.getString("Distrito"));
-                    ubigeo.setLocal(jsonObject.getString("Local"));
+                    Ubigeo ubigeo = new Ubigeo();
+                    ubigeo.setDepartamento( jsonObject.getString("Departamento") );
+                    ubigeo.setProvincia( jsonObject.getString("Provincia") );
+                    ubigeo.setDistrito( jsonObject.getString("Distrito") );
+                    ubigeo.setLocal( jsonObject.getString("Local") );
 
-                    logstatus = jsonObject.getInt("logstatus");
+                    arrayList.add(ubigeo);
                 }
-
-                Log.e("Login Status", "logstatus = " + logstatus);
             }
             catch (Exception e)
             {
                 e.printStackTrace();
             }
 
-            if (logstatus == 0)
-            {
-                Log.e("Login Status", "invalido");
-                return  false;
-            }
-            else
-            {
-                Log.e("Login Status", "valido");
-                return  true;
-            }
+            return arrayList;
         }
         else
         {
-            Log.e("JSON", "ERROR");
-            return false;
+            return null;
         }
 
     }
 
-    class asynclogin extends AsyncTask <String, String, String> {
-
-        String usuario;
-        String password;
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            dialog = new ProgressDialog(MainActivity.this);
-            dialog.setMessage("Autenticando...");
-            dialog.setIndeterminate(false);
-            dialog.setCancelable(false);
-            dialog.show();
-        }
-
-        @Override
-        protected String doInBackground(String... params) {
-
-            usuario = params[0];
-            password = params[1];
-
-            if (loginStatus(usuario, password) == true)
-            {
-                return "ok";
-            }
-            else
-            {
-                return "err";
-            }
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            super.onPostExecute(result);
-
-            dialog.dismiss();
-            Log.e("onPostExecute = ", result);
-
-            if ( result.equals("ok") )
-            {
-                Intent intent = new Intent(MainActivity.this, UbigeoVerify.class);
-                intent.putExtra("user", usuario);
-                startActivity(intent);
-            }
-            else
-            {
-                err_login();
-            }
-        }
-
-    }
-
-    class asyn2Login extends AsyncTask<String, ArrayList<Ubigeo>, ArrayList<Ubigeo>>{
+    class asyncLogin extends AsyncTask<String, ArrayList<Ubigeo>, ArrayList<Ubigeo>>{
 
         @Override
         protected void onPreExecute() {
@@ -228,47 +157,7 @@ public class MainActivity extends Activity {
             usuario = params[0];
             password = params[1];
 
-            ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
-
-            parametersPost.add( new BasicNameValuePair("usuario", usuario) );
-            parametersPost.add( new BasicNameValuePair("password", password) );
-
-            JSONArray jsonArray = posteo.getServerData(parametersPost, URL_Connect);
-
-            SystemClock.sleep(950);
-
-            ArrayList<Ubigeo> arrayList = new ArrayList<Ubigeo>();
-
-            if ( jsonArray != null && jsonArray.length() > 0 )
-            {
-                JSONObject jsonObject;
-                try
-                {
-                    for ( int i = 0; i < jsonArray.length(); i++ )
-                    {
-                        jsonObject = (JSONObject) jsonArray.get(i);
-
-                        Ubigeo ubigeo = new Ubigeo();
-                        ubigeo.setDepartamento( jsonObject.getString("Departamento") );
-                        ubigeo.setProvincia(jsonObject.getString("Provincia"));
-                        ubigeo.setDistrito( jsonObject.getString("Distrito") );
-                        ubigeo.setLocal( jsonObject.getString("Local") );
-
-                        arrayList.add(ubigeo);
-
-                    }
-                }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
-
-                return  arrayList;
-            }
-            else
-            {
-                return null;
-            }
+            return loginStatus(usuario, password);
         }
 
         @Override
@@ -283,7 +172,9 @@ public class MainActivity extends Activity {
                 Log.e("onPostExecute : ", count.toString() );
 
                 Intent intent = new Intent(MainActivity.this, UbigeoVerify.class);
-                intent.putExtra( "listUbigeo", ubigeos );
+                // intent.putExtra( "listUbigeo", ubigeos );
+                intent.putParcelableArrayListExtra( "listUbigeo", ubigeos );
+
                 startActivity(intent);
             }
             else

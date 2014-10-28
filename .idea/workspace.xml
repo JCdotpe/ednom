@@ -49,9 +49,19 @@
       <file leaf-file-name="Ubigeo.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/Entity/Ubigeo.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="684">
-              <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-              <folding />
+            <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="1458">
+              <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#317#318#0" expanded="true" />
+                <element signature="e#340#341#0" expanded="true" />
+                <element signature="e#827#828#0" expanded="true" />
+                <element signature="e#851#852#0" expanded="true" />
+                <element signature="e#1000#1001#0" expanded="true" />
+                <element signature="e#1049#1050#0" expanded="true" />
+                <element signature="e#1113#1114#0" expanded="true" />
+                <element signature="e#1160#1161#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -59,51 +69,14 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.6819788" vertical-offset="1036" max-vertical-offset="3438">
-              <caret line="79" column="9" selection-start-line="79" selection-start-column="9" selection-end-line="79" selection-end-column="9" />
+            <state vertical-scroll-proportion="0.42756185" vertical-offset="2764" max-vertical-offset="3492">
+              <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
               <folding>
                 <element signature="imports" expanded="true" />
-                <element signature="e#1487#2065#0" expanded="true" />
-                <element signature="e#2054#2055#0" expanded="true" />
-                <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-                <element signature="e#2829#2844#0" expanded="true" />
-                <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-                <element signature="e#6525#6540#0" expanded="true" />
-                <element signature="e#6882#6890#0" expanded="true" />
+                <element signature="e#1498#2008#0" expanded="true" />
+                <element signature="e#1997#1998#0" expanded="true" />
+                <element signature="e#2753#2768#0" expanded="true" />
               </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="UbigeoVerify.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/UbigeoVerify.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="366" max-vertical-offset="1242">
-              <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HiScreen.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/HiScreen.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="132" max-vertical-offset="1062">
-              <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
-              <folding>
-                <element signature="e#896#1038#0" expanded="true" />
-                <element signature="e#1027#1028#0" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="HttpPostAux.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/libreria/HttpPostAux.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1332" max-vertical-offset="1998">
-              <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-              <folding />
             </state>
           </provider>
         </entry>
@@ -1226,8 +1199,8 @@
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/ordanel/ednom/ObtainCensus.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ordanel/ednom/libreria/HttpPostAux.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/ordanel/ednom/Entity/Ubigeo.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ordanel/ednom/UbigeoVerify.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/ordanel/ednom/Entity/Ubigeo.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/ordanel/ednom/MainActivity.java" />
       </list>
     </option>
@@ -1319,6 +1292,28 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="ednom" />
               <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ednom" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="app" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidSourceTypeNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="ednom" />
+              <option name="myItemType" value="com.android.tools.idea.navigator.nodes.AndroidPsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="libreria" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
@@ -1568,7 +1563,7 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17857143" sideWeight="0.50082916" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.34" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32777777" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32777777" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1581,7 +1576,7 @@
       <window_info id="Memory Monitor" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2777778" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.43333334" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.17857143" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -1641,7 +1636,7 @@
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
-      <option name="time" value="1" />
+      <option name="time" value="2" />
     </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
@@ -1651,13 +1646,9 @@
           <caret line="113" column="18" selection-start-line="113" selection-start-column="18" selection-end-line="113" selection-end-column="18" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1487#2065#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#2829#2844#0" expanded="true" />
-            <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#6525#6540#0" expanded="true" />
-            <element signature="e#6882#6890#0" expanded="true" />
+            <element signature="e#1498#2008#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+            <element signature="e#2753#2768#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1676,13 +1667,9 @@
           <caret line="187" column="0" selection-start-line="187" selection-start-column="0" selection-end-line="187" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1487#2065#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#2829#2844#0" expanded="true" />
-            <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#6525#6540#0" expanded="true" />
-            <element signature="e#6882#6890#0" expanded="true" />
+            <element signature="e#1498#2008#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+            <element signature="e#2753#2768#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1701,13 +1688,9 @@
           <caret line="25" column="0" selection-start-line="25" selection-start-column="0" selection-end-line="25" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1487#2065#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#2829#2844#0" expanded="true" />
-            <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#6525#6540#0" expanded="true" />
-            <element signature="e#6882#6890#0" expanded="true" />
+            <element signature="e#1498#2008#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+            <element signature="e#2753#2768#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1745,13 +1728,9 @@
           <caret line="106" column="0" selection-start-line="106" selection-start-column="0" selection-end-line="106" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1487#2065#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#2829#2844#0" expanded="true" />
-            <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#6525#6540#0" expanded="true" />
-            <element signature="e#6882#6890#0" expanded="true" />
+            <element signature="e#1498#2008#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+            <element signature="e#2753#2768#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1781,13 +1760,9 @@
           <caret line="88" column="0" selection-start-line="88" selection-start-column="0" selection-end-line="88" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1487#2065#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#2829#2844#0" expanded="true" />
-            <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#6525#6540#0" expanded="true" />
-            <element signature="e#6882#6890#0" expanded="true" />
+            <element signature="e#1498#2008#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+            <element signature="e#2753#2768#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1817,13 +1792,9 @@
           <caret line="97" column="19" selection-start-line="97" selection-start-column="19" selection-end-line="97" selection-end-column="19" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1487#2065#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#2829#2844#0" expanded="true" />
-            <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#6525#6540#0" expanded="true" />
-            <element signature="e#6882#6890#0" expanded="true" />
+            <element signature="e#1498#2008#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+            <element signature="e#2753#2768#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1845,13 +1816,9 @@
           <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1487#2065#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#2829#2844#0" expanded="true" />
-            <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#6525#6540#0" expanded="true" />
-            <element signature="e#6882#6890#0" expanded="true" />
+            <element signature="e#1498#2008#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+            <element signature="e#2753#2768#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -1881,13 +1848,9 @@
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1487#2065#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#2829#2844#0" expanded="true" />
-            <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#6525#6540#0" expanded="true" />
-            <element signature="e#6882#6890#0" expanded="true" />
+            <element signature="e#1498#2008#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+            <element signature="e#2753#2768#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2039,18 +2002,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/libreria/HttpPostAux.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="754" max-vertical-offset="1746">
-          <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/HiScreen.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="132" max-vertical-offset="1062">
-          <caret line="40" column="25" selection-start-line="40" selection-start-column="25" selection-end-line="40" selection-end-column="25" />
+        <state vertical-scroll-proportion="0.58506227" vertical-offset="78" max-vertical-offset="1062">
+          <caret line="24" column="54" selection-start-line="24" selection-start-column="54" selection-end-line="24" selection-end-column="54" />
           <folding>
             <element signature="e#896#1038#0" expanded="true" />
             <element signature="e#1027#1028#0" expanded="true" />
@@ -2058,35 +2013,52 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/UbigeoVerify.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/Entity/Ubigeo.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="366" max-vertical-offset="1242">
-          <caret line="45" column="0" selection-start-line="45" selection-start-column="0" selection-end-line="45" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="1458">
+          <caret line="24" column="36" selection-start-line="24" selection-start-column="36" selection-end-line="24" selection-end-column="36" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#317#318#0" expanded="true" />
+            <element signature="e#340#341#0" expanded="true" />
+            <element signature="e#827#828#0" expanded="true" />
+            <element signature="e#851#852#0" expanded="true" />
+            <element signature="e#1000#1001#0" expanded="true" />
+            <element signature="e#1049#1050#0" expanded="true" />
+            <element signature="e#1113#1114#0" expanded="true" />
+            <element signature="e#1160#1161#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/libreria/HttpPostAux.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.2385321" vertical-offset="0" max-vertical-offset="1746">
+          <caret line="74" column="0" selection-start-line="74" selection-start-column="0" selection-end-line="74" selection-end-column="0" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/Entity/Ubigeo.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/UbigeoVerify.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="684">
-          <caret line="8" column="0" selection-start-line="8" selection-start-column="0" selection-end-line="8" selection-end-column="0" />
-          <folding />
+        <state vertical-scroll-proportion="0.31880733" vertical-offset="118" max-vertical-offset="1260">
+          <caret line="33" column="94" selection-start-line="33" selection-start-column="94" selection-end-line="33" selection-end-column="94" />
+          <folding>
+            <element signature="e#1940#1941#0" expanded="true" />
+            <element signature="e#1964#1965#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/ordanel/ednom/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6819788" vertical-offset="1036" max-vertical-offset="3438">
-          <caret line="79" column="9" selection-start-line="79" selection-start-column="9" selection-end-line="79" selection-end-column="9" />
+        <state vertical-scroll-proportion="0.42756185" vertical-offset="2764" max-vertical-offset="3492">
+          <caret line="167" column="0" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
           <folding>
             <element signature="imports" expanded="true" />
-            <element signature="e#1487#2065#0" expanded="true" />
-            <element signature="e#2054#2055#0" expanded="true" />
-            <element signature="method#loginStatus#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#2829#2844#0" expanded="true" />
-            <element signature="class#asynclogin#0;class#MainActivity#0" expanded="false" />
-            <element signature="e#6525#6540#0" expanded="true" />
-            <element signature="e#6882#6890#0" expanded="true" />
+            <element signature="e#1498#2008#0" expanded="true" />
+            <element signature="e#1997#1998#0" expanded="true" />
+            <element signature="e#2753#2768#0" expanded="true" />
           </folding>
         </state>
       </provider>
