@@ -13,29 +13,25 @@ import ordanel.ednom.Asyncs.LoginAsync;
 
 public class MainActivity extends Activity {
 
-    EditText txtUsuario;
     EditText txtPassword;
     Button btnLogin;
-
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        txtUsuario = (EditText) findViewById(R.id.txtUsuario);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
 
     }
 
-    public void InitLogin(View view){
-        String usuario = txtUsuario.getText().toString();
+    public void initLogin(View view){
         String password = txtPassword.getText().toString();
 
-        if ( checkLoginData( usuario, password ) == true )
+        if ( checkLoginData( password ) )
         {
-            new LoginAsync(MainActivity.this).execute( usuario, password );
+            new LoginAsync(MainActivity.this).execute( password );
         }
         else
         {
@@ -43,11 +39,11 @@ public class MainActivity extends Activity {
         }
     }
 
-    public boolean checkLoginData(String userName, String password){
+    public boolean checkLoginData( String password ){
 
-        if ( userName.equals("") || password.equals("") )
+        if ( password.equals("") )
         {
-            Log.e("Login UI", "check login data user or pass error!");
+            Log.e("Login UI", "check login data pass error!");
             return false;
         }
         else
@@ -64,4 +60,3 @@ public class MainActivity extends Activity {
     }
 
 }
-

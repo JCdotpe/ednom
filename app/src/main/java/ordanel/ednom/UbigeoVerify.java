@@ -51,11 +51,10 @@ public class UbigeoVerify extends Activity {
     }
 
     public void clickCorrecto(View view){
-        Toast toast = Toast.makeText(getApplicationContext(), "Acepto los Datos", Toast.LENGTH_SHORT );
-        toast.show();
 
         Intent intent = new Intent(UbigeoVerify.this, ObtainCensus.class);
         startActivity(intent);
+
     }
 
     public void clickIncorrecto(View view){

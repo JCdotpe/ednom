@@ -17,16 +17,15 @@ import ordanel.ednom.libreria.HttpPostAux;
  */
 public class Login {
 
-    String IP_Server = "172.16.100.45";
-    String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";
+    String IP_Server = "jc.pe";
+    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";
 
     HttpPostAux posteo = new HttpPostAux();
     ArrayList<Ubigeo> arrayList;
 
-    public ArrayList<Ubigeo> CheckLogin(String usuario, String password){
+    public ArrayList<Ubigeo> CheckLogin( String password ){
 
         ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
-        parametersPost.add( new BasicNameValuePair("usuario", usuario) );
         parametersPost.add( new BasicNameValuePair("password", password) );
 
         JSONArray jsonArray = posteo.getServerData( parametersPost, URL_Connect );

@@ -24,18 +24,24 @@ public class ObtainCensus extends Activity {
 
         btnPadron = (Button) findViewById(R.id.btnPadron);
 
-        btnPadron.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new asyncPadron().execute();
+        Integer flag = 1;
 
-                Toast toast = Toast.makeText(getApplicationContext(), "Padrón descargado", Toast.LENGTH_SHORT);
-                toast.show();
-            }
-        });
-
+        if ( flag == 0 )
+        {
+            btnPadron.setText("Descargar Padron");
+        }
+        else
+        {
+            btnPadron.setText("Actualizar Padron");
+        }
 
     }
+
+    public void downloadPadron(View view){
+        Toast toast = Toast.makeText(getApplicationContext(), "Padrón descargado", Toast.LENGTH_SHORT);
+        toast.show();
+    }
+
 
     class asyncPadron extends AsyncTask<String, String, String>{
 
