@@ -1,22 +1,23 @@
 package ordanel.ednom;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ordanel.ednom.Entity.Ubigeo;
+import ordanel.ednom.Asyncs.VersionAsync;
+import ordanel.ednom.Entity.UbigeoE;
 
 /**
  * Created by Leandro on 27/10/2014.
  */
 public class UbigeoVerify extends Activity {
+
+    private static final String TAG = UbigeoVerify.class.getSimpleName();
 
     String Departamento, Provincia, Distrito, Local;
     TextView txvDepartamento, txvProvincia, txvDistrito, txvLocal;
@@ -26,15 +27,15 @@ public class UbigeoVerify extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ubigeo_verify);
 
-        txvDepartamento = (TextView) findViewById(R.id.txvDepartamento);
-        txvProvincia = (TextView) findViewById(R.id.txvProvincia);
-        txvDistrito = (TextView) findViewById(R.id.txvDistrito);
-        txvLocal = (TextView) findViewById(R.id.txvLocal);
+        txvDepartamento = (TextView) findViewById( R.id.txvDepartamento );
+        txvProvincia = (TextView) findViewById( R.id.txvProvincia );
+        txvDistrito = (TextView) findViewById( R.id.txvDistrito );
+        txvLocal = (TextView) findViewById( R.id.txvLocal );
 
-        ArrayList<Ubigeo> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" );
+        ArrayList<UbigeoE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" );
 
         Integer count = arrayList.size();
-        Log.e("CreateActivity : ", count.toString());
+        Log.e( TAG, count.toString() );
 
         for (int i = 0; i < arrayList.size(); i++)
         {
@@ -44,20 +45,19 @@ public class UbigeoVerify extends Activity {
             Local = arrayList.get(i).getLocal();
         }
 
-        txvDepartamento.setText(Departamento);
-        txvProvincia.setText(Provincia);
-        txvDistrito.setText(Distrito);
-        txvLocal.setText(Local);
+        txvDepartamento.setText( Departamento );
+        txvProvincia.setText( Provincia );
+        txvDistrito.setText( Distrito );
+        txvLocal.setText( Local );
     }
 
-    public void clickCorrecto(View view){
+    public void clickCorrecto(View view) {
 
-        Intent intent = new Intent(UbigeoVerify.this, ObtainCensus.class);
-        startActivity(intent);
+        new VersionAsync( UbigeoVerify.this ).execute();
 
     }
 
-    public void clickIncorrecto(View view){
+    public void clickIncorrecto(View view) {
         finish();
     }
 
@@ -69,6 +69,6 @@ public class UbigeoVerify extends Activity {
             return true;
         }
 
-        return super.onKeyDown(keyCode, event);
+        return super.onKeyDown( keyCode, event );
     }
 }

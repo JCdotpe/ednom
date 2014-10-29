@@ -26,7 +26,7 @@ public class MainActivity extends Activity {
 
     }
 
-    public void initLogin(View view){
+    public void initLogin(View view) {
         String password = txtPassword.getText().toString();
 
         if ( checkLoginData( password ) )
@@ -39,7 +39,7 @@ public class MainActivity extends Activity {
         }
     }
 
-    public boolean checkLoginData( String password ){
+    public boolean checkLoginData( String password ) {
 
         if ( password.equals("") )
         {
@@ -52,10 +52,10 @@ public class MainActivity extends Activity {
         }
     }
 
-    public void err_login(){
+    public void err_login() {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-        vibrator.vibrate(200);
-        Toast toast = Toast.makeText( getApplicationContext(), "Error: El password es incorrecto", Toast.LENGTH_SHORT );
+        vibrator.vibrate( 200 );
+        Toast toast = Toast.makeText( getApplicationContext(), getString( R.string.login_msg_error ), Toast.LENGTH_SHORT );
         toast.show();
     }
 

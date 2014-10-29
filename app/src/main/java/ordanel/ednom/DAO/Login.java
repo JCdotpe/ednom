@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import ordanel.ednom.Entity.Ubigeo;
+import ordanel.ednom.Entity.UbigeoE;
 import ordanel.ednom.libreria.HttpPostAux;
 
 /**
@@ -17,27 +17,29 @@ import ordanel.ednom.libreria.HttpPostAux;
  */
 public class Login {
 
+    private static final String TAG = Login.class.getSimpleName();
+
     String IP_Server = "jc.pe";
     String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";
 
     HttpPostAux posteo = new HttpPostAux();
-    ArrayList<Ubigeo> arrayList;
+    ArrayList<UbigeoE> arrayList;
 
-    public ArrayList<Ubigeo> CheckLogin( String password ){
+    public ArrayList<UbigeoE> CheckLogin( String password ) {
 
         ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
-        parametersPost.add( new BasicNameValuePair("password", password) );
+        parametersPost.add( new BasicNameValuePair( "password", password ) );
 
         JSONArray jsonArray = posteo.getServerData( parametersPost, URL_Connect );
 
         if ( jsonArray != null && jsonArray.length() > 0 )
         {
-            arrayList = new ArrayList<Ubigeo>();
+            arrayList = new ArrayList<UbigeoE>();
             JSONObject jsonObject;
 
             Integer count = jsonArray.length();
 
-            Log.e("LOGIN : " , count.toString() );
+            Log.e( TAG , count.toString() );
 
             try
             {
@@ -45,13 +47,13 @@ public class Login {
                 {
                     jsonObject = (JSONObject) jsonArray.get(i);
 
-                    Ubigeo ubigeo = new Ubigeo();
-                    ubigeo.setDepartamento( jsonObject.getString("Departamento") );
-                    ubigeo.setProvincia( jsonObject.getString("Provincia") );
-                    ubigeo.setDistrito( jsonObject.getString("Distrito") );
-                    ubigeo.setLocal( jsonObject.getString("Local") );
+                    UbigeoE ubigeoE = new UbigeoE();
+                    ubigeoE.setDepartamento( jsonObject.getString( "Departamento" ) );
+                    ubigeoE.setProvincia( jsonObject.getString( "Provincia" ) );
+                    ubigeoE.setDistrito( jsonObject.getString( "Distrito" ) );
+                    ubigeoE.setLocal( jsonObject.getString( "Local" ) );
 
-                    arrayList.add(ubigeo);
+                    arrayList.add(ubigeoE);
                 }
             }
             catch (Exception e)

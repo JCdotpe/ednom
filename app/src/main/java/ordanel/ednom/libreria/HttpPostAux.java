@@ -22,14 +22,16 @@ import java.util.ArrayList;
  */
 public class HttpPostAux {
 
+    private static final String TAG = HttpPostAux.class.getSimpleName();
+
     InputStream inputStream = null;
     String result = "";
 
-    public JSONArray getServerData(ArrayList<NameValuePair> parameters, String urlWebServer){
+    public JSONArray getServerData( ArrayList<NameValuePair> parameters, String urlWebServer ) {
 
-        httpPostConnect(parameters, urlWebServer);
+        httpPostConnect( parameters, urlWebServer );
 
-        if (inputStream != null)
+        if ( inputStream != null )
         {
             getPostResponse();
             return getJsonArray();
@@ -40,49 +42,52 @@ public class HttpPostAux {
 
     }
 
-    private void httpPostConnect(ArrayList<NameValuePair> parameters, String urlWebServer){
+    private void httpPostConnect( ArrayList<NameValuePair> parameters, String urlWebServer ) {
 
         try
         {
             HttpClient httpClient = new DefaultHttpClient();
-            HttpPost httpPost = new HttpPost(urlWebServer);
+            HttpPost httpPost = new HttpPost( urlWebServer );
 
-            httpPost.setEntity(new UrlEncodedFormEntity(parameters));
+            if ( parameters != null )
+            {
+                httpPost.setEntity( new UrlEncodedFormEntity( parameters ) );
+            }
 
-            HttpResponse httpResponse = httpClient.execute(httpPost);
+            HttpResponse httpResponse = httpClient.execute( httpPost );
             HttpEntity httpEntity = httpResponse.getEntity();
 
             inputStream = httpEntity.getContent();
         }
         catch (Exception e)
         {
-            Log.e("LOG_TAG", "Error in the connection : " + e.toString() );
+            Log.e( TAG, "Error in the connection : " + e.toString() );
         }
 
     }
 
-    public void getPostResponse(){
+    public void getPostResponse() {
 
         try
         {
-            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"), 8);
+            BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( inputStream, "iso-8859-1" ), 8 );
             StringBuilder stringBuilder = new StringBuilder();
             String line = null;
 
-            while ( (line = bufferedReader.readLine()) != null )
+            while ( ( line = bufferedReader.readLine() ) != null )
             {
-                stringBuilder.append(line + "\n");
+                stringBuilder.append( line + "\n" );
             }
 
             bufferedReader.close();
 
             result = stringBuilder.toString();
 
-            Log.e("LOG_TAG", "result = " + stringBuilder.toString());
+            Log.e( TAG, "result : " + stringBuilder.toString() );
         }
         catch (Exception e)
         {
-            Log.e("LOG_TAG", "Error converting result : " + e.toString());
+            Log.e( TAG, "Error converting result : " + e.toString() );
         }
 
     }
@@ -91,13 +96,13 @@ public class HttpPostAux {
 
         try
         {
-            JSONArray jsonArray = new JSONArray(result);
+            JSONArray jsonArray = new JSONArray( result );
 
             return jsonArray;
         }
         catch (Exception e)
         {
-            Log.e("LOG_TAG", "Error parsing data : " + e.toString());
+            Log.e( TAG, "Error parsing data : " + e.toString() );
             return null;
         }
     }

@@ -6,7 +6,7 @@ import android.os.Parcelable;
 /**
  * Created by Leandro on 27/10/2014.
  */
-public class Ubigeo implements Parcelable {
+public class UbigeoE implements Parcelable {
 
     private String Departamento;
     private String Provincia;
@@ -14,11 +14,11 @@ public class Ubigeo implements Parcelable {
     private String Local;
 
 
-    public Ubigeo(){
+    public UbigeoE() {
         super();
     }
 
-    public Ubigeo(Parcel parcel){
+    public UbigeoE(Parcel parcel) {
         Departamento = parcel.readString();
         Provincia = parcel.readString();
         Distrito = parcel.readString();
@@ -40,15 +40,15 @@ public class Ubigeo implements Parcelable {
         return 0;
     }
 
-    public static final Creator<Ubigeo> CREATOR = new Creator<Ubigeo>() {
+    public static final Creator<UbigeoE> CREATOR = new Creator<UbigeoE>() {
         @Override
-        public Ubigeo createFromParcel(Parcel source) {
-            return new Ubigeo(source);
+        public UbigeoE createFromParcel( Parcel source ) {
+            return new UbigeoE( source );
         }
 
         @Override
-        public Ubigeo[] newArray(int size) {
-            return new Ubigeo[size];
+        public UbigeoE[] newArray( int size ) {
+            return new UbigeoE[size];
         }
     };
 

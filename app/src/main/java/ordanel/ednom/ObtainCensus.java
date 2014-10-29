@@ -1,10 +1,8 @@
 package ordanel.ednom;
 
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.SystemClock;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -14,62 +12,44 @@ import android.widget.Toast;
  */
 public class ObtainCensus extends Activity {
 
+    private static final String TAG = ObtainCensus.class.getSimpleName();
+
     Button btnPadron;
-    private ProgressDialog dialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.obtain_census);
 
-        btnPadron = (Button) findViewById(R.id.btnPadron);
+        btnPadron = (Button) findViewById( R.id.btnPadron );
 
-        Integer flag = 1;
+        Integer flag = getIntent().getIntExtra( "statusVersion", -1 );
 
-        if ( flag == 0 )
+        if ( flag == 1 )
         {
-            btnPadron.setText("Descargar Padron");
+            btnPadron.setText( getString( R.string.padron_msg_new ) );
         }
-        else
+        else if ( flag == 2 )
         {
-            btnPadron.setText("Actualizar Padron");
+            btnPadron.setText( getString( R.string.padron_msg_update ) );
         }
 
     }
 
-    public void downloadPadron(View view){
-        Toast toast = Toast.makeText(getApplicationContext(), "Padrón descargado", Toast.LENGTH_SHORT);
+    public void downloadPadron(View view) {
+        Toast toast = Toast.makeText( getApplicationContext(), "Padrón descargado", Toast.LENGTH_SHORT );
         toast.show();
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
 
-    class asyncPadron extends AsyncTask<String, String, String>{
-
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-
-            dialog = new ProgressDialog(ObtainCensus.this);
-            dialog.setMessage("Obteniendo Padrón");
-            dialog.setIndeterminate(false);
-            dialog.setCancelable(false);
-            dialog.show();
+        if ( keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 )
+        {
+            return true;
         }
 
-        @Override
-        protected String doInBackground(String... params) {
-            SystemClock.sleep(950);
-            return "ok";
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-            super.onPostExecute(s);
-
-            dialog.dismiss();
-        }
-
+        return super.onKeyDown( keyCode, event );
 
     }
-
 }
