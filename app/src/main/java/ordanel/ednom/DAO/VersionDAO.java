@@ -18,8 +18,10 @@ public class VersionDAO {
 
     private static final String TAG = VersionDAO.class.getSimpleName();
 
-    String IP_Server = "jc.pe";
-    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/version.php";
+    /*String IP_Server = "jc.pe";
+    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/version.php";*/
+    String IP_Server = "172.16.100.45";
+    String URL_Connect = "http://" + IP_Server + "/droidlogin/version.php";
 
     Context context;
 
@@ -77,44 +79,35 @@ public class VersionDAO {
         Integer statusVersion = 0;
 
         versionLocal = this.currentVersion();
+        Log.e( TAG, "version local : " + versionLocal.toString() );
 
-        if ( versionLocal > 0 )
+        HttpPostAux httpPostAux = new HttpPostAux();
+
+        JSONArray jsonArray = httpPostAux.getServerData( null, URL_Connect );
+
+        if ( jsonArray != null && jsonArray.length() > 0 )
         {
-            HttpPostAux httpPostAux = new HttpPostAux();
+            JSONObject jsonObject;
 
-            JSONArray jsonArray = httpPostAux.getServerData( null, URL_Connect );
+            Integer count = jsonArray.length();
+            Log.e( TAG, count.toString() );
 
-            if ( jsonArray != null && jsonArray.length() > 0 )
+            try
             {
-                JSONObject jsonObject;
+                jsonObject = (JSONObject) jsonArray.get(0);
 
-                Integer count = jsonArray.length();
-                Log.e(TAG, count.toString());
+                versionNube = jsonObject.getInt( "idVersion" );
 
-                try
+                if ( !versionNube.equals(versionLocal) )
                 {
-                    jsonObject = (JSONObject) jsonArray.get(0);
-
-                    versionNube = jsonObject.getInt( "idVersion" );
-
-                    if ( versionNube.equals(versionLocal) )
-                    {
-                        statusVersion = 0;
-                    }
-                    else
-                    {
-                        statusVersion = 2;
-                    }
+                    statusVersion = versionNube;
                 }
-                catch (Exception e)
-                {
-                    e.printStackTrace();
-                }
+
             }
-        }
-        else
-        {
-            statusVersion = 1;
+            catch (Exception e)
+            {
+                e.printStackTrace();
+            }
         }
 
         return statusVersion;

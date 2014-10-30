@@ -9,7 +9,7 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:text="Obtener Padrón de Docentes"
+        android:text="Obtener el Último Padrón de Docentes"
         android:textSize="20dp"/>
 
     <Button
@@ -17,6 +17,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
+        android:text="@string/padron_btn_new"
         android:onClick="downloadPadron" />
 
 </LinearLayout>

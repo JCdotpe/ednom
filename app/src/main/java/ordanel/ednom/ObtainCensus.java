@@ -5,7 +5,8 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
+
+import ordanel.ednom.Asyncs.PadronAsync;
 
 /**
  * Created by Leandro on 27/10/2014.
@@ -14,7 +15,10 @@ public class ObtainCensus extends Activity {
 
     private static final String TAG = ObtainCensus.class.getSimpleName();
 
+    Integer flag;
+
     Button btnPadron;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,22 +27,23 @@ public class ObtainCensus extends Activity {
 
         btnPadron = (Button) findViewById( R.id.btnPadron );
 
-        Integer flag = getIntent().getIntExtra( "statusVersion", -1 );
+        flag = getIntent().getIntExtra( "statusVersion", -1 );
 
-        if ( flag == 1 )
+        /*if ( flag == 1 )
         {
-            btnPadron.setText( getString( R.string.padron_msg_new ) );
+            btnPadron.setText( getString( R.string.padron_btn_new) );
         }
         else if ( flag == 2 )
         {
-            btnPadron.setText( getString( R.string.padron_msg_update ) );
-        }
+            btnPadron.setText( getString( R.string.padron_btn_update) );
+        }*/
 
     }
 
     public void downloadPadron(View view) {
-        Toast toast = Toast.makeText( getApplicationContext(), "Padrón descargado", Toast.LENGTH_SHORT );
-        toast.show();
+
+        new PadronAsync( ObtainCensus.this ).execute();
+
     }
 
     @Override
