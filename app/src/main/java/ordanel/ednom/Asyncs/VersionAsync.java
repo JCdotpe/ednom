@@ -3,6 +3,7 @@ package ordanel.ednom.Asyncs;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import ordanel.ednom.DAO.VersionDAO;
 import ordanel.ednom.ObtainCensus;
@@ -30,12 +31,20 @@ public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
     }
 
     @Override
-    protected void onPostExecute(Integer integer) {
-        super.onPostExecute(integer);
+    protected void onPostExecute(Integer statusVersion) {
+        super.onPostExecute(statusVersion);
 
-        Intent intent = new Intent( this.context, ObtainCensus.class );
-        intent.putExtra( "statusVersion", integer );
-        this.context.startActivity( intent );
+        if ( statusVersion > 0 )
+        {
+            Intent intent = new Intent( this.context, ObtainCensus.class );
+            intent.putExtra( "statusVersion", statusVersion );
+            this.context.startActivity( intent );
+        }
+        else
+        {
+            Toast toast = Toast.makeText( this.context, "Passa al menu", Toast.LENGTH_SHORT );
+            toast.show();
+        }
 
     }
 }

@@ -22,10 +22,10 @@ public class PadronDAO {
 
     private static final String TAG = PadronDAO.class.getSimpleName();
 
-    /*String IP_Server = "jc.pe";
-    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/padron.php";*/
-    String IP_Server = "172.16.100.45";
-    String URL_Connect = "http://" + IP_Server + "/droidlogin/padron.php";
+    String IP_Server = "jc.pe";
+    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/padron.php";
+    /*String IP_Server = "172.16.100.45";
+    String URL_Connect = "http://" + IP_Server + "/droidlogin/padron.php";*/
 
     ArrayList<PadronE> arrayList;
 
@@ -81,11 +81,13 @@ public class PadronDAO {
 
     }
 
-    public void padronLocal() {
+    public Integer padronLocal( Integer idVersion ) {
 
         DBHelper dbHelper = DBHelper.getUtilDb( this.context );
 
+        String success = "0";
         Cursor cursor = null;
+        ContentValues contentValues;
 
         arrayList = this.padronNube();
 
@@ -108,11 +110,9 @@ public class PadronDAO {
 
             }
 
-            String success = "";
-
             for ( int i = 0; i < arrayList.size(); i++ )
             {
-                ContentValues contentValues = new ContentValues();
+                contentValues = new ContentValues();
 
                 contentValues.put( "Codigo", arrayList.get(i).getCodigo() );
                 contentValues.put( "Sede", arrayList.get(i).getSede() );
@@ -126,11 +126,16 @@ public class PadronDAO {
 
             if ( !success.equals("0") && !success.equals("-1") )
             {
+                dbHelper.getDatabase().delete( "Version", null, null );
 
+                contentValues =  new ContentValues();
+                contentValues.put( "idVersion" , idVersion );
+
+                Long exito = dbHelper.getDatabase().insertOrThrow( "Version", null, contentValues );
+                success = String.valueOf(exito);
             }
 
             dbHelper.setTransactionSuccessful();
-
         }
         catch (Exception e)
         {
@@ -142,6 +147,8 @@ public class PadronDAO {
             dbHelper.close();
             cursor.close();
         }
+
+        return Integer.valueOf(success);
     }
 
 }

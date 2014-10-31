@@ -18,10 +18,10 @@ public class VersionDAO {
 
     private static final String TAG = VersionDAO.class.getSimpleName();
 
-    /*String IP_Server = "jc.pe";
-    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/version.php";*/
-    String IP_Server = "172.16.100.45";
-    String URL_Connect = "http://" + IP_Server + "/droidlogin/version.php";
+    String IP_Server = "jc.pe";
+    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/version.php";
+    /*String IP_Server = "172.16.100.45";
+    String URL_Connect = "http://" + IP_Server + "/droidlogin/version.php";*/
 
     Context context;
 

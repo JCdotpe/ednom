@@ -29,20 +29,11 @@ public class ObtainCensus extends Activity {
 
         flag = getIntent().getIntExtra( "statusVersion", -1 );
 
-        /*if ( flag == 1 )
-        {
-            btnPadron.setText( getString( R.string.padron_btn_new) );
-        }
-        else if ( flag == 2 )
-        {
-            btnPadron.setText( getString( R.string.padron_btn_update) );
-        }*/
-
     }
 
     public void downloadPadron(View view) {
 
-        new PadronAsync( ObtainCensus.this ).execute();
+        new PadronAsync( ObtainCensus.this ).execute( flag );
 
     }
 

@@ -13,10 +13,9 @@
     <!-- /Login -->
 
     <!-- Padrón -->
-    <string name="padron_msg_new">Descargando Padrón</string>
-    <string name="padron_msg_update">Actualizando Padrón</string>
-    <string name="padron_btn_new">Descargar Padrón</string>
-    <string name="padron_btn_update">Actualizar Padrón</string>
+    <string name="padron_msg_download">Descargando Padrón</string>
+    <string name="padron_msg_error">Ocurrió un error. Cierre la aplicación y vuélvalo a intentar!</string>
+    <string name="padron_btn_text">Descargar Padrón</string>
     <!-- /Padrón -->
 
 </resources>

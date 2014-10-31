@@ -19,10 +19,10 @@ public class Login {
 
     private static final String TAG = Login.class.getSimpleName();
 
-    /*String IP_Server = "jc.pe";
-    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";*/
-    String IP_Server = "172.16.100.45";
-    String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";
+    String IP_Server = "jc.pe";
+    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";
+    /*String IP_Server = "172.16.100.45";
+    String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";*/
 
     HttpPostAux posteo = new HttpPostAux();
     ArrayList<UbigeoE> arrayList;
