@@ -10,7 +10,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ordanel.ednom.Entity.UbigeoE;
-import ordanel.ednom.libreria.HttpPostAux;
+import ordanel.ednom.Library.HttpPostAux;
 
 /**
  * Created by OrdNael on 28/10/2014.

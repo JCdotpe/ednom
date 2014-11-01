@@ -49,6 +49,8 @@ public class PadronAsync extends AsyncTask<Integer, Integer, Integer> {
         {
             Toast toast = Toast.makeText( this.context, "Pasa al menu!", Toast.LENGTH_SHORT );
             toast.show();
+            /*Intent intent = new Intent( this.context, Base.class);
+            this.context.startActivity( intent );*/
         }
 
     }

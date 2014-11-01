@@ -6,11 +6,11 @@
     <string name="action_settings">Settings</string>
     <string name="button_login">Iniciar Sesión</string>
 
-
     <!-- Login -->
     <string name="login_msg">Autenticando Sesión...</string>
     <string name="login_msg_error">Error: El password es incorrecto!</string>
     <!-- /Login -->
+
 
     <!-- Padrón -->
     <string name="padron_msg_download">Descargando Padrón</string>

@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.VersionE;
-import ordanel.ednom.libreria.HttpPostAux;
+import ordanel.ednom.Library.HttpPostAux;
 
 /**
  * Created by OrdNael on 29/10/2014.

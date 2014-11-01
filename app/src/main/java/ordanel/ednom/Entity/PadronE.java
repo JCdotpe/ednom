@@ -13,6 +13,12 @@ public class PadronE implements Parcelable {
     private Integer NroLocal;
     private String LocalAplicacion;
     private String Aula;
+    private String NumDoc;
+    private String ApePaterno;
+    private String ApeMaterno;
+    private String Nombres;
+    private Integer Status;
+
 
     public PadronE() {
         super();
@@ -25,6 +31,11 @@ public class PadronE implements Parcelable {
         setNroLocal( parcel.readInt() );
         setLocalAplicacion( parcel.readString() );
         setAula( parcel.readString() );
+        setNumDoc( parcel.readString() );
+        setApePaterno( parcel.readString() );
+        setApeMaterno( parcel.readString() );
+        setNombres( parcel.readString() );
+        setStatus( parcel.readInt() );
 
     }
 
@@ -41,6 +52,11 @@ public class PadronE implements Parcelable {
         dest.writeInt( getNroLocal() );
         dest.writeString( getLocalAplicacion() );
         dest.writeString( getAula() );
+        dest.writeString( getNumDoc() );
+        dest.writeString( getApePaterno() );
+        dest.writeString( getApeMaterno() );
+        dest.writeString( getNombres() );
+        dest.writeInt( getStatus() );
 
     }
 
@@ -95,5 +111,45 @@ public class PadronE implements Parcelable {
 
     public void setAula(String aula) {
         Aula = aula;
+    }
+
+    public String getNumDoc() {
+        return NumDoc;
+    }
+
+    public void setNumDoc(String numDoc) {
+        NumDoc = numDoc;
+    }
+
+    public String getApePaterno() {
+        return ApePaterno;
+    }
+
+    public void setApePaterno(String apePaterno) {
+        ApePaterno = apePaterno;
+    }
+
+    public String getApeMaterno() {
+        return ApeMaterno;
+    }
+
+    public void setApeMaterno(String apeMaterno) {
+        ApeMaterno = apeMaterno;
+    }
+
+    public String getNombres() {
+        return Nombres;
+    }
+
+    public void setNombres(String nombres) {
+        Nombres = nombres;
+    }
+
+    public Integer getStatus() {
+        return Status;
+    }
+
+    public void setStatus(Integer status) {
+        Status = status;
     }
 }

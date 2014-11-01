@@ -3,7 +3,6 @@ package ordanel.ednom.DAO;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
-import android.database.sqlite.SQLiteStatement;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -13,7 +12,7 @@ import java.util.ArrayList;
 
 import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.PadronE;
-import ordanel.ednom.libreria.HttpPostAux;
+import ordanel.ednom.Library.HttpPostAux;
 
 /**
  * Created by OrdNael on 30/10/2014.
@@ -61,6 +60,11 @@ public class PadronDAO {
                     padronE.setNroLocal( jsonObject.getInt( "NroLocal") );
                     padronE.setLocalAplicacion( jsonObject.getString( "LocalAplicacion" ) );
                     padronE.setAula( jsonObject.getString( "Aula" ) );
+                    padronE.setNumDoc( jsonObject.getString( "NumDoc" ) );
+                    padronE.setApePaterno( jsonObject.getString( "ApePaterno" ) );
+                    padronE.setApeMaterno( jsonObject.getString( "ApeMaterno" ) );
+                    padronE.setNombres( jsonObject.getString( "Nombres" ) );
+                    padronE.setStatus( jsonObject.getInt( "Status" ) );
 
                     arrayList.add( padronE );
                 }
@@ -119,6 +123,11 @@ public class PadronDAO {
                 contentValues.put( "NroLocal", arrayList.get(i).getNroLocal() );
                 contentValues.put( "LocalAplicacion", arrayList.get(i).getLocalAplicacion() );
                 contentValues.put( "Aula", arrayList.get(i).getAula() );
+                contentValues.put( "NumDoc", arrayList.get(i).getNumDoc() );
+                contentValues.put( "ApePaterno", arrayList.get(i).getApePaterno() );
+                contentValues.put( "ApeMaterno", arrayList.get(i).getApeMaterno() );
+                contentValues.put( "Nombres", arrayList.get(i).getNombres() );
+                contentValues.put( "Status", arrayList.get(i).getStatus() );
 
                 Long exito = dbHelper.getDatabase().insertOrThrow( "Padron", null, contentValues );
                 success = String.valueOf(exito);

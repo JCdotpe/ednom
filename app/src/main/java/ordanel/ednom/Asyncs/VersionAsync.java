@@ -44,6 +44,9 @@ public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
         {
             Toast toast = Toast.makeText( this.context, "Passa al menu", Toast.LENGTH_SHORT );
             toast.show();
+            /*Intent intent = new Intent( this.context, Base.class);
+            this.context.startActivity( intent );*/
+
         }
 
     }

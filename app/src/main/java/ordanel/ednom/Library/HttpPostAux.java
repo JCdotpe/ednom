@@ -1,4 +1,4 @@
-package ordanel.ednom.libreria;
+package ordanel.ednom.Library;
 
 import android.util.Log;
 

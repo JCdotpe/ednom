@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 import ordanel.ednom.Asyncs.LoginAsync;
 
-public class MainActivity extends Activity {
+public class Login extends Activity {
 
     EditText txtPassword;
     Button btnLogin;
@@ -19,7 +19,7 @@ public class MainActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.login_screen);
 
         txtPassword = (EditText) findViewById(R.id.txtPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -31,7 +31,7 @@ public class MainActivity extends Activity {
 
         if ( checkLoginData( password ) )
         {
-            new LoginAsync(MainActivity.this).execute( password );
+            new LoginAsync(Login.this).execute( password );
         }
         else
         {
