@@ -2,10 +2,12 @@ package ordanel.ednom.Asyncs;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
 import ordanel.ednom.DAO.PadronDAO;
+import ordanel.ednom.MainActivity;
 import ordanel.ednom.R;
 
 /**
@@ -47,10 +49,10 @@ public class PadronAsync extends AsyncTask<Integer, Integer, Integer> {
         }
         else
         {
-            Toast toast = Toast.makeText( this.context, "Pasa al menu!", Toast.LENGTH_SHORT );
-            toast.show();
-            /*Intent intent = new Intent( this.context, Base.class);
-            this.context.startActivity( intent );*/
+            /*Toast toast = Toast.makeText( this.context, "Pasa al menu!", Toast.LENGTH_SHORT );
+            toast.show();*/
+            Intent intent = new Intent( this.context, MainActivity.class);
+            this.context.startActivity( intent );
         }
 
     }

@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import ordanel.ednom.DAO.VersionDAO;
+import ordanel.ednom.MainActivity;
 import ordanel.ednom.ObtainCensus;
 
 /**
@@ -42,10 +43,10 @@ public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
         }
         else
         {
-            Toast toast = Toast.makeText( this.context, "Passa al menu", Toast.LENGTH_SHORT );
-            toast.show();
-            /*Intent intent = new Intent( this.context, Base.class);
-            this.context.startActivity( intent );*/
+            /*Toast toast = Toast.makeText( this.context, "Passa al menu", Toast.LENGTH_SHORT );
+            toast.show();*/
+            Intent intent = new Intent( this.context, MainActivity.class);
+            this.context.startActivity( intent );
 
         }
 
