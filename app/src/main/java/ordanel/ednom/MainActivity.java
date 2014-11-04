@@ -16,14 +16,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.support.v4.widget.DrawerLayout;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
+import ordanel.ednom.Fragments.OnFragmentInteractionListener;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnFragmentInteractionListener {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -126,7 +129,15 @@ public class MainActivity extends Activity
         return super.onOptionsItemSelected(item);
     }
 
-    /**
+    @Override
+    public void onFragmentInteraction(View view) {
+
+        TextView tv = (TextView) findViewById( R.id.txtDNI_Local );
+        Button btn = (Button) view;
+        tv.setText(btn.getText());
+
+    }
+/**
      * A placeholder fragment containing a simple view.
      */
     /*public static class PlaceholderFragment extends Fragment {
