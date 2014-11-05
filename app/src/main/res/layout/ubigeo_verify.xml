@@ -13,7 +13,7 @@
         android:layout_marginTop="10dp"/>
 
     <TextView
-        android:id="@+id/txvDepartamento"
+        android:id="@+id/txtDepartamento"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -27,7 +27,7 @@
         android:layout_marginTop="25dp"/>
 
     <TextView
-        android:id="@+id/txvProvincia"
+        android:id="@+id/txtProvincia"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -41,7 +41,7 @@
         android:layout_marginTop="25dp"/>
 
     <TextView
-        android:id="@+id/txvDistrito"
+        android:id="@+id/txtDistrito"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -55,7 +55,7 @@
         android:layout_marginTop="25dp"/>
 
     <TextView
-        android:id="@+id/txvLocal"
+        android:id="@+id/txtLocal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"

@@ -21,7 +21,7 @@ public class Login extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_screen);
 
-        txtPassword = (EditText) findViewById(R.id.txtPassword);
+        txtPassword = (EditText) findViewById(R.id.edtPassword);
         btnLogin = (Button) findViewById(R.id.btnLogin);
 
     }

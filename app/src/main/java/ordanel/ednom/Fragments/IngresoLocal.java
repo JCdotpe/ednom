@@ -8,9 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
-import ordanel.ednom.MainActivity;
+import ordanel.ednom.Interfaces.LocalI;
 import ordanel.ednom.R;
 
 /**
@@ -20,7 +19,7 @@ public class IngresoLocal extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private OnFragmentInteractionListener mListener;
+    private LocalI mListener;
 
 
     public IngresoLocal() {
@@ -43,29 +42,26 @@ public class IngresoLocal extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate( R.layout.fragment_ingreso_local, container, false );
-
+        mListener.onSectionAttached( getArguments().getInt( ARG_SECTION_NUMBER ) );
 
         Button button = (Button) view.findViewById( R.id.btnLocal );
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mListener.onFragmentInteraction( v );
+                mListener.searchPerson(v);
             }
         });
 
-
         return view;
-
     }
 
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
 
-//        ( (MainActivity) activity ).onSectionAttached( getArguments().getInt( ARG_SECTION_NUMBER ) );
         try
         {
-            mListener = (OnFragmentInteractionListener) activity;
+            mListener = (LocalI) activity;
         }
         catch (ClassCastException e)
         {

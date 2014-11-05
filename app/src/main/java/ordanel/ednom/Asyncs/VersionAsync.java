@@ -3,7 +3,6 @@ package ordanel.ednom.Asyncs;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
-import android.widget.Toast;
 
 import ordanel.ednom.DAO.VersionDAO;
 import ordanel.ednom.MainActivity;

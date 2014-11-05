@@ -1,32 +1,29 @@
 package ordanel.ednom;
 
-import android.app.Activity;
-
 import android.app.ActionBar;
+import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
-import android.content.Context;
-import android.os.Build;
 import android.os.Bundle;
-import android.view.Gravity;
-import android.view.LayoutInflater;
+import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
-import android.support.v4.widget.DrawerLayout;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import ordanel.ednom.Asyncs.LocalAsync;
+import ordanel.ednom.Entity.PadronE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
-import ordanel.ednom.Fragments.OnFragmentInteractionListener;
+import ordanel.ednom.Interfaces.LocalI;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, OnFragmentInteractionListener {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, LocalI {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -79,6 +76,7 @@ public class MainActivity extends Activity
                 .commit();*/
     }
 
+    @Override
     public void onSectionAttached(int number) {
         switch (number) {
             case 1:
@@ -130,51 +128,40 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public void onFragmentInteraction(View view) {
+    public void searchPerson(View view) {
 
-        TextView tv = (TextView) findViewById( R.id.txtDNI_Local );
-        Button btn = (Button) view;
-        tv.setText(btn.getText());
+        EditText edtDNI_Local = (EditText) findViewById( R.id.edtDNI_Local );
+
+        LocalAsync localAsync = new LocalAsync( MainActivity.this );
+        localAsync.setLocalI( MainActivity.this );
+        localAsync.execute( edtDNI_Local.getText().toString() );
+
+        edtDNI_Local.setText("");
 
     }
-/**
-     * A placeholder fragment containing a simple view.
-     */
-    /*public static class PlaceholderFragment extends Fragment {
-        *//**
-         * The fragment argument representing the section number for this
-         * fragment.
-         *//*
-        private static final String ARG_SECTION_NUMBER = "section_number";
 
-        *//**
-         * Returns a new instance of this fragment for the given section
-         * number.
-         *//*
-        public static PlaceholderFragment newInstance(int sectionNumber) {
-            PlaceholderFragment fragment = new PlaceholderFragment();
-            Bundle args = new Bundle();
-            args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-            fragment.setArguments(args);
-            return fragment;
+    @Override
+    public void showPerson(ArrayList<PadronE> arrayList) {
+
+        if ( arrayList != null )
+        {
+            TextView txtApePaterno = (TextView) findViewById( R.id.txtApePaterno );
+            TextView txtApeMaterno = (TextView) findViewById( R.id.txtApeMaterno );
+            TextView txtNombres = (TextView) findViewById( R.id.txtNombres );
+
+            for ( int i = 0; i < arrayList.size(); i++ )
+            {
+                txtApePaterno.setText( arrayList.get(i).getApePaterno() );
+                txtApeMaterno.setText( arrayList.get(i).getApeMaterno() );
+                txtNombres.setText( arrayList.get(i).getNombres() );
+            }
+        }
+        else
+        {
+            Toast toast = Toast.makeText( MainActivity.this, "Error en busqueda", Toast.LENGTH_SHORT );
+            toast.show();
         }
 
-        public PlaceholderFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                                 Bundle savedInstanceState) {
-            View rootView = inflater.inflate(R.layout.fragment_main, container, false);
-            return rootView;
-        }
-
-        @Override
-        public void onAttach(Activity activity) {
-            super.onAttach(activity);
-            ((MainActivity) activity).onSectionAttached(
-                    getArguments().getInt(ARG_SECTION_NUMBER));
-        }
-    }*/
+    }
 
 }

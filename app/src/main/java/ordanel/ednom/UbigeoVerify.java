@@ -27,10 +27,10 @@ public class UbigeoVerify extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ubigeo_verify);
 
-        txvDepartamento = (TextView) findViewById( R.id.txvDepartamento );
-        txvProvincia = (TextView) findViewById( R.id.txvProvincia );
-        txvDistrito = (TextView) findViewById( R.id.txvDistrito );
-        txvLocal = (TextView) findViewById( R.id.txvLocal );
+        txvDepartamento = (TextView) findViewById( R.id.txtDepartamento);
+        txvProvincia = (TextView) findViewById( R.id.txtProvincia);
+        txvDistrito = (TextView) findViewById( R.id.txtDistrito);
+        txvLocal = (TextView) findViewById( R.id.txtLocal);
 
         ArrayList<UbigeoE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" );
 

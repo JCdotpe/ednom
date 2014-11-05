@@ -1,24 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/txvDNI"
+        android:id="@+id/txtDNI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Numero de DNI : " />
+        android:text="Numero de DNI : "
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true" />
 
     <EditText
-        android:id="@+id/txtDNI_Local"
+        android:id="@+id/edtDNI_Local"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="ej. 06481844" />
+        android:hint="ej. 06481844"
+        android:inputType="number"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true" />
 
     <Button
         android:id="@+id/btnLocal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrar" />
+        android:text="Registrar"
+        android:layout_toEndOf="@+id/edtDNI_Local"
+        android:layout_marginLeft="28dp"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/edtDNI_Local" />
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/txtApePaterno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Apellido Paterno"
+        android:layout_below="@+id/btnLocal"
+        android:layout_alignRight="@+id/txtDNI"
+        android:layout_alignEnd="@+id/txtDNI"
+        android:layout_marginTop="24dp" />
+
+    <TextView
+        android:id="@+id/txtApeMaterno"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Apellido Materno"
+        android:layout_alignTop="@+id/txtApePaterno"
+        android:layout_alignLeft="@+id/edtDNI_Local"
+        android:layout_alignStart="@+id/edtDNI_Local" />
+
+    <TextView
+        android:id="@+id/txtNombres"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:hint="Nombres"
+        android:layout_alignTop="@+id/txtApePaterno"
+        android:layout_alignLeft="@+id/btnLocal"
+        android:layout_alignStart="@+id/btnLocal" />
+
+
+</RelativeLayout>
