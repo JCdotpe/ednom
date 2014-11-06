@@ -8,12 +8,12 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Departamento"
+        android:text="@string/verify_usuario"
         android:textSize="20dp"
         android:layout_marginTop="10dp"/>
 
     <TextView
-        android:id="@+id/txtDepartamento"
+        android:id="@+id/txtUsuario"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -22,12 +22,12 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Provincia"
+        android:text="@string/verify_nombre_local"
         android:textSize="20dp"
         android:layout_marginTop="25dp"/>
 
     <TextView
-        android:id="@+id/txtProvincia"
+        android:id="@+id/txtNombreLocal"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -36,12 +36,12 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Distrito"
+        android:text="@string/verify_numero_aulas"
         android:textSize="20dp"
         android:layout_marginTop="25dp"/>
 
     <TextView
-        android:id="@+id/txtDistrito"
+        android:id="@+id/txtNAulas"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"
@@ -50,12 +50,26 @@
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Local de Aplicación"
+        android:text="@string/verify_numero_contingencia"
         android:textSize="20dp"
         android:layout_marginTop="25dp"/>
 
     <TextView
-        android:id="@+id/txtLocal"
+        android:id="@+id/txtNContingencia"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:textSize="18dp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/verify_sede"
+        android:textSize="20dp"
+        android:layout_marginTop="25dp" />
+
+    <TextView
+        android:id="@+id/txtSede"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:textSize="18dp"

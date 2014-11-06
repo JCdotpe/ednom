@@ -6,8 +6,8 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="generalNoTitle" parent="android:Theme.Holo.Light.DarkActionBar">
+    <!--<style name="generalNoTitle" parent="android:Theme.Holo.Light.DarkActionBar">
         <item name="android:windowNoTitle">true</item>
-    </style>
+    </style>-->
 
 </resources>

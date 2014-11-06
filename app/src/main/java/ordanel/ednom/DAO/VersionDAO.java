@@ -27,6 +27,7 @@ public class VersionDAO {
 
     public VersionDAO (Context context) {
         this.context = context;
+        Log.v( TAG, "start" );
     }
 
     public Integer currentVersion() {
@@ -79,7 +80,7 @@ public class VersionDAO {
         Integer statusVersion = 0;
 
         versionLocal = this.currentVersion();
-        Log.e( TAG, "version local : " + versionLocal.toString() );
+        Log.w( TAG, "version local : " + versionLocal.toString() );
 
         HttpPostAux httpPostAux = new HttpPostAux();
 
@@ -87,13 +88,10 @@ public class VersionDAO {
 
         if ( jsonArray != null && jsonArray.length() > 0 )
         {
-            JSONObject jsonObject;
-
-            Integer count = jsonArray.length();
-            Log.e( TAG, count.toString() );
-
             try
             {
+                JSONObject jsonObject;
+
                 jsonObject = (JSONObject) jsonArray.get(0);
 
                 versionNube = jsonObject.getInt( "idVersion" );

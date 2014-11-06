@@ -26,6 +26,11 @@ public class HttpPostAux {
 
     InputStream inputStream = null;
     String result = "";
+    Boolean status = true;
+
+    public  HttpPostAux() {
+        Log.v( TAG, "start" );
+    }
 
     public JSONArray getServerData( ArrayList<NameValuePair> parameters, String urlWebServer ) {
 
@@ -62,6 +67,14 @@ public class HttpPostAux {
         catch (Exception e)
         {
             Log.e( TAG, "Error in the connection : " + e.toString() );
+            status = false;
+        }
+        finally
+        {
+            if ( !status )
+            {
+                inputStream = null;
+            }
         }
 
     }
@@ -83,11 +96,19 @@ public class HttpPostAux {
 
             result = stringBuilder.toString();
 
-            Log.e( TAG, "result : " + stringBuilder.toString() );
+            Log.v( TAG, "result : " + stringBuilder.toString() );
         }
         catch (Exception e)
         {
             Log.e( TAG, "Error converting result : " + e.toString() );
+            status = false;
+        }
+        finally
+        {
+            if ( !status )
+            {
+                result = "";
+            }
         }
 
     }
@@ -97,7 +118,6 @@ public class HttpPostAux {
         try
         {
             JSONArray jsonArray = new JSONArray( result );
-
             return jsonArray;
         }
         catch (Exception e)
@@ -105,6 +125,7 @@ public class HttpPostAux {
             Log.e( TAG, "Error parsing data : " + e.toString() );
             return null;
         }
+
     }
 
 }

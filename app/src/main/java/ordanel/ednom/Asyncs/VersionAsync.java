@@ -3,6 +3,7 @@ package ordanel.ednom.Asyncs;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import ordanel.ednom.DAO.VersionDAO;
 import ordanel.ednom.MainActivity;
@@ -18,9 +19,8 @@ public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
     Context context;
 
     public VersionAsync(Context context) {
-
         this.context = context;
-
+        Log.w( TAG, "start" );
     }
 
     @Override
@@ -42,11 +42,8 @@ public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
         }
         else
         {
-            /*Toast toast = Toast.makeText( this.context, "Passa al menu", Toast.LENGTH_SHORT );
-            toast.show();*/
             Intent intent = new Intent( this.context, MainActivity.class);
             this.context.startActivity( intent );
-
         }
 
     }

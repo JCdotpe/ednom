@@ -9,15 +9,15 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ordanel.ednom.DAO.Login;
-import ordanel.ednom.Entity.UbigeoE;
+import ordanel.ednom.DAO.LoginDAO;
+import ordanel.ednom.Entity.UsuarioLocalE;
 import ordanel.ednom.R;
 import ordanel.ednom.UbigeoVerify;
 
 /**
  * Created by OrdNael on 28/10/2014.
  */
-public class LoginAsync extends AsyncTask< String, ArrayList<UbigeoE>, ArrayList<UbigeoE> > {
+public class LoginAsync extends AsyncTask< String, ArrayList<UsuarioLocalE>, ArrayList<UsuarioLocalE> > {
 
     Context context;
     ProgressDialog dialog;
@@ -43,15 +43,15 @@ public class LoginAsync extends AsyncTask< String, ArrayList<UbigeoE>, ArrayList
     }
 
     @Override
-    protected ArrayList<UbigeoE> doInBackground( String... params ) {
+    protected ArrayList<UsuarioLocalE> doInBackground( String... params ) {
 
         String password = params[0];
 
-        return new Login().CheckLogin( password );
+        return new LoginDAO( this.context ).CheckLogin( password );
     }
 
     @Override
-    protected void onPostExecute( ArrayList<UbigeoE> ubigeoEs) {
+    protected void onPostExecute( ArrayList<UsuarioLocalE> ubigeoEs) {
 
         dialog.dismiss();
 

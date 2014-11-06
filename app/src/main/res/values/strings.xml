@@ -10,6 +10,14 @@
     <string name="login_msg">Autenticando Sesión...</string>
     <string name="login_msg_error">Error: El password es incorrecto!</string>
     <!-- /Login -->
+    
+    <!-- UbigeoVerify -->
+    <string name="verify_usuario">Usuario</string>
+    <string name="verify_nombre_local">Nombre de la I.E</string>
+    <string name="verify_numero_aulas">Número de Aulas</string>
+    <string name="verify_numero_contingencia">Número de Aulas de Contingencia</string>
+    <string name="verify_sede">Sede</string>
+    <!-- /UbigeoVerify -->
 
 
     <!-- Padrón -->

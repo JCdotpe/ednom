@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import org.apache.http.NameValuePair;
+import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -26,30 +28,70 @@ public class PadronDAO {
     /*String IP_Server = "172.16.100.45";
     String URL_Connect = "http://" + IP_Server + "/droidlogin/padron.php";*/
 
-    ArrayList<PadronE> arrayList;
+    Boolean status = true;
 
+    DBHelper dbHelper;
     Context context;
+    Cursor cursor = null;
+    ContentValues contentValues;
+
+    ArrayList<PadronE> arrayList;
+    Integer nro_local = 0;
 
     public PadronDAO( Context context ) {
         this.context = context;
+        Log.w( TAG, "start" );
+    }
+
+    public Integer searchNroLocal() {
+
+        dbHelper = DBHelper.getUtilDb( this.context );
+
+        try
+        {
+            dbHelper.openDataBase();
+            dbHelper.beginTransaction();
+
+            String SQL = "SELECT nro_local FROM usuario_local";
+
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+            cursor.moveToFirst();
+
+            nro_local = cursor.getInt(0);
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            dbHelper.endTransaction();
+            dbHelper.close();
+            cursor.close();
+        }
+
+        return nro_local;
+
     }
 
     public ArrayList<PadronE> padronNube() {
 
+        nro_local = this.searchNroLocal();
+
         HttpPostAux httpPostAux = new HttpPostAux();
 
-        JSONArray jsonArray = httpPostAux.getServerData( null, URL_Connect );
+        ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
+        parametersPost.add( new BasicNameValuePair( "nro_local", nro_local.toString() ) );
+
+        JSONArray jsonArray = httpPostAux.getServerData( parametersPost, URL_Connect );
 
         if ( jsonArray != null && jsonArray.length() > 0 )
         {
-            arrayList = new ArrayList<PadronE>();
-            JSONObject jsonObject;
-
-            Integer count = jsonArray.length();
-            Log.e( TAG, count.toString() );
-
             try
             {
+                arrayList = new ArrayList<PadronE>();
+                JSONObject jsonObject;
+
                 for ( int i = 0; i < jsonArray.length(); i++ )
                 {
                     jsonObject = (JSONObject) jsonArray.get(i);
@@ -64,15 +106,15 @@ public class PadronDAO {
                     padronE.setApePaterno( jsonObject.getString( "ApePaterno" ) );
                     padronE.setApeMaterno( jsonObject.getString( "ApeMaterno" ) );
                     padronE.setNombres( jsonObject.getString( "Nombres" ) );
-                    padronE.setStatus( jsonObject.getInt( "Status" ) );
+                    padronE.setStatus( jsonObject.getInt( "Statu" ) );
 
                     arrayList.add( padronE );
                 }
-
             }
             catch (Exception e)
             {
                 e.printStackTrace();
+                arrayList = null;
             }
 
             return arrayList;
@@ -87,11 +129,9 @@ public class PadronDAO {
 
     public Integer padronLocal( Integer idVersion ) {
 
-        DBHelper dbHelper = DBHelper.getUtilDb( this.context );
+        dbHelper = DBHelper.getUtilDb( this.context );
 
         String success = "0";
-        Cursor cursor = null;
-        ContentValues contentValues;
 
         arrayList = this.padronNube();
 
@@ -110,7 +150,7 @@ public class PadronDAO {
             if ( count > 0 )
             {
                 dbHelper.getDatabase().delete( "Padron", null, null );
-                Log.e( TAG, "Se elimino Padron!" );
+                Log.w( TAG, "Se elimino Padron!" );
 
             }
 

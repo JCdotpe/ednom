@@ -1,7 +1,9 @@
 package ordanel.ednom.DAO;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 
 import java.util.ArrayList;
 
@@ -29,6 +31,7 @@ public class LocalDAO {
         DBHelper dbHelper = DBHelper.getUtilDb( this.context );
 
         Cursor cursor = null;
+        ContentValues contentValues = null;
         arrayList = null;
 
         try
@@ -57,6 +60,17 @@ public class LocalDAO {
 
                     cursor.moveToNext();
                 }
+
+                if ( arrayList.size() > 0 )
+                {
+                    contentValues =  new ContentValues();
+                    contentValues.put( "Status", 1 );
+
+                    SQL = "NumDoc = '" + number_dni + "'";
+
+                    Integer exito = dbHelper.getDatabase().updateWithOnConflict( "Padron", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
+                }
+
             }
 
         }

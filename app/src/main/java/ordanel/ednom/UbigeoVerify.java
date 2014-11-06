@@ -10,7 +10,7 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import ordanel.ednom.Asyncs.VersionAsync;
-import ordanel.ednom.Entity.UbigeoE;
+import ordanel.ednom.Entity.UsuarioLocalE;
 
 /**
  * Created by Leandro on 27/10/2014.
@@ -19,36 +19,53 @@ public class UbigeoVerify extends Activity {
 
     private static final String TAG = UbigeoVerify.class.getSimpleName();
 
-    String Departamento, Provincia, Distrito, Local;
-    TextView txvDepartamento, txvProvincia, txvDistrito, txvLocal;
+    String Usuario, NombreLocal, NAulas, Sede;
+    Integer NContingencia;
+    TextView txtUsuario, txtNombreLocal, txtNAulas, txtNContingencia, txtSede;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.ubigeo_verify);
 
-        txvDepartamento = (TextView) findViewById( R.id.txtDepartamento);
-        txvProvincia = (TextView) findViewById( R.id.txtProvincia);
-        txvDistrito = (TextView) findViewById( R.id.txtDistrito);
-        txvLocal = (TextView) findViewById( R.id.txtLocal);
+        txtUsuario = (TextView) findViewById( R.id.txtUsuario);
+        txtNombreLocal = (TextView) findViewById( R.id.txtNombreLocal);
+        txtNAulas = (TextView) findViewById( R.id.txtNAulas);
+        txtNContingencia = (TextView) findViewById( R.id.txtNContingencia);
+        txtSede = (TextView) findViewById( R.id.txtSede );
 
-        ArrayList<UbigeoE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" );
+        ArrayList<UsuarioLocalE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" );
+
+        setUbigeo( arrayList );
+
+    }
+
+    public void setUbigeo( ArrayList<UsuarioLocalE> arrayList ) {
 
         Integer count = arrayList.size();
-        Log.e( TAG, count.toString() );
 
-        for (int i = 0; i < arrayList.size(); i++)
+        if ( count > 0 )
         {
-            Departamento = arrayList.get(i).getDepartamento();
-            Provincia = arrayList.get(i).getProvincia();
-            Distrito = arrayList.get(i).getDistrito();
-            Local = arrayList.get(i).getLocal();
+            for (int i = 0; i < arrayList.size(); i++)
+            {
+                Usuario = arrayList.get(i).getUsuario();
+                NombreLocal = arrayList.get(i).getNombreLocal();
+                NAulas = arrayList.get(i).getNaulas();
+                NContingencia = arrayList.get(i).getNcontingencia();
+                Sede = arrayList.get(i).getSede();
+            }
+
+            txtUsuario.setText( Usuario );
+            txtNombreLocal.setText( NombreLocal );
+            txtNAulas.setText( NAulas );
+            txtNContingencia.setText( NContingencia.toString() );
+            txtSede.setText( Sede );
+        }
+        else
+        {
+            Log.e( TAG, "setUbigeo count : " + count.toString() );
         }
 
-        txvDepartamento.setText( Departamento );
-        txvProvincia.setText( Provincia );
-        txvDistrito.setText( Distrito );
-        txvLocal.setText( Local );
     }
 
     public void clickCorrecto(View view) {
@@ -58,7 +75,9 @@ public class UbigeoVerify extends Activity {
     }
 
     public void clickIncorrecto(View view) {
+
         finish();
+
     }
 
     @Override
