@@ -26,7 +26,6 @@ public class HttpPostAux {
 
     InputStream inputStream = null;
     String result = "";
-    Boolean status = true;
 
     public  HttpPostAux() {
         Log.v( TAG, "start" );
@@ -67,14 +66,6 @@ public class HttpPostAux {
         catch (Exception e)
         {
             Log.e( TAG, "Error in the connection : " + e.toString() );
-            status = false;
-        }
-        finally
-        {
-            if ( !status )
-            {
-                inputStream = null;
-            }
         }
 
     }
@@ -96,20 +87,13 @@ public class HttpPostAux {
 
             result = stringBuilder.toString();
 
-            Log.v( TAG, "result : " + stringBuilder.toString() );
+            Log.e( TAG, "result : " + stringBuilder.toString() );
         }
         catch (Exception e)
         {
             Log.e( TAG, "Error converting result : " + e.toString() );
-            status = false;
         }
-        finally
-        {
-            if ( !status )
-            {
-                result = "";
-            }
-        }
+
 
     }
 

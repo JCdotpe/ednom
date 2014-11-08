@@ -20,7 +20,6 @@ public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
 
     public VersionAsync(Context context) {
         this.context = context;
-        Log.w( TAG, "start" );
     }
 
     @Override

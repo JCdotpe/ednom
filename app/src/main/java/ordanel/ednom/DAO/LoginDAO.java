@@ -2,7 +2,6 @@ package ordanel.ednom.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -37,12 +36,12 @@ public class LoginDAO {
 
     public LoginDAO( Context context ) {
         this.context = context;
-        Log.w( TAG, "start" );
+        Log.e( TAG, "start" );
     }
 
     public ArrayList<UsuarioLocalE> CheckLogin( String password ) {
 
-        Log.w( TAG, "start CheckLogin" );
+        Log.e( TAG, "start CheckLogin" );
 
         ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
         parametersPost.add( new BasicNameValuePair( "password", password ) );
@@ -63,7 +62,7 @@ public class LoginDAO {
                     UsuarioLocalE usuarioLocalE = new UsuarioLocalE();
 
                     usuarioLocalE.setIdUsuario( jsonObject.getInt( "idUsuario") );
-                    usuarioLocalE.setUsuario(jsonObject.getString("usuario"));
+                    usuarioLocalE.setUsuario(jsonObject.getString( "usuario" ) );
                     usuarioLocalE.setClave( jsonObject.getString( "clave") );
                     usuarioLocalE.setRol( jsonObject.getInt( "rol" ) );
                     usuarioLocalE.setNro_local( jsonObject.getInt( "nro_local" ) );
@@ -72,7 +71,7 @@ public class LoginDAO {
                     usuarioLocalE.setNcontingencia( jsonObject.getInt( "ncontingencia" ) );
                     usuarioLocalE.setSede( jsonObject.getString( "sede" ) );
 
-                    arrayList.add(usuarioLocalE);
+                    arrayList.add( usuarioLocalE );
                 }
 
                 if ( arrayList.size() > 0 )
@@ -84,16 +83,10 @@ public class LoginDAO {
             catch (Exception e)
             {
                 e.printStackTrace();
-                status = false;
             }
             finally
             {
-                if ( !status )
-                {
-                    arrayList = null;
-                }
-
-                Log.w( TAG, "end CheckLogin" );
+                Log.e( TAG, "end CheckLogin" );
             }
 
             return arrayList;
@@ -107,7 +100,7 @@ public class LoginDAO {
 
     public void registerLogin( ArrayList<UsuarioLocalE> usuarioLocalEArrayList ) {
 
-        Log.w( TAG, "start registerLogin" );
+        Log.e( TAG, "start registerLogin" );
 
         DBHelper dbHelper = DBHelper.getUtilDb( this.context );
 
@@ -119,7 +112,7 @@ public class LoginDAO {
             dbHelper.beginTransaction();
 
             dbHelper.getDatabase().delete( "usuario_local", null, null );
-            Log.w( TAG, "Se elimino usuario_local" );
+            Log.e( TAG, "Se elimino usuario_local!" );
 
             for ( int i = 0; i < usuarioLocalEArrayList.size(); i++ )
             {
@@ -135,14 +128,16 @@ public class LoginDAO {
                 contentValues.put( "ncontingencia", usuarioLocalEArrayList.get(i).getNcontingencia() );
                 contentValues.put( "sede", usuarioLocalEArrayList.get(i).getSede() );
 
-                dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentValues );
-
+                Long exito = dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentValues );
+                Log.e( TAG, "ingreso : " + String.valueOf(exito) );
             }
+
+            dbHelper.setTransactionSuccessful();
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            Log.e( TAG, e.toString() );
+            Log.e( TAG, "error registerLogin : " + e.toString() );
         }
         finally
         {
@@ -150,7 +145,7 @@ public class LoginDAO {
             dbHelper.close();
         }
 
-        Log.w( TAG, "end registerLogin" );
+        Log.e( TAG, "end registerLogin" );
 
     }
 

@@ -151,8 +151,8 @@ public class MainActivity extends Activity
 
             for ( int i = 0; i < arrayList.size(); i++ )
             {
-                txtApePaterno.setText( arrayList.get(i).getApePaterno() );
-                txtApeMaterno.setText( arrayList.get(i).getApeMaterno() );
+                txtApePaterno.setText( arrayList.get(i).getApepat() );
+                txtApeMaterno.setText( arrayList.get(i).getApemat() );
                 txtNombres.setText( arrayList.get(i).getNombres() );
             }
         }

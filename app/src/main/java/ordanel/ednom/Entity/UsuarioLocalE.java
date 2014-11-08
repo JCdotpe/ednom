@@ -24,30 +24,30 @@ public class UsuarioLocalE implements Parcelable {
 
     public UsuarioLocalE( Parcel parcel ) {
 
-        idUsuario = parcel.readInt();
-        usuario = parcel.readString();
-        clave = parcel.readString();
-        rol = parcel.readInt();
-        nro_local = parcel.readInt();
-        nombreLocal = parcel.readString();
-        naulas = parcel.readString();
-        ncontingencia = parcel.readInt();
-        sede = parcel.readString();
+        setIdUsuario(parcel.readInt());
+        setUsuario(parcel.readString());
+        setClave(parcel.readString());
+        setRol(parcel.readInt());
+        setNro_local(parcel.readInt());
+        setNombreLocal(parcel.readString());
+        setNaulas(parcel.readString());
+        setNcontingencia(parcel.readInt());
+        setSede(parcel.readString());
 
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeInt( idUsuario );
-        dest.writeString( usuario );
-        dest.writeString( clave );
-        dest.writeInt( rol );
-        dest.writeInt( nro_local );
-        dest.writeString( nombreLocal );
-        dest.writeString( naulas );
-        dest.writeInt( ncontingencia );
-        dest.writeString( sede );
+        dest.writeInt(getIdUsuario());
+        dest.writeString(getUsuario());
+        dest.writeString(getClave());
+        dest.writeInt(getRol());
+        dest.writeInt(getNro_local());
+        dest.writeString(getNombreLocal());
+        dest.writeString(getNaulas());
+        dest.writeInt(getNcontingencia());
+        dest.writeString(getSede());
 
     }
 
@@ -67,7 +67,6 @@ public class UsuarioLocalE implements Parcelable {
             return new UsuarioLocalE[size];
         }
     };
-
 
     public Integer getIdUsuario() {
         return idUsuario;
@@ -140,4 +139,5 @@ public class UsuarioLocalE implements Parcelable {
     public void setSede(String sede) {
         this.sede = sede;
     }
+
 }

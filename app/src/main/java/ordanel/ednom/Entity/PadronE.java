@@ -3,22 +3,45 @@ package ordanel.ednom.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.Date;
+
 /**
  * Created by OrdNael on 30/10/2014.
  */
 public class PadronE implements Parcelable {
 
-    private Integer Codigo;
-    private String Sede;
-    private Integer NroLocal;
-    private String LocalAplicacion;
-    private String Aula;
-    private String NumDoc;
-    private String ApePaterno;
-    private String ApeMaterno;
-    private String Nombres;
-    private Integer Status;
-
+    private Integer codigo;
+    private String sede;
+    private Integer nro_local;
+    private String local_aplicacion;
+    private String aula;
+    private String ins_numdoc;
+    private String apepat;
+    private String apemat;
+    private String nombres;
+    private Integer estatus;
+    private Date fecha_registro;
+    private Integer s_aula;
+    private Date f_aula;
+    private Integer s_ficha;
+    private Date f_ficha;
+    private Integer s_cartilla;
+    private Date f_cartilla;
+    private Integer id_local;
+    private Integer id_aula;
+    private String direccion;
+    private String codFicha;
+    private String codCartilla;
+    private String aula_ficha;
+    private String aula_cartilla;
+    private String sf_cartilla;
+    private String sf_aula;
+    private String sf_ficha;
+    private String sfecha_registro;
+    private String new_aula;
+    private String new_local;
+    private Integer cant_ficha;
+    private String tipo;
 
     public PadronE() {
         super();
@@ -26,16 +49,37 @@ public class PadronE implements Parcelable {
 
     public PadronE( Parcel parcel) {
 
-        setCodigo( parcel.readInt() );
-        setSede( parcel.readString() );
-        setNroLocal( parcel.readInt() );
-        setLocalAplicacion( parcel.readString() );
-        setAula( parcel.readString() );
-        setNumDoc( parcel.readString() );
-        setApePaterno( parcel.readString() );
-        setApeMaterno( parcel.readString() );
-        setNombres( parcel.readString() );
-        setStatus( parcel.readInt() );
+        codigo = parcel.readInt();
+        sede = parcel.readString();
+        nro_local = parcel.readInt();
+        local_aplicacion = parcel.readString();
+        aula = parcel.readString();
+        ins_numdoc = parcel.readString();
+        apepat = parcel.readString();
+        apemat = parcel.readString();
+        nombres = parcel.readString();
+        estatus = parcel.readInt();
+        fecha_registro = (Date) parcel.readSerializable();
+        s_aula = parcel.readInt();
+        f_aula = (Date) parcel.readSerializable();
+        s_ficha = parcel.readInt();
+        f_ficha = (Date) parcel.readSerializable();
+        s_cartilla = parcel.readInt();
+        f_cartilla = (Date) parcel.readSerializable();
+        id_local = parcel.readInt();
+        id_aula = parcel.readInt();
+        direccion = parcel.readString();
+        codFicha = parcel.readString();
+        codCartilla = parcel.readString();
+        aula_ficha = parcel.readString();
+        aula_cartilla = parcel.readString();
+        sf_cartilla = parcel.readString();
+        sf_aula = parcel.readString();
+        sf_ficha = parcel.readString();
+        new_aula = parcel.readString();
+        new_local = parcel.readString();
+        cant_ficha = parcel.readInt();
+        tipo = parcel.readString();
 
     }
 
@@ -47,16 +91,37 @@ public class PadronE implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeInt( getCodigo() );
-        dest.writeString( getSede() );
-        dest.writeInt( getNroLocal() );
-        dest.writeString( getLocalAplicacion() );
-        dest.writeString( getAula() );
-        dest.writeString( getNumDoc() );
-        dest.writeString( getApePaterno() );
-        dest.writeString( getApeMaterno() );
-        dest.writeString( getNombres() );
-        dest.writeInt( getStatus() );
+        dest.writeInt( codigo );
+        dest.writeString( sede );
+        dest.writeInt( nro_local );
+        dest.writeString( local_aplicacion );
+        dest.writeString( aula );
+        dest.writeString( ins_numdoc );
+        dest.writeString( apepat );
+        dest.writeString( apemat );
+        dest.writeString( nombres );
+        dest.writeInt( estatus );
+        dest.writeSerializable( fecha_registro );
+        dest.writeInt( s_aula );
+        dest.writeSerializable( f_aula );
+        dest.writeInt( s_ficha );
+        dest.writeSerializable( f_ficha );
+        dest.writeInt( s_cartilla );
+        dest.writeSerializable( f_cartilla );
+        dest.writeInt( id_local );
+        dest.writeInt( id_aula );
+        dest.writeString( direccion );
+        dest.writeString( codFicha );
+        dest.writeString( codCartilla );
+        dest.writeString( aula_ficha );
+        dest.writeString( aula_cartilla );
+        dest.writeString( sf_cartilla );
+        dest.writeString( sf_aula );
+        dest.writeString( sf_ficha );
+        dest.writeString( new_aula );
+        dest.writeString( new_local );
+        dest.writeInt( cant_ficha );
+        dest.writeString( tipo );
 
     }
 
@@ -72,84 +137,260 @@ public class PadronE implements Parcelable {
         }
     };
 
-
     public Integer getCodigo() {
-        return Codigo;
+        return codigo;
     }
 
     public void setCodigo(Integer codigo) {
-        Codigo = codigo;
+        this.codigo = codigo;
     }
 
     public String getSede() {
-        return Sede;
+        return sede;
     }
 
     public void setSede(String sede) {
-        Sede = sede;
+        this.sede = sede;
     }
 
-    public Integer getNroLocal() {
-        return NroLocal;
+    public Integer getNro_local() {
+        return nro_local;
     }
 
-    public void setNroLocal(Integer nroLocal) {
-        NroLocal = nroLocal;
+    public void setNro_local(Integer nro_local) {
+        this.nro_local = nro_local;
     }
 
-    public String getLocalAplicacion() {
-        return LocalAplicacion;
+    public String getLocal_aplicacion() {
+        return local_aplicacion;
     }
 
-    public void setLocalAplicacion(String localAplicacion) {
-        LocalAplicacion = localAplicacion;
+    public void setLocal_aplicacion(String local_aplicacion) {
+        this.local_aplicacion = local_aplicacion;
     }
 
     public String getAula() {
-        return Aula;
+        return aula;
     }
 
     public void setAula(String aula) {
-        Aula = aula;
+        this.aula = aula;
     }
 
-    public String getNumDoc() {
-        return NumDoc;
+    public String getIns_numdoc() {
+        return ins_numdoc;
     }
 
-    public void setNumDoc(String numDoc) {
-        NumDoc = numDoc;
+    public void setIns_numdoc(String ins_numdoc) {
+        this.ins_numdoc = ins_numdoc;
     }
 
-    public String getApePaterno() {
-        return ApePaterno;
+    public String getApepat() {
+        return apepat;
     }
 
-    public void setApePaterno(String apePaterno) {
-        ApePaterno = apePaterno;
+    public void setApepat(String apepat) {
+        this.apepat = apepat;
     }
 
-    public String getApeMaterno() {
-        return ApeMaterno;
+    public String getApemat() {
+        return apemat;
     }
 
-    public void setApeMaterno(String apeMaterno) {
-        ApeMaterno = apeMaterno;
+    public void setApemat(String apemat) {
+        this.apemat = apemat;
     }
 
     public String getNombres() {
-        return Nombres;
+        return nombres;
     }
 
     public void setNombres(String nombres) {
-        Nombres = nombres;
+        this.nombres = nombres;
     }
 
-    public Integer getStatus() {
-        return Status;
+    public Integer getEstatus() {
+        return estatus;
     }
 
-    public void setStatus(Integer status) {
-        Status = status;
+    public void setEstatus(Integer estatus) {
+        this.estatus = estatus;
     }
+
+    public Date getFecha_registro() {
+        return fecha_registro;
+    }
+
+    public void setFecha_registro(Date fecha_registro) {
+        this.fecha_registro = fecha_registro;
+    }
+
+    public Integer getS_aula() {
+        return s_aula;
+    }
+
+    public void setS_aula(Integer s_aula) {
+        this.s_aula = s_aula;
+    }
+
+    public Date getF_aula() {
+        return f_aula;
+    }
+
+    public void setF_aula(Date f_aula) {
+        this.f_aula = f_aula;
+    }
+
+    public Integer getS_ficha() {
+        return s_ficha;
+    }
+
+    public void setS_ficha(Integer s_ficha) {
+        this.s_ficha = s_ficha;
+    }
+
+    public Date getF_ficha() {
+        return f_ficha;
+    }
+
+    public void setF_ficha(Date f_ficha) {
+        this.f_ficha = f_ficha;
+    }
+
+    public Integer getS_cartilla() {
+        return s_cartilla;
+    }
+
+    public void setS_cartilla(Integer s_cartilla) {
+        this.s_cartilla = s_cartilla;
+    }
+
+    public Date getF_cartilla() {
+        return f_cartilla;
+    }
+
+    public void setF_cartilla(Date f_cartilla) {
+        this.f_cartilla = f_cartilla;
+    }
+
+    public Integer getId_local() {
+        return id_local;
+    }
+
+    public void setId_local(Integer id_local) {
+        this.id_local = id_local;
+    }
+
+    public Integer getId_aula() {
+        return id_aula;
+    }
+
+    public void setId_aula(Integer id_aula) {
+        this.id_aula = id_aula;
+    }
+
+    public String getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(String direccion) {
+        this.direccion = direccion;
+    }
+
+    public String getCodFicha() {
+        return codFicha;
+    }
+
+    public void setCodFicha(String codFicha) {
+        this.codFicha = codFicha;
+    }
+
+    public String getCodCartilla() {
+        return codCartilla;
+    }
+
+    public void setCodCartilla(String codCartilla) {
+        this.codCartilla = codCartilla;
+    }
+
+    public String getAula_ficha() {
+        return aula_ficha;
+    }
+
+    public void setAula_ficha(String aula_ficha) {
+        this.aula_ficha = aula_ficha;
+    }
+
+    public String getAula_cartilla() {
+        return aula_cartilla;
+    }
+
+    public void setAula_cartilla(String aula_cartilla) {
+        this.aula_cartilla = aula_cartilla;
+    }
+
+    public String getSf_cartilla() {
+        return sf_cartilla;
+    }
+
+    public void setSf_cartilla(String sf_cartilla) {
+        this.sf_cartilla = sf_cartilla;
+    }
+
+    public String getSf_aula() {
+        return sf_aula;
+    }
+
+    public void setSf_aula(String sf_aula) {
+        this.sf_aula = sf_aula;
+    }
+
+    public String getSf_ficha() {
+        return sf_ficha;
+    }
+
+    public void setSf_ficha(String sf_ficha) {
+        this.sf_ficha = sf_ficha;
+    }
+
+    public String getSfecha_registro() {
+        return sfecha_registro;
+    }
+
+    public void setSfecha_registro(String sfecha_registro) {
+        this.sfecha_registro = sfecha_registro;
+    }
+
+    public String getNew_aula() {
+        return new_aula;
+    }
+
+    public void setNew_aula(String new_aula) {
+        this.new_aula = new_aula;
+    }
+
+    public String getNew_local() {
+        return new_local;
+    }
+
+    public void setNew_local(String new_local) {
+        this.new_local = new_local;
+    }
+
+    public Integer getCant_ficha() {
+        return cant_ficha;
+    }
+
+    public void setCant_ficha(Integer cant_ficha) {
+        this.cant_ficha = cant_ficha;
+    }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+
 }

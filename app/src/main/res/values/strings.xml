@@ -21,7 +21,7 @@
 
 
     <!-- Padrón -->
-    <string name="padron_msg_download">Descargando Padrón</string>
+    <string name="padron_msg_download">Descargando Padrón. Esto puede tomar varios minutos!</string>
     <string name="padron_msg_error">Ocurrió un error. Cierre la aplicación y vuélvalo a intentar!</string>
     <string name="padron_btn_text">Descargar Padrón</string>
     <!-- /Padrón -->

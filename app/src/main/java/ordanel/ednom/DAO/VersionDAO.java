@@ -27,7 +27,7 @@ public class VersionDAO {
 
     public VersionDAO (Context context) {
         this.context = context;
-        Log.v( TAG, "start" );
+        Log.e( TAG, "start" );
     }
 
     public Integer currentVersion() {
@@ -80,7 +80,7 @@ public class VersionDAO {
         Integer statusVersion = 0;
 
         versionLocal = this.currentVersion();
-        Log.w( TAG, "version local : " + versionLocal.toString() );
+        Log.e( TAG, "version local : " + versionLocal.toString() );
 
         HttpPostAux httpPostAux = new HttpPostAux();
 
