@@ -5,11 +5,14 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ordanel.ednom.Asyncs.VersionAsync;
+import ordanel.ednom.DAO.LoginDAO;
 import ordanel.ednom.Entity.UsuarioLocalE;
 
 /**
@@ -19,9 +22,12 @@ public class UbigeoVerify extends Activity {
 
     private static final String TAG = UbigeoVerify.class.getSimpleName();
 
+    Integer error = 0;
+
     String Usuario, NombreLocal, NAulas, Sede;
     Integer NContingencia;
     TextView txtUsuario, txtNombreLocal, txtNAulas, txtNContingencia, txtSede;
+    Button btnCorrecto;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,39 +39,78 @@ public class UbigeoVerify extends Activity {
         txtNAulas = (TextView) findViewById( R.id.txtNAulas);
         txtNContingencia = (TextView) findViewById( R.id.txtNContingencia);
         txtSede = (TextView) findViewById( R.id.txtSede );
+        btnCorrecto = (Button) findViewById( R.id.btnCorrecto );
 
-        ArrayList<UsuarioLocalE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" );
+        /*ArrayList<UsuarioLocalE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" );*/
+        ArrayList<UsuarioLocalE> arrayList = new LoginDAO( UbigeoVerify.this ).showInfoUser();
 
-        setUbigeo( arrayList );
+        error = setUbigeo( arrayList );
+
+        if ( error > 0 )
+        {
+            err_UbigeoVerify( error );
+        }
 
     }
 
-    public void setUbigeo( ArrayList<UsuarioLocalE> arrayList ) {
+    public Integer setUbigeo( ArrayList<UsuarioLocalE> arrayList ) {
 
-        Integer count = arrayList.size();
-
-        if ( count > 0 )
+        if ( arrayList != null )
         {
-            for (int i = 0; i < arrayList.size(); i++)
+            Integer count = arrayList.size();
+
+            if ( count > 0 )
             {
-                Usuario = arrayList.get(i).getUsuario();
-                NombreLocal = arrayList.get(i).getNombreLocal();
-                NAulas = arrayList.get(i).getNaulas();
-                NContingencia = arrayList.get(i).getNcontingencia();
-                Sede = arrayList.get(i).getSede();
+                for (int i = 0; i < arrayList.size(); i++)
+                {
+                    Usuario = arrayList.get(i).getUsuario();
+                    NombreLocal = arrayList.get(i).getNombreLocal();
+                    NAulas = arrayList.get(i).getNaulas();
+                    NContingencia = arrayList.get(i).getNcontingencia();
+                    Sede = arrayList.get(i).getSede();
+                }
+
+                txtUsuario.setText( Usuario );
+                txtNombreLocal.setText( NombreLocal );
+                txtNAulas.setText( NAulas );
+                txtNContingencia.setText( NContingencia.toString() );
+                txtSede.setText( Sede );
+            }
+            else
+            {
+                error = 2;
             }
 
-            txtUsuario.setText( Usuario );
-            txtNombreLocal.setText( NombreLocal );
-            txtNAulas.setText( NAulas );
-            txtNContingencia.setText( NContingencia.toString() );
-            txtSede.setText( Sede );
+            Log.e( TAG, "setUbigeo count : " + count.toString() );
         }
         else
         {
-            Log.e( TAG, "setUbigeo count : " + count.toString() );
+            error = 1;
         }
 
+        return error;
+
+    }
+
+    public void err_UbigeoVerify( Integer error ) {
+
+        String msg_error = "";
+
+        switch ( error )
+        {
+            case 1:
+                msg_error = getString( R.string.verify_error_query );
+                break;
+
+            case 2:
+                msg_error = getString( R.string.verify_error_data );
+                break;
+        }
+
+        btnCorrecto.setEnabled( false );
+
+        Toast toast = Toast.makeText( UbigeoVerify.this, msg_error, Toast.LENGTH_SHORT );
+        toast.show();
     }
 
     public void clickCorrecto(View view) {
@@ -75,9 +120,7 @@ public class UbigeoVerify extends Activity {
     }
 
     public void clickIncorrecto(View view) {
-
         finish();
-
     }
 
     @Override

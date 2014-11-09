@@ -6,6 +6,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -164,4 +165,14 @@ public class MainActivity extends Activity
 
     }
 
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+        if ( keyCode == KeyEvent.KEYCODE_BACK && event.getRepeatCount() == 0 )
+        {
+            return true;
+        }
+
+        return super.onKeyDown( keyCode, event );
+    }
 }

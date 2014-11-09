@@ -40,7 +40,6 @@ public class LocalDAO {
             dbHelper.beginTransaction();
 
             String SQL = "SELECT ins_numdoc, apepat, apemat, nombres FROM postulantes2014 WHERE ins_numdoc = '" + number_dni + "'";
-
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
             if ( cursor.moveToFirst() )

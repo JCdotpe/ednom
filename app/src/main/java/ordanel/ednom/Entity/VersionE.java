@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 public class VersionE implements Parcelable {
 
+    private Integer Id;
     private Integer idVersion;
     private String Descripcion;
 
@@ -17,6 +18,7 @@ public class VersionE implements Parcelable {
 
     public VersionE(Parcel parcel) {
 
+        setId( parcel.readInt() );
         setIdVersion(parcel.readInt());
         setDescripcion(parcel.readString());
 
@@ -25,6 +27,7 @@ public class VersionE implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
+        dest.writeInt(getId());
         dest.writeInt(getIdVersion());
         dest.writeString(getDescripcion());
 
@@ -47,6 +50,13 @@ public class VersionE implements Parcelable {
         }
     };
 
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        Id = id;
+    }
 
     public Integer getIdVersion() {
         return idVersion;
@@ -63,4 +73,6 @@ public class VersionE implements Parcelable {
     public void setDescripcion(String descripcion) {
         Descripcion = descripcion;
     }
+
+
 }

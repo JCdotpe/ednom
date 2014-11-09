@@ -13,6 +13,8 @@ import ordanel.ednom.Asyncs.LoginAsync;
 
 public class Login extends Activity {
 
+    private static final String TAG = Login.class.getSimpleName();
+
     EditText txtPassword;
     Button btnLogin;
 
@@ -43,7 +45,7 @@ public class Login extends Activity {
 
         if ( password.equals("") )
         {
-            Log.e("Login UI", "check login data pass error!");
+            Log.e( TAG, "check login data pass error!");
             return false;
         }
         else
@@ -55,7 +57,7 @@ public class Login extends Activity {
     public void err_login() {
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate( 200 );
-        Toast toast = Toast.makeText( getApplicationContext(), getString( R.string.login_msg_error ), Toast.LENGTH_SHORT );
+        Toast toast = Toast.makeText( getApplicationContext(), getString( R.string.login_msg_error_password ), Toast.LENGTH_SHORT );
         toast.show();
     }
 

@@ -26,6 +26,7 @@ public class HttpPostAux {
 
     InputStream inputStream = null;
     String result = "";
+    Integer error  = 0;
 
     public  HttpPostAux() {
         Log.v( TAG, "start" );
@@ -35,10 +36,17 @@ public class HttpPostAux {
 
         httpPostConnect( parameters, urlWebServer );
 
-        if ( inputStream != null )
+        if ( error == 0 && inputStream != null )
         {
             getPostResponse();
-            return getJsonArray();
+            if ( error == 0 )
+            {
+                return getJsonArray();
+            }
+            else
+            {
+                return null;
+            }
         }
         else {
             return null;
@@ -66,6 +74,7 @@ public class HttpPostAux {
         catch (Exception e)
         {
             Log.e( TAG, "Error in the connection : " + e.toString() );
+            error = 1;
         }
 
     }
@@ -92,6 +101,7 @@ public class HttpPostAux {
         catch (Exception e)
         {
             Log.e( TAG, "Error converting result : " + e.toString() );
+            error = 1;
         }
 
 

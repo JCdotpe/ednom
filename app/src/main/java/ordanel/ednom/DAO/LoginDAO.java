@@ -2,6 +2,7 @@ package ordanel.ednom.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -24,12 +25,9 @@ public class LoginDAO {
 
     String IP_Server = "jc.pe";
     String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";
-    /*String IP_Server = "172.16.100.45";
-    String URL_Connect = "http://" + IP_Server + "/droidlogin/acces.php";*/
 
-    Boolean status = true;
+    Integer error = 0;
     Context context;
-
 
     HttpPostAux posteo = new HttpPostAux();
     ArrayList<UsuarioLocalE> arrayList;
@@ -39,7 +37,8 @@ public class LoginDAO {
         Log.e( TAG, "start" );
     }
 
-    public ArrayList<UsuarioLocalE> CheckLogin( String password ) {
+    /*public ArrayList<UsuarioLocalE> CheckLogin( String password ) {*/
+    public Integer CheckLogin( String password ) {
 
         Log.e( TAG, "start CheckLogin" );
 
@@ -48,53 +47,58 @@ public class LoginDAO {
 
         JSONArray jsonArray = posteo.getServerData( parametersPost, URL_Connect );
 
-        if ( jsonArray != null && jsonArray.length() > 0 )
+        if ( jsonArray != null )
         {
-            try
+            if ( jsonArray.length() > 0 )
             {
-                arrayList = new ArrayList<UsuarioLocalE>();
-                JSONObject jsonObject;
-
-                for ( int i = 0; i < jsonArray.length(); i++ )
+                try
                 {
-                    jsonObject = (JSONObject) jsonArray.get(i);
+                    arrayList = new ArrayList<UsuarioLocalE>();
+                    JSONObject jsonObject;
 
-                    UsuarioLocalE usuarioLocalE = new UsuarioLocalE();
+                    for ( int i = 0; i < jsonArray.length(); i++ )
+                    {
+                        jsonObject = (JSONObject) jsonArray.get(i);
 
-                    usuarioLocalE.setIdUsuario( jsonObject.getInt( "idUsuario") );
-                    usuarioLocalE.setUsuario(jsonObject.getString( "usuario" ) );
-                    usuarioLocalE.setClave( jsonObject.getString( "clave") );
-                    usuarioLocalE.setRol( jsonObject.getInt( "rol" ) );
-                    usuarioLocalE.setNro_local( jsonObject.getInt( "nro_local" ) );
-                    usuarioLocalE.setNombreLocal( jsonObject.getString( "nombreLocal" ) );
-                    usuarioLocalE.setNaulas( jsonObject.getString( "naulas" ) );
-                    usuarioLocalE.setNcontingencia( jsonObject.getInt( "ncontingencia" ) );
-                    usuarioLocalE.setSede( jsonObject.getString( "sede" ) );
+                        UsuarioLocalE usuarioLocalE = new UsuarioLocalE();
 
-                    arrayList.add( usuarioLocalE );
+                        usuarioLocalE.setIdUsuario( jsonObject.getInt( "idUsuario") );
+                        usuarioLocalE.setUsuario(jsonObject.getString( "usuario" ) );
+                        usuarioLocalE.setClave( jsonObject.getString( "clave") );
+                        usuarioLocalE.setRol( jsonObject.getInt( "rol" ) );
+                        usuarioLocalE.setNro_local( jsonObject.getInt( "nro_local" ) );
+                        usuarioLocalE.setNombreLocal( jsonObject.getString( "nombreLocal" ) );
+                        usuarioLocalE.setNaulas( jsonObject.getString( "naulas" ) );
+                        usuarioLocalE.setNcontingencia( jsonObject.getInt( "ncontingencia" ) );
+                        usuarioLocalE.setSede( jsonObject.getString( "sede" ) );
+
+                        arrayList.add( usuarioLocalE );
+                    }
+
+                    if ( arrayList.size() > 0 )
+                    {
+                        this.registerLogin( arrayList );
+                    }
+
                 }
-
-                if ( arrayList.size() > 0 )
+                catch (Exception e)
                 {
-                    this.registerLogin( arrayList );
+                    e.printStackTrace();
+                    error = 3; // error en el CheckLogin //
                 }
-
             }
-            catch (Exception e)
+            else
             {
-                e.printStackTrace();
+                error  = 2; // error en el Password //
             }
-            finally
-            {
-                Log.e( TAG, "end CheckLogin" );
-            }
-
-            return arrayList;
         }
         else
         {
-            return null;
+            error = 1; // error en el HttpPostAux //
         }
+        Log.e( TAG, "end CheckLogin" );
+
+        return error;
 
     }
 
@@ -103,7 +107,6 @@ public class LoginDAO {
         Log.e( TAG, "start registerLogin" );
 
         DBHelper dbHelper = DBHelper.getUtilDb( this.context );
-
         ContentValues contentValues;
 
         try
@@ -138,6 +141,7 @@ public class LoginDAO {
         {
             e.printStackTrace();
             Log.e( TAG, "error registerLogin : " + e.toString() );
+            error = 4; // error en el registerLogin //
         }
         finally
         {
@@ -146,6 +150,67 @@ public class LoginDAO {
         }
 
         Log.e( TAG, "end registerLogin" );
+
+    }
+
+    public ArrayList<UsuarioLocalE> showInfoUser() {
+
+        Log.e( TAG, "start showInfoUser" );
+
+        DBHelper dbHelper = DBHelper.getUtilDb( this.context );
+        Cursor cursor = null;
+
+        try
+        {
+            dbHelper.openDataBase();
+            dbHelper.beginTransaction();
+
+            String SQL = "SELECT idUsuario, usuario, clave, rol, nro_local, nombreLocal, naulas, ncontingencia, sede FROM usuario_local";
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            arrayList = new ArrayList<UsuarioLocalE>();
+
+            if ( cursor.moveToFirst() )
+            {
+
+                while ( !cursor.isAfterLast() )
+                {
+                    UsuarioLocalE usuarioLocalE = new UsuarioLocalE();
+
+                    usuarioLocalE.setIdUsuario( cursor.getInt(cursor.getColumnIndex("idUsuario")) );
+                    usuarioLocalE.setUsuario( cursor.getString( cursor.getColumnIndex( "usuario" ) ) );
+                    usuarioLocalE.setClave( cursor.getString( cursor.getColumnIndex( "clave" ) ) );
+                    usuarioLocalE.setRol( cursor.getInt(cursor.getColumnIndex("rol")) );
+                    usuarioLocalE.setNro_local( cursor.getInt(cursor.getColumnIndex("nro_local")) );
+                    usuarioLocalE.setNombreLocal( cursor.getString( cursor.getColumnIndex( "nombreLocal" ) ) );
+                    usuarioLocalE.setNaulas( cursor.getString( cursor.getColumnIndex( "naulas" ) ) );
+                    usuarioLocalE.setNcontingencia( cursor.getInt(cursor.getColumnIndex("ncontingencia")) );
+                    usuarioLocalE.setSede( cursor.getString( cursor.getColumnIndex( "sede" ) ) );
+
+                    arrayList.add( usuarioLocalE );
+
+                    cursor.moveToNext();
+                }
+
+            }
+
+            return arrayList;
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e( TAG, "error showInfoUser : " + e.toString() );
+            return null; // error en el showInfoUser //
+        }
+        finally
+        {
+            dbHelper.endTransaction();
+            dbHelper.close();
+            cursor.close();
+
+            Log.e( TAG, "start showInfoUser" );
+        }
 
     }
 

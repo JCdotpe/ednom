@@ -27,13 +27,13 @@ public class ObtainCensus extends Activity {
 
         btnPadron = (Button) findViewById( R.id.btnPadron );
 
-        flag = getIntent().getIntExtra( "statusVersion", -1 );
+        /*flag = getIntent().getIntExtra( "statusVersion", -1 );*/
 
     }
 
     public void downloadPadron(View view) {
 
-        new PadronAsync( ObtainCensus.this ).execute( flag );
+        new PadronAsync( ObtainCensus.this ).execute();
 
     }
 

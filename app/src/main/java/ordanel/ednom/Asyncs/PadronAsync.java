@@ -13,7 +13,7 @@ import ordanel.ednom.R;
 /**
  * Created by OrdNael on 30/10/2014.
  */
-public class PadronAsync extends AsyncTask<Integer, Integer, Integer> {
+public class PadronAsync extends AsyncTask<Void, Integer, Integer> {
 
     ProgressDialog dialog;
     Context context;
@@ -30,31 +30,48 @@ public class PadronAsync extends AsyncTask<Integer, Integer, Integer> {
     }
 
     @Override
-    protected Integer doInBackground(Integer... params) {
+    protected Integer doInBackground(Void... params) {
 
-        Integer idVersion = params[0];
-        return new PadronDAO( this.context ).padronLocal( idVersion );
+        return new PadronDAO( this.context ).padronLocal();
     }
 
     @Override
-    protected void onPostExecute(Integer success) {
-        super.onPostExecute(success);
+    protected void onPostExecute(Integer error) {
+        super.onPostExecute(error);
 
         dialog.dismiss();
 
-        if ( success.equals(0) && success.equals(-1) )
+        if ( error == 0 )
         {
-            Toast toast = Toast.makeText( this.context, this.context.getString( R.string.padron_msg_error ), Toast.LENGTH_LONG );
-            toast.show();
-        }
-        else
-        {
-            /*Toast toast = Toast.makeText( this.context, "Pasa al menu!", Toast.LENGTH_SHORT );
-            toast.show();*/
             Intent intent = new Intent( this.context, MainActivity.class);
             this.context.startActivity( intent );
         }
+        else
+        {
+            err_padron( error );
+        }
 
+    }
+
+    public void err_padron( Integer error ) {
+
+        String msg_error = "";
+
+        switch ( error )
+        {
+            case 1:
+                msg_error = this.context.getString( R.string.padron_msg_error_nube );
+                break;
+            case 2:
+                msg_error = this.context.getString( R.string.httppostaux_msg_error_data );
+                break;
+            case 3:
+                msg_error = this.context.getString( R.string.padron_msg_error_register );
+                break;
+        }
+
+        Toast toast = Toast.makeText( this.context, msg_error, Toast.LENGTH_SHORT );
+        toast.show();
     }
 
 }
