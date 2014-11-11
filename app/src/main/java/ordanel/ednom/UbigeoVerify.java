@@ -1,6 +1,7 @@
 package ordanel.ednom;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
@@ -120,7 +121,11 @@ public class UbigeoVerify extends Activity {
     }
 
     public void clickIncorrecto(View view) {
-        finish();
+
+        Intent intent = new Intent( getApplicationContext(), Login.class );
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+
     }
 
     @Override

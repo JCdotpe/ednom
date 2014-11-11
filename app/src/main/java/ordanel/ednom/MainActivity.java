@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
@@ -112,7 +113,7 @@ public class MainActivity extends Activity
             // Only show items in the action bar relevant to this screen
             // if the drawer is not showing. Otherwise, let the drawer
             // decide what to show in the action bar.
-            getMenuInflater().inflate(R.menu.main, menu);
+            getMenuInflater().inflate(R.menu.menu_main, menu);
             restoreActionBar();
             return true;
         }
@@ -130,8 +131,18 @@ public class MainActivity extends Activity
         if (id == R.id.action_settings) {
             return true;
         }
+        else if ( id == R.id.action_logout )
+        {
+            logOut();
+        }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void logOut() {
+        Intent intent = new Intent( getApplicationContext(), Login.class );
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
     }
 
     @Override
