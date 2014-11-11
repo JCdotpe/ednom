@@ -42,9 +42,9 @@
     <!-- /Padrón -->
 
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_section1">Ingreso al Local</string>
-    <string name="title_section2">Asistencia en Aula</string>
-    <string name="title_section3">Inventario de Fichas</string>
+    <string name="title_section1">Home</string>
+    <string name="title_section2">Ingreso al Local</string>
+    <string name="title_section3">Asistencia en Aula</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>

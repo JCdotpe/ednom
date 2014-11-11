@@ -5,88 +5,101 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <ScrollView
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/verify_usuario"
-        android:textSize="20dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_height="fill_parent">
 
-    <TextView
-        android:id="@+id/txtUsuario"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:layout_marginTop="5dp"/>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/verify_nombre_local"
-        android:textSize="20dp"
-        android:layout_marginTop="25dp"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/verify_usuario"
+                android:textSize="20dp"
+                android:layout_marginTop="10dp"/>
 
-    <TextView
-        android:id="@+id/txtNombreLocal"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/txtUsuario"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/verify_numero_aulas"
-        android:textSize="20dp"
-        android:layout_marginTop="25dp"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/verify_nombre_local"
+                android:textSize="20dp"
+                android:layout_marginTop="25dp"/>
 
-    <TextView
-        android:id="@+id/txtNAulas"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/txtNombreLocal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/verify_numero_contingencia"
-        android:textSize="20dp"
-        android:layout_marginTop="25dp"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/verify_numero_aulas"
+                android:textSize="20dp"
+                android:layout_marginTop="25dp"/>
 
-    <TextView
-        android:id="@+id/txtNContingencia"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/txtNAulas"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
 
-    <TextView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/verify_sede"
-        android:textSize="20dp"
-        android:layout_marginTop="25dp" />
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/verify_numero_contingencia"
+                android:textSize="20dp"
+                android:layout_marginTop="25dp"/>
 
-    <TextView
-        android:id="@+id/txtSede"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:textSize="18dp"
-        android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/txtNContingencia"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
 
-    <Button
-        android:id="@+id/btnCorrecto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Son Correctos"
-        android:onClick="clickCorrecto"/>
+            <TextView
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/verify_sede"
+                android:textSize="20dp"
+                android:layout_marginTop="25dp" />
 
-    <Button
-        android:id="@+id/btnIncorrecto"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="No son los Datos"
-        android:onClick="clickIncorrecto"/>
+            <TextView
+                android:id="@+id/txtSede"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:textSize="18dp"
+                android:layout_marginTop="5dp"/>
+
+            <Button
+                android:id="@+id/btnCorrecto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Son Correctos"
+                android:onClick="clickCorrecto"/>
+
+            <Button
+                android:id="@+id/btnIncorrecto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="No son los Datos"
+                android:onClick="clickIncorrecto"/>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

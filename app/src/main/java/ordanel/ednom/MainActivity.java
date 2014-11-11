@@ -20,6 +20,7 @@ import ordanel.ednom.Asyncs.LocalAsync;
 import ordanel.ednom.Entity.PadronE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
+import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.LocalI;
 
 
@@ -60,12 +61,17 @@ public class MainActivity extends Activity
         switch ( position )
         {
             case 0:
-                fragment = new IngresoLocal().newInstance( position + 1 );
+                fragment = new Welcome().newInstance( position + 1 );
                 break;
 
             case 1:
+                fragment = new IngresoLocal().newInstance( position + 1 );
+                break;
+
+            case 2:
                 fragment = new AsistenciaAula().newInstance( position + 1 );
                 break;
+
         }
 
         fragmentManager.beginTransaction()
