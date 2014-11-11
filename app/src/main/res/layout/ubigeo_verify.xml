@@ -1,105 +1,197 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/app_background"
+    tools:context="ordanel.ednom.UbigeoVerify" >
 
     <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
-        <LinearLayout
-            android:orientation="vertical"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <TextView
-                android:layout_width="fill_parent"
+                android:id="@+id/txtVerifyTitle"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/verify_usuario"
-                android:textSize="20dp"
-                android:layout_marginTop="10dp"/>
+                android:text="1. Verificación de Local de Aplicación"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#2196F3"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginStart="20dp" />
 
             <TextView
-                android:id="@+id/txtUsuario"
-                android:layout_width="fill_parent"
+                android:id="@+id/txtE_Sede"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_marginTop="5dp"/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/verify_nombre_local"
-                android:textSize="20dp"
-                android:layout_marginTop="25dp"/>
-
-            <TextView
-                android:id="@+id/txtNombreLocal"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_marginTop="5dp"/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/verify_numero_aulas"
-                android:textSize="20dp"
-                android:layout_marginTop="25dp"/>
-
-            <TextView
-                android:id="@+id/txtNAulas"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_marginTop="5dp"/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/verify_numero_contingencia"
-                android:textSize="20dp"
-                android:layout_marginTop="25dp"/>
-
-            <TextView
-                android:id="@+id/txtNContingencia"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_marginTop="5dp"/>
-
-            <TextView
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/verify_sede"
-                android:textSize="20dp"
-                android:layout_marginTop="25dp" />
+                android:text="Sede : "
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#64B5F6"
+                android:layout_below="@+id/txtVerifyTitle"
+                android:layout_alignLeft="@+id/txtVerifyTitle"
+                android:layout_alignStart="@+id/txtVerifyTitle"
+                android:layout_marginTop="20dp" />
 
             <TextView
                 android:id="@+id/txtSede"
-                android:layout_width="fill_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="18dp"
-                android:layout_marginTop="5dp"/>
+                android:text="Nombre_de_la_sede"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_alignBottom="@+id/txtE_Sede"
+                android:layout_alignLeft="@+id/txtUsuario"
+                android:layout_alignStart="@+id/txtUsuario" />
+
+            <TextView
+                android:id="@+id/txtE_Usuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Usuario : "
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#64B5F6"
+                android:layout_below="@+id/txtE_Sede"
+                android:layout_alignLeft="@+id/txtE_Sede"
+                android:layout_alignStart="@+id/txtE_Sede"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:id="@+id/txtUsuario"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre_de_Usuario"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_alignBottom="@+id/txtE_Usuario"
+                android:layout_toEndOf="@+id/txtE_Usuario"
+                android:layout_toRightOf="@+id/txtE_Usuario"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp" />
+
+            <TextView
+                android:id="@+id/txtE_NombreLocal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre del Local de Aplicación"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#64B5F6"
+                android:layout_below="@+id/txtE_Usuario"
+                android:layout_alignLeft="@+id/txtE_Usuario"
+                android:layout_alignStart="@+id/txtE_Usuario"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:id="@+id/txtNombreLocal"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre_de_local_aplicacion"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/txtE_NombreLocal"
+                android:layout_alignLeft="@+id/txtE_NombreLocal"
+                android:layout_alignStart="@+id/txtE_NombreLocal"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/txtE_NAulas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de Aulas"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#64B5F6"
+                android:layout_below="@+id/txtNombreLocal"
+                android:layout_alignLeft="@+id/txtNombreLocal"
+                android:layout_alignStart="@+id/txtNombreLocal"
+                android:layout_marginTop="20dp" />
+
+            <TextView
+                android:id="@+id/txtE_NContingencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nro de Aulas de Contingencia"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#64B5F6"
+                android:layout_alignBottom="@+id/txtE_NAulas"
+                android:layout_toEndOf="@id/txtE_NAulas"
+                android:layout_toRightOf="@id/txtE_NAulas"
+                android:layout_marginLeft="30dp"
+                android:layout_marginStart="30dp" />
+
+            <TextView
+                android:id="@+id/txtNAulas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="25"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/txtE_NAulas"
+                android:layout_alignLeft="@+id/txtE_NAulas"
+                android:layout_alignStart="@+id/txtE_NAulas"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="90dp"
+                android:layout_marginStart="90dp" />
+
+            <TextView
+                android:id="@+id/txtNContingencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:layout_alignBottom="@+id/txtNAulas"
+                android:layout_alignRight="@+id/txtE_NContingencia"
+                android:layout_alignEnd="@+id/txtE_NContingencia"
+                android:layout_marginRight="150dp"
+                android:layout_marginEnd="150dp" />
 
             <Button
                 android:id="@+id/btnCorrecto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Son Correctos"
-                android:onClick="clickCorrecto"/>
+                android:textStyle="bold"
+                android:background="@color/button_background"
+                android:textColor="@color/text_white"
+                android:padding="10dp"
+                android:layout_below="@+id/txtNAulas"
+                android:layout_marginLeft="120dp"
+                android:layout_marginStart="120dp"
+                android:layout_marginTop="40dp"
+                android:onClick="clickCorrecto" />
 
             <Button
                 android:id="@+id/btnIncorrecto"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="No son los Datos"
-                android:onClick="clickIncorrecto"/>
+                android:textStyle="bold"
+                android:background="@color/button_background"
+                android:textColor="@color/text_white"
+                android:padding="10dp"
+                android:layout_alignBottom="@id/btnCorrecto"
+                android:layout_toEndOf="@id/btnCorrecto"
+                android:layout_toRightOf="@id/btnCorrecto"
+                android:layout_marginLeft="40dp"
+                android:layout_marginStart="40dp"
+                android:onClick="clickIncorrecto" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </ScrollView>
 
-</LinearLayout>
+</RelativeLayout>

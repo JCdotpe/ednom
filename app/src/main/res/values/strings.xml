@@ -12,6 +12,9 @@
     <!-- /HttpPostAux -->
 
     <!-- Login -->
+    <string name="inei_content_description">INEI</string>
+    <string name="password_text_hint">Password</string>
+    <string name="button_login_text">Iniciar Sesión</string>
     <string name="login_msg">Autenticando Sesión...</string>
     <string name="login_msg_error_password">Error: El password es incorrecto!</string>
     <string name="login_msg_error_data">Error: Problemas en el checking del login!</string>
@@ -48,6 +51,21 @@
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
+
+
+    <!-- Ingreso al Local -->
+    <string name="numero_documento">Número de DNI :</string>
+    <string name="numero_documento_text_hint">ej: 06979411</string>
+    <string name="numero_documento_abrev">DNI :</string>
+    <string name="apellido_paterno_text_hint">Apellido Paterno</string>
+    <string name="apellido_materno_text_hint">Apellido Materno</string>
+    <string name="nombres_text_hint">Nombres</string>
+    <string name="local_de_aplicacion">Local de Aplicación</string>
+    <string name="aula_aplicacion">Aula</string>
+    <string name="aula_aplicacion_text_hint">Nro Aula</string>
+    <!-- /Ingreso al Local -->
+
+
 
     <!-- Array de Aulas -->
     <string-array name="aulas">

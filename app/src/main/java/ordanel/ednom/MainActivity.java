@@ -150,17 +150,30 @@ public class MainActivity extends Activity
     @Override
     public void showPerson(ArrayList<PadronE> arrayList) {
 
+        TextView txtDni = (TextView) findViewById( R.id.txtDNI );
+        TextView txtApePaterno = (TextView) findViewById( R.id.txtApePaterno );
+        TextView txtApeMaterno = (TextView) findViewById( R.id.txtApeMaterno );
+        TextView txtNombres = (TextView) findViewById( R.id.txtNombres );
+        TextView txtLocalAplicacion = (TextView) findViewById( R.id.txtLocalAplicacion );
+        TextView txtAula = (TextView) findViewById( R.id.txtAula );
+
+        txtDni.setText( "" );
+        txtApePaterno.setText( "" );
+        txtApeMaterno.setText( "" );
+        txtNombres.setText( "" );
+        txtLocalAplicacion.setText( "" );
+        txtAula.setText( "" );
+
         if ( arrayList != null )
         {
-            TextView txtApePaterno = (TextView) findViewById( R.id.txtApePaterno );
-            TextView txtApeMaterno = (TextView) findViewById( R.id.txtApeMaterno );
-            TextView txtNombres = (TextView) findViewById( R.id.txtNombres );
-
             for ( int i = 0; i < arrayList.size(); i++ )
             {
+                txtDni.setText( arrayList.get(i).getIns_numdoc() );
                 txtApePaterno.setText( arrayList.get(i).getApepat() );
                 txtApeMaterno.setText( arrayList.get(i).getApemat() );
                 txtNombres.setText( arrayList.get(i).getNombres() );
+                txtLocalAplicacion.setText( arrayList.get(i).getLocal_aplicacion() );
+                txtAula.setText( arrayList.get(i).getAula() );
             }
         }
         else

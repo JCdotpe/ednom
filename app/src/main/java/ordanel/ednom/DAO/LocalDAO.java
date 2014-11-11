@@ -39,7 +39,7 @@ public class LocalDAO {
             dbHelper.openDataBase();
             dbHelper.beginTransaction();
 
-            String SQL = "SELECT ins_numdoc, apepat, apemat, nombres FROM postulantes2014 WHERE ins_numdoc = '" + number_dni + "'";
+            String SQL = "SELECT ins_numdoc, apepat, apemat, nombres, local_aplicacion, aula FROM postulantes2014 WHERE ins_numdoc = '" + number_dni + "'";
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
             if ( cursor.moveToFirst() )
@@ -54,6 +54,8 @@ public class LocalDAO {
                     padronE.setApepat( cursor.getString( cursor.getColumnIndex( "apepat" ) ) );
                     padronE.setApemat( cursor.getString( cursor.getColumnIndex( "apemat" ) ) );
                     padronE.setNombres( cursor.getString( cursor.getColumnIndex( "nombres" ) ) );
+                    padronE.setLocal_aplicacion( cursor.getString( cursor.getColumnIndex( "local_aplicacion" ) ) );
+                    padronE.setAula( cursor.getString( cursor.getColumnIndex( "aula" ) ) );
 
                     arrayList.add( padronE );
 
@@ -63,9 +65,9 @@ public class LocalDAO {
                 if ( arrayList.size() > 0 )
                 {
                     contentValues =  new ContentValues();
-                    contentValues.put( "Status", 1 );
+                    contentValues.put( "estatus", 1 );
 
-                    SQL = "NumDoc = '" + number_dni + "'";
+                    SQL = "ins_numdoc = '" + number_dni + "'";
 
                     Integer exito = dbHelper.getDatabase().updateWithOnConflict( "postulantes2014", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
                 }
