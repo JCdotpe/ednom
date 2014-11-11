@@ -5,7 +5,9 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.PadronE;
@@ -64,12 +66,27 @@ public class LocalDAO {
 
                 if ( arrayList.size() > 0 )
                 {
+
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date();
+
                     contentValues =  new ContentValues();
                     contentValues.put( "estatus", 1 );
+                    contentValues.put( "fecha_registro", dateFormat.format(date) );
 
                     SQL = "ins_numdoc = '" + number_dni + "'";
 
                     Integer exito = dbHelper.getDatabase().updateWithOnConflict( "postulantes2014", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
+
+
+                    /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date();
+                    ContentValues initialValues = new ContentValues();
+                    initialValues.put("date_created", dateFormat.format(date));
+                    long rowId = mDb.insert(DATABASE_TABLE, null, initialValues);*/
+
+
+
                 }
 
             }
