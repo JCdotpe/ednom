@@ -10,7 +10,6 @@ import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -22,11 +21,11 @@ import ordanel.ednom.Entity.PadronE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
 import ordanel.ednom.Fragments.Welcome;
-import ordanel.ednom.Interfaces.LocalI;
+import ordanel.ednom.Interfaces.MainI;
 
 
 public class MainActivity extends Activity
-        implements NavigationDrawerFragment.NavigationDrawerCallbacks, LocalI {
+        implements NavigationDrawerFragment.NavigationDrawerCallbacks, MainI {
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -146,12 +145,12 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public void searchPerson(View view) {
+    public void searchPerson() {
 
         EditText edtDNI_Local = (EditText) findViewById( R.id.edtDNI_Local );
 
         LocalAsync localAsync = new LocalAsync( MainActivity.this );
-        localAsync.setLocalI( MainActivity.this );
+        localAsync.setMainI(MainActivity.this);
         localAsync.execute( edtDNI_Local.getText().toString() );
 
         edtDNI_Local.setText("");
@@ -189,7 +188,7 @@ public class MainActivity extends Activity
         }
         else
         {
-            Toast toast = Toast.makeText( MainActivity.this, "Error en busqueda", Toast.LENGTH_SHORT );
+            Toast toast = Toast.makeText( MainActivity.this, getString( R.string.docente_not_found ), Toast.LENGTH_LONG );
             toast.show();
         }
 

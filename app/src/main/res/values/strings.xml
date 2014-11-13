@@ -53,6 +53,8 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
 
+    <string name="docente_found">Buscando Datos del Docente</string>
+    <string name="docente_not_found">No se encontraron Datos del Docente en este Local de Aplicación</string>
 
     <!-- Ingreso al Local -->
     <string name="numero_documento">Número de DNI :</string>

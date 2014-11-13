@@ -4,12 +4,15 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 
-import ordanel.ednom.Interfaces.LocalI;
+import ordanel.ednom.Interfaces.MainI;
 import ordanel.ednom.R;
 
 /**
@@ -19,7 +22,9 @@ public class IngresoLocal extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
-    private LocalI mListener;
+    private MainI mListener;
+
+    EditText edtDNI_Local;
 
 
     public IngresoLocal() {
@@ -44,11 +49,26 @@ public class IngresoLocal extends Fragment {
         View view = inflater.inflate( R.layout.fragment_ingreso_local, container, false );
         mListener.onSectionAttached( getArguments().getInt( ARG_SECTION_NUMBER ) );
 
-        Button button = (Button) view.findViewById( R.id.btnLocal );
-        button.setOnClickListener(new View.OnClickListener() {
+        edtDNI_Local = (EditText) view.findViewById( R.id.edtDNI_Local );
+        edtDNI_Local.addTextChangedListener(new TextWatcher() {
             @Override
-            public void onClick(View v) {
-                mListener.searchPerson(v);
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+                if ( s.length() == 8 )
+                {
+                    mListener.searchPerson();
+                }
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
             }
         });
 
@@ -61,7 +81,7 @@ public class IngresoLocal extends Fragment {
 
         try
         {
-            mListener = (LocalI) activity;
+            mListener = (MainI) activity;
         }
         catch (ClassCastException e)
         {

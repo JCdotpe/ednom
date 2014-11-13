@@ -8,7 +8,8 @@ import java.util.ArrayList;
 
 import ordanel.ednom.DAO.LocalDAO;
 import ordanel.ednom.Entity.PadronE;
-import ordanel.ednom.Interfaces.LocalI;
+import ordanel.ednom.Interfaces.MainI;
+import ordanel.ednom.R;
 
 /**
  * Created by OrdNael on 05/11/2014.
@@ -17,7 +18,7 @@ public class LocalAsync extends AsyncTask<String, ArrayList<PadronE>, ArrayList<
 
     private static final String TAG = LocalAsync.class.getSimpleName();
 
-    private LocalI localI;
+    private MainI mainI;
 
     ProgressDialog progressDialog;
 
@@ -28,15 +29,15 @@ public class LocalAsync extends AsyncTask<String, ArrayList<PadronE>, ArrayList<
         this.context = context;
 
         progressDialog = new ProgressDialog( this.context );
-        progressDialog.setMessage( "Buscando Persona" );
+        progressDialog.setMessage( this.context.getString(R.string.docente_found ) );
         progressDialog.setIndeterminate( false );
         progressDialog.setCancelable( false );
         progressDialog.show();
 
     }
 
-    public void setLocalI( LocalI localI ) {
-        this.localI = localI;
+    public void setMainI( MainI mainI ) {
+        this.mainI = mainI;
     }
 
     @Override
@@ -52,7 +53,7 @@ public class LocalAsync extends AsyncTask<String, ArrayList<PadronE>, ArrayList<
         super.onPostExecute(padronEs);
 
         progressDialog.dismiss();
-        localI.showPerson( padronEs );
+        mainI.showPerson( padronEs );
 
     }
 }
