@@ -100,4 +100,56 @@ public class LocalDAO {
 
     }
 
+    public ArrayList<PadronE> showPerson( String number_dni ) {
+
+        Cursor cursor = null;
+
+        DBHelper dbHelper = DBHelper.getUtilDb( this.context );
+
+        try
+        {
+            dbHelper.openDataBase();
+            dbHelper.beginTransaction();
+
+            String SQL = "SELECT ins_numdoc, apepat, apemat, nombres, local_aplicacion, aula FROM postulantes2014 WHERE ins_numdoc = '" + number_dni + "'";
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            if ( cursor.moveToFirst() )
+            {
+                arrayList = new ArrayList<PadronE>();
+
+                while ( !cursor.isAfterLast() )
+                {
+                    PadronE padronE = new PadronE();
+
+                    padronE.setIns_numdoc( cursor.getString( cursor.getColumnIndex( "ins_numdoc" ) ) );
+                    padronE.setApepat( cursor.getString( cursor.getColumnIndex( "apepat" ) ) );
+                    padronE.setApemat( cursor.getString( cursor.getColumnIndex( "apemat" ) ) );
+                    padronE.setNombres( cursor.getString( cursor.getColumnIndex( "nombres" ) ) );
+                    padronE.setLocal_aplicacion( cursor.getString( cursor.getColumnIndex( "local_aplicacion" ) ) );
+                    padronE.setAula( cursor.getString( cursor.getColumnIndex( "aula" ) ) );
+
+                    arrayList.add( padronE );
+
+                    cursor.moveToNext();
+
+                }
+
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+        }
+        finally
+        {
+            dbHelper.endTransaction();
+            dbHelper.close();
+            cursor.close();
+        }
+
+        return arrayList;
+    }
+
 }

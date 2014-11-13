@@ -4,12 +4,16 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -17,6 +21,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ordanel.ednom.Asyncs.LocalAsync;
+import ordanel.ednom.DAO.LocalDAO;
 import ordanel.ednom.Entity.PadronE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
@@ -50,6 +55,7 @@ public class MainActivity extends Activity
         mNavigationDrawerFragment.setUp(
                 R.id.navigation_drawer,
                 (DrawerLayout) findViewById(R.id.drawer_layout));
+
     }
 
     @Override
@@ -145,6 +151,34 @@ public class MainActivity extends Activity
     }
 
     @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        View view = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(ev);
+
+        if ( view instanceof EditText )
+        {
+            View view1 = getCurrentFocus();
+
+            int scrcoords[] = new int[2];
+
+            view1.getLocationOnScreen( scrcoords );
+
+            float x = ev.getRawX() + view1.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + view1.getTop() - scrcoords[1];
+
+            if ( ev.getAction() == MotionEvent.ACTION_UP && ( x < view1.getLeft() || x >= view1.getRight() || y < view1.getTop() || y > view1.getBottom() ) )
+            {
+                InputMethodManager imm = (InputMethodManager) getSystemService( Context.INPUT_METHOD_SERVICE );
+                imm.hideSoftInputFromWindow( getWindow().getCurrentFocus().getWindowToken(), 0 );
+            }
+
+        }
+
+        return ret;
+    }
+
+    @Override
     public void searchPerson() {
 
         EditText edtDNI_Local = (EditText) findViewById( R.id.edtDNI_Local );
@@ -159,6 +193,8 @@ public class MainActivity extends Activity
 
     @Override
     public void showPerson(ArrayList<PadronE> arrayList) {
+
+        arrayList = new LocalDAO( MainActivity.this ).showPerson("42817115");
 
         TextView txtDni = (TextView) findViewById( R.id.txtDNI );
         TextView txtApePaterno = (TextView) findViewById( R.id.txtApePaterno );
