@@ -78,16 +78,9 @@ public class LocalDAO {
 
                     Integer exito = dbHelper.getDatabase().updateWithOnConflict( "postulantes2014", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
 
-
-                    /*SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-                    Date date = new Date();
-                    ContentValues initialValues = new ContentValues();
-                    initialValues.put("date_created", dateFormat.format(date));
-                    long rowId = mDb.insert(DATABASE_TABLE, null, initialValues);*/
-
-
-
                 }
+
+                dbHelper.setTransactionSuccessful();
 
             }
 
