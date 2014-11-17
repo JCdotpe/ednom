@@ -20,7 +20,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="1. Verificación de Local de Aplicación"
-                android:textSize="25sp"
+                android:textSize="45sp"
                 android:textStyle="bold"
                 android:textColor="#2196F3"
                 android:layout_alignParentTop="true"
@@ -35,7 +35,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Sede : "
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 android:textColor="#64B5F6"
                 android:layout_below="@+id/txtVerifyTitle"
@@ -48,7 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre_de_la_sede"
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 android:layout_alignBottom="@+id/txtE_Sede"
                 android:layout_alignLeft="@+id/txtUsuario"
@@ -59,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Usuario : "
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 android:textColor="#64B5F6"
                 android:layout_below="@+id/txtE_Sede"
@@ -72,7 +72,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre_de_Usuario"
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 android:layout_alignBottom="@+id/txtE_Usuario"
                 android:layout_toEndOf="@+id/txtE_Usuario"
@@ -85,7 +85,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre del Local de Aplicación"
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 android:textColor="#64B5F6"
                 android:layout_below="@+id/txtE_Usuario"
@@ -98,7 +98,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Nombre_de_local_aplicacion"
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 android:layout_below="@+id/txtE_NombreLocal"
                 android:layout_alignLeft="@+id/txtE_NombreLocal"
@@ -106,58 +106,139 @@
                 android:layout_marginTop="10dp" />
 
             <TextView
-                android:id="@+id/txtE_NAulas"
+                android:id="@+id/txtE_Direcion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Número de Aulas"
-                android:textSize="25sp"
+                android:text="Dirección del local aplicacion"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 android:textColor="#64B5F6"
                 android:layout_below="@+id/txtNombreLocal"
                 android:layout_alignLeft="@+id/txtNombreLocal"
                 android:layout_alignStart="@+id/txtNombreLocal"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/txtDirecion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Dirección_del_local_aplicacion"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/txtE_Direcion"
+                android:layout_alignLeft="@+id/txtE_Direcion"
+                android:layout_alignStart="@+id/txtE_Direcion"
+                android:layout_marginTop="10dp" />
+
+            <TextView
+                android:id="@+id/txtE_NAulas"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número Total de Aulas"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:textColor="#64B5F6"
+                android:layout_below="@+id/txtDirecion"
+                android:layout_alignLeft="@+id/txtDirecion"
+                android:layout_alignStart="@+id/txtDirecion"
                 android:layout_marginTop="20dp" />
 
             <TextView
-                android:id="@+id/txtE_NContingencia"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nro de Aulas de Contingencia"
-                android:textSize="25sp"
-                android:textStyle="bold"
-                android:textColor="#64B5F6"
-                android:layout_alignBottom="@+id/txtE_NAulas"
-                android:layout_toEndOf="@id/txtE_NAulas"
-                android:layout_toRightOf="@id/txtE_NAulas"
-                android:layout_marginLeft="30dp"
-                android:layout_marginStart="30dp" />
-
-            <TextView
-                android:id="@+id/txtNAulas"
+                android:id="@+id/txtNAulas_t"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="25"
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
                 android:layout_below="@+id/txtE_NAulas"
                 android:layout_alignLeft="@+id/txtE_NAulas"
                 android:layout_alignStart="@+id/txtE_NAulas"
                 android:layout_marginTop="10dp"
                 android:layout_marginLeft="90dp"
-                android:layout_marginStart="90dp" />
+                android:layout_marginStart="90dp"/>
 
             <TextView
-                android:id="@+id/txtNContingencia"
+                android:id="@+id/txtE_NNormales"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de Aulas de Profesores sin Discapacidad"
+                android:textSize="33sp"
+                android:textStyle="bold"
+                android:textColor="#64B5F6"
+                android:layout_below="@+id/txtE_NAulas"
+                android:layout_alignLeft="@+id/txtE_NAulas"
+                android:layout_alignStart="@+id/txtE_NAulas"
+                android:layout_marginTop="50dp"
+                 />
+
+            <TextView
+                android:id="@+id/txtNAulas_n"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="45"
-                android:textSize="25sp"
+                android:textSize="35sp"
                 android:textStyle="bold"
-                android:layout_alignBottom="@+id/txtNAulas"
-                android:layout_alignRight="@+id/txtE_NContingencia"
-                android:layout_alignEnd="@+id/txtE_NContingencia"
-                android:layout_marginRight="150dp"
-                android:layout_marginEnd="150dp" />
+                android:layout_below="@+id/txtE_NNormales"
+                android:layout_alignLeft="@+id/txtE_NNormales"
+                android:layout_alignStart="@+id/txtE_NNormales"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="90dp"
+                android:layout_marginStart="90dp" />
+
+            <TextView
+                android:id="@+id/txtE_NDiscapacidad"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de Aulas de Profesores con Discapacidad"
+                android:textSize="33sp"
+                android:textStyle="bold"
+                android:textColor="#64B5F6"
+                android:layout_below="@+id/txtE_NNormales"
+                android:layout_alignLeft="@+id/txtE_NNormales"
+                android:layout_alignStart="@+id/txtE_NNormales"
+                android:layout_marginTop="50dp"
+                />
+
+            <TextView
+                android:id="@+id/txtNAulas_disc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/txtE_NDiscapacidad"
+                android:layout_alignLeft="@+id/txtE_NDiscapacidad"
+                android:layout_alignStart="@+id/txtE_NDiscapacidad"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="90dp"
+                android:layout_marginStart="90dp" />
+
+            <TextView
+                android:id="@+id/txtE_NContingencia"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Número de Aulas de Contingencia"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:textColor="#64B5F6"
+                android:layout_below="@+id/txtE_NDiscapacidad"
+                android:layout_alignLeft="@+id/txtE_NDiscapacidad"
+                android:layout_alignStart="@+id/txtE_NDiscapacidad"
+                android:layout_marginTop="50dp"/>
+
+            <TextView
+                android:id="@+id/txtNAulas_contin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="45"
+                android:textSize="35sp"
+                android:textStyle="bold"
+                android:layout_below="@+id/txtE_NContingencia"
+                android:layout_alignLeft="@+id/txtE_NContingencia"
+                android:layout_alignStart="@+id/txtE_NContingencia"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="90dp"
+                android:layout_marginStart="90dp" />
 
             <Button
                 android:id="@+id/btnCorrecto"
@@ -168,10 +249,10 @@
                 android:background="@color/button_background"
                 android:textColor="@color/text_white"
                 android:padding="10dp"
-                android:layout_below="@+id/txtNAulas"
-                android:layout_marginLeft="120dp"
+                android:layout_below="@+id/txtNAulas_contin"
+                android:layout_marginLeft="320dp"
                 android:layout_marginStart="120dp"
-                android:layout_marginTop="40dp"
+                android:layout_marginTop="140dp"
                 android:onClick="clickCorrecto" />
 
             <Button
