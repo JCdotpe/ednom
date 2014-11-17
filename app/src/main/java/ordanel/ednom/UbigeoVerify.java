@@ -13,7 +13,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ordanel.ednom.Asyncs.VersionAsync;
-import ordanel.ednom.DAO.LoginDAO;
+import ordanel.ednom.DAO.LocalDAO;
 import ordanel.ednom.Entity.UsuarioLocalE;
 
 /**
@@ -25,9 +25,9 @@ public class UbigeoVerify extends Activity {
 
     Integer error = 0;
 
-    String Usuario, NombreLocal, NAulas, Sede;
-    Integer NContingencia;
-    TextView txtUsuario, txtNombreLocal, txtNAulas, txtNContingencia, txtSede;
+    String Sede, Usuario, NombreLocal, Direccion;
+    Integer NAulas_t, NAulas_n, NAulas_disc, NAulas_contin;
+    TextView txtSede, txtUsuario, txtNombreLocal, txtDireccion, txtNAulas_t, txtNAulas_n, txtNAulas_disc, txtNAulas_contin;
     Button btnCorrecto;
 
     @Override
@@ -37,15 +37,18 @@ public class UbigeoVerify extends Activity {
 
         txtUsuario = (TextView) findViewById( R.id.txtUsuario);
         txtNombreLocal = (TextView) findViewById( R.id.txtNombreLocal);
-        txtNAulas = (TextView) findViewById( R.id.txtNAulas);
-        txtNContingencia = (TextView) findViewById( R.id.txtNContingencia);
+        txtDireccion = (TextView) findViewById( R.id.txtDirecion);
+        txtNAulas_t = (TextView) findViewById( R.id.txtNAulas_t);
+        txtNAulas_n = (TextView) findViewById( R.id.txtNAulas_n);
+        txtNAulas_disc = (TextView) findViewById( R.id.txtNAulas_disc);
+        txtNAulas_contin = (TextView) findViewById( R.id.txtNAulas_contin);
         txtSede = (TextView) findViewById( R.id.txtSede );
         btnCorrecto = (Button) findViewById( R.id.btnCorrecto );
 
-        /*ArrayList<UsuarioLocalE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" );*/
-        ArrayList<UsuarioLocalE> arrayList = new LoginDAO( UbigeoVerify.this ).showInfoUser();
+        /*ArrayList<UsuarioLocalE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" ); // metodo para obtener arraylist */
+        ArrayList<UsuarioLocalE> usuarioLocalEArrayList = new LocalDAO( UbigeoVerify.this ).showInfoLocal();
 
-        error = setUbigeo( arrayList );
+        error = setUbigeo( usuarioLocalEArrayList );
 
         if ( error > 0 )
         {
@@ -64,18 +67,24 @@ public class UbigeoVerify extends Activity {
             {
                 for (int i = 0; i < arrayList.size(); i++)
                 {
+                    Sede = arrayList.get(i).getLocalE().getSedeOperativaE().getSede_operativa();
                     Usuario = arrayList.get(i).getUsuario();
-                    NombreLocal = arrayList.get(i).getNombreLocal();
-                    NAulas = arrayList.get(i).getNaulas();
-                    NContingencia = arrayList.get(i).getNcontingencia();
-                    Sede = arrayList.get(i).getSede();
+                    NombreLocal = arrayList.get(i).getLocalE().getNombreLocal();
+                    Direccion = arrayList.get(i).getLocalE().getDireccion();
+                    NAulas_t = arrayList.get(i).getLocalE().getNaula_t();
+                    NAulas_n = arrayList.get(i).getLocalE().getNaula_n();
+                    NAulas_disc = arrayList.get(i).getLocalE().getNaula_discapacidad();
+                    NAulas_contin = arrayList.get(i).getLocalE().getNaula_contingencia();
                 }
 
+                txtSede.setText( Sede );
                 txtUsuario.setText( Usuario );
                 txtNombreLocal.setText( NombreLocal );
-                txtNAulas.setText( NAulas );
-                txtNContingencia.setText( NContingencia.toString() );
-                txtSede.setText( Sede );
+                txtDireccion.setText( Direccion );
+                txtNAulas_t.setText( NAulas_n.toString() );
+                txtNAulas_n.setText( NAulas_t.toString() );
+                txtNAulas_disc.setText( NAulas_disc.toString() );
+                txtNAulas_contin.setText( NAulas_contin.toString() );
             }
             else
             {

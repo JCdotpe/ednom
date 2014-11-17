@@ -1,10 +1,13 @@
 package ordanel.ednom;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -52,6 +55,34 @@ public class Login extends Activity {
         {
             return true;
         }
+    }
+
+    @Override
+    public boolean dispatchTouchEvent(MotionEvent ev) {
+
+        View view = getCurrentFocus();
+        boolean ret = super.dispatchTouchEvent(ev);
+
+        if ( view instanceof EditText )
+        {
+            View view1 = getCurrentFocus();
+
+            int scrcoords[] = new int[2];
+
+            view1.getLocationOnScreen( scrcoords );
+
+            float x = ev.getRawX() + view1.getLeft() - scrcoords[0];
+            float y = ev.getRawY() + view1.getTop() - scrcoords[1];
+
+            if ( ev.getAction() == MotionEvent.ACTION_UP && ( x < view1.getLeft() || x >= view1.getRight() || y < view1.getTop() || y > view1.getBottom() ) )
+            {
+                InputMethodManager imm = (InputMethodManager) getSystemService( Context.INPUT_METHOD_SERVICE );
+                imm.hideSoftInputFromWindow( getWindow().getCurrentFocus().getWindowToken(), 0 );
+            }
+
+        }
+
+        return ret;
     }
 
     public void err_login() {

@@ -12,11 +12,7 @@ public class UsuarioLocalE implements Parcelable {
     private String usuario;
     private String clave;
     private Integer rol;
-    private Integer nro_local;
-    private String nombreLocal;
-    private String naulas;
-    private Integer ncontingencia;
-    private String sede;
+    private LocalE localE = new LocalE();
 
     public UsuarioLocalE() {
         super();
@@ -24,30 +20,22 @@ public class UsuarioLocalE implements Parcelable {
 
     public UsuarioLocalE( Parcel parcel ) {
 
-        setIdUsuario(parcel.readInt());
-        setUsuario(parcel.readString());
-        setClave(parcel.readString());
-        setRol(parcel.readInt());
-        setNro_local(parcel.readInt());
-        setNombreLocal(parcel.readString());
-        setNaulas(parcel.readString());
-        setNcontingencia(parcel.readInt());
-        setSede(parcel.readString());
+        setIdUsuario( parcel.readInt() );
+        setUsuario( parcel.readString() );
+        setClave( parcel.readString() );
+        setRol( parcel.readInt() );
+        setLocalE( (LocalE) parcel.readParcelable( LocalE.class.getClassLoader() )  );
 
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeInt(getIdUsuario());
-        dest.writeString(getUsuario());
-        dest.writeString(getClave());
-        dest.writeInt(getRol());
-        dest.writeInt(getNro_local());
-        dest.writeString(getNombreLocal());
-        dest.writeString(getNaulas());
-        dest.writeInt(getNcontingencia());
-        dest.writeString(getSede());
+        dest.writeInt( getIdUsuario() );
+        dest.writeString( getUsuario() );
+        dest.writeString( getClave() );
+        dest.writeInt( getRol() );
+        dest.writeParcelable( getLocalE(), flags );
 
     }
 
@@ -100,44 +88,11 @@ public class UsuarioLocalE implements Parcelable {
         this.rol = rol;
     }
 
-    public Integer getNro_local() {
-        return nro_local;
+    public LocalE getLocalE() {
+        return localE;
     }
 
-    public void setNro_local(Integer nro_local) {
-        this.nro_local = nro_local;
+    public void setLocalE(LocalE localE) {
+        this.localE = localE;
     }
-
-    public String getNombreLocal() {
-        return nombreLocal;
-    }
-
-    public void setNombreLocal(String nombreLocal) {
-        this.nombreLocal = nombreLocal;
-    }
-
-    public String getNaulas() {
-        return naulas;
-    }
-
-    public void setNaulas(String naulas) {
-        this.naulas = naulas;
-    }
-
-    public Integer getNcontingencia() {
-        return ncontingencia;
-    }
-
-    public void setNcontingencia(Integer ncontingencia) {
-        this.ncontingencia = ncontingencia;
-    }
-
-    public String getSede() {
-        return sede;
-    }
-
-    public void setSede(String sede) {
-        this.sede = sede;
-    }
-
 }
