@@ -3,6 +3,9 @@ package ordanel.ednom.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by OrdNael on 17/11/2014.
  */
@@ -10,6 +13,7 @@ public class SedeOperativaE implements Parcelable {
 
     private Integer cod_sede_operativa;
     private String sede_operativa;
+    private List<LocalE> localEList;
 
 
     public SedeOperativaE() {
@@ -20,6 +24,8 @@ public class SedeOperativaE implements Parcelable {
     {
         setCod_sede_operativa( parcel.readInt() );
         setSede_operativa( parcel.readString() );
+        setLocalEList( new ArrayList<LocalE>() );
+        parcel.readTypedList( getLocalEList(), LocalE.CREATOR );
     }
 
     @Override
@@ -27,6 +33,7 @@ public class SedeOperativaE implements Parcelable {
 
         dest.writeInt( getCod_sede_operativa() );
         dest.writeString( getSede_operativa() );
+        dest.writeTypedList( getLocalEList() );
 
     }
 
@@ -61,5 +68,13 @@ public class SedeOperativaE implements Parcelable {
 
     public void setSede_operativa(String sede_operativa) {
         this.sede_operativa = sede_operativa;
+    }
+
+    public List<LocalE> getLocalEList() {
+        return localEList;
+    }
+
+    public void setLocalEList(List<LocalE> localEList) {
+        this.localEList = localEList;
     }
 }

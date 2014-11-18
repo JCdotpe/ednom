@@ -8,9 +8,11 @@ import android.os.Parcelable;
  */
 public class VersionE implements Parcelable {
 
-    private Integer Id;
-    private Integer idVersion;
-    private String Descripcion;
+    private Integer vercod;
+    private Integer v_padron;
+    private Integer v_sistem;
+    private String fecha;
+    private String observa;
 
     public VersionE() {
         super();
@@ -18,18 +20,22 @@ public class VersionE implements Parcelable {
 
     public VersionE(Parcel parcel) {
 
-        setId( parcel.readInt() );
-        setIdVersion(parcel.readInt());
-        setDescripcion(parcel.readString());
+        setVercod(parcel.readInt());
+        setV_padron(parcel.readInt());
+        setV_sistem(parcel.readInt());
+        setFecha(parcel.readString());
+        setObserva( parcel.readString()  );
 
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeInt(getId());
-        dest.writeInt(getIdVersion());
-        dest.writeString(getDescripcion());
+        dest.writeInt( getVercod() );
+        dest.writeInt( getV_padron() );
+        dest.writeInt(getV_sistem());
+        dest.writeString( getFecha() );
+        dest.writeString( getObserva() );
 
     }
 
@@ -50,29 +56,44 @@ public class VersionE implements Parcelable {
         }
     };
 
-    public Integer getId() {
-        return Id;
+
+    public Integer getVercod() {
+        return vercod;
     }
 
-    public void setId(Integer id) {
-        Id = id;
+    public void setVercod(Integer vercod) {
+        this.vercod = vercod;
     }
 
-    public Integer getIdVersion() {
-        return idVersion;
+    public Integer getV_padron() {
+        return v_padron;
     }
 
-    public void setIdVersion(Integer idVersion) {
-        this.idVersion = idVersion;
+    public void setV_padron(Integer v_padron) {
+        this.v_padron = v_padron;
     }
 
-    public String getDescripcion() {
-        return Descripcion;
+    public Integer getV_sistem() {
+        return v_sistem;
     }
 
-    public void setDescripcion(String descripcion) {
-        Descripcion = descripcion;
+    public void setV_sistem(Integer v_sistem) {
+        this.v_sistem = v_sistem;
     }
 
+    public String getFecha() {
+        return fecha;
+    }
 
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getObserva() {
+        return observa;
+    }
+
+    public void setObserva(String observa) {
+        this.observa = observa;
+    }
 }

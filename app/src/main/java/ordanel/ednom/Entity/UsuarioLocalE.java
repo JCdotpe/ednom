@@ -12,7 +12,9 @@ public class UsuarioLocalE implements Parcelable {
     private String usuario;
     private String clave;
     private Integer rol;
-    private LocalE localE = new LocalE();
+    private Integer cod_sede_operativa;
+    private Integer cod_local_sede;
+
 
     public UsuarioLocalE() {
         super();
@@ -24,7 +26,8 @@ public class UsuarioLocalE implements Parcelable {
         setUsuario( parcel.readString() );
         setClave( parcel.readString() );
         setRol( parcel.readInt() );
-        setLocalE( (LocalE) parcel.readParcelable( LocalE.class.getClassLoader() )  );
+        setCod_sede_operativa( parcel.readInt() );
+        setCod_local_sede( parcel.readInt() );
 
     }
 
@@ -35,7 +38,8 @@ public class UsuarioLocalE implements Parcelable {
         dest.writeString( getUsuario() );
         dest.writeString( getClave() );
         dest.writeInt( getRol() );
-        dest.writeParcelable( getLocalE(), flags );
+        dest.writeInt( getCod_sede_operativa() );
+        dest.writeInt( getCod_local_sede() );
 
     }
 
@@ -88,11 +92,19 @@ public class UsuarioLocalE implements Parcelable {
         this.rol = rol;
     }
 
-    public LocalE getLocalE() {
-        return localE;
+    public Integer getCod_sede_operativa() {
+        return cod_sede_operativa;
     }
 
-    public void setLocalE(LocalE localE) {
-        this.localE = localE;
+    public void setCod_sede_operativa(Integer cod_sede_operativa) {
+        this.cod_sede_operativa = cod_sede_operativa;
+    }
+
+    public Integer getCod_local_sede() {
+        return cod_local_sede;
+    }
+
+    public void setCod_local_sede(Integer cod_local_sede) {
+        this.cod_local_sede = cod_local_sede;
     }
 }

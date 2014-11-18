@@ -17,6 +17,7 @@ import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Entity.UsuarioLocalE;
+import ordanel.ednom.Library.ConstantsUtils;
 import ordanel.ednom.Library.HttpPostAux;
 
 /**
@@ -26,8 +27,9 @@ public class LoginDAO {
 
     private static final String TAG = LoginDAO.class.getSimpleName();
 
-    String IP_Server = "jc.pe";
-    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";
+    /*String IP_Server = "jc.pe";
+    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/acces.php";*/
+    String URL_Connect = ConstantsUtils.BASE_URL + "acces.php";
 
     Integer error = 0;
     String SQL = "";
@@ -75,7 +77,7 @@ public class LoginDAO {
                         sedeOperativaE.setCod_sede_operativa( jsonObject.getInt( "cod_sede_operativa" ) );
                         sedeOperativaE.setSede_operativa( jsonObject.getString( "sede_operativa" ) );
 
-                        localE.setSedeOperativaE( sedeOperativaE );
+                        localE.setCod_sede_operativa( jsonObject.getInt("cod_sede_operativa") );
                         localE.setCod_local_sede( jsonObject.getInt( "cod_local_sede" ) );
                         localE.setNombreLocal( jsonObject.getString("nombreLocal") );
                         localE.setDireccion( jsonObject.getString( "direccion" ) );
@@ -90,7 +92,8 @@ public class LoginDAO {
                         usuarioLocalE.setUsuario(jsonObject.getString( "usuario" ) );
                         usuarioLocalE.setClave( jsonObject.getString( "clave") );
                         usuarioLocalE.setRol( jsonObject.getInt( "rol" ) );
-                        usuarioLocalE.setLocalE( localE );
+                        usuarioLocalE.setCod_sede_operativa( jsonObject.getInt( "cod_sede_operativa") );
+                        usuarioLocalE.setCod_local_sede( jsonObject.getInt( "cod_local_sede" ) );
 
                         arrayList.add( usuarioLocalE );
                     }
@@ -138,17 +141,17 @@ public class LoginDAO {
 
             for ( int i = 0; i < usuarioLocalEArrayList.size(); i++ )
             {
-                Integer cod_sede_operativa = usuarioLocalEArrayList.get(i).getLocalE().getSedeOperativaE().getCod_sede_operativa();
-                Integer cod_local_sede = usuarioLocalEArrayList.get(i).getLocalE().getCod_local_sede();
+                /*Integer cod_sede_operativa = usuarioLocalEArrayList.get(i).getLocalE().getSedeOperativaE().getCod_sede_operativa();
+                Integer cod_local_sede = usuarioLocalEArrayList.get(i).getLocalE().getCod_local_sede();*/
 
                 ContentValues contentSedeOperativa = new ContentValues();
-                contentSedeOperativa.put( "cod_sede_operativa", cod_sede_operativa );
-                contentSedeOperativa.put( "sede_operativa", usuarioLocalEArrayList.get(i).getLocalE().getSedeOperativaE().getSede_operativa() );
+                /*contentSedeOperativa.put( "cod_sede_operativa", cod_sede_operativa );*/
+                /*contentSedeOperativa.put( "sede_operativa", usuarioLocalEArrayList.get(i).getLocalE().getSedeOperativaE().getSede_operativa() );*/
 
                 ContentValues contentLocal =  new ContentValues();
-                contentLocal.put( "cod_sede_operativa", cod_sede_operativa );
-                contentLocal.put( "cod_local_sede", cod_local_sede );
-                contentLocal.put( "nombreLocal", usuarioLocalEArrayList.get(i).getLocalE().getNombreLocal() );
+                /*contentLocal.put( "cod_sede_operativa", cod_sede_operativa );
+                contentLocal.put( "cod_local_sede", cod_local_sede );*/
+                /*contentLocal.put( "nombreLocal", usuarioLocalEArrayList.get(i).getLocalE().getNombreLocal() );
                 contentLocal.put( "direccion", usuarioLocalEArrayList.get(i).getLocalE().getDireccion() );
                 contentLocal.put( "naula_t", usuarioLocalEArrayList.get(i).getLocalE().getNaula_t() );
                 contentLocal.put( "naula_n", usuarioLocalEArrayList.get(i).getLocalE().getNaula_n() );
@@ -157,15 +160,15 @@ public class LoginDAO {
                 contentLocal.put( "nficha", usuarioLocalEArrayList.get(i).getLocalE().getNficha() );
                 contentLocal.put( "ncartilla", usuarioLocalEArrayList.get(i).getLocalE().getNcartilla() );
 
-                SQL = "SELECT * FROM local WHERE cod_sede_operativa = " + cod_sede_operativa + " AND cod_local_sede = " + cod_local_sede;
+                SQL = "SELECT * FROM local WHERE cod_sede_operativa = " + cod_sede_operativa + " AND cod_local_sede = " + cod_local_sede;*/
                 cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
                 if ( cursor.moveToFirst() )
                 {
-                    String Where = "cod_sede_operativa = " + cod_sede_operativa + " AND cod_local_sede = " + cod_local_sede;
+                    /*String Where = "cod_sede_operativa = " + cod_sede_operativa + " AND cod_local_sede = " + cod_local_sede;*/
 
-                    Integer exitoLocal = dbHelper.getDatabase().updateWithOnConflict( "local", contentLocal, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
-                    Log.e( TAG, "Local update : " + String.valueOf(exitoLocal) );
+                    /*Integer exitoLocal = dbHelper.getDatabase().updateWithOnConflict( "local", contentLocal, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
+                    Log.e( TAG, "Local update : " + String.valueOf(exitoLocal) );*/
                 }
                 else
                 {
@@ -183,8 +186,8 @@ public class LoginDAO {
                 contentUsuarioLocal.put( "usuario", usuarioLocalEArrayList.get(i).getUsuario() );
                 contentUsuarioLocal.put( "clave", usuarioLocalEArrayList.get(i).getClave() );
                 contentUsuarioLocal.put( "rol", usuarioLocalEArrayList.get(i).getRol() );
-                contentUsuarioLocal.put( "cod_sede_operativa", cod_sede_operativa );
-                contentUsuarioLocal.put( "cod_local_sede", cod_local_sede );
+                /*contentUsuarioLocal.put( "cod_sede_operativa", cod_sede_operativa );
+                contentUsuarioLocal.put( "cod_local_sede", cod_local_sede );*/
 
                 Long exito = dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentUsuarioLocal );
                 Log.e( TAG, "usuario_local insert : " + String.valueOf(exito) );

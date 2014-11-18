@@ -3,12 +3,15 @@ package ordanel.ednom.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by OrdNael on 17/11/2014.
  */
 public class LocalE implements Parcelable {
 
-    private SedeOperativaE sedeOperativaE;
+    private Integer cod_sede_operativa;
     private Integer cod_local_sede;
     private String nombreLocal;
     private String direccion;
@@ -18,6 +21,7 @@ public class LocalE implements Parcelable {
     private Integer naula_contingencia;
     private Integer nficha;
     private Integer ncartilla;
+    private List<UsuarioLocalE> usuarioLocalEList;
 
     public LocalE() {
         super();
@@ -25,7 +29,7 @@ public class LocalE implements Parcelable {
 
     public LocalE( Parcel parcel ) {
 
-        setSedeOperativaE( (SedeOperativaE) parcel.readParcelable( SedeOperativaE.class.getClassLoader() ) );
+        setCod_sede_operativa( parcel.readInt() );
         setCod_local_sede( parcel.readInt() );
         setNombreLocal( parcel.readString() );
         setDireccion( parcel.readString() );
@@ -35,13 +39,15 @@ public class LocalE implements Parcelable {
         setNaula_contingencia( parcel.readInt() );
         setNficha( parcel.readInt() );
         setNcartilla( parcel.readInt() );
+        setUsuarioLocalEList( new ArrayList<UsuarioLocalE>() );
+        parcel.readTypedList( getUsuarioLocalEList(), UsuarioLocalE.CREATOR );
 
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeParcelable( getSedeOperativaE(), flags );
+        dest.writeInt( getCod_sede_operativa() );
         dest.writeInt( getCod_local_sede() );
         dest.writeString( getNombreLocal() );
         dest.writeString( getDireccion() );
@@ -71,12 +77,12 @@ public class LocalE implements Parcelable {
         }
     };
 
-    public SedeOperativaE getSedeOperativaE() {
-        return sedeOperativaE;
+    public Integer getCod_sede_operativa() {
+        return cod_sede_operativa;
     }
 
-    public void setSedeOperativaE(SedeOperativaE sedeOperativaE) {
-        this.sedeOperativaE = sedeOperativaE;
+    public void setCod_sede_operativa(Integer cod_sede_operativa) {
+        this.cod_sede_operativa = cod_sede_operativa;
     }
 
     public Integer getCod_local_sede() {
@@ -151,4 +157,11 @@ public class LocalE implements Parcelable {
         this.ncartilla = ncartilla;
     }
 
+    public List<UsuarioLocalE> getUsuarioLocalEList() {
+        return usuarioLocalEList;
+    }
+
+    public void setUsuarioLocalEList(List<UsuarioLocalE> usuarioLocalEList) {
+        this.usuarioLocalEList = usuarioLocalEList;
+    }
 }

@@ -15,7 +15,12 @@ import java.util.ArrayList;
 import java.util.Date;
 
 import ordanel.ednom.BD.DBHelper;
+import ordanel.ednom.Entity.AulaLocalE;
+import ordanel.ednom.Entity.DiscapacidadE;
+import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.PadronE;
+import ordanel.ednom.Entity.SedeOperativaE;
+import ordanel.ednom.Library.ConstantsUtils;
 import ordanel.ednom.Library.HttpPostAux;
 
 /**
@@ -25,8 +30,9 @@ public class PadronDAO {
 
     private static final String TAG = PadronDAO.class.getSimpleName();
 
-    String IP_Server = "jc.pe";
-    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/padron.php";
+    /*String IP_Server = "jc.pe";
+    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/padron.php";*/
+    String URL_Connect = ConstantsUtils.BASE_URL + "padron.php";
 
     Integer error = 0;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -87,7 +93,8 @@ public class PadronDAO {
 
     public ArrayList<PadronE> padronNube() {
 
-        nro_local = this.searchNroLocal();
+//        nro_local = this.searchNroLocal();
+        nro_local = 0;
 
         Log.e( TAG, "start padronNube" );
 
@@ -107,9 +114,48 @@ public class PadronDAO {
 
                 try
                 {
-                    JSONObject jsonObject;
+                    JSONObject jsonObject = jsonArray.getJSONObject(0);
 
-                    for ( int i = 0; i < jsonArray.length(); i++ )
+                    JSONObject jsonObjectTemp;
+
+//                    jsonObject = jsonArray.getJSONObject(0);
+                    JSONArray aula_local = jsonObject.getJSONArray("aula_local");
+
+                    for ( int i = 0; i < aula_local.length(); i++ )
+                    {
+                        jsonObjectTemp = (JSONObject) aula_local.get(i);
+
+                        SedeOperativaE sedeOperativaE = new SedeOperativaE();
+                        sedeOperativaE.setCod_sede_operativa( jsonObjectTemp.getInt( "cod_sede_operativa" ) );
+
+                        LocalE localE = new LocalE();
+                        localE.setSedeOperativaE( sedeOperativaE );
+                        localE.setCod_local_sede( jsonObjectTemp.getInt( "cod_local_sede" ) );
+
+                        AulaLocalE aulaLocalE = new AulaLocalE();
+                        aulaLocalE.setLocalE( localE );
+                        aulaLocalE.setNro_aula( jsonObjectTemp.getInt( "nro_aula") );
+                        aulaLocalE.setTipo( jsonObjectTemp.getString( "tipo" ) );
+                        aulaLocalE.setCant_docente( jsonObjectTemp.getInt( "cant_docente" ) );
+
+
+                    }
+
+                    JSONArray discapacidad = jsonObject.getJSONArray("discapacidad");
+
+                    for ( int i = 0; i < discapacidad.length(); i++ )
+                    {
+                        jsonObjectTemp = (JSONObject) discapacidad.get(i);
+
+                        DiscapacidadE discapacidadE = new DiscapacidadE();
+                        discapacidadE.setCod_discap( jsonObjectTemp.getInt( "cod_discap" ) );
+                        discapacidadE.setDiscapacidad( jsonObjectTemp.getString( "discapacidad") );
+
+
+                    }
+
+
+                    /*for ( int i = 0; i < jsonArray.length(); i++ )
                     {
                         jsonObject = (JSONObject) jsonArray.get(i);
 
@@ -150,7 +196,7 @@ public class PadronDAO {
                         arrayList.add( padronE );
                     }
 
-                    return arrayList;
+                    return arrayList;*/
 
                 }
                 catch (Exception e)
