@@ -129,7 +129,7 @@ public class PadronDAO {
                         sedeOperativaE.setCod_sede_operativa( jsonObjectTemp.getInt( "cod_sede_operativa" ) );
 
                         LocalE localE = new LocalE();
-                        localE.setSedeOperativaE( sedeOperativaE );
+                        /*localE.setSedeOperativaE( sedeOperativaE );*/
                         localE.setCod_local_sede( jsonObjectTemp.getInt( "cod_local_sede" ) );
 
                         AulaLocalE aulaLocalE = new AulaLocalE();

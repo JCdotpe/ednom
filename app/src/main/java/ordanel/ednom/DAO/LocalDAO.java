@@ -193,7 +193,7 @@ public class LocalDAO {
                     sedeOperativaE.setCod_sede_operativa( cursor.getInt( cursor.getColumnIndex( "cod_sede_operativa" ) ) );
                     sedeOperativaE.setSede_operativa(cursor.getString(cursor.getColumnIndex("sede_operativa")));
 
-                    localE.setSedeOperativaE( sedeOperativaE );
+                    /*localE.setSedeOperativaE( sedeOperativaE );*/
                     localE.setCod_local_sede( cursor.getInt( cursor.getColumnIndex( "cod_local_sede" ) ) );
                     localE.setNombreLocal( cursor.getString( cursor.getColumnIndex( "nombreLocal" ) ) );
                     localE.setDireccion( cursor.getString( cursor.getColumnIndex( "direccion" ) ) );
@@ -206,7 +206,7 @@ public class LocalDAO {
 
                     usuarioLocalE.setUsuario( cursor.getString( cursor.getColumnIndex( "usuario" ) ) );
                     usuarioLocalE.setRol( cursor.getInt( cursor.getColumnIndex( "rol" ) ) );
-                    usuarioLocalE.setLocalE( localE );
+                    /*usuarioLocalE.setLocalE( localE );*/
 
                     usuarioLocalEArrayList.add( usuarioLocalE );
 

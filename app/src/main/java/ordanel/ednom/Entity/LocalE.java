@@ -57,6 +57,7 @@ public class LocalE implements Parcelable {
         dest.writeInt( getNaula_contingencia() );
         dest.writeInt( getNficha() );
         dest.writeInt( getNcartilla() );
+        dest.writeTypedList( getUsuarioLocalEList() );
 
     }
 

@@ -67,14 +67,14 @@ public class UbigeoVerify extends Activity {
             {
                 for (int i = 0; i < arrayList.size(); i++)
                 {
-                    Sede = arrayList.get(i).getLocalE().getSedeOperativaE().getSede_operativa();
+                    /*Sede = arrayList.get(i).getLocalE().getSedeOperativaE().getSede_operativa();
                     Usuario = arrayList.get(i).getUsuario();
                     NombreLocal = arrayList.get(i).getLocalE().getNombreLocal();
                     Direccion = arrayList.get(i).getLocalE().getDireccion();
                     NAulas_t = arrayList.get(i).getLocalE().getNaula_t();
                     NAulas_n = arrayList.get(i).getLocalE().getNaula_n();
                     NAulas_disc = arrayList.get(i).getLocalE().getNaula_discapacidad();
-                    NAulas_contin = arrayList.get(i).getLocalE().getNaula_contingencia();
+                    NAulas_contin = arrayList.get(i).getLocalE().getNaula_contingencia();*/
                 }
 
                 txtSede.setText( Sede );

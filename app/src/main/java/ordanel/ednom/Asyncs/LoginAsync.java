@@ -45,9 +45,10 @@ public class LoginAsync extends AsyncTask< String, Integer, Integer > {
 
         if ( error == 0 )
         {
-            Intent intent = new Intent( this.context, UbigeoVerify.class );
-            /*intent.putParcelableArrayListExtra( "listUbigeo", ubigeoEs); // metodo para enviar arraylist */
-            this.context.startActivity( intent );
+            /*Intent intent = new Intent( this.context, UbigeoVerify.class );
+            *//*intent.putParcelableArrayListExtra( "listUbigeo", ubigeoEs); // metodo para enviar arraylist *//*
+            this.context.startActivity( intent );*/
+            Toast.makeText( this.context, "Ingreso", Toast.LENGTH_LONG).show();
         }
         else
         {
