@@ -36,6 +36,7 @@ public class LoginDAO {
 
     Context context;
     Cursor cursor = null;
+    ContentValues contentValues = null;
 
     DBHelper dbHelper;
     HttpPostAux posteo = new HttpPostAux();
@@ -48,7 +49,6 @@ public class LoginDAO {
         Log.e( TAG, "start" );
     }
 
-    /*public ArrayList<UsuarioLocalE> CheckLogin( String password ) {*/
     public Integer CheckLogin( String password ) {
 
         Log.e( TAG, "start CheckLogin" );
@@ -122,12 +122,6 @@ public class LoginDAO {
 
                     }
 
-                    /*if ( arrayList.size() > 0 )
-                    {
-                        this.registerLogin( arrayList );
-                    }*/
-
-
                 }
                 catch (Exception e)
                 {
@@ -166,42 +160,41 @@ public class LoginDAO {
             SQL = "SELECT * FROM sede_operativa WHERE cod_sede_operativa = " + cod_sede_operativa;
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
-            ContentValues contentSedeOperativa = new ContentValues();
-            contentSedeOperativa.put( "cod_sede_operativa", cod_sede_operativa );
-            contentSedeOperativa.put( "sede_operativa", sedeOperativaE.getSede_operativa() );
+            contentValues = new ContentValues();
+            contentValues.put( "cod_sede_operativa", cod_sede_operativa );
+            contentValues.put( "sede_operativa", sedeOperativaE.getSede_operativa() );
 
             if ( cursor.moveToFirst() )
             {
                 Where = "cod_sede_operativa = " + cod_sede_operativa;
 
-                Integer exitoSedeOperativa = dbHelper.getDatabase().updateWithOnConflict( "sede_operativa", contentSedeOperativa, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
+                Integer exitoSedeOperativa = dbHelper.getDatabase().updateWithOnConflict( "sede_operativa", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
                 Log.e( TAG, "sede_operativa update : " + String.valueOf(exitoSedeOperativa) );
             }
             else
             {
                 this.CleanBD( 1 );/* Login con diferente sede operativa */
 
-                Long exitoSedeOperativa = dbHelper.getDatabase().insertOrThrow( "sede_operativa", null, contentSedeOperativa );
+                Long exitoSedeOperativa = dbHelper.getDatabase().insertOrThrow( "sede_operativa", null, contentValues );
                 Log.e( TAG, "sede_operativa insert : " + String.valueOf(exitoSedeOperativa) );
 
             }
 
-            for ( int i = 0; i < sedeOperativaE.getLocalEList().size(); i++ )
+            for ( LocalE localE : sedeOperativaE.getLocalEList() )
             {
+                cod_local_sede = localE.getCod_local_sede();
 
-                cod_local_sede = sedeOperativaE.getLocalEList().get(i).getCod_local_sede();
-
-                ContentValues contentLocal =  new ContentValues();
-                contentLocal.put( "cod_sede_operativa", cod_sede_operativa );
-                contentLocal.put( "cod_local_sede", cod_local_sede );
-                contentLocal.put( "nombreLocal", sedeOperativaE.getLocalEList().get(i).getNombreLocal() );
-                contentLocal.put( "direccion", sedeOperativaE.getLocalEList().get(i).getDireccion() );
-                contentLocal.put( "naula_t", sedeOperativaE.getLocalEList().get(i).getNaula_t() );
-                contentLocal.put( "naula_n", sedeOperativaE.getLocalEList().get(i).getNaula_n() );
-                contentLocal.put( "naula_discapacidad", sedeOperativaE.getLocalEList().get(i).getNaula_discapacidad() );
-                contentLocal.put( "naula_contingencia", sedeOperativaE.getLocalEList().get(i).getNaula_contingencia() );
-                contentLocal.put( "nficha", sedeOperativaE.getLocalEList().get(i).getNficha() );
-                contentLocal.put( "ncartilla", sedeOperativaE.getLocalEList().get(i).getNcartilla() );
+                contentValues =  new ContentValues();
+                contentValues.put( "cod_sede_operativa", cod_sede_operativa );
+                contentValues.put( "cod_local_sede", cod_local_sede );
+                contentValues.put( "nombreLocal", localE.getNombreLocal() );
+                contentValues.put( "direccion", localE.getDireccion() );
+                contentValues.put( "naula_t", localE.getNaula_t() );
+                contentValues.put( "naula_n", localE.getNaula_n() );
+                contentValues.put( "naula_discapacidad", localE.getNaula_discapacidad() );
+                contentValues.put( "naula_contingencia", localE.getNaula_contingencia() );
+                contentValues.put( "nficha", localE.getNficha() );
+                contentValues.put( "ncartilla", localE.getNcartilla() );
 
                 SQL = "SELECT * FROM local WHERE cod_sede_operativa = " + cod_sede_operativa + " and cod_local_sede = " + cod_local_sede;
                 cursor = dbHelper.getDatabase().rawQuery( SQL, null );
@@ -210,7 +203,7 @@ public class LoginDAO {
                 {
                     Where = "cod_sede_operativa = " + cod_sede_operativa + " AND cod_local_sede = " + cod_local_sede;
 
-                    Integer exitoLocal = dbHelper.getDatabase().updateWithOnConflict( "local", contentLocal, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
+                    Integer exitoLocal = dbHelper.getDatabase().updateWithOnConflict( "local", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
                     Log.e( TAG, "Local update : " + String.valueOf(exitoLocal) );
                 }
                 else
@@ -218,25 +211,26 @@ public class LoginDAO {
 
                     this.CleanBD( 2 );/* Login con diferente local */
 
-                    Long exitoLocal = dbHelper.getDatabase().insertOrThrow( "local", null, contentLocal );
+                    Long exitoLocal = dbHelper.getDatabase().insertOrThrow( "local", null, contentValues );
                     Log.e( TAG, "Local insert : " + String.valueOf(exitoLocal) );
                 }
+
 
                 dbHelper.getDatabase().delete( "usuario_local", null, null );
                 Log.e( TAG, "Se elimino usuario_local!" );
 
-                for (int j = 0; j < sedeOperativaE.getLocalEList().get(i).getUsuarioLocalEList().size(); j++)
+                for ( UsuarioLocalE usuarioLocalE : localE.getUsuarioLocalEList() )
                 {
 
-                    ContentValues contentUsuarioLocal = new ContentValues();
-                    contentUsuarioLocal.put( "idUsuario", sedeOperativaE.getLocalEList().get(i).getUsuarioLocalEList().get(j).getIdUsuario() );
-                    contentUsuarioLocal.put( "usuario", sedeOperativaE.getLocalEList().get(i).getUsuarioLocalEList().get(j).getUsuario() );
-                    contentUsuarioLocal.put( "clave", sedeOperativaE.getLocalEList().get(i).getUsuarioLocalEList().get(j).getClave() );
-                    contentUsuarioLocal.put( "rol", sedeOperativaE.getLocalEList().get(i).getUsuarioLocalEList().get(j).getRol() );
-                    contentUsuarioLocal.put( "cod_sede_operativa", cod_sede_operativa );
-                    contentUsuarioLocal.put( "cod_local_sede", cod_local_sede );
+                    contentValues = new ContentValues();
+                    contentValues.put( "idUsuario", usuarioLocalE.getIdUsuario() );
+                    contentValues.put( "usuario", usuarioLocalE.getUsuario() );
+                    contentValues.put( "clave", usuarioLocalE.getClave() );
+                    contentValues.put( "rol", usuarioLocalE.getRol() );
+                    contentValues.put( "cod_sede_operativa", cod_sede_operativa );
+                    contentValues.put( "cod_local_sede", cod_local_sede );
 
-                    Long exitoUsuarioLocal = dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentUsuarioLocal );
+                    Long exitoUsuarioLocal = dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentValues );
                     Log.e( TAG, "usuario_local insert : " + String.valueOf(exitoUsuarioLocal) );
 
                 }
@@ -260,94 +254,6 @@ public class LoginDAO {
         Log.e( TAG, "end registerLogin" );
 
     }
-
-    /*public void registerLogin( ArrayList<UsuarioLocalE> usuarioLocalEArrayList ) {
-
-
-        Log.e( TAG, "start registerLogin" );
-
-        dbHelper = DBHelper.getUtilDb( this.context );
-
-        try
-        {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
-
-            dbHelper.getDatabase().delete( "usuario_local", null, null );
-            Log.e( TAG, "Se elimino usuario_local!" );
-
-            for ( int i = 0; i < usuarioLocalEArrayList.size(); i++ )
-            {
-                *//*Integer cod_sede_operativa = usuarioLocalEArrayList.get(i).getLocalE().getSedeOperativaE().getCod_sede_operativa();
-                Integer cod_local_sede = usuarioLocalEArrayList.get(i).getLocalE().getCod_local_sede();*//*
-
-                ContentValues contentSedeOperativa = new ContentValues();
-                *//*contentSedeOperativa.put( "cod_sede_operativa", cod_sede_operativa );*//*
-                *//*contentSedeOperativa.put( "sede_operativa", usuarioLocalEArrayList.get(i).getLocalE().getSedeOperativaE().getSede_operativa() );*//*
-
-                ContentValues contentLocal =  new ContentValues();
-                *//*contentLocal.put( "cod_sede_operativa", cod_sede_operativa );
-                contentLocal.put( "cod_local_sede", cod_local_sede );*//*
-                *//*contentLocal.put( "nombreLocal", usuarioLocalEArrayList.get(i).getLocalE().getNombreLocal() );
-                contentLocal.put( "direccion", usuarioLocalEArrayList.get(i).getLocalE().getDireccion() );
-                contentLocal.put( "naula_t", usuarioLocalEArrayList.get(i).getLocalE().getNaula_t() );
-                contentLocal.put( "naula_n", usuarioLocalEArrayList.get(i).getLocalE().getNaula_n() );
-                contentLocal.put( "naula_discapacidad", usuarioLocalEArrayList.get(i).getLocalE().getNaula_discapacidad() );
-                contentLocal.put( "naula_contingencia", usuarioLocalEArrayList.get(i).getLocalE().getNaula_contingencia() );
-                contentLocal.put( "nficha", usuarioLocalEArrayList.get(i).getLocalE().getNficha() );
-                contentLocal.put( "ncartilla", usuarioLocalEArrayList.get(i).getLocalE().getNcartilla() );
-
-                SQL = "SELECT * FROM local WHERE cod_sede_operativa = " + cod_sede_operativa + " AND cod_local_sede = " + cod_local_sede;*//*
-                cursor = dbHelper.getDatabase().rawQuery( SQL, null );
-
-                if ( cursor.moveToFirst() )
-                {
-                    *//*String Where = "cod_sede_operativa = " + cod_sede_operativa + " AND cod_local_sede = " + cod_local_sede;*//*
-
-                    *//*Integer exitoLocal = dbHelper.getDatabase().updateWithOnConflict( "local", contentLocal, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
-                    Log.e( TAG, "Local update : " + String.valueOf(exitoLocal) );*//*
-                }
-                else
-                {
-                    ResetBD();
-
-                    Long exitoSedeOperativa = dbHelper.getDatabase().insertOrThrow( "sede_operativa", null, contentSedeOperativa );
-                    Log.e( TAG, "sede_operativa insert : " + String.valueOf(exitoSedeOperativa) );
-
-                    Long exitoLocal = dbHelper.getDatabase().insertOrThrow( "local", null, contentLocal );
-                    Log.e( TAG, "Local insert : " + String.valueOf(exitoLocal) );
-                }
-
-                ContentValues contentUsuarioLocal = new ContentValues();
-                contentUsuarioLocal.put( "idUsuario", usuarioLocalEArrayList.get(i).getIdUsuario() );
-                contentUsuarioLocal.put( "usuario", usuarioLocalEArrayList.get(i).getUsuario() );
-                contentUsuarioLocal.put( "clave", usuarioLocalEArrayList.get(i).getClave() );
-                contentUsuarioLocal.put( "rol", usuarioLocalEArrayList.get(i).getRol() );
-                *//*contentUsuarioLocal.put( "cod_sede_operativa", cod_sede_operativa );
-                contentUsuarioLocal.put( "cod_local_sede", cod_local_sede );*//*
-
-                Long exito = dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentUsuarioLocal );
-                Log.e( TAG, "usuario_local insert : " + String.valueOf(exito) );
-
-            }
-
-            dbHelper.setTransactionSuccessful();
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            Log.e( TAG, "error registerLogin : " + e.toString() );
-            error = 4; // error en el registerLogin //
-        }
-        finally
-        {
-            dbHelper.endTransaction();
-            dbHelper.close();
-        }
-
-        Log.e( TAG, "end registerLogin" );
-
-    }*/
 
     public void CleanBD( Integer CaseOfClean ) {
 

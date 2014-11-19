@@ -30,8 +30,6 @@ public class PadronDAO {
 
     private static final String TAG = PadronDAO.class.getSimpleName();
 
-    /*String IP_Server = "jc.pe";
-    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/padron.php";*/
     String URL_Connect = ConstantsUtils.BASE_URL + "padron.php";
 
     Integer error = 0;

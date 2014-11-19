@@ -86,10 +86,11 @@ public class Login extends Activity {
     }
 
     public void err_login() {
+
         Vibrator vibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
         vibrator.vibrate( 200 );
-        Toast toast = Toast.makeText( getApplicationContext(), getString( R.string.login_msg_error_password ), Toast.LENGTH_SHORT );
-        toast.show();
+        Toast.makeText( getApplicationContext(), getString( R.string.login_msg_error_password ), Toast.LENGTH_SHORT ).show();
+
     }
 
 }

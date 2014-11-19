@@ -48,7 +48,6 @@ public class UbigeoVerify extends Activity {
         btnCorrecto = (Button) findViewById( R.id.btnCorrecto );
 
         /*ArrayList<UsuarioLocalE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" ); // metodo para obtener arraylist */
-        /*ArrayList<UsuarioLocalE> usuarioLocalEArrayList = new LocalDAO( UbigeoVerify.this ).showInfoLocal();*/
         SedeOperativaE sedeOperativaE = new LocalDAO( UbigeoVerify.this ).showInfoLocal();
 
         error = setUbigeo( sedeOperativaE );
@@ -102,51 +101,6 @@ public class UbigeoVerify extends Activity {
 
     }
 
-    /*public Integer setUbigeo( ArrayList<UsuarioLocalE> arrayList ) {
-
-        if ( arrayList != null )
-        {
-            Integer count = arrayList.size();
-
-            if ( count > 0 )
-            {
-                for (int i = 0; i < arrayList.size(); i++)
-                {
-                    *//*Sede = arrayList.get(i).getLocalE().getSedeOperativaE().getSede_operativa();
-                    Usuario = arrayList.get(i).getUsuario();
-                    NombreLocal = arrayList.get(i).getLocalE().getNombreLocal();
-                    Direccion = arrayList.get(i).getLocalE().getDireccion();
-                    NAulas_t = arrayList.get(i).getLocalE().getNaula_t();
-                    NAulas_n = arrayList.get(i).getLocalE().getNaula_n();
-                    NAulas_disc = arrayList.get(i).getLocalE().getNaula_discapacidad();
-                    NAulas_contin = arrayList.get(i).getLocalE().getNaula_contingencia();*//*
-                }
-
-                txtSede.setText( Sede );
-                txtUsuario.setText( Usuario );
-                txtNombreLocal.setText( NombreLocal );
-                txtDireccion.setText( Direccion );
-                txtNAulas_t.setText( NAulas_n.toString() );
-                txtNAulas_n.setText( NAulas_t.toString() );
-                txtNAulas_disc.setText( NAulas_disc.toString() );
-                txtNAulas_contin.setText( NAulas_contin.toString() );
-            }
-            else
-            {
-                error = 2;
-            }
-
-            Log.e( TAG, "setUbigeo count : " + count.toString() );
-        }
-        else
-        {
-            error = 1;
-        }
-
-        return error;
-
-    }*/
-
     public void err_UbigeoVerify( Integer error ) {
 
         String msg_error = "";
@@ -164,8 +118,7 @@ public class UbigeoVerify extends Activity {
 
         btnCorrecto.setEnabled( false );
 
-        Toast toast = Toast.makeText( UbigeoVerify.this, msg_error, Toast.LENGTH_SHORT );
-        toast.show();
+        Toast.makeText( UbigeoVerify.this, msg_error, Toast.LENGTH_SHORT ).show();
     }
 
     public void clickCorrecto(View view) {

@@ -20,14 +20,15 @@ public class VersionDAO {
 
     private static final String TAG = VersionDAO.class.getSimpleName();
 
-    Integer error = 0;
-
-    /*String IP_Server = "jc.pe";
-    String URL_Connect = "http://" + IP_Server + "/portafolio/ednom/version.php";*/
     String URL_Connect = ConstantsUtils.BASE_URL + "version.php";
+
+    Integer error = 0;
 
     DBHelper dbHelper;
     Context context;
+    ContentValues contentValues;
+
+    VersionE versionE;
 
     public VersionDAO (Context context) {
         this.context = context;
@@ -41,7 +42,7 @@ public class VersionDAO {
         dbHelper = DBHelper.getUtilDb( this.context );
         Cursor cursor = null;
 
-        VersionE versionE = new VersionE();
+        versionE = new VersionE();
 
         try
         {
@@ -61,7 +62,7 @@ public class VersionDAO {
                     cursor.moveToNext();
                 }*/
 
-                versionE.setV_padron(cursor.getInt(cursor.getColumnIndex("currentVersion")));
+                versionE.setV_padron( cursor.getInt( cursor.getColumnIndex( "currentVersion" ) ) );
             }
 
             return versionE.getV_padron();
@@ -90,8 +91,7 @@ public class VersionDAO {
 
         Log.e( TAG, "start checkVersion" );
 
-//        versionLocal = this.currentVersion();
-        versionLocal = 0;
+        versionLocal = this.currentVersion();
 
         if ( versionLocal != null )
         {
@@ -111,19 +111,17 @@ public class VersionDAO {
 
                         jsonObject = (JSONObject) jsonArray.get(0);
 
+                        versionNube = jsonObject.getInt( "v_padron" );
 
-                        VersionE versionE = new VersionE();
+                        versionE = new VersionE();
                         versionE.setVercod( jsonObject.getInt( "vercod" ) );
-                        versionE.setV_padron( jsonObject.getInt( "v_padron" ) );
+                        versionE.setV_padron( versionNube );
                         versionE.setV_sistem(jsonObject.getInt("v_sistem"));
                         versionE.setFecha( jsonObject.getString( "fecha" ) );
                         versionE.setObserva( jsonObject.getString( "observa" ) );
 
-                        versionNube = jsonObject.getInt( "v_padron" );
-
                         if ( !versionNube.equals(versionLocal) )
                         {
-                            /*if ( this.registerVersion( versionNube ) == 0 )*/
                             if ( this.registerVersion( versionE ) == 0 )
                             {
                                 statusVersion = 99;
@@ -173,7 +171,6 @@ public class VersionDAO {
 
     }
 
-//    public Integer registerVersion( Integer idVersion ) {
     public Integer registerVersion( VersionE versionE ) {
 
         Log.e( TAG, "start registerVersion" );
@@ -189,7 +186,7 @@ public class VersionDAO {
             Integer rowsNumber = dbHelper.getDatabase().delete( "version", null, null );
             Log.e( TAG, "Se elimino version! : " + rowsNumber.toString() );
 
-            ContentValues contentValues =  new ContentValues();
+            contentValues =  new ContentValues();
 
             contentValues.put( "vercod", versionE.getVercod() );
             contentValues.put( "v_padron", versionE.getV_padron() );
@@ -197,8 +194,8 @@ public class VersionDAO {
             contentValues.put( "fecha", versionE.getFecha() );
             contentValues.put( "observa", versionE.getObserva() );
 
-            Long exito = dbHelper.getDatabase().insertOrThrow( "version", null, contentValues );
-            success = String.valueOf(exito);
+            Long exitoVersion = dbHelper.getDatabase().insertOrThrow( "version", null, contentValues );
+            success = String.valueOf(exitoVersion);
 
             if ( success.equals("0") && success.equals("-1") )
             {

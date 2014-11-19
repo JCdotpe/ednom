@@ -75,7 +75,6 @@ public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
                 break;
         }
 
-        Toast toast = Toast.makeText( this.context, msg_error, Toast.LENGTH_SHORT );
-        toast.show();
+        Toast.makeText( this.context, msg_error, Toast.LENGTH_SHORT ).show();
     }
 }
