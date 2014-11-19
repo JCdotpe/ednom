@@ -156,8 +156,112 @@ public class LocalDAO {
 
         return arrayList;
     }
+    public SedeOperativaE showInfoLocal() {
 
-    public ArrayList<UsuarioLocalE> showInfoLocal() {
+        Log.e(TAG, "start showInfoLocal");
+
+        DBHelper dbHelper = DBHelper.getUtilDb( this.context );
+        Cursor cursor = null;
+
+        try
+        {
+            dbHelper.openDataBase();
+            dbHelper.beginTransaction();
+
+            String SQL = "SELECT cod_sede_operativa, sede_operativa FROM sede_operativa";
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            SedeOperativaE sedeOperativaE = new SedeOperativaE();
+
+            if ( cursor.moveToFirst() )
+            {
+
+                while ( !cursor.isAfterLast() )
+                {
+                    Integer cod_sede_operativa, cod_local_sede;
+
+                    cod_sede_operativa = cursor.getInt( cursor.getColumnIndex( "cod_sede_operativa" ) );
+                    sedeOperativaE.setCod_sede_operativa( cod_sede_operativa );
+                    sedeOperativaE.setSede_operativa( cursor.getString( cursor.getColumnIndex( "sede_operativa" ) ) );
+
+
+                    SQL = "SELECT cod_local_sede, nombreLocal, direccion, naula_t, naula_n, naula_discapacidad, naula_contingencia, nficha, ncartilla " +
+                            "FROM local " +
+                            "WHERE cod_sede_operativa = " + cod_sede_operativa;
+                    Cursor cursorLocal = dbHelper.getDatabase().rawQuery( SQL, null );
+
+                    ArrayList<LocalE> localEArrayList = new ArrayList<LocalE>();
+
+                    cursorLocal.moveToFirst();
+                    while ( !cursorLocal.isAfterLast() )
+                    {
+                        LocalE localE = new LocalE();
+
+                        cod_local_sede = cursorLocal.getInt( cursorLocal.getColumnIndex( "cod_local_sede" ) );
+                        localE.setCod_local_sede( cod_local_sede );
+                        localE.setNombreLocal( cursorLocal.getString( cursorLocal.getColumnIndex( "nombreLocal" ) ) );
+                        localE.setDireccion( cursorLocal.getString( cursorLocal.getColumnIndex( "direccion" ) ) );
+                        localE.setNaula_t( cursorLocal.getInt( cursorLocal.getColumnIndex( "naula_t" ) ) );
+                        localE.setNaula_n( cursorLocal.getInt( cursorLocal.getColumnIndex( "naula_n" ) ) );
+                        localE.setNaula_discapacidad( cursorLocal.getInt( cursorLocal.getColumnIndex("naula_discapacidad") ) );
+                        localE.setNaula_contingencia( cursorLocal.getInt( cursorLocal.getColumnIndex( "naula_contingencia" ) ) );
+                        localE.setNficha( cursorLocal.getInt( cursorLocal.getColumnIndex( "nficha" ) ) );
+                        localE.setNcartilla( cursorLocal.getInt( cursorLocal.getColumnIndex( "ncartilla" ) ) );
+
+
+                        SQL = "SELECT idUsuario, usuario, rol FROM usuario_local WHERE cod_sede_operativa = " + cod_sede_operativa + " and cod_local_sede = " + cod_local_sede;
+                        Cursor cursorUsuarioLocal = dbHelper.getDatabase().rawQuery( SQL, null );
+
+                        usuarioLocalEArrayList = new ArrayList<UsuarioLocalE>();
+
+                        cursorUsuarioLocal.moveToFirst();
+                        while ( !cursorUsuarioLocal.isAfterLast() )
+                        {
+                            UsuarioLocalE usuarioLocalE = new UsuarioLocalE();
+
+                            usuarioLocalE.setIdUsuario( cursorUsuarioLocal.getInt( cursorUsuarioLocal.getColumnIndex( "idUsuario" ) ) );
+                            usuarioLocalE.setUsuario( cursorUsuarioLocal.getString( cursorUsuarioLocal.getColumnIndex( "usuario" ) ) );
+                            usuarioLocalE.setRol( cursorUsuarioLocal.getInt( cursorUsuarioLocal.getColumnIndex( "rol" ) ) );
+
+                            usuarioLocalEArrayList.add( usuarioLocalE );
+                            cursorUsuarioLocal.moveToNext();
+                        }
+
+                        localE.setUsuarioLocalEList( usuarioLocalEArrayList );
+
+                        localEArrayList.add( localE );
+
+                        cursorLocal.moveToNext();
+                    }
+
+                    sedeOperativaE.setLocalEList( localEArrayList );
+
+                    cursor.moveToNext();
+                }
+
+            }
+
+            return sedeOperativaE;
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e( TAG, "error showInfoLocal : " + e.toString() );
+            return null; // error en el showInfoLocal //
+        }
+        finally
+        {
+            dbHelper.endTransaction();
+            dbHelper.close();
+            cursor.close();
+
+            Log.e( TAG, "end showInfoLocal" );
+        }
+
+    }
+
+    /*public ArrayList<UsuarioLocalE> showInfoLocal() {
 
         Log.e(TAG, "start showInfoLocal");
 
@@ -193,7 +297,7 @@ public class LocalDAO {
                     sedeOperativaE.setCod_sede_operativa( cursor.getInt( cursor.getColumnIndex( "cod_sede_operativa" ) ) );
                     sedeOperativaE.setSede_operativa(cursor.getString(cursor.getColumnIndex("sede_operativa")));
 
-                    /*localE.setSedeOperativaE( sedeOperativaE );*/
+                    *//*localE.setSedeOperativaE( sedeOperativaE );*//*
                     localE.setCod_local_sede( cursor.getInt( cursor.getColumnIndex( "cod_local_sede" ) ) );
                     localE.setNombreLocal( cursor.getString( cursor.getColumnIndex( "nombreLocal" ) ) );
                     localE.setDireccion( cursor.getString( cursor.getColumnIndex( "direccion" ) ) );
@@ -206,7 +310,7 @@ public class LocalDAO {
 
                     usuarioLocalE.setUsuario( cursor.getString( cursor.getColumnIndex( "usuario" ) ) );
                     usuarioLocalE.setRol( cursor.getInt( cursor.getColumnIndex( "rol" ) ) );
-                    /*usuarioLocalE.setLocalE( localE );*/
+
 
                     usuarioLocalEArrayList.add( usuarioLocalE );
 
@@ -233,6 +337,6 @@ public class LocalDAO {
             Log.e( TAG, "start showInfoLocal" );
         }
 
-    }
+    }*/
 
 }

@@ -77,4 +77,5 @@ public class SedeOperativaE implements Parcelable {
     public void setLocalEList(List<LocalE> localEList) {
         this.localEList = localEList;
     }
+
 }
