@@ -8,6 +8,7 @@ import android.os.Parcelable;
  */
 public class DocentesE implements Parcelable {
 
+    private AulaLocalE aulaLocalE;
     private DiscapacidadE discapacidadE;
     private ModalidadE modalidadE;
     private String dre_des;
@@ -38,11 +39,13 @@ public class DocentesE implements Parcelable {
 
     public DocentesE( Parcel parcel ) {
 
+        setAulaLocalE( (AulaLocalE) parcel.readParcelable( AulaLocalE.class.getClassLoader() ) );
         setDiscapacidadE( (DiscapacidadE) parcel.readParcelable( DiscapacidadE.class.getClassLoader() ) );
         setModalidadE( (ModalidadE) parcel.readParcelable( ModalidadE.class.getClassLoader() ) );
 
         setDre_des( parcel.readString() );
         setUgel_des( parcel.readString() );
+        setTipo_doc( parcel.readString() );
         setNro_doc( parcel.readString() );
         setApe_pat( parcel.readString() );
         setApe_mat( parcel.readString() );
@@ -67,6 +70,31 @@ public class DocentesE implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
+        dest.writeParcelable( getAulaLocalE(), flags );
+        dest.writeParcelable( getDiscapacidadE(), flags );
+        dest.writeParcelable( getModalidadE(), flags );
+        dest.writeString( getDre_des() );
+        dest.writeString( getUgel_des() );
+        dest.writeString( getTipo_doc() );
+        dest.writeString( getNro_doc() );
+        dest.writeString( getApe_pat() );
+        dest.writeString( getApe_mat() );
+        dest.writeString( getNombres() );
+        dest.writeString( getSexo() );
+        dest.writeString( getFecha_nac() );
+        dest.writeInt( edad );
+        dest.writeString( cod_ficha );
+        dest.writeString( cod_cartilla );
+        dest.writeInt( estado );
+        dest.writeString( f_registro );
+        dest.writeInt( estado_aula );
+        dest.writeString( f_aula );
+        dest.writeInt( estado_ficha );
+        dest.writeString( f_ficha );
+        dest.writeInt( estado_cartilla );
+        dest.writeString( f_caritlla );
+        dest.writeInt( nro_aula_cambio );
+
     }
 
     @Override
@@ -86,6 +114,13 @@ public class DocentesE implements Parcelable {
         }
     };
 
+    public AulaLocalE getAulaLocalE() {
+        return aulaLocalE;
+    }
+
+    public void setAulaLocalE(AulaLocalE aulaLocalE) {
+        this.aulaLocalE = aulaLocalE;
+    }
 
     public DiscapacidadE getDiscapacidadE() {
         return discapacidadE;
@@ -270,4 +305,5 @@ public class DocentesE implements Parcelable {
     public void setNro_aula_cambio(Integer nro_aula_cambio) {
         this.nro_aula_cambio = nro_aula_cambio;
     }
+
 }

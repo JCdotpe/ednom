@@ -34,7 +34,7 @@ public class PadronDAO {
     String URL_Connect = ConstantsUtils.BASE_URL + "padron.php";
 
     Integer error = 0;
-    Integer cod_sede_operativa, cod_local_sede;
+    Integer cod_sede_operativa, cod_local_sede, nro_aula;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     DBHelper dbHelper;
@@ -119,14 +119,14 @@ public class PadronDAO {
 
             if ( jsonArray != null && jsonArray.length() > 0 )
             {
+                ArrayList<AulaLocalE> aulaLocalEArrayList = new ArrayList<AulaLocalE>();
+
                 try
                 {
                     JSONObject jsonObjectTemp;
                     JSONObject jsonObject = jsonArray.getJSONObject(0);
 
                     JSONArray aula_local = jsonObject.getJSONArray("AULAS");
-
-                    ArrayList<AulaLocalE> aulaLocalEArrayList = new ArrayList<AulaLocalE>();
 
                     for ( int i = 0; i < aula_local.length(); i++ )
                     {
@@ -140,26 +140,25 @@ public class PadronDAO {
 
                         JSONArray jsonArrayTemp = (JSONArray) jsonObjectTemp.get("DOCENTES");
 
+                        ArrayList<DocentesE> docentesEArrayList = new ArrayList<DocentesE>();
+
                         for ( int j = 0; j < jsonArrayTemp.length(); j++ )
                         {
                             jsonObjectTemp = (JSONObject) jsonArrayTemp.get(j);
+                            DocentesE docentesE = new DocentesE();
 
-                            Log.e( TAG, "datos de docentes : " + jsonObjectTemp.getString( "ape_pat" ).toString() );
+                            docentesE.setAulaLocalE( aulaLocalE );
+                            docentesE.setTipo_doc( jsonObjectTemp.getString( "tipo_doc" ) );
+                            docentesE.setNro_doc( jsonObjectTemp.getString( "nro_doc" ) );
+                            docentesE.setApe_pat( jsonObjectTemp.getString( "ape_pat" ) );
+                            docentesE.setApe_mat( jsonObjectTemp.getString( "ape_mat" ) );
+                            docentesE.setNombres( jsonObjectTemp.getString( "nombres" ) );
+
+                            docentesEArrayList.add( docentesE );
 
                         }
 
-                        /*JSONArray jsonArrayTemp = jsonObjectTemp.getJSONArray("DOCENTES");
-
-                        for ( int j = 0; j < jsonArrayTemp.length(); j++ )
-                        {
-
-                            DocentesE docentesE = new DocentesE();
-                            docentesE.setNombres( jsonObjectTemp.getString("nombres") );
-
-                            Log.e( TAG, "datos de docentes : " + docentesE.getNombres() );
-                        }*/
-
-
+                        aulaLocalE.setDocentesEList( docentesEArrayList );
 
                         aulaLocalEArrayList.add( aulaLocalE );
 
@@ -168,18 +167,92 @@ public class PadronDAO {
                     Integer cantidad = aulaLocalEArrayList.size();
                     Log.e( TAG, "cantidad de aula_local : " + cantidad.toString() );
 
+                    this.registrarPadron( aulaLocalEArrayList );
+
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
                     Log.e( TAG, "error padronNubeJson : " + e.toString() );
                 }
+
             }
 
 
         }
 
         Log.e( TAG, "end padronNubeJson" );
+
+    }
+
+    public void registrarPadron( ArrayList<AulaLocalE> aulaLocalEArrayList ) {
+
+        Log.e( TAG, "start registrarPadron" );
+
+        dbHelper = DBHelper.getUtilDb( this.context );
+
+        try
+        {
+            dbHelper.openDataBase();
+            dbHelper.beginTransaction();
+
+            dbHelper.getDatabase().delete( "aula_local", null, null );
+            Log.e( TAG, "Se elimino aula_local!" );
+
+            dbHelper.getDatabase().delete( "docentes", null, null );
+            Log.e( TAG, "Se elimino docentes!" );
+
+            for ( AulaLocalE aulaLocalE : aulaLocalEArrayList )
+            {
+                cod_sede_operativa = aulaLocalE.getLocalE().getCod_sede_operativa();
+                cod_local_sede = aulaLocalE.getLocalE().getCod_local_sede();
+                nro_aula = aulaLocalE.getNro_aula();
+
+                contentValues = new ContentValues();
+
+                contentValues.put( "cod_sede_operativa", cod_sede_operativa );
+                contentValues.put( "cod_local_sede", cod_local_sede);
+                contentValues.put( "nro_aula", nro_aula);
+                contentValues.put( "tipo", aulaLocalE.getTipo() );
+                contentValues.put( "cant_docente", aulaLocalE.getCant_docente() );
+
+                Long exitoAula_Local = dbHelper.getDatabase().insertOrThrow( "aula_local", null, contentValues );
+                Log.e( TAG, "aula_local insert : " + String.valueOf(exitoAula_Local) );
+
+                for ( DocentesE docentesE : aulaLocalE.getDocentesEList() )
+                {
+                    contentValues = new ContentValues();
+
+                    contentValues.put( "cod_sede_operativa", cod_sede_operativa );
+                    contentValues.put( "cod_local_sede", cod_local_sede );
+                    contentValues.put( "tipo_doc", docentesE.getTipo_doc() );
+                    contentValues.put( "nro_doc", docentesE.getNro_doc() );
+                    contentValues.put( "ape_pat", docentesE.getApe_pat() );
+                    contentValues.put( "ape_mat", docentesE.getApe_mat() );
+                    contentValues.put( "nombres", docentesE.getNombres() );
+                    contentValues.put( "nro_aula", nro_aula );
+
+                    Long exitoDocentes = dbHelper.getDatabase().insertOrThrow( "docentes", null, contentValues );
+                    Log.e( TAG, "docentes insert : " + String.valueOf(exitoDocentes) );
+
+                }
+
+            }
+
+            dbHelper.setTransactionSuccessful();
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e( TAG, "error registrarPadron : " + e.toString() );
+        }
+        finally
+        {
+            dbHelper.endTransaction();
+            dbHelper.close();
+        }
+
+        Log.e( TAG, "end registrarPadron" );
 
     }
 
