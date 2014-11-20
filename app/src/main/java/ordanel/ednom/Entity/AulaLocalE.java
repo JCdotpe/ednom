@@ -3,6 +3,9 @@ package ordanel.ednom.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by OrdNael on 18/11/2014.
  */
@@ -12,6 +15,7 @@ public class AulaLocalE implements Parcelable {
     private Integer nro_aula;
     private String tipo;
     private Integer cant_docente;
+    private List<DocentesE> docentesEList;
 
 
     public AulaLocalE() {
@@ -24,6 +28,8 @@ public class AulaLocalE implements Parcelable {
         setNro_aula( parcel.readInt() );
         setTipo( parcel.readString() );
         setCant_docente( parcel.readInt() );
+        setDocentesEList( new ArrayList<DocentesE>() );
+        parcel.readTypedList( getDocentesEList(), DocentesE.CREATOR );
 
     }
 
@@ -34,6 +40,7 @@ public class AulaLocalE implements Parcelable {
         dest.writeInt( getNro_aula() );
         dest.writeString( getTipo() );
         dest.writeInt( getCant_docente() );
+        dest.writeTypedList( getDocentesEList() );
 
     }
 
@@ -84,5 +91,13 @@ public class AulaLocalE implements Parcelable {
 
     public void setCant_docente(Integer cant_docente) {
         this.cant_docente = cant_docente;
+    }
+
+    public List<DocentesE> getDocentesEList() {
+        return docentesEList;
+    }
+
+    public void setDocentesEList(List<DocentesE> docentesEList) {
+        this.docentesEList = docentesEList;
     }
 }

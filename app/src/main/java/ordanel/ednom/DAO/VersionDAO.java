@@ -91,7 +91,8 @@ public class VersionDAO {
 
         Log.e( TAG, "start checkVersion" );
 
-        versionLocal = this.currentVersion();
+        /*versionLocal = this.currentVersion();*/
+        versionLocal = 0;
 
         if ( versionLocal != null )
         {

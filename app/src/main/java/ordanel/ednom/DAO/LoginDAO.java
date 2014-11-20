@@ -81,7 +81,7 @@ public class LoginDAO {
                             LocalE localE = new LocalE();
                             jsonObject = (JSONObject) jsonArray.get(j);
 
-                            localE.setCod_sede_operativa( jsonObject.getInt("cod_sede_operativa") );
+                            localE.setCod_sede_operativa( jsonObject.getInt( "cod_sede_operativa" ) );
                             localE.setCod_local_sede( jsonObject.getInt( "cod_local_sede" ) );
                             localE.setNombreLocal( jsonObject.getString("nombreLocal") );
                             localE.setDireccion( jsonObject.getString( "direccion" ) );
