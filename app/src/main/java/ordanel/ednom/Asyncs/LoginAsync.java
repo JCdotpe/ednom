@@ -76,6 +76,6 @@ public class LoginAsync extends AsyncTask< String, Integer, Integer > {
                 break;
         }
 
-        Toast.makeText( this.context, msg_error, Toast.LENGTH_SHORT ).show();
+        Toast.makeText( this.context, msg_error, Toast.LENGTH_LONG ).show();
     }
 }

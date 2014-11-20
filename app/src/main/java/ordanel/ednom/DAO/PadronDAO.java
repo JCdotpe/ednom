@@ -33,6 +33,7 @@ public class PadronDAO {
     String URL_Connect = ConstantsUtils.BASE_URL + "padron.php";
 
     Integer error = 0;
+    Integer cod_sede_operativa, cod_local_sede;
     SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
     DBHelper dbHelper;
@@ -40,15 +41,16 @@ public class PadronDAO {
     Cursor cursor = null;
     ContentValues contentValues;
 
+    LocalE localE;
     ArrayList<PadronE> arrayList;
-    Integer nro_local;
+
 
     public PadronDAO( Context context ) {
         this.context = context;
         Log.e( TAG, "start" );
     }
 
-    public Integer searchNroLocal() {
+    public LocalE searchNroLocal() {
 
         Log.e( TAG, "start searchNroLocal" );
 
@@ -59,16 +61,22 @@ public class PadronDAO {
             dbHelper.openDataBase();
             dbHelper.beginTransaction();
 
-            String SQL = "SELECT nro_local FROM usuario_local";
+            String SQL = "SELECT cod_sede_operativa, cod_local_sede FROM local";
 
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
             if ( cursor.moveToFirst() )
             {
-                nro_local = cursor.getInt( cursor.getColumnIndex( "nro_local" ) );
+                localE = new LocalE();
+
+                localE.setCod_sede_operativa( cursor.getInt( cursor.getColumnIndex( "cod_sede_operativa" ) ) );
+                localE.setCod_local_sede( cursor.getInt( cursor.getColumnIndex( "cod_local_sede" ) ) );
+                localE.setOperation_status( 0 );
+
+                Integer nro_local = cursor.getInt( cursor.getColumnIndex( "cod_local_sede" ) );
                 Log.e( TAG, "numero de local : " + nro_local.toString() );
 
-                return nro_local;
+                return localE;
             }
         }
         catch (Exception e)
@@ -92,20 +100,25 @@ public class PadronDAO {
     public ArrayList<PadronE> padronNube() {
 
 //        nro_local = this.searchNroLocal();
-        nro_local = 0;
+        localE = this.searchNroLocal();
 
         Log.e( TAG, "start padronNube" );
 
-        if ( nro_local != null )
+        if ( localE != null )
         {
             HttpPostAux httpPostAux = new HttpPostAux();
 
+            cod_sede_operativa = localE.getCod_sede_operativa();
+            cod_local_sede = localE.getCod_local_sede();
+
             ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
-            parametersPost.add( new BasicNameValuePair( "nro_local", nro_local.toString() ) );
+            parametersPost.add( new BasicNameValuePair( "cod_sede_operativa", cod_sede_operativa.toString() ) );
+            parametersPost.add( new BasicNameValuePair( "cod_local_sede", cod_local_sede.toString() ) );
 
             JSONArray jsonArray = httpPostAux.getServerData( parametersPost, URL_Connect );
 
-            if ( jsonArray != null && jsonArray.length() > 0 )
+
+            /*if ( jsonArray != null && jsonArray.length() > 0 )
             {
 
                 arrayList = new ArrayList<PadronE>();
@@ -127,7 +140,7 @@ public class PadronDAO {
                         sedeOperativaE.setCod_sede_operativa( jsonObjectTemp.getInt( "cod_sede_operativa" ) );
 
                         LocalE localE = new LocalE();
-                        /*localE.setSedeOperativaE( sedeOperativaE );*/
+                        *//*localE.setSedeOperativaE( sedeOperativaE );*//*
                         localE.setCod_local_sede( jsonObjectTemp.getInt( "cod_local_sede" ) );
 
                         AulaLocalE aulaLocalE = new AulaLocalE();
@@ -153,7 +166,7 @@ public class PadronDAO {
                     }
 
 
-                    /*for ( int i = 0; i < jsonArray.length(); i++ )
+                    *//*for ( int i = 0; i < jsonArray.length(); i++ )
                     {
                         jsonObject = (JSONObject) jsonArray.get(i);
 
@@ -194,7 +207,7 @@ public class PadronDAO {
                         arrayList.add( padronE );
                     }
 
-                    return arrayList;*/
+                    return arrayList;*//*
 
                 }
                 catch (Exception e)
@@ -203,7 +216,7 @@ public class PadronDAO {
                     Log.e( TAG, "error padronNube : " + e.toString() );
                 }
 
-            }
+            }*/
 
         }
 

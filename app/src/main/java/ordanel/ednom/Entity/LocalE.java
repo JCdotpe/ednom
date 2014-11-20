@@ -21,6 +21,7 @@ public class LocalE implements Parcelable {
     private Integer naula_contingencia;
     private Integer nficha;
     private Integer ncartilla;
+    private Integer operation_status;
     private List<UsuarioLocalE> usuarioLocalEList;
 
     public LocalE() {
@@ -39,6 +40,7 @@ public class LocalE implements Parcelable {
         setNaula_contingencia( parcel.readInt() );
         setNficha( parcel.readInt() );
         setNcartilla( parcel.readInt() );
+        setOperation_status( parcel.readInt() );
         setUsuarioLocalEList( new ArrayList<UsuarioLocalE>() );
         parcel.readTypedList( getUsuarioLocalEList(), UsuarioLocalE.CREATOR );
 
@@ -57,6 +59,7 @@ public class LocalE implements Parcelable {
         dest.writeInt( getNaula_contingencia() );
         dest.writeInt( getNficha() );
         dest.writeInt( getNcartilla() );
+        dest.writeInt( getOperation_status() );
         dest.writeTypedList( getUsuarioLocalEList() );
 
     }
@@ -158,6 +161,14 @@ public class LocalE implements Parcelable {
         this.ncartilla = ncartilla;
     }
 
+    public Integer getOperation_status() {
+        return operation_status;
+    }
+
+    public void setOperation_status(Integer operation_status) {
+        this.operation_status = operation_status;
+    }
+
     public List<UsuarioLocalE> getUsuarioLocalEList() {
         return usuarioLocalEList;
     }
@@ -165,4 +176,6 @@ public class LocalE implements Parcelable {
     public void setUsuarioLocalEList(List<UsuarioLocalE> usuarioLocalEList) {
         this.usuarioLocalEList = usuarioLocalEList;
     }
+
+
 }
