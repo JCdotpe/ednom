@@ -3,14 +3,22 @@ package ordanel.ednom.Entity;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by OrdNael on 30/10/2014.
  */
 public class PadronE implements Parcelable {
 
-    private Integer codigo;
+    private List<AulaLocalE> aulaLocalEList = new ArrayList<AulaLocalE>();
+    private List<DocentesE> docentesEList = new ArrayList<DocentesE>();
+    private List<DiscapacidadE> discapacidadEList = new ArrayList<DiscapacidadE>();
+    private List<ModalidadE> modalidadEList = new ArrayList<ModalidadE>();
+    private Integer status;
+
+    /*private Integer codigo;
     private String sede;
     private Integer nro_local;
     private String local_aplicacion;
@@ -41,7 +49,7 @@ public class PadronE implements Parcelable {
     private String new_aula;
     private String new_local;
     private Integer cant_ficha;
-    private String tipo;
+    private String tipo;*/
 
     public PadronE() {
         super();
@@ -49,7 +57,13 @@ public class PadronE implements Parcelable {
 
     public PadronE( Parcel parcel) {
 
-        codigo = parcel.readInt();
+        parcel.readTypedList( aulaLocalEList, AulaLocalE.CREATOR );
+        parcel.readTypedList( docentesEList, DocentesE.CREATOR );
+        parcel.readTypedList( discapacidadEList, DiscapacidadE.CREATOR );
+        parcel.readTypedList( modalidadEList, ModalidadE.CREATOR );
+        status = parcel.readInt();
+
+        /*codigo = parcel.readInt();
         sede = parcel.readString();
         nro_local = parcel.readInt();
         local_aplicacion = parcel.readString();
@@ -79,7 +93,7 @@ public class PadronE implements Parcelable {
         new_aula = parcel.readString();
         new_local = parcel.readString();
         cant_ficha = parcel.readInt();
-        tipo = parcel.readString();
+        tipo = parcel.readString();*/
 
     }
 
@@ -91,7 +105,13 @@ public class PadronE implements Parcelable {
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeInt( codigo );
+        dest.writeTypedList(aulaLocalEList);
+        dest.writeTypedList( docentesEList );
+        dest.writeTypedList( discapacidadEList );
+        dest.writeTypedList( modalidadEList );
+        dest.writeInt( status );
+
+        /*dest.writeInt( codigo );
         dest.writeString( sede );
         dest.writeInt( nro_local );
         dest.writeString( local_aplicacion );
@@ -121,7 +141,7 @@ public class PadronE implements Parcelable {
         dest.writeString( new_aula );
         dest.writeString( new_local );
         dest.writeInt( cant_ficha );
-        dest.writeString( tipo );
+        dest.writeString( tipo );*/
 
     }
 
@@ -137,7 +157,47 @@ public class PadronE implements Parcelable {
         }
     };
 
-    public Integer getCodigo() {
+    public List<AulaLocalE> getAulaLocalEList() {
+        return aulaLocalEList;
+    }
+
+    public void setAulaLocalEList(List<AulaLocalE> aulaLocalEList) {
+        this.aulaLocalEList = aulaLocalEList;
+    }
+
+    public List<DocentesE> getDocentesEList() {
+        return docentesEList;
+    }
+
+    public void setDocentesEList(List<DocentesE> docentesEList) {
+        this.docentesEList = docentesEList;
+    }
+
+    public List<DiscapacidadE> getDiscapacidadEList() {
+        return discapacidadEList;
+    }
+
+    public void setDiscapacidadEList(List<DiscapacidadE> discapacidadEList) {
+        this.discapacidadEList = discapacidadEList;
+    }
+
+    public List<ModalidadE> getModalidadEList() {
+        return modalidadEList;
+    }
+
+    public void setModalidadEList(List<ModalidadE> modalidadEList) {
+        this.modalidadEList = modalidadEList;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    /*public Integer getCodigo() {
         return codigo;
     }
 
@@ -391,6 +451,6 @@ public class PadronE implements Parcelable {
 
     public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
+    }*/
 
 }

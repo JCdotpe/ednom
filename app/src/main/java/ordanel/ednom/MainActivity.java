@@ -214,12 +214,12 @@ public class MainActivity extends Activity
         {
             for ( int i = 0; i < arrayList.size(); i++ )
             {
-                txtDni.setText( arrayList.get(i).getIns_numdoc() );
+                /*txtDni.setText( arrayList.get(i).getIns_numdoc() );
                 txtApePaterno.setText( arrayList.get(i).getApepat() );
                 txtApeMaterno.setText( arrayList.get(i).getApemat() );
                 txtNombres.setText( arrayList.get(i).getNombres() );
                 txtLocalAplicacion.setText( arrayList.get(i).getLocal_aplicacion() );
-                txtAula.setText( arrayList.get(i).getAula() );
+                txtAula.setText( arrayList.get(i).getAula() );*/
             }
         }
         else

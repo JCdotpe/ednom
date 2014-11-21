@@ -57,12 +57,12 @@ public class LocalDAO {
                 {
                     PadronE padronE = new PadronE();
 
-                    padronE.setIns_numdoc( cursor.getString( cursor.getColumnIndex( "ins_numdoc" ) ) );
+                    /*padronE.setIns_numdoc( cursor.getString( cursor.getColumnIndex( "ins_numdoc" ) ) );
                     padronE.setApepat( cursor.getString( cursor.getColumnIndex( "apepat" ) ) );
                     padronE.setApemat( cursor.getString( cursor.getColumnIndex( "apemat" ) ) );
                     padronE.setNombres( cursor.getString( cursor.getColumnIndex( "nombres" ) ) );
                     padronE.setLocal_aplicacion( cursor.getString( cursor.getColumnIndex( "local_aplicacion" ) ) );
-                    padronE.setAula( cursor.getString( cursor.getColumnIndex( "aula" ) ) );
+                    padronE.setAula( cursor.getString( cursor.getColumnIndex( "aula" ) ) );*/
 
                     arrayList.add( padronE );
 
@@ -127,12 +127,12 @@ public class LocalDAO {
                 {
                     PadronE padronE = new PadronE();
 
-                    padronE.setIns_numdoc( cursor.getString( cursor.getColumnIndex( "ins_numdoc" ) ) );
+                    /*padronE.setIns_numdoc( cursor.getString( cursor.getColumnIndex( "ins_numdoc" ) ) );
                     padronE.setApepat( cursor.getString( cursor.getColumnIndex( "apepat" ) ) );
                     padronE.setApemat( cursor.getString( cursor.getColumnIndex( "apemat" ) ) );
                     padronE.setNombres( cursor.getString( cursor.getColumnIndex( "nombres" ) ) );
                     padronE.setLocal_aplicacion( cursor.getString( cursor.getColumnIndex( "local_aplicacion" ) ) );
-                    padronE.setAula( cursor.getString( cursor.getColumnIndex( "aula" ) ) );
+                    padronE.setAula( cursor.getString( cursor.getColumnIndex( "aula" ) ) );*/
 
                     arrayList.add( padronE );
 

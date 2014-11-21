@@ -19,8 +19,8 @@ import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DiscapacidadE;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.LocalE;
+import ordanel.ednom.Entity.ModalidadE;
 import ordanel.ednom.Entity.PadronE;
-import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Library.ConstantsUtils;
 import ordanel.ednom.Library.HttpPostAux;
 
@@ -98,11 +98,12 @@ public class PadronDAO {
 
     }
 
-    public void padronNubeJson() {
+    public PadronE padronNube( LocalE localE ) {
 
-        localE = this.searchNroLocal();
+        //localE = this.searchNroLocal();
 
         Log.e( TAG, "start padronNubeJson" );
+        PadronE padronE = new PadronE();
 
         if ( localE != null )
         {
@@ -164,28 +165,70 @@ public class PadronDAO {
 
                     }
 
-                    Integer cantidad = aulaLocalEArrayList.size();
+                    Integer cantidad;
+                    cantidad = aulaLocalEArrayList.size();
                     Log.e( TAG, "cantidad de aula_local : " + cantidad.toString() );
+                    padronE.setAulaLocalEList( aulaLocalEArrayList );
 
-                    this.registrarPadron( aulaLocalEArrayList );
+                    JSONArray discapacidad = jsonObject.getJSONArray("DISCAPACIDAD");
+                    ArrayList<DiscapacidadE> discapacidadEArrayList = new ArrayList<DiscapacidadE>();
+
+                    for ( int i = 0; i < discapacidad.length(); i++ )
+                    {
+                        jsonObjectTemp = (JSONObject) discapacidad.get(i);
+
+                        DiscapacidadE discapacidadE = new DiscapacidadE();
+                        discapacidadE.setCod_discap( jsonObjectTemp.getInt( "cod_discap" ) );
+                        discapacidadE.setDiscapacidad( jsonObjectTemp.getString( "discapacidad" ) );
+
+                        discapacidadEArrayList.add( discapacidadE );
+                    }
+
+                    cantidad = discapacidadEArrayList.size();
+                    Log.e( TAG, "cantidad de discapacidad : " + cantidad.toString() );
+                    padronE.setDiscapacidadEList( discapacidadEArrayList );
+
+                    JSONArray modalidad = jsonObject.getJSONArray("MODALIDAD");
+                    ArrayList<ModalidadE> modalidadEArrayList = new ArrayList<ModalidadE>();
+
+                    for ( int i = 0; i < modalidad.length(); i++ )
+                    {
+                        jsonObjectTemp = (JSONObject) modalidad.get(i);
+
+                        ModalidadE modalidadE = new ModalidadE();
+                        modalidadE.setCod_modal( jsonObjectTemp.getInt( "cod_modal" ) );
+                        modalidadE.setModalidad( jsonObjectTemp.getString( "modalidad" ) );
+
+                        modalidadEArrayList.add( modalidadE );
+                    }
+
+                    cantidad = modalidadEArrayList.size();
+                    Log.e( TAG, "cantidad de modalidad : " + cantidad.toString() );
+                    padronE.setModalidadEList( modalidadEArrayList );
+
+                    padronE.setStatus( 0 );
+
+                    //this.registrarPadron( aulaLocalEArrayList, discapacidadEArrayList, modalidadEArrayList );
 
                 }
                 catch (Exception e)
                 {
                     e.printStackTrace();
+                    padronE.setStatus( 1 );
                     Log.e( TAG, "error padronNubeJson : " + e.toString() );
                 }
 
             }
 
-
         }
 
         Log.e( TAG, "end padronNubeJson" );
 
+        return padronE;
+
     }
 
-    public void registrarPadron( ArrayList<AulaLocalE> aulaLocalEArrayList ) {
+    public PadronE registrarPadron( PadronE padronE ) {
 
         Log.e( TAG, "start registrarPadron" );
 
@@ -201,6 +244,16 @@ public class PadronDAO {
 
             dbHelper.getDatabase().delete( "docentes", null, null );
             Log.e( TAG, "Se elimino docentes!" );
+
+            dbHelper.getDatabase().delete( "discapacidad", null, null );
+            Log.e( TAG, "Se elimino discapacidad!" );
+
+            dbHelper.getDatabase().delete( "modalidad", null, null );
+            Log.e( TAG, "Se elimino modalidad!" );
+
+            ArrayList<AulaLocalE> aulaLocalEArrayList = (ArrayList) padronE.getAulaLocalEList();
+            ArrayList<DiscapacidadE> discapacidadEArrayList = (ArrayList) padronE.getDiscapacidadEList();
+            ArrayList<ModalidadE> modalidadEArrayList = (ArrayList) padronE.getModalidadEList();
 
             for ( AulaLocalE aulaLocalE : aulaLocalEArrayList )
             {
@@ -239,11 +292,37 @@ public class PadronDAO {
 
             }
 
+            for ( DiscapacidadE discapacidadE : discapacidadEArrayList )
+            {
+                contentValues = new ContentValues();
+
+                contentValues.put( "cod_discap", discapacidadE.getCod_discap() );
+                contentValues.put( "discapacidad", discapacidadE.getDiscapacidad() );
+
+                Long exitoDocentes = dbHelper.getDatabase().insertOrThrow( "discapacidad", null, contentValues );
+                Log.e( TAG, "discapacidad insert : " + String.valueOf(exitoDocentes) );
+            }
+
+            for ( ModalidadE modalidadE : modalidadEArrayList )
+            {
+                contentValues = new ContentValues();
+
+                contentValues.put( "cod_modal", modalidadE.getCod_modal() );
+                contentValues.put( "modalidad", modalidadE.getModalidad() );
+
+                Long exitoDocentes = dbHelper.getDatabase().insertOrThrow( "modalidad", null, contentValues );
+                Log.e( TAG, "modalidad insert : " + String.valueOf(exitoDocentes) );
+            }
+
             dbHelper.setTransactionSuccessful();
+
+            padronE.setStatus( 0 );
+
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            padronE.setStatus( 2 );
             Log.e( TAG, "error registrarPadron : " + e.toString() );
         }
         finally
@@ -254,10 +333,12 @@ public class PadronDAO {
 
         Log.e( TAG, "end registrarPadron" );
 
+        return padronE;
+
     }
 
 
-    public ArrayList<PadronE> padronNube() {
+    /*public ArrayList<PadronE> padronNube() {
 
 //        nro_local = this.searchNroLocal();
         localE = this.searchNroLocal();
@@ -383,7 +464,7 @@ public class PadronDAO {
         Log.e( TAG, "end padronNube" );
         return null;
 
-    }
+    }*/
 
     public Date setearFecha( String stringFecha ) {
 
@@ -403,9 +484,9 @@ public class PadronDAO {
     }
 
 
-    public Integer padronLocal() {
+    /*public Integer padronLocal() {
 
-        /*arrayList = this.padronNube();*/
+        *//*arrayList = this.padronNube();*//*
         this.padronNubeJson();
         arrayList = null;
 
@@ -422,7 +503,7 @@ public class PadronDAO {
                     dbHelper.openDataBase();
                     dbHelper.beginTransaction();
 
-                /*String SQL = "SELECT COUNT(codigo) AS numberRows FROM postulantes2014";
+                *//*String SQL = "SELECT COUNT(codigo) AS numberRows FROM postulantes2014";
 
                 cursor = dbHelper.getDatabase().rawQuery( SQL, null );
                 Integer count = 0;
@@ -441,7 +522,7 @@ public class PadronDAO {
                     Integer exito = dbHelper.getDatabase().delete( "postulantes2014", null, null );
                     Log.e( TAG, "Se elimino Padron! : " + exito.toString() );
 
-                }*/
+                }*//*
 
                     Integer rowsNumber;
                     String success = "0";
@@ -492,14 +573,14 @@ public class PadronDAO {
 
                     if ( success.equals("0") && success.equals("-1") )
                     {
-                        /*dbHelper.getDatabase().delete( "Version", null, null );
+                        *//*dbHelper.getDatabase().delete( "Version", null, null );
 
                         contentValues =  new ContentValues();
                         contentValues.put( "idVersion" , idVersion );
 
 
                         Long exito = dbHelper.getDatabase().insertOrThrow( "Version", null, contentValues );
-                        success = String.valueOf(exito);*/
+                        success = String.valueOf(exito);*//*
                         rowsNumber = dbHelper.getDatabase().delete( "Version", null, null );
                         Log.e( TAG, "Se elimino Padron! : " + rowsNumber.toString() );
                         error = 3; // error en padronLocal //
@@ -533,6 +614,6 @@ public class PadronDAO {
         }
 
         return error;
-    }
+    }*/
 
 }

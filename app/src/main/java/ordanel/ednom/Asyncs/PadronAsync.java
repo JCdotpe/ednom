@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
+import ordanel.ednom.Business.PadronBL;
 import ordanel.ednom.DAO.PadronDAO;
 import ordanel.ednom.MainActivity;
 import ordanel.ednom.R;
@@ -32,7 +33,7 @@ public class PadronAsync extends AsyncTask<Void, Integer, Integer> {
     @Override
     protected Integer doInBackground(Void... params) {
 
-        return new PadronDAO( this.context ).padronLocal();
+        return new PadronBL().asyncPadron( this.context  );
     }
 
     @Override
