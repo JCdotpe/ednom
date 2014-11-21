@@ -27,7 +27,7 @@ public class LoginDAO {
 
     private static final String TAG = LoginDAO.class.getSimpleName();
 
-    String URL_Connect = ConstantsUtils.BASE_URL + "acces.php"; // "acces.php" "logeo"
+    String URL_Connect = ConstantsUtils.BASE_URL + "logeo"; // "acces.php" "logeo"
 
     Integer error = 0;
     String SQL = "";
@@ -54,7 +54,7 @@ public class LoginDAO {
         Log.e( TAG, "start CheckLogin" );
 
         ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
-        parametersPost.add( new BasicNameValuePair( "password", password ) ); // "password" "sendPass"
+        parametersPost.add( new BasicNameValuePair( "sendPass", password ) ); // "password" "sendPass"
 
         JSONArray jsonArray = posteo.getServerData( parametersPost, URL_Connect );
 

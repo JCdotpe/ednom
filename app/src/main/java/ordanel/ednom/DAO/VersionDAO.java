@@ -20,7 +20,7 @@ public class VersionDAO {
 
     private static final String TAG = VersionDAO.class.getSimpleName();
 
-    String URL_Connect = ConstantsUtils.BASE_URL + "version.php";// "version.php" "version"
+    String URL_Connect = ConstantsUtils.BASE_URL + "version";// "version.php" "version"
 
     Integer error = 0;
 
