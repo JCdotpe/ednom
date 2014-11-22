@@ -10,7 +10,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ordanel.ednom.Asyncs.VersionAsync;
-import ordanel.ednom.DAO.LocalDAO;
+import ordanel.ednom.Business.SedeOperativaBL;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Entity.UsuarioLocalE;
@@ -20,14 +20,14 @@ import ordanel.ednom.Entity.UsuarioLocalE;
  */
 public class UbigeoVerify extends Activity {
 
-    private static final String TAG = UbigeoVerify.class.getSimpleName();
-
     Integer error = 0;
 
     String Sede, Usuario, NombreLocal, Direccion;
     Integer NAulas_t, NAulas_n, NAulas_disc, NAulas_contin;
     TextView txtSede, txtUsuario, txtNombreLocal, txtDireccion, txtNAulas_t, txtNAulas_n, txtNAulas_disc, txtNAulas_contin;
     Button btnCorrecto;
+
+    SedeOperativaE sedeOperativaE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,7 +45,7 @@ public class UbigeoVerify extends Activity {
         btnCorrecto = (Button) findViewById( R.id.btnCorrecto );
 
         /*ArrayList<UsuarioLocalE> arrayList = getIntent().getParcelableArrayListExtra( "listUbigeo" ); // metodo para obtener arraylist */
-        SedeOperativaE sedeOperativaE = new LocalDAO( UbigeoVerify.this ).showInfoLocal();
+        sedeOperativaE = new SedeOperativaBL( UbigeoVerify.this ).showInfo();
 
         error = setUbigeo( sedeOperativaE );
 
@@ -56,14 +56,14 @@ public class UbigeoVerify extends Activity {
 
     }
 
-    public Integer setUbigeo( SedeOperativaE sedeOperativaE ) {
+    public Integer setUbigeo( SedeOperativaE paramSedeOperativaE ) {
 
-        if ( sedeOperativaE != null )
+        if ( paramSedeOperativaE != null )
         {
+            Sede = paramSedeOperativaE.getSede_operativa();
 
-            Sede = sedeOperativaE.getSede_operativa();
-
-            for ( LocalE localE : sedeOperativaE.getLocalEList() )
+            // set data LOCAL
+            for ( LocalE localE : paramSedeOperativaE.getLocalEList() )
             {
                 NombreLocal = localE.getNombreLocal();
                 Direccion = localE.getDireccion();
@@ -72,12 +72,15 @@ public class UbigeoVerify extends Activity {
                 NAulas_disc = localE.getNaula_discapacidad();
                 NAulas_contin = localE.getNaula_contingencia();
 
+                // set data USUARIO_LOCAL
                 for ( UsuarioLocalE usuarioLocalE : localE.getUsuarioLocalEList() )
                 {
                     Usuario = usuarioLocalE.getUsuario();
                 }
+                // .set data USUARIO_LOCAL
 
             }
+            // .set data LOCAL
 
             txtSede.setText( Sede );
             txtUsuario.setText( Usuario );
@@ -89,12 +92,8 @@ public class UbigeoVerify extends Activity {
             txtNAulas_contin.setText( NAulas_contin.toString() );
 
         }
-        else
-        {
-            error = 1;
-        }
 
-        return error;
+        return paramSedeOperativaE.getStatus();
 
     }
 

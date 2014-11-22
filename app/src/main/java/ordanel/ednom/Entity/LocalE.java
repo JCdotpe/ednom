@@ -11,7 +11,7 @@ import java.util.List;
  */
 public class LocalE implements Parcelable {
 
-    private Integer cod_sede_operativa;
+    private SedeOperativaE sedeOperativaE;
     private Integer cod_local_sede;
     private String nombreLocal;
     private String direccion;
@@ -21,8 +21,8 @@ public class LocalE implements Parcelable {
     private Integer naula_contingencia;
     private Integer nficha;
     private Integer ncartilla;
-    private Integer operation_status;
     private List<UsuarioLocalE> usuarioLocalEList;
+    private Integer status;
 
     public LocalE() {
         super();
@@ -30,37 +30,36 @@ public class LocalE implements Parcelable {
 
     public LocalE( Parcel parcel ) {
 
-        setCod_sede_operativa( parcel.readInt() );
-        setCod_local_sede( parcel.readInt() );
-        setNombreLocal( parcel.readString() );
-        setDireccion( parcel.readString() );
-        setNaula_t( parcel.readInt() );
-        setNaula_n( parcel.readInt() );
-        setNaula_discapacidad( parcel.readInt() );
-        setNaula_contingencia( parcel.readInt() );
-        setNficha( parcel.readInt() );
-        setNcartilla( parcel.readInt() );
-        setOperation_status( parcel.readInt() );
-        setUsuarioLocalEList( new ArrayList<UsuarioLocalE>() );
-        parcel.readTypedList( getUsuarioLocalEList(), UsuarioLocalE.CREATOR );
+        sedeOperativaE = parcel.readParcelable( SedeOperativaE.class.getClassLoader() );
+        nombreLocal = parcel.readString();
+        direccion = parcel.readString();
+        naula_t = parcel.readInt();
+        naula_n = parcel.readInt();
+        naula_discapacidad = parcel.readInt();
+        naula_contingencia = parcel.readInt();
+        nficha = parcel.readInt();
+        ncartilla = parcel.readInt();
+        usuarioLocalEList = new ArrayList<UsuarioLocalE>();
+        parcel.readTypedList( usuarioLocalEList, UsuarioLocalE.CREATOR );
+        status = parcel.readInt();
+
 
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeInt( getCod_sede_operativa() );
-        dest.writeInt( getCod_local_sede() );
-        dest.writeString( getNombreLocal() );
-        dest.writeString( getDireccion() );
-        dest.writeInt( getNaula_t() );
-        dest.writeInt( getNaula_n() );
-        dest.writeInt( getNaula_discapacidad() );
-        dest.writeInt( getNaula_contingencia() );
-        dest.writeInt( getNficha() );
-        dest.writeInt( getNcartilla() );
-        dest.writeInt( getOperation_status() );
-        dest.writeTypedList( getUsuarioLocalEList() );
+        dest.writeParcelable( sedeOperativaE, flags );
+        dest.writeString( nombreLocal );
+        dest.writeString( direccion );
+        dest.writeInt( naula_t );
+        dest.writeInt( naula_n );
+        dest.writeInt( naula_discapacidad );
+        dest.writeInt( naula_contingencia );
+        dest.writeInt( nficha );
+        dest.writeInt( ncartilla );
+        dest.writeTypedList( usuarioLocalEList );
+        dest.writeInt(status);
 
     }
 
@@ -81,12 +80,12 @@ public class LocalE implements Parcelable {
         }
     };
 
-    public Integer getCod_sede_operativa() {
-        return cod_sede_operativa;
+    public SedeOperativaE getSedeOperativaE() {
+        return sedeOperativaE;
     }
 
-    public void setCod_sede_operativa(Integer cod_sede_operativa) {
-        this.cod_sede_operativa = cod_sede_operativa;
+    public void setSedeOperativaE(SedeOperativaE sedeOperativaE) {
+        this.sedeOperativaE = sedeOperativaE;
     }
 
     public Integer getCod_local_sede() {
@@ -161,14 +160,6 @@ public class LocalE implements Parcelable {
         this.ncartilla = ncartilla;
     }
 
-    public Integer getOperation_status() {
-        return operation_status;
-    }
-
-    public void setOperation_status(Integer operation_status) {
-        this.operation_status = operation_status;
-    }
-
     public List<UsuarioLocalE> getUsuarioLocalEList() {
         return usuarioLocalEList;
     }
@@ -177,5 +168,12 @@ public class LocalE implements Parcelable {
         this.usuarioLocalEList = usuarioLocalEList;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 
 }

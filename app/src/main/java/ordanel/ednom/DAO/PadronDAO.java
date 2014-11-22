@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,9 +16,11 @@ import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DiscapacidadE;
 import ordanel.ednom.Entity.DocentesE;
+import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.ModalidadE;
 import ordanel.ednom.Entity.PadronE;
+import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Library.ConstantsUtils;
 import ordanel.ednom.Library.HttpPostAux;
 
@@ -46,7 +46,7 @@ public class PadronDAO {
     JSONObject jsonObject;
     JSONArray jsonArray;
     JSONObject jsonObjectTemp;
-    JSONArray jsonArrayAulaLocal, jsonArrayDiscapacidad, jsonArrayModalidad;
+    JSONArray jsonArrayAulaLocal, jsonArrayDiscapacidad, jsonArrayModalidad, jsonArrayInstrumento;
 
     LocalE localE;
     PadronE padronE;
@@ -54,6 +54,7 @@ public class PadronDAO {
     ArrayList<DocentesE> docentesEArrayList;
     ArrayList<DiscapacidadE> discapacidadEArrayList;
     ArrayList<ModalidadE> modalidadEArrayList;
+    ArrayList<InstrumentoE> instrumentoEArrayList;
 
 
     public PadronDAO( Context context ) {
@@ -66,6 +67,7 @@ public class PadronDAO {
         Log.e( TAG, "start searchNroLocal" );
 
         dbHelper = DBHelper.getUtilDb( this.context );
+        localE = new LocalE();
 
         try
         {
@@ -78,21 +80,27 @@ public class PadronDAO {
 
             if ( cursor.moveToFirst() )
             {
-                localE = new LocalE();
+                SedeOperativaE sedeOperativaE = new SedeOperativaE();
+                sedeOperativaE.setCod_sede_operativa( cursor.getInt( cursor.getColumnIndex( "cod_sede_operativa" ) )  );
 
-                localE.setCod_sede_operativa( cursor.getInt( cursor.getColumnIndex( "cod_sede_operativa" ) ) );
+                localE.setSedeOperativaE( sedeOperativaE );
                 localE.setCod_local_sede( cursor.getInt( cursor.getColumnIndex( "cod_local_sede" ) ) );
-                localE.setOperation_status( 0 );
 
                 valueInteger = cursor.getInt( cursor.getColumnIndex( "cod_local_sede" ) );
                 Log.e( TAG, "numero de local : " + valueInteger.toString() );
 
-                return localE;
+                localE.setStatus( 0 );
             }
+            else
+            {
+                localE.setStatus( 2 ); // no hay datos
+            }
+
         }
         catch (Exception e)
         {
             e.printStackTrace();
+            localE.setStatus( 1 ); // error en busqueda
             Log.e( TAG, "error searchNroLocal : " + e.toString() );
         }
         finally
@@ -104,27 +112,26 @@ public class PadronDAO {
 
         Log.e( TAG, "end searchNroLocal" );
 
-        return null;
+        return localE;
 
     }
 
     public PadronE padronNube( LocalE paramLocalE ) {
 
-        Log.e( TAG, "start padronNubeJson" );
+        Log.e( TAG, "start padronNube" );
         padronE = new PadronE();
 
-        if ( paramLocalE != null )
+        HttpPostAux httpPostAux = new HttpPostAux();
+
+        cod_sede_operativa = paramLocalE.getSedeOperativaE().getCod_sede_operativa();
+        cod_local_sede = paramLocalE.getCod_local_sede();
+
+        jsonArray = httpPostAux.getServerData( null, URL_Connect + "?cod_sede_operativa=" + cod_sede_operativa + "&cod_local_sede=" + cod_local_sede );
+
+        if ( jsonArray != null )
         {
-            HttpPostAux httpPostAux = new HttpPostAux();
-
-            cod_sede_operativa = paramLocalE.getCod_sede_operativa();
-            cod_local_sede = paramLocalE.getCod_local_sede();
-
-            jsonArray = httpPostAux.getServerData( null, URL_Connect + "?cod_sede_operativa=" + cod_sede_operativa + "&cod_local_sede=" + cod_local_sede );
-
-            if ( jsonArray != null && jsonArray.length() > 0 )
+            if ( jsonArray.length() > 0 )
             {
-
                 try
                 {
                     jsonObject = jsonArray.getJSONObject(0);
@@ -150,14 +157,38 @@ public class PadronDAO {
                         for ( int j = 0; j < jsonArray.length(); j++ )
                         {
                             jsonObjectTemp = (JSONObject) jsonArray.get(j);
-                            DocentesE docentesE = new DocentesE();
 
+                            DiscapacidadE discapacidadE = new DiscapacidadE();
+                            discapacidadE.setCod_discap( jsonObjectTemp.getInt( "cod_discap" ) );
+
+                            ModalidadE modalidadE = new ModalidadE();
+                            modalidadE.setCod_modal( jsonObjectTemp.getInt( "cod_modal" ) );
+
+                            DocentesE docentesE = new DocentesE();
                             docentesE.setAulaLocalE( aulaLocalE );
+                            docentesE.setDiscapacidadE( discapacidadE );
+                            docentesE.setModalidadE( modalidadE );
+                            docentesE.setDre_des( jsonObjectTemp.getString( "dre_des" ) );
+                            docentesE.setUgel_des( jsonObjectTemp.getString( "ugel_des" ) );
                             docentesE.setTipo_doc( jsonObjectTemp.getString( "tipo_doc" ) );
                             docentesE.setNro_doc( jsonObjectTemp.getString( "nro_doc" ) );
                             docentesE.setApe_pat( jsonObjectTemp.getString( "ape_pat" ) );
                             docentesE.setApe_mat( jsonObjectTemp.getString( "ape_mat" ) );
                             docentesE.setNombres( jsonObjectTemp.getString( "nombres" ) );
+                            docentesE.setSexo( jsonObjectTemp.getString( "sexo" ) );
+                            docentesE.setFecha_nac( jsonObjectTemp.getString( "fecha_nac" ) );
+                            docentesE.setEdad( jsonObjectTemp.getInt( "edad" ) );
+                            docentesE.setCod_ficha( jsonObjectTemp.getString( "cod_ficha" ) );
+                            docentesE.setCod_cartilla( jsonObjectTemp.getString( "cod_cartilla" ) );
+                            docentesE.setEstado( jsonObjectTemp.getInt( "estado" ) );
+                            docentesE.setF_registro( jsonObjectTemp.getString( "f_registro" ) );
+                            docentesE.setEstado_aula( jsonObjectTemp.getInt( "estado_aula" ) );
+                            docentesE.setF_aula( jsonObjectTemp.getString( "f_aula" ) );
+                            docentesE.setEstado_ficha( jsonObjectTemp.getInt( "estado_ficha" ) );
+                            docentesE.setF_ficha( jsonObjectTemp.getString( "f_ficha" ) );
+                            docentesE.setEstado_cartilla( jsonObjectTemp.getInt( "estado_cartilla" ) );
+                            docentesE.setF_caritlla( jsonObjectTemp.getString( "f_cartilla" ) );
+                            docentesE.setNro_aula_cambio( jsonObjectTemp.getInt( "nro_aula_cambio" ) );
 
                             docentesEArrayList.add( docentesE );
 
@@ -217,6 +248,34 @@ public class PadronDAO {
                     padronE.setModalidadEList( modalidadEArrayList );
                     // .set array MODALIDAD
 
+                    // set array INSTRUMENTO
+                    jsonArrayInstrumento = jsonObject.getJSONArray("INSTRUMENTO");
+                    instrumentoEArrayList = new ArrayList<InstrumentoE>();
+
+                    for ( int i = 0; i < jsonArrayInstrumento.length(); i++ )
+                    {
+                        jsonObjectTemp = (JSONObject) jsonArrayInstrumento.get(i);
+
+                        InstrumentoE instrumentoE = new InstrumentoE();
+                        instrumentoE.setId_inst( jsonObjectTemp.getInt( "id_inst" ) );
+                        instrumentoE.setCod_ficha( jsonObjectTemp.getString( "cod_ficha" ) );
+                        instrumentoE.setCod_cartilla( jsonObjectTemp.getString( "cod_cartilla" ) );
+                        instrumentoE.setNro_aula( jsonObjectTemp.getInt( "nro_aula" ) );
+                        instrumentoE.setEstado_ficha( jsonObjectTemp.getInt( "estado_ficha" ) );
+                        instrumentoE.setF_ficha( jsonObjectTemp.getString( "f_ficha" ) );
+                        instrumentoE.setEstado_cartilla( jsonObjectTemp.getInt( "estado_cartilla" ) );
+                        instrumentoE.setF_cartilla( jsonObjectTemp.getString( "f_cartilla" ) );
+
+                        instrumentoE.setLocalE( paramLocalE );
+
+                        instrumentoEArrayList.add( instrumentoE );
+
+                    }
+
+                    valueInteger = instrumentoEArrayList.size();
+                    Log.e( TAG, "cantidad de modalidad : " + valueInteger.toString() );
+                    padronE.setInstrumentoEList(instrumentoEArrayList);
+                    // .set array INSTRUMENTO
 
                     padronE.setStatus( 0 );
 
@@ -224,15 +283,22 @@ public class PadronDAO {
                 catch (Exception e)
                 {
                     e.printStackTrace();
-                    padronE.setStatus( 1 ); // error en padron nube
-                    Log.e( TAG, "error padronNubeJson : " + e.toString() );
+                    padronE.setStatus( 4 ); // error en padron nube
+                    Log.e( TAG, "error padronNube : " + e.toString() );
                 }
-
+            }
+            else
+            {
+                padronE.setStatus( 3 ); // no hay datos
             }
 
         }
+        else
+        {
+            padronE.setStatus( 2 ); // error en conexion
+        }
 
-        Log.e( TAG, "end padronNubeJson" );
+        Log.e( TAG, "end padronNube" );
 
         return padronE;
 
@@ -255,12 +321,13 @@ public class PadronDAO {
                 aulaLocalEArrayList = (ArrayList) paramPadronE.getAulaLocalEList();
                 discapacidadEArrayList = (ArrayList) paramPadronE.getDiscapacidadEList();
                 modalidadEArrayList = (ArrayList) paramPadronE.getModalidadEList();
+                instrumentoEArrayList = (ArrayList) paramPadronE.getInstrumentoEList();
                 // .set de Arrays
 
                 // registro de AULAS
                 for ( AulaLocalE aulaLocalE : aulaLocalEArrayList )
                 {
-                    cod_sede_operativa = aulaLocalE.getLocalE().getCod_sede_operativa();
+                    cod_sede_operativa = aulaLocalE.getLocalE().getSedeOperativaE().getCod_sede_operativa();
                     cod_local_sede = aulaLocalE.getLocalE().getCod_local_sede();
                     nro_aula = aulaLocalE.getNro_aula();
 
@@ -282,12 +349,29 @@ public class PadronDAO {
 
                         contentValues.put( "cod_sede_operativa", cod_sede_operativa );
                         contentValues.put( "cod_local_sede", cod_local_sede );
+                        contentValues.put( "nro_aula", nro_aula );
+                        contentValues.put( "cod_discap", docentesE.getDiscapacidadE().getCod_discap() );
+                        contentValues.put( "cod_modal", docentesE.getModalidadE().getCod_modal() );
+                        contentValues.put( "dre_des", docentesE.getDre_des() );
+                        contentValues.put( "ugel_des", docentesE.getUgel_des() );
                         contentValues.put( "tipo_doc", docentesE.getTipo_doc() );
                         contentValues.put( "nro_doc", docentesE.getNro_doc() );
                         contentValues.put( "ape_pat", docentesE.getApe_pat() );
                         contentValues.put( "ape_mat", docentesE.getApe_mat() );
                         contentValues.put( "nombres", docentesE.getNombres() );
-                        contentValues.put( "nro_aula", nro_aula );
+                        contentValues.put( "sexo", docentesE.getSexo() );
+                        contentValues.put( "fecha_nac", docentesE.getFecha_nac() );
+                        contentValues.put( "edad", docentesE.getEdad() );
+                        contentValues.put( "cod_ficha", docentesE.getCod_ficha() );
+                        contentValues.put( "cod_cartilla", docentesE.getCod_cartilla() );
+                        contentValues.put( "estado", docentesE.getEstado() );
+                        contentValues.put( "f_registro", docentesE.getF_registro() );
+                        contentValues.put( "estado_aula", docentesE.getEstado_aula() );
+                        contentValues.put( "f_aula", docentesE.getF_aula() );
+                        contentValues.put( "estado_ficha", docentesE.getEstado_ficha() );
+                        contentValues.put( "f_ficha", docentesE.getF_ficha() );
+                        contentValues.put( "estado_cartilla", docentesE.getEstado_cartilla() );
+                        contentValues.put( "nro_aula_cambio", docentesE.getNro_aula_cambio() );
 
                         valueLong = dbHelper.getDatabase().insertOrThrow( "docentes", null, contentValues );
                         Log.e( TAG, "docentes insert : " + String.valueOf(valueLong) );
@@ -324,6 +408,28 @@ public class PadronDAO {
                 }
                 // .registro de MODALIDAD
 
+
+                // registro de INSTRUMENTO
+                for ( InstrumentoE instrumentoE : instrumentoEArrayList )
+                {
+                    contentValues = new ContentValues();
+
+                    contentValues.put( "id_inst", instrumentoE.getId_inst() );
+                    contentValues.put( "cod_sede_operativa", instrumentoE.getLocalE().getSedeOperativaE().getCod_sede_operativa() );
+                    contentValues.put( "cod_local_sede", instrumentoE.getLocalE().getCod_local_sede() );
+                    contentValues.put( "cod_ficha", instrumentoE.getCod_ficha() );
+                    contentValues.put( "cod_cartilla", instrumentoE.getCod_cartilla() );
+                    contentValues.put( "nro_aula", instrumentoE.getNro_aula() );
+                    contentValues.put( "estado_ficha", instrumentoE.getEstado_ficha() );
+                    contentValues.put( "f_ficha", instrumentoE.getF_ficha() );
+                    contentValues.put( "estado_cartilla", instrumentoE.getEstado_cartilla() );
+                    contentValues.put( "f_cartilla", instrumentoE.getF_cartilla() );
+
+                    valueLong = dbHelper.getDatabase().insertOrThrow( "instrumento", null, contentValues );
+                    Log.e( TAG, "instrumento insert : " + String.valueOf(valueLong) );
+                }
+                // .registro de INSTRUMENTO
+
                 dbHelper.setTransactionSuccessful();
 
                 padronE.setStatus( 0 );
@@ -331,14 +437,14 @@ public class PadronDAO {
             }
             else
             {
-                padronE.setStatus( 2 ); // error cleanPadron
+                padronE.setStatus( 5 ); // error cleanPadron
             }
 
         }
         catch (Exception e)
         {
             e.printStackTrace();
-            padronE.setStatus( 3 ); // error register padron
+            padronE.setStatus( 6 ); // error register padron
             Log.e( TAG, "error registrarPadron : " + e.toString() );
         }
         finally
@@ -363,6 +469,9 @@ public class PadronDAO {
 
             dbHelper.getDatabase().delete( "docentes", null, null );
             Log.e( TAG, "Se elimino docentes!" );
+
+            dbHelper.getDatabase().delete( "instrumento", null, null );
+            Log.e( TAG, "Se elimino instrumento!" );
 
             dbHelper.getDatabase().delete( "discapacidad", null, null );
             Log.e( TAG, "Se elimino discapacidad!" );

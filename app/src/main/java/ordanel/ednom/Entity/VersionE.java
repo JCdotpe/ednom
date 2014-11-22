@@ -13,6 +13,7 @@ public class VersionE implements Parcelable {
     private Integer v_sistem;
     private String fecha;
     private String observa;
+    private Integer status;
 
     public VersionE() {
         super();
@@ -20,22 +21,24 @@ public class VersionE implements Parcelable {
 
     public VersionE(Parcel parcel) {
 
-        setVercod(parcel.readInt());
-        setV_padron(parcel.readInt());
-        setV_sistem(parcel.readInt());
-        setFecha(parcel.readString());
-        setObserva( parcel.readString()  );
+        vercod = parcel.readInt();
+        v_padron = parcel.readInt();
+        v_sistem = parcel.readInt();
+        fecha = parcel.readString();
+        observa = parcel.readString();
+        status = parcel.readInt();
 
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeInt( getVercod() );
-        dest.writeInt( getV_padron() );
-        dest.writeInt(getV_sistem());
-        dest.writeString( getFecha() );
-        dest.writeString( getObserva() );
+        dest.writeInt( vercod );
+        dest.writeInt( v_padron );
+        dest.writeInt( v_sistem );
+        dest.writeString( fecha );
+        dest.writeString( observa );
+        dest.writeInt( status );
 
     }
 
@@ -95,5 +98,13 @@ public class VersionE implements Parcelable {
 
     public void setObserva(String observa) {
         this.observa = observa;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

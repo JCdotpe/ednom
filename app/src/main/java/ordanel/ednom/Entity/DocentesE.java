@@ -39,49 +39,48 @@ public class DocentesE implements Parcelable {
 
     public DocentesE( Parcel parcel ) {
 
-        setAulaLocalE( (AulaLocalE) parcel.readParcelable( AulaLocalE.class.getClassLoader() ) );
-        setDiscapacidadE( (DiscapacidadE) parcel.readParcelable( DiscapacidadE.class.getClassLoader() ) );
-        setModalidadE( (ModalidadE) parcel.readParcelable( ModalidadE.class.getClassLoader() ) );
-
-        setDre_des( parcel.readString() );
-        setUgel_des( parcel.readString() );
-        setTipo_doc( parcel.readString() );
-        setNro_doc( parcel.readString() );
-        setApe_pat( parcel.readString() );
-        setApe_mat( parcel.readString() );
-        setNombres( parcel.readString() );
-        setSexo( parcel.readString() );
-        setFecha_nac( parcel.readString() );
-        setEdad( parcel.readInt() );
-        setCod_ficha( parcel.readString() );
-        setCod_cartilla( parcel.readString() );
-        setEstado( parcel.readInt() );
-        setF_registro( parcel.readString() );
-        setEstado_aula( parcel.readInt() );
-        setF_aula( parcel.readString() );
-        setEstado_ficha( parcel.readInt() );
-        setF_ficha( parcel.readString() );
-        setEstado_cartilla( parcel.readInt() );
-        setF_caritlla( parcel.readString() );
-        setNro_aula_cambio( parcel.readInt() );
+        aulaLocalE = parcel.readParcelable( AulaLocalE.class.getClassLoader() );
+        discapacidadE = parcel.readParcelable( DiscapacidadE.class.getClassLoader() );
+        modalidadE = parcel.readParcelable( ModalidadE.class.getClassLoader() );
+        dre_des = parcel.readString();
+        ugel_des = parcel.readString();
+        tipo_doc = parcel.readString();
+        nro_doc = parcel.readString();
+        ape_pat = parcel.readString();
+        ape_mat = parcel.readString();
+        nombres = parcel.readString();
+        sexo = parcel.readString();
+        fecha_nac = parcel.readString();
+        edad = parcel.readInt();
+        cod_ficha = parcel.readString();
+        cod_cartilla = parcel.readString();
+        estado = parcel.readInt();
+        f_registro = parcel.readString();
+        estado_aula = parcel.readInt();
+        f_aula = parcel.readString();
+        estado_ficha = parcel.readInt();
+        f_ficha = parcel.readString();
+        estado_cartilla = parcel.readInt();
+        f_caritlla = parcel.readString();
+        nro_aula_cambio = parcel.readInt();
 
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeParcelable( getAulaLocalE(), flags );
-        dest.writeParcelable( getDiscapacidadE(), flags );
-        dest.writeParcelable( getModalidadE(), flags );
-        dest.writeString( getDre_des() );
-        dest.writeString( getUgel_des() );
-        dest.writeString( getTipo_doc() );
-        dest.writeString( getNro_doc() );
-        dest.writeString( getApe_pat() );
-        dest.writeString( getApe_mat() );
-        dest.writeString( getNombres() );
-        dest.writeString( getSexo() );
-        dest.writeString( getFecha_nac() );
+        dest.writeParcelable( aulaLocalE, flags );
+        dest.writeParcelable( discapacidadE, flags );
+        dest.writeParcelable( modalidadE, flags );
+        dest.writeString( dre_des );
+        dest.writeString( ugel_des );
+        dest.writeString( tipo_doc );
+        dest.writeString( nro_doc );
+        dest.writeString( ape_pat );
+        dest.writeString( ape_mat );
+        dest.writeString( nombres );
+        dest.writeString( sexo );
+        dest.writeString( fecha_nac );
         dest.writeInt( edad );
         dest.writeString( cod_ficha );
         dest.writeString( cod_cartilla );

@@ -3,8 +3,10 @@ package ordanel.ednom.Business;
 import android.content.Context;
 
 import ordanel.ednom.DAO.PadronDAO;
+import ordanel.ednom.DAO.VersionDAO;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.PadronE;
+import ordanel.ednom.Entity.VersionE;
 
 /**
  * Created by Leandro on 21/11/2014.
@@ -12,30 +14,40 @@ import ordanel.ednom.Entity.PadronE;
 public class PadronBL {
 
     private static PadronDAO padronDAO;
-    private static LocalE localE;
     private static PadronE padronE;
+    private static VersionDAO versionDAO;
+    private static LocalE localE;
 
-    public static Integer asyncPadron( Context context ) {
 
+    public PadronBL( Context context ) {
         padronDAO = new PadronDAO( context );
+        versionDAO = new VersionDAO( context );
+    }
+
+    public static Integer asyncPadron( VersionE versionE ) {
 
         localE = padronDAO.searchNroLocal();
 
-        if ( localE != null )
+        if ( localE.getStatus() == 0 )
         {
-            padronE = padronDAO.padronNube( localE );
-            if ( padronE != null && padronE.getStatus() == 0 )
+            padronE = padronDAO.padronNube( localE ); // set data nube
+            if ( padronE.getStatus() == 0 )
             {
-                padronE = padronDAO.registrarPadron( padronE );
+                padronE = padronDAO.registrarPadron( padronE ); // register data in local
+
+                if ( padronE.getStatus() == 0 )
+                {
+                    if ( versionDAO.registerVersion( versionE ) != 0 ) // register version
+                    {
+                        padronE.setStatus( 7 ); // error register version
+                    }
+                }
             }
-            else
-            {
-                // error al obtener de la nube;
-            }
+
         }
         else
         {
-            // error en busqueda de local;
+           padronE.setStatus( 1 ); // error en busqueda de Nro Local;
         }
 
         return padronE.getStatus();

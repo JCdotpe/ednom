@@ -7,13 +7,14 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import ordanel.ednom.Business.PadronBL;
+import ordanel.ednom.Entity.VersionE;
 import ordanel.ednom.MainActivity;
 import ordanel.ednom.R;
 
 /**
  * Created by OrdNael on 30/10/2014.
  */
-public class PadronAsync extends AsyncTask<Void, Integer, Integer> {
+public class PadronAsync extends AsyncTask<VersionE, Integer, Integer> {
 
     ProgressDialog dialog;
     Context context;
@@ -30,9 +31,9 @@ public class PadronAsync extends AsyncTask<Void, Integer, Integer> {
     }
 
     @Override
-    protected Integer doInBackground(Void... params) {
+    protected Integer doInBackground(VersionE... paramVersionE) {
 
-        return new PadronBL().asyncPadron( this.context  );
+        return new PadronBL( this.context ).asyncPadron( paramVersionE[0] );
     }
 
     @Override
@@ -60,18 +61,35 @@ public class PadronAsync extends AsyncTask<Void, Integer, Integer> {
         switch ( error )
         {
             case 1:
-                msg_error = this.context.getString( R.string.padron_msg_error_nube );
+                msg_error = this.context.getString( R.string.padron_msg_error_local );
                 break;
+
             case 2:
+                msg_error = this.context.getString( R.string.httppostaux_msg_error_conexion );
+                break;
+
+            case 3:
+                msg_error = this.context.getString( R.string.padron_msg_error_data );
+                break;
+
+            case 4:
                 msg_error = this.context.getString( R.string.httppostaux_msg_error_data );
                 break;
-            case 3:
+
+            case 5:
+                msg_error = this.context.getString( R.string.padron_msg_error_clean );
+                break;
+
+            case 6:
                 msg_error = this.context.getString( R.string.padron_msg_error_register );
+                break;
+
+            case 7:
+                msg_error = this.context.getString( R.string.version_error_register );
                 break;
         }
 
-        Toast toast = Toast.makeText( this.context, msg_error, Toast.LENGTH_SHORT );
-        toast.show();
+        Toast.makeText( this.context, msg_error, Toast.LENGTH_LONG ).show();
     }
 
 }

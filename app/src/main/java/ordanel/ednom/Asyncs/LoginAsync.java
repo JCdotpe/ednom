@@ -7,14 +7,13 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import ordanel.ednom.DAO.LoginDAO;
+import ordanel.ednom.Business.SedeOperativaBL;
 import ordanel.ednom.R;
 import ordanel.ednom.UbigeoVerify;
 
 /**
  * Created by OrdNael on 28/10/2014.
  */
-/*public class LoginAsync extends AsyncTask< String, ArrayList<UsuarioLocalE>, ArrayList<UsuarioLocalE> > {*/
 public class LoginAsync extends AsyncTask< String, Integer, Integer > {
 
     Context context;
@@ -33,9 +32,8 @@ public class LoginAsync extends AsyncTask< String, Integer, Integer > {
     @Override
     protected Integer doInBackground( String... params ) {
 
-        String password = params[0];
+        return new SedeOperativaBL( this.context ).checkLogin( params );
 
-        return new LoginDAO( this.context ).CheckLogin( password );
     }
 
     @Override

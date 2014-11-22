@@ -5,7 +5,8 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 
-import ordanel.ednom.DAO.VersionDAO;
+import ordanel.ednom.Business.VersionBL;
+import ordanel.ednom.Entity.VersionE;
 import ordanel.ednom.MainActivity;
 import ordanel.ednom.ObtainCensus;
 import ordanel.ednom.R;
@@ -13,9 +14,7 @@ import ordanel.ednom.R;
 /**
  * Created by OrdNael on 29/10/2014.
  */
-public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
-
-    private static final String TAG =  VersionAsync.class.getSimpleName();
+public class VersionAsync extends AsyncTask< Void, VersionE, VersionE> {
 
     Context context;
 
@@ -24,20 +23,23 @@ public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
     }
 
     @Override
-    protected Integer doInBackground(Void... params) {
+    protected VersionE doInBackground(Void... params) {
 
-        return new VersionDAO( this.context ).checkVersion();
+        return new VersionBL( this.context ).checkVersion();
 
     }
 
     @Override
-    protected void onPostExecute(Integer statusVersion) {
-        super.onPostExecute(statusVersion);
+    protected void onPostExecute(VersionE versionE) {
+        super.onPostExecute(versionE);
+
+        Integer statusVersion = versionE.getStatus();
 
         if ( statusVersion == 99 )
         {
             Intent intent = new Intent( this.context, ObtainCensus.class );
-            /*intent.putExtra( "statusVersion", statusVersion );*/
+            intent.putExtra( "versionE", versionE );
+            /*intent.putParcelableArrayListExtra( "listUbigeo", ubigeoEs); // metodo para enviar arraylist*/
             this.context.startActivity( intent );
         }
         else if ( statusVersion == 100 )
@@ -70,11 +72,8 @@ public class VersionAsync extends AsyncTask< Void, Integer, Integer> {
             case 4:
                 msg_error = this.context.getString( R.string.version_error_check );
                 break;
-            case 5:
-                msg_error = this.context.getString( R.string.version_error_register );
-                break;
         }
 
-        Toast.makeText( this.context, msg_error, Toast.LENGTH_SHORT ).show();
+        Toast.makeText( this.context, msg_error, Toast.LENGTH_LONG ).show();
     }
 }

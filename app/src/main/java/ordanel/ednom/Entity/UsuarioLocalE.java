@@ -12,8 +12,7 @@ public class UsuarioLocalE implements Parcelable {
     private String usuario;
     private String clave;
     private Integer rol;
-    private Integer cod_sede_operativa;
-    private Integer cod_local_sede;
+    private LocalE localE;
 
 
     public UsuarioLocalE() {
@@ -22,24 +21,22 @@ public class UsuarioLocalE implements Parcelable {
 
     public UsuarioLocalE( Parcel parcel ) {
 
-        setIdUsuario( parcel.readInt() );
-        setUsuario( parcel.readString() );
-        setClave( parcel.readString() );
-        setRol( parcel.readInt() );
-        setCod_sede_operativa( parcel.readInt() );
-        setCod_local_sede( parcel.readInt() );
+        idUsuario = parcel.readInt();
+        usuario = parcel.readString();
+        clave = parcel.readString();
+        rol = parcel.readInt();
+        localE = parcel.readParcelable( LocalE.class.getClassLoader() );
 
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeInt( getIdUsuario() );
-        dest.writeString( getUsuario() );
-        dest.writeString( getClave() );
-        dest.writeInt( getRol() );
-        dest.writeInt( getCod_sede_operativa() );
-        dest.writeInt( getCod_local_sede() );
+        dest.writeInt( idUsuario );
+        dest.writeString( usuario );
+        dest.writeString( clave );
+        dest.writeInt( rol );
+        dest.writeParcelable( localE, flags );
 
     }
 
@@ -92,19 +89,11 @@ public class UsuarioLocalE implements Parcelable {
         this.rol = rol;
     }
 
-    public Integer getCod_sede_operativa() {
-        return cod_sede_operativa;
+    public LocalE getLocalE() {
+        return localE;
     }
 
-    public void setCod_sede_operativa(Integer cod_sede_operativa) {
-        this.cod_sede_operativa = cod_sede_operativa;
-    }
-
-    public Integer getCod_local_sede() {
-        return cod_local_sede;
-    }
-
-    public void setCod_local_sede(Integer cod_local_sede) {
-        this.cod_local_sede = cod_local_sede;
+    public void setLocalE(LocalE localE) {
+        this.localE = localE;
     }
 }

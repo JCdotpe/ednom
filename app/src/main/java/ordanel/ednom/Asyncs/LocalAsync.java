@@ -16,8 +16,6 @@ import ordanel.ednom.R;
  */
 public class LocalAsync extends AsyncTask<String, ArrayList<PadronE>, ArrayList<PadronE>> {
 
-    private static final String TAG = LocalAsync.class.getSimpleName();
-
     private MainI mainI;
 
     ProgressDialog progressDialog;

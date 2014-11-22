@@ -22,11 +22,14 @@ public class VersionDAO {
 
     String URL_Connect = ConstantsUtils.BASE_URL + "version";// "version.php" "version"
 
-    Integer error = 0;
+    Integer error;
+    Long valueLong;
 
     DBHelper dbHelper;
     Context context;
     ContentValues contentValues;
+
+    JSONObject jsonObject;
 
     VersionE versionE;
 
@@ -55,13 +58,6 @@ public class VersionDAO {
 
             if ( cursor.moveToFirst() )
             {
-                /*while ( !cursor.isAfterLast() )
-                {
-                    versionE.setIdVersion( cursor.getInt( cursor.getColumnIndex( "currentVersion" ) ) );
-
-                    cursor.moveToNext();
-                }*/
-
                 versionE.setV_padron( cursor.getInt( cursor.getColumnIndex( "currentVersion" ) ) );
             }
 
@@ -84,91 +80,64 @@ public class VersionDAO {
 
     }
 
-    public Integer checkVersion() {
+    public VersionE checkVersion( Integer versionLocal ) {
 
-        Integer versionNube, versionLocal;
-        Integer statusVersion;
+        Integer versionNube;
 
-        Log.e( TAG, "start checkVersion" );
+        Log.e( TAG, "start checkVersion - version local: " + versionLocal.toString() );
 
-        /*versionLocal = this.currentVersion();*/
-        versionLocal = 0;
+        HttpPostAux httpPostAux = new HttpPostAux();
+        JSONArray jsonArray = httpPostAux.getServerData( null, URL_Connect );
 
-        if ( versionLocal != null )
+        versionE = new VersionE();
+
+        if ( jsonArray != null )
         {
-            Log.e( TAG, "version local : " + versionLocal.toString() );
-
-            HttpPostAux httpPostAux = new HttpPostAux();
-
-            JSONArray jsonArray = httpPostAux.getServerData( null, URL_Connect );
-
-            if ( jsonArray != null )
+            if ( jsonArray.length() > 0 )
             {
-                if ( jsonArray.length() > 0 )
+                try
                 {
-                    try
+                    jsonObject = (JSONObject) jsonArray.get(0);
+
+                    versionNube = jsonObject.getInt( "v_padron" );
+
+                    versionE.setVercod( jsonObject.getInt( "vercod" ) );
+                    versionE.setV_padron( versionNube );
+                    versionE.setV_sistem(jsonObject.getInt( "v_sistem" ) );
+                    versionE.setFecha( jsonObject.getString( "fecha" ) );
+                    versionE.setObserva( jsonObject.getString( "observa" ) );
+
+                    if ( !versionNube.equals(versionLocal) )
                     {
-                        JSONObject jsonObject;
-
-                        jsonObject = (JSONObject) jsonArray.get(0);
-
-                        versionNube = jsonObject.getInt( "v_padron" );
-
-                        versionE = new VersionE();
-                        versionE.setVercod( jsonObject.getInt( "vercod" ) );
-                        versionE.setV_padron( versionNube );
-                        versionE.setV_sistem(jsonObject.getInt("v_sistem"));
-                        versionE.setFecha( jsonObject.getString( "fecha" ) );
-                        versionE.setObserva( jsonObject.getString( "observa" ) );
-
-                        if ( !versionNube.equals(versionLocal) )
-                        {
-                            if ( this.registerVersion( versionE ) == 0 )
-                            {
-                                statusVersion = 99;
-                            }
-                            else
-                            {
-                                statusVersion = 5; // error en registerVersion //
-                            }
-                        }
-                        else
-                        {
-                            statusVersion = 100;
-                        }
-
-                        return statusVersion;
-
+                        versionE.setStatus( 99 );
                     }
-                    catch (Exception e)
+                    else
                     {
-                        e.printStackTrace();
-                        error = 4; // error en checkVersion //
-                        Log.e( TAG, "error checkVersion : " + e.toString() );
+                        versionE.setStatus( 100 );
                     }
-                    finally
-                    {
-                        Log.e( TAG, "end checkVersion" );
-                    }
+
                 }
-                else
+                catch (Exception e)
                 {
-                    error = 3; // error en data //
+                    e.printStackTrace();
+                    versionE.setStatus( 4 ); // error en checkVersion //
+                    Log.e( TAG, "error checkVersion : " + e.toString() );
                 }
+
             }
             else
             {
-                error = 2; // error en HttpPostAux //
+                versionE.setStatus( 3 ); // error en data //
             }
         }
         else
         {
-            error = 1; // error en currentVersion //
+            versionE.setStatus( 2 ); // error en HttpPostAux //
         }
 
         Log.e( TAG, "end checkVersion" );
 
-        return error;
+        return versionE;
 
     }
 
@@ -182,8 +151,6 @@ public class VersionDAO {
             dbHelper.openDataBase();
             dbHelper.beginTransaction();
 
-            String success = "0";
-
             Integer rowsNumber = dbHelper.getDatabase().delete( "version", null, null );
             Log.e( TAG, "Se elimino version! : " + rowsNumber.toString() );
 
@@ -195,13 +162,9 @@ public class VersionDAO {
             contentValues.put( "fecha", versionE.getFecha() );
             contentValues.put( "observa", versionE.getObserva() );
 
-            Long exitoVersion = dbHelper.getDatabase().insertOrThrow( "version", null, contentValues );
-            success = String.valueOf(exitoVersion);
-
-            if ( success.equals("0") && success.equals("-1") )
-            {
-                error = 1;
-            }
+            valueLong = dbHelper.getDatabase().insertOrThrow( "version", null, contentValues );
+            Log.e( TAG, "register : " + String.valueOf(valueLong) ); // -1 => error register
+            error = 0;
 
             dbHelper.setTransactionSuccessful();
 
@@ -210,7 +173,7 @@ public class VersionDAO {
         {
             e.printStackTrace();
             Log.e( TAG, "error registerVersion : " + e.toString() );
-            error = 1;
+            error = 1; // error register
         }
         finally
         {

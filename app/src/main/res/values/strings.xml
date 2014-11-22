@@ -41,7 +41,9 @@
     <!-- Padrón -->
     <string name="padron_msg_download">Descargando Padrón. Esto puede tomar varios minutos!</string>
     <string name="padron_btn_text">Descargar Padrón</string>
-    <string name="padron_msg_error_nube">Error: Problemas al acceder al padrón de la nube!</string>
+    <string name="padron_msg_error_local">Error: Problemas para acceder a BD local</string>
+    <string name="padron_msg_error_data">Error: No hay padron del Local!</string>
+    <string name="padron_msg_error_clean">Error: Problemas al Limpiar BD</string>
     <string name="padron_msg_error_register">Error: No se pudo registrar el padrón!</string>
     <!-- /Padrón -->
 

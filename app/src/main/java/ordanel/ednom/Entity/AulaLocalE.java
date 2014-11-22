@@ -24,23 +24,23 @@ public class AulaLocalE implements Parcelable {
 
     public AulaLocalE( Parcel parcel ) {
 
-        setLocalE( (LocalE) parcel.readParcelable( LocalE.class.getClassLoader() ) );
-        setNro_aula( parcel.readInt() );
-        setTipo( parcel.readString() );
-        setCant_docente( parcel.readInt() );
-        setDocentesEList( new ArrayList<DocentesE>() );
-        parcel.readTypedList( getDocentesEList(), DocentesE.CREATOR );
+        localE = parcel.readParcelable( LocalE.class.getClassLoader() );
+        nro_aula = parcel.readInt();
+        tipo = parcel.readString();
+        cant_docente = parcel.readInt();
+        docentesEList = new ArrayList<DocentesE>();
+        parcel.readTypedList( docentesEList, DocentesE.CREATOR );
 
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeParcelable( getLocalE(), flags );
-        dest.writeInt( getNro_aula() );
-        dest.writeString( getTipo() );
-        dest.writeInt( getCant_docente() );
-        dest.writeTypedList( getDocentesEList() );
+        dest.writeParcelable( localE, flags );
+        dest.writeInt( nro_aula );
+        dest.writeString( tipo );
+        dest.writeInt( cant_docente );
+        dest.writeTypedList( docentesEList );
 
     }
 

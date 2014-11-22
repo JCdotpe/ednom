@@ -7,18 +7,16 @@ import android.view.View;
 import android.widget.Button;
 
 import ordanel.ednom.Asyncs.PadronAsync;
+import ordanel.ednom.Entity.VersionE;
 
 /**
  * Created by Leandro on 27/10/2014.
  */
 public class ObtainCensus extends Activity {
 
-    private static final String TAG = ObtainCensus.class.getSimpleName();
-
-    Integer flag;
-
     Button btnPadron;
 
+    VersionE versionE;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,12 +26,13 @@ public class ObtainCensus extends Activity {
         btnPadron = (Button) findViewById( R.id.btnPadron );
 
         /*flag = getIntent().getIntExtra( "statusVersion", -1 );*/
+        versionE = getIntent().getParcelableExtra( "versionE" );
 
     }
 
     public void downloadPadron(View view) {
 
-        new PadronAsync( ObtainCensus.this ).execute();
+        new PadronAsync( ObtainCensus.this ).execute( versionE );
 
     }
 

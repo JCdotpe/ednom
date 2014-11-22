@@ -14,6 +14,7 @@ public class SedeOperativaE implements Parcelable {
     private Integer cod_sede_operativa;
     private String sede_operativa;
     private List<LocalE> localEList;
+    private Integer status;
 
 
     public SedeOperativaE() {
@@ -22,18 +23,20 @@ public class SedeOperativaE implements Parcelable {
 
     public SedeOperativaE( Parcel parcel )
     {
-        setCod_sede_operativa( parcel.readInt() );
-        setSede_operativa( parcel.readString() );
-        setLocalEList( new ArrayList<LocalE>() );
-        parcel.readTypedList( getLocalEList(), LocalE.CREATOR );
+        cod_sede_operativa = parcel.readInt();
+        sede_operativa = parcel.readString();
+        localEList = new ArrayList<LocalE>();
+        parcel.readTypedList( localEList, LocalE.CREATOR );
+        status = parcel.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
 
-        dest.writeInt( getCod_sede_operativa() );
-        dest.writeString( getSede_operativa() );
-        dest.writeTypedList( getLocalEList() );
+        dest.writeInt( cod_sede_operativa );
+        dest.writeString( sede_operativa );
+        dest.writeTypedList( localEList );
+        dest.writeInt( status );
 
     }
 
@@ -78,4 +81,11 @@ public class SedeOperativaE implements Parcelable {
         this.localEList = localEList;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }
