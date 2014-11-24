@@ -55,9 +55,6 @@
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
 
-    <string name="docente_found">Buscando Datos del Docente</string>
-    <string name="docente_not_found">No se encontraron Datos del Docente en este Local de Aplicación</string>
-
     <!-- Ingreso al Local -->
     <string name="numero_documento">Número de DNI :</string>
     <string name="numero_documento_text_hint">ej: 06979411</string>
@@ -68,6 +65,12 @@
     <string name="local_de_aplicacion">Local de Aplicación</string>
     <string name="aula_aplicacion">Aula</string>
     <string name="aula_aplicacion_text_hint">Nro Aula</string>
+
+
+    <string name="docente_found">Buscando Datos del Docente</string>
+    <string name="docente_not_found">No se encontraron Datos del Docente en este Local de Aplicación</string>
+    <string name="docente_not_access">Error. Problemas al acceder a la BD!.</string>
+    <string name="docente_not_register">Error. No se registro asistencia del docente!.</string>
     <!-- /Ingreso al Local -->
 
 

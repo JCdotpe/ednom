@@ -29,11 +29,6 @@
             android:layout_height="wrap_content"
             android:hint="ej. 06481844" />
 
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Registrar" />
-
     </LinearLayout>
 
 </LinearLayout>

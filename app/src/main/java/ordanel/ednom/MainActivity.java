@@ -4,6 +4,7 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -18,11 +19,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
-import ordanel.ednom.Asyncs.LocalAsync;
-import ordanel.ednom.DAO.LocalDAO;
-import ordanel.ednom.Entity.PadronE;
+import ordanel.ednom.Business.LocalBL;
+import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
 import ordanel.ednom.Fragments.Welcome;
@@ -31,6 +29,8 @@ import ordanel.ednom.Interfaces.MainI;
 
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, MainI {
+
+    ProgressDialog progressDialog;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -150,6 +150,16 @@ public class MainActivity extends Activity
         startActivity(intent);
     }
 
+    public void showDialog( String paramMessage ) {
+
+        progressDialog = new ProgressDialog( MainActivity.this );
+        progressDialog.setMessage( paramMessage );
+        progressDialog.setIndeterminate( false );
+        progressDialog.setCancelable( false );
+        progressDialog.show();
+
+    }
+
     @Override
     public boolean dispatchTouchEvent(MotionEvent ev) {
 
@@ -179,22 +189,19 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public void searchPerson() {
+    public void searchPerson( String conditional ) {
 
-        EditText edtDNI_Local = (EditText) findViewById( R.id.edtDNI_Local );
+        this.showDialog( "Buscando Docente!" );
+        DocentesE docentesE = new LocalBL( MainActivity.this ).searchPerson( conditional );
 
-        LocalAsync localAsync = new LocalAsync( MainActivity.this );
-        localAsync.setMainI(MainActivity.this);
-        localAsync.execute( edtDNI_Local.getText().toString() );
-
-        edtDNI_Local.setText("");
+        this.showPerson( docentesE );
 
     }
 
     @Override
-    public void showPerson(ArrayList<PadronE> arrayList) {
+    public void showPerson( DocentesE docentesE ) {
 
-        arrayList = new LocalDAO( MainActivity.this ).showPerson("42817115");
+        progressDialog.dismiss();
 
         TextView txtDni = (TextView) findViewById( R.id.txtDNI );
         TextView txtApePaterno = (TextView) findViewById( R.id.txtApePaterno );
@@ -210,22 +217,36 @@ public class MainActivity extends Activity
         txtLocalAplicacion.setText( "" );
         txtAula.setText( "" );
 
-        if ( arrayList != null )
+        if ( docentesE.getStatus() == 0 )
         {
-            for ( int i = 0; i < arrayList.size(); i++ )
-            {
-                /*txtDni.setText( arrayList.get(i).getIns_numdoc() );
-                txtApePaterno.setText( arrayList.get(i).getApepat() );
-                txtApeMaterno.setText( arrayList.get(i).getApemat() );
-                txtNombres.setText( arrayList.get(i).getNombres() );
-                txtLocalAplicacion.setText( arrayList.get(i).getLocal_aplicacion() );
-                txtAula.setText( arrayList.get(i).getAula() );*/
-            }
+            txtDni.setText( docentesE.getNro_doc().toString() );
+            txtApePaterno.setText( docentesE.getApe_pat().toString() );
+            txtApeMaterno.setText( docentesE.getApe_mat().toString() );
+            txtNombres.setText( docentesE.getNombres().toString() );
+
+            txtAula.setText( docentesE.getAulaLocalE().getNro_aula().toString() );
         }
         else
         {
-            Toast toast = Toast.makeText( MainActivity.this, getString( R.string.docente_not_found ), Toast.LENGTH_LONG );
-            toast.show();
+
+            String msg = "";
+
+            switch ( docentesE.getStatus() )
+            {
+                case 1:
+                    msg = getString( R.string.docente_not_found );
+                    break;
+
+                case 2:
+                    msg = getString( R.string.docente_not_access );
+                    break;
+
+                case 3:
+                    msg = getString( R.string.docente_not_register );
+                    break;
+            }
+
+            Toast.makeText( MainActivity.this, msg, Toast.LENGTH_LONG ).show();
         }
 
     }

@@ -29,17 +29,6 @@
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp" />
 
-    <Button
-        android:id="@+id/btnLocal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registrar"
-        android:layout_alignBaseline="@id/edtDNI_Local"
-        android:layout_toRightOf="@id/edtDNI_Local"
-        android:layout_toEndOf="@id/edtDNI_Local"
-        android:layout_marginLeft="10dp"
-        android:layout_marginStart="10dp" />
-
     <TextView
         android:id="@+id/txtR_DNI"
         android:layout_width="wrap_content"

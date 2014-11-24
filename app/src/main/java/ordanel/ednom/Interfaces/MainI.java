@@ -1,8 +1,6 @@
 package ordanel.ednom.Interfaces;
 
-import java.util.ArrayList;
-
-import ordanel.ednom.Entity.PadronE;
+import ordanel.ednom.Entity.DocentesE;
 
 /**
  * Created by OrdNael on 05/11/2014.
@@ -11,8 +9,8 @@ public interface MainI {
 
     public void onSectionAttached( int number );
 
-    public void searchPerson( );
+    public void searchPerson( String conditional );
 
-    public void showPerson( ArrayList<PadronE> arrayList );
+    public void showPerson( DocentesE docentesE );
 
 }

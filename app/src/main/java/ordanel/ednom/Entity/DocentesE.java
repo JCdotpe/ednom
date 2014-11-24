@@ -32,6 +32,7 @@ public class DocentesE implements Parcelable {
     private Integer estado_cartilla;
     private String f_caritlla;
     private Integer nro_aula_cambio;
+    private Integer status;
 
     public DocentesE() {
         super();
@@ -63,6 +64,7 @@ public class DocentesE implements Parcelable {
         estado_cartilla = parcel.readInt();
         f_caritlla = parcel.readString();
         nro_aula_cambio = parcel.readInt();
+        status = parcel.readInt();
 
     }
 
@@ -93,6 +95,7 @@ public class DocentesE implements Parcelable {
         dest.writeInt( estado_cartilla );
         dest.writeString( f_caritlla );
         dest.writeInt( nro_aula_cambio );
+        dest.writeInt( status );
 
     }
 
@@ -305,4 +308,11 @@ public class DocentesE implements Parcelable {
         this.nro_aula_cambio = nro_aula_cambio;
     }
 
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
 }

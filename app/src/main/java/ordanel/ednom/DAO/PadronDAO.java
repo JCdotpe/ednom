@@ -371,6 +371,7 @@ public class PadronDAO {
                         contentValues.put( "estado_ficha", docentesE.getEstado_ficha() );
                         contentValues.put( "f_ficha", docentesE.getF_ficha() );
                         contentValues.put( "estado_cartilla", docentesE.getEstado_cartilla() );
+                        contentValues.put( "f_cartilla", docentesE.getF_caritlla() );
                         contentValues.put( "nro_aula_cambio", docentesE.getNro_aula_cambio() );
 
                         valueLong = dbHelper.getDatabase().insertOrThrow( "docentes", null, contentValues );
