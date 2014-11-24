@@ -20,12 +20,11 @@ import ordanel.ednom.R;
 public class IngresoLocal extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-    private String conditional;
+    private String number_dni;
+
+    EditText edtDNI;
 
     private MainI mListener;
-
-    EditText edtDNI_Local;
-
 
     public IngresoLocal() {
     }
@@ -49,9 +48,9 @@ public class IngresoLocal extends Fragment {
         View view = inflater.inflate( R.layout.fragment_ingreso_local, container, false );
         mListener.onSectionAttached( getArguments().getInt( ARG_SECTION_NUMBER ) );
 
-        edtDNI_Local = (EditText) view.findViewById( R.id.edtDNI_Local );
+        edtDNI = (EditText) view.findViewById( R.id.edtDNI);
 
-        edtDNI_Local.addTextChangedListener(new TextWatcher() {
+        edtDNI.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -62,8 +61,8 @@ public class IngresoLocal extends Fragment {
 
                 if ( s.length() == 8 )
                 {
-                    conditional = "nro_doc = '" + s.toString() + "'";
-                    mListener.searchPerson( conditional );
+                    number_dni = s.toString();
+                    mListener.asistenciaLocal( number_dni );
                 }
 
             }
@@ -72,7 +71,7 @@ public class IngresoLocal extends Fragment {
             public void afterTextChanged(Editable s) {
                 if ( s.length() == 8 )
                 {
-                    edtDNI_Local.setText( "" );
+                    edtDNI.setText( "" );
                 }
 
             }

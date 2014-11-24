@@ -18,10 +18,11 @@
         android:layout_marginStart="10dp" />
 
     <EditText
-        android:id="@+id/edtDNI_Local"
+        android:id="@+id/edtDNI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
+        android:maxLength="8"
         android:hint="@string/numero_documento_text_hint"
         android:layout_alignBaseline="@id/txtE_DNI"
         android:layout_toRightOf="@id/txtE_DNI"
@@ -112,9 +113,9 @@
         android:layout_height="wrap_content"
         android:text="@string/aula_aplicacion"
         android:textSize="20sp"
-        android:layout_alignBottom="@+id/txtDNI"
-        android:layout_alignLeft="@+id/btnLocal"
-        android:layout_alignStart="@+id/btnLocal" />
+        android:layout_alignTop="@+id/txtDNI"
+        android:layout_toRightOf="@+id/edtDNI"
+        android:layout_toEndOf="@+id/edtDNI" />
 
     <TextView
         android:id="@+id/txtAula"
@@ -122,8 +123,8 @@
         android:layout_height="wrap_content"
         android:hint="@string/aula_aplicacion_text_hint"
         android:textSize="40sp"
-        android:layout_below="@id/txtR_Aula"
-        android:layout_alignLeft="@+id/btnLocal"
-        android:layout_alignStart="@+id/btnLocal" />
+        android:layout_below="@+id/txtR_Aula"
+        android:layout_alignLeft="@+id/txtR_Aula"
+        android:layout_alignStart="@+id/txtR_Aula" />
 
 </RelativeLayout>

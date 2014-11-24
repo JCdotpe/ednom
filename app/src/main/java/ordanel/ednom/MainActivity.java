@@ -19,7 +19,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import ordanel.ednom.Business.LocalBL;
+import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
@@ -31,6 +31,8 @@ public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, MainI {
 
     ProgressDialog progressDialog;
+    DocentesE docentesE;
+    DocentesBL docentesBL = new DocentesBL( MainActivity.this );
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -189,16 +191,24 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public void searchPerson( String conditional ) {
+    public void asistenciaLocal( String paramDNI ) {
 
-        this.showDialog( "Buscando Docente!" );
-        DocentesE docentesE = new LocalBL( MainActivity.this ).searchPerson( conditional );
+        this.showDialog("Buscando Docente!");
+        docentesE = docentesBL.asistenciaLocal( paramDNI );
 
         this.showPerson( docentesE );
 
     }
 
     @Override
+    public void asistenciaAula( String paramDNI, Integer paramNroAula ) {
+
+        this.showDialog("Buscando Docente!");
+        docentesE = docentesBL.asistenciaAula( paramDNI, paramNroAula );
+
+        this.showPerson( docentesE );
+    }
+
     public void showPerson( DocentesE docentesE ) {
 
         progressDialog.dismiss();
@@ -241,8 +251,13 @@ public class MainActivity extends Activity
                     msg = getString( R.string.docente_not_access );
                     break;
 
+                case 5:
                 case 3:
-                    msg = getString( R.string.docente_not_register );
+                    msg = getString( R.string.docente_not_register_local );
+                    break;
+
+                case 4:
+                    msg = getString( R.string.docente_not_register_aula);
                     break;
             }
 

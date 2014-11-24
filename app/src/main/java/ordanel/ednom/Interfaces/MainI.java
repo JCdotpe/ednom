@@ -1,7 +1,5 @@
 package ordanel.ednom.Interfaces;
 
-import ordanel.ednom.Entity.DocentesE;
-
 /**
  * Created by OrdNael on 05/11/2014.
  */
@@ -9,8 +7,8 @@ public interface MainI {
 
     public void onSectionAttached( int number );
 
-    public void searchPerson( String conditional );
+    public void asistenciaLocal( String paramDNI );
 
-    public void showPerson( DocentesE docentesE );
+    public void asistenciaAula( String paramDNI, Integer paramNroAula );
 
 }
