@@ -47,13 +47,13 @@ public class DocentesBL {
         if ( contingencia == 0 ) // NO es del TIPO CONTINGENCIA
         {
             conditional = "nro_doc = '" + paramDNI + "' and nro_aula = " + paramNroAula;
-            docentesE = docentesDAO.searchPerson( conditional );
         }
         else
         {
             conditional = "nro_doc = '" + paramDNI + "'";
-            docentesE = docentesDAO.searchPerson( conditional );
         }
+
+        docentesE = docentesDAO.searchPerson( conditional );
 
         if ( docentesE.getStatus() == 0 )
         {
