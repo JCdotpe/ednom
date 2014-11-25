@@ -14,36 +14,42 @@ import ordanel.ednom.Library.ConstantsUtils;
 /**
  * Created by OrdNael on 05/11/2014.
  */
-public class DocentesDAO {
+public class DocentesDAO extends BaseDAO {
 
     private static final String TAG = DocentesDAO.class.getSimpleName();
+    private static DocentesDAO docentesDAO;
+
     String SQL;
     Integer valueInteger;
 
-    DBHelper dbHelper;
-
     ConstantsUtils constantsUtils;
 
-    Context context;
     Cursor cursor = null;
     ContentValues contentValues = null;
 
-    public DocentesDAO(Context context) {
-        this.context = context;
+    public static DocentesDAO getInstance( Context paramContext ) {
+
+        if ( docentesDAO == null )
+        {
+            docentesDAO = new DocentesDAO( paramContext );
+        }
+
+        return docentesDAO;
+    }
+
+    private DocentesDAO( Context paramContext ) {
+        initDBHelper( paramContext );
     }
 
     public DocentesE searchPerson( String paramConditional ) {
 
         Log.e( TAG, "start searchPerson" );
 
-        dbHelper = DBHelper.getUtilDb( this.context );
-
         DocentesE docentesE = new DocentesE();
 
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             String SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula FROM docentes WHERE " + paramConditional;
             Log.e( TAG, "string sql : " + SQL );
@@ -81,8 +87,7 @@ public class DocentesDAO {
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
             cursor.close();
         }
 
@@ -96,12 +101,9 @@ public class DocentesDAO {
 
         Log.e( TAG, "start asistenciaLocal" );
 
-        dbHelper = DBHelper.getUtilDb( this.context );
-
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             contentValues =  new ContentValues();
             contentValues.put( "estado", 1 );
@@ -123,8 +125,7 @@ public class DocentesDAO {
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
         }
 
         Log.e( TAG, "end asistenciaLocal" );
@@ -136,12 +137,9 @@ public class DocentesDAO {
 
         Log.e( TAG, "start asistenciaAula" );
 
-        dbHelper = DBHelper.getUtilDb( this.context );
-
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             contentValues =  new ContentValues();
             contentValues.put( "estado_aula", 1 );
@@ -178,8 +176,7 @@ public class DocentesDAO {
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
         }
 
         Log.e( TAG, "end asistenciaAula" );

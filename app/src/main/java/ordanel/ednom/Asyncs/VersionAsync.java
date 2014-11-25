@@ -44,7 +44,7 @@ public class VersionAsync extends AsyncTask< Void, VersionE, VersionE> {
         }
         else if ( statusVersion == 100 )
         {
-            Intent intent = new Intent( this.context, MainActivity.class);
+            Intent intent = new Intent( this.context, MainActivity.class );
             this.context.startActivity( intent );
         }
         else

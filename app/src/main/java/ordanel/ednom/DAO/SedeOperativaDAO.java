@@ -13,41 +13,49 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Entity.UsuarioLocalE;
 import ordanel.ednom.Library.ConstantsUtils;
-import ordanel.ednom.Library.HttpPostAux;
 
 /**
  * Created by Leandro on 21/11/2014.
  */
-public class SedeOperativaDAO {
+public class SedeOperativaDAO extends BaseDAO {
 
     private static final String TAG = SedeOperativaDAO.class.getSimpleName();
+    private static SedeOperativaDAO sedeOperativaDAO;
 
     String URL_Connect = ConstantsUtils.BASE_URL + "logeo"; // "acces.php" "logeo"
     Integer cod_sede_operativa, cod_local_sede;
     String SQL, Where;
 
-    DBHelper dbHelper;
-    ContentValues contentValues = null;
     Cursor cursor = null;
-    Context context;
+    ContentValues contentValues = null;
 
     JSONObject jsonObject;
     JSONArray jsonArray;
 
-    HttpPostAux posteo = new HttpPostAux();
-
     SedeOperativaE sedeOperativaE;
+
     ArrayList<LocalE> localEArrayList;
     ArrayList<UsuarioLocalE> usuarioLocalEArrayList;
 
-    public SedeOperativaDAO( Context paramContext ) {
-        this.context = paramContext;
-        Log.e( TAG, "start" );
+    public static SedeOperativaDAO getInstance( Context paramContext ) {
+
+        if ( sedeOperativaDAO == null )
+        {
+            sedeOperativaDAO = new SedeOperativaDAO( paramContext );
+        }
+
+        return sedeOperativaDAO;
+    }
+
+    private SedeOperativaDAO( Context paramContext ) {
+
+        initDBHelper( paramContext );
+        initHttPostAux();
+
     }
 
     public SedeOperativaE CheckLogin( String password ) {
@@ -57,7 +65,7 @@ public class SedeOperativaDAO {
         ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
         parametersPost.add( new BasicNameValuePair( "sendPass", password ) ); // "password" "sendPass"
 
-        jsonArray = posteo.getServerData( parametersPost, URL_Connect );
+        jsonArray = httpPostAux.getServerData( parametersPost, URL_Connect );
 
         sedeOperativaE = new SedeOperativaE();
 
@@ -155,12 +163,9 @@ public class SedeOperativaDAO {
 
         Log.e( TAG, "start registerLogin" );
 
-        dbHelper = DBHelper.getUtilDb( this.context );
-
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             cod_sede_operativa = paramSedeOperativaE.getCod_sede_operativa();
 
@@ -263,8 +268,7 @@ public class SedeOperativaDAO {
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
         }
 
         Log.e( TAG, "end registerLogin" );
@@ -324,17 +328,14 @@ public class SedeOperativaDAO {
 
         Log.e(TAG, "start showInfo");
 
-        dbHelper = DBHelper.getUtilDb( this.context );
+        sedeOperativaE = new SedeOperativaE();
 
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             String SQL = "SELECT cod_sede_operativa, sede_operativa FROM sede_operativa";
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
-
-            sedeOperativaE = new SedeOperativaE();
 
             // set data SEDE_OPERATIVA
             if ( cursor.moveToFirst() )
@@ -414,24 +415,22 @@ public class SedeOperativaDAO {
                 sedeOperativaE.setStatus( 2 ); // no hay datos
             }
 
-            return sedeOperativaE;
-
         }
         catch (Exception e)
         {
             e.printStackTrace();
             Log.e( TAG, "error showInfo : " + e.toString() );
-            sedeOperativaE.setStatus( 1 );
-            return sedeOperativaE; // error en el showInfoLocal //
+            sedeOperativaE.setStatus( 1 ); // error en el showInfoLocal //
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
             cursor.close();
-
-            Log.e( TAG, "end showInfo" );
         }
+
+        Log.e( TAG, "end showInfo" );
+
+        return sedeOperativaE;
 
     }
 }

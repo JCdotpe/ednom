@@ -6,29 +6,37 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
-import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.AulaLocalE;
 
 /**
  * Created by OrdNael on 24/11/2014.
  */
-public class AulaLocalDAO {
+public class AulaLocalDAO extends BaseDAO {
 
     private static final String TAG = AulaLocalDAO.class.getSimpleName();
+    private static AulaLocalDAO aulaLocalDAO;
 
     String SQL;
     Integer valueInteger;
     String valueString;
 
+    Cursor cursor = null;
+
     ArrayList<AulaLocalE> aulaLocalEArrayList;
 
-    DBHelper dbHelper;
+    public static AulaLocalDAO getInstance( Context paramContext ) {
 
-    Context context;
-    Cursor cursor;
+        if ( aulaLocalDAO == null )
+        {
+            aulaLocalDAO = new AulaLocalDAO( paramContext );
+        }
 
-    public AulaLocalDAO ( Context context ) {
-        this.context = context;
+        return aulaLocalDAO;
+
+    }
+
+    private AulaLocalDAO ( Context paramContext ) {
+        initDBHelper( paramContext );
     }
 
 
@@ -38,12 +46,9 @@ public class AulaLocalDAO {
 
         aulaLocalEArrayList = new ArrayList<AulaLocalE>();
 
-        dbHelper = DBHelper.getUtilDb( this.context );
-
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             SQL = "SELECT nro_aula, tipo FROM aula_local ORDER BY nro_aula ASC";
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
@@ -70,8 +75,7 @@ public class AulaLocalDAO {
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
             cursor.close();
         }
 
@@ -84,12 +88,9 @@ public class AulaLocalDAO {
 
         Log.e( TAG, "start searchTipoAula" );
 
-        dbHelper = DBHelper.getUtilDb( this.context );
-
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             SQL = "SELECT tipo FROM aula_local WHERE nro_aula = " + paramNroAula;
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
@@ -115,8 +116,7 @@ public class AulaLocalDAO {
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
             cursor.close();
         }
 

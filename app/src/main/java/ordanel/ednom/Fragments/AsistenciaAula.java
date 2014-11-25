@@ -6,21 +6,17 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 
 import ordanel.ednom.Business.AulaLocalBL;
-import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Interfaces.MainI;
-import ordanel.ednom.MainActivity;
 import ordanel.ednom.R;
 
 /**

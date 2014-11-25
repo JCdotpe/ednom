@@ -32,7 +32,7 @@ public class MainActivity extends Activity
 
     ProgressDialog progressDialog;
     DocentesE docentesE;
-    DocentesBL docentesBL = new DocentesBL( MainActivity.this );
+    DocentesBL docentesBL;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -48,6 +48,8 @@ public class MainActivity extends Activity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        docentesBL = new DocentesBL( MainActivity.this );
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);

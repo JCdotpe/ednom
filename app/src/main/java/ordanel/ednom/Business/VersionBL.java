@@ -15,8 +15,8 @@ public class VersionBL {
 
     public static Integer currentVersion;
 
-    public VersionBL( Context context ) {
-        versionDAO = new VersionDAO( context );
+    public VersionBL( Context paramContext ) {
+        versionDAO = VersionDAO.getInstance( paramContext );
     }
 
     public static VersionE checkVersion() {

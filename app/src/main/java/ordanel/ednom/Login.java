@@ -36,7 +36,7 @@ public class Login extends Activity {
 
         if ( checkLoginData( password ) )
         {
-            new LoginAsync(Login.this).execute( password );
+            new LoginAsync( Login.this ).execute( password );
         }
         else
         {

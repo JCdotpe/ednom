@@ -4,7 +4,6 @@ import android.content.Context;
 
 import ordanel.ednom.DAO.AulaLocalDAO;
 import ordanel.ednom.DAO.DocentesDAO;
-import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DocentesE;
 
 /**
@@ -20,8 +19,8 @@ public class DocentesBL {
 
     public DocentesBL( Context paramContext ) {
 
-        docentesDAO = new DocentesDAO( paramContext );
-        aulaLocalDAO = new AulaLocalDAO( paramContext );
+        docentesDAO = DocentesDAO.getInstance( paramContext );
+        aulaLocalDAO = AulaLocalDAO.getInstance( paramContext );
 
     }
 

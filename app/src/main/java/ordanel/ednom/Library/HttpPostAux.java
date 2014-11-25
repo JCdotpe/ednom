@@ -23,13 +23,25 @@ import java.util.ArrayList;
 public class HttpPostAux {
 
     private static final String TAG = HttpPostAux.class.getSimpleName();
+    private static HttpPostAux httpPostAux;
 
     InputStream inputStream = null;
     String result = "";
     Integer error  = 0;
 
-    public  HttpPostAux() {
-        Log.v( TAG, "start" );
+    public static HttpPostAux getInstance() {
+
+        Log.e( TAG, "start HttpPostAux" );
+
+        if ( httpPostAux == null )
+        {
+            httpPostAux = new HttpPostAux();
+        }
+
+        return httpPostAux;
+    }
+
+    private HttpPostAux() {
     }
 
     public JSONArray getServerData( ArrayList<NameValuePair> parameters, String urlWebServer ) {

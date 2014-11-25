@@ -16,8 +16,8 @@ public class AulaLocalBL {
     private static ArrayList<AulaLocalE> aulaLocalEArrayList;
     private static ArrayList<String> stringArrayList;
 
-    public AulaLocalBL( Context context ){
-        aulaLocalDAO = new AulaLocalDAO( context );
+    public AulaLocalBL( Context paramContext ) {
+        aulaLocalDAO = AulaLocalDAO.getInstance( paramContext );
     }
 
     public static ArrayList<String> getAllNroAula() {

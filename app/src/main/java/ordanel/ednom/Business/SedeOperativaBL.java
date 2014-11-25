@@ -17,7 +17,7 @@ public class SedeOperativaBL {
 
     public SedeOperativaBL( Context paramContext ) {
 
-        sedeOperativaDAO = new SedeOperativaDAO( paramContext );
+        sedeOperativaDAO = SedeOperativaDAO.getInstance( paramContext );
     }
 
     public static Integer checkLogin( String... params ) {

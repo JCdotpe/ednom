@@ -8,49 +8,55 @@ import android.util.Log;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
-import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.VersionE;
 import ordanel.ednom.Library.ConstantsUtils;
-import ordanel.ednom.Library.HttpPostAux;
 
 /**
  * Created by OrdNael on 29/10/2014.
  */
-public class VersionDAO {
+public class VersionDAO extends BaseDAO {
 
     private static final String TAG = VersionDAO.class.getSimpleName();
+    private static VersionDAO versionDAO;
 
     String URL_Connect = ConstantsUtils.BASE_URL + "version";// "version.php" "version"
 
-    Integer error;
+    Integer valueInteger;
     Long valueLong;
 
-    DBHelper dbHelper;
-    Context context;
-    ContentValues contentValues;
+    Cursor cursor = null;
+    ContentValues contentValues = null;
 
     JSONObject jsonObject;
 
     VersionE versionE;
 
-    public VersionDAO (Context context) {
-        this.context = context;
-        Log.e( TAG, "start" );
+    public static VersionDAO getInstance( Context paramContext ) {
+
+        if ( versionDAO == null )
+        {
+            versionDAO =new VersionDAO( paramContext );
+        }
+
+        return versionDAO;
+    }
+
+    private VersionDAO ( Context paramContext ) {
+
+        initDBHelper( paramContext );
+        initHttPostAux();
+
     }
 
     public Integer currentVersion() {
 
         Log.e( TAG, "start currentVersion" );
 
-        dbHelper = DBHelper.getUtilDb( this.context );
-        Cursor cursor = null;
-
         versionE = new VersionE();
 
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             String SQL = "SELECT MAX(v_padron) AS currentVersion FROM version";
 
@@ -71,8 +77,7 @@ public class VersionDAO {
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
             cursor.close();
 
             Log.e( TAG, "end currentVersion" );
@@ -82,14 +87,13 @@ public class VersionDAO {
 
     public VersionE checkVersion( Integer versionLocal ) {
 
-        Integer versionNube;
-
         Log.e( TAG, "start checkVersion - version local: " + versionLocal.toString() );
 
-        HttpPostAux httpPostAux = new HttpPostAux();
         JSONArray jsonArray = httpPostAux.getServerData( null, URL_Connect );
 
         versionE = new VersionE();
+
+        Integer versionNube;
 
         if ( jsonArray != null )
         {
@@ -144,12 +148,10 @@ public class VersionDAO {
     public Integer registerVersion( VersionE versionE ) {
 
         Log.e( TAG, "start registerVersion" );
-        dbHelper = DBHelper.getUtilDb( this.context );
 
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             Integer rowsNumber = dbHelper.getDatabase().delete( "version", null, null );
             Log.e( TAG, "Se elimino version! : " + rowsNumber.toString() );
@@ -164,7 +166,15 @@ public class VersionDAO {
 
             valueLong = dbHelper.getDatabase().insertOrThrow( "version", null, contentValues );
             Log.e( TAG, "register : " + String.valueOf(valueLong) ); // -1 => error register
-            error = 0;
+
+            if ( !valueLong.equals(0) && !valueLong.equals(-1) )
+            {
+                valueInteger = 0;
+            }
+            else
+            {
+                valueInteger = 1; // error register
+            }
 
             dbHelper.setTransactionSuccessful();
 
@@ -173,17 +183,16 @@ public class VersionDAO {
         {
             e.printStackTrace();
             Log.e( TAG, "error registerVersion : " + e.toString() );
-            error = 1; // error register
+            valueInteger = 1; // error register
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
         }
 
         Log.e( TAG, "end registerVersion" );
 
-        return error;
+        return valueInteger;
     }
 
 }

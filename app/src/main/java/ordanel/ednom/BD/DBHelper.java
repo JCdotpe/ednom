@@ -19,22 +19,24 @@ public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = DBHelper.class.getSimpleName();
 
+    private static DBHelper dbHelper;
+
     public static final String DB_NAME = "ednom.sqlite";
     public static final int DB_VERSION = 1;
     private String DB_PATH = null;
     private Context mContext;
 
 
-    public DBHelper(Context context)
+    private DBHelper( Context context )
     {
         super(context, DB_NAME, null, DB_VERSION);
         mContext = context;
         DB_PATH = "data/data/" + mContext.getPackageName() + "/databases/";
     }
 
-    public static DBHelper getUtilDb(Context context)
+    public static DBHelper getUtilDb( Context context )
     {
-        DBHelper dbHelper = new DBHelper(context);
+        dbHelper = new DBHelper(context);
 
         if (!dbHelper.isDataBaseExist())
         {

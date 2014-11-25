@@ -19,9 +19,11 @@ public class PadronBL {
     private static LocalE localE;
 
 
-    public PadronBL( Context context ) {
-        padronDAO = new PadronDAO( context );
-        versionDAO = new VersionDAO( context );
+    public PadronBL( Context paramContext ) {
+
+        padronDAO = PadronDAO.getInstance( paramContext );
+        versionDAO = VersionDAO.getInstance( paramContext );
+
     }
 
     public static Integer asyncPadron( VersionE versionE ) {

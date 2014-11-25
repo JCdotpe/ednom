@@ -12,7 +12,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DiscapacidadE;
 import ordanel.ednom.Entity.DocentesE;
@@ -22,26 +21,22 @@ import ordanel.ednom.Entity.ModalidadE;
 import ordanel.ednom.Entity.PadronE;
 import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Library.ConstantsUtils;
-import ordanel.ednom.Library.HttpPostAux;
 
 /**
  * Created by OrdNael on 30/10/2014.
  */
-public class PadronDAO {
+public class PadronDAO extends BaseDAO {
 
     private static final String TAG = PadronDAO.class.getSimpleName();
+    private static PadronDAO padronDAO;
 
     String URL_Connect = ConstantsUtils.BASE_URL + "padron"; // "padron.php" "padron"
-
     Integer cod_sede_operativa, cod_local_sede, nro_aula;
-    SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     Long valueLong;
     Integer valueInteger;
 
-    DBHelper dbHelper;
-    Context context;
     Cursor cursor = null;
-    ContentValues contentValues;
+    ContentValues contentValues = null;
 
     JSONObject jsonObject;
     JSONArray jsonArray;
@@ -50,6 +45,7 @@ public class PadronDAO {
 
     LocalE localE;
     PadronE padronE;
+
     ArrayList<AulaLocalE> aulaLocalEArrayList;
     ArrayList<DocentesE> docentesEArrayList;
     ArrayList<DiscapacidadE> discapacidadEArrayList;
@@ -57,22 +53,33 @@ public class PadronDAO {
     ArrayList<InstrumentoE> instrumentoEArrayList;
 
 
-    public PadronDAO( Context context ) {
-        this.context = context;
-        Log.e( TAG, "start" );
+    public static PadronDAO getInstance( Context paramContext ) {
+
+        if ( padronDAO == null )
+        {
+            padronDAO = new PadronDAO( paramContext );
+        }
+
+        return padronDAO;
+    }
+
+
+    private PadronDAO( Context paramContext ) {
+
+        initDBHelper( paramContext );
+        initHttPostAux();
+
     }
 
     public LocalE searchNroLocal() {
 
         Log.e( TAG, "start searchNroLocal" );
 
-        dbHelper = DBHelper.getUtilDb( this.context );
         localE = new LocalE();
 
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             String SQL = "SELECT cod_sede_operativa, cod_local_sede FROM local";
 
@@ -105,8 +112,7 @@ public class PadronDAO {
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
             cursor.close();
         }
 
@@ -119,9 +125,8 @@ public class PadronDAO {
     public PadronE padronNube( LocalE paramLocalE ) {
 
         Log.e( TAG, "start padronNube" );
-        padronE = new PadronE();
 
-        HttpPostAux httpPostAux = new HttpPostAux();
+        padronE = new PadronE();
 
         cod_sede_operativa = paramLocalE.getSedeOperativaE().getCod_sede_operativa();
         cod_local_sede = paramLocalE.getCod_local_sede();
@@ -308,12 +313,9 @@ public class PadronDAO {
 
         Log.e( TAG, "start registrarPadron" );
 
-        dbHelper = DBHelper.getUtilDb( this.context );
-
         try
         {
-            dbHelper.openDataBase();
-            dbHelper.beginTransaction();
+            openDBHelper();
 
             if ( this.clearPadron() )// limpio padron
             {
@@ -450,8 +452,7 @@ public class PadronDAO {
         }
         finally
         {
-            dbHelper.endTransaction();
-            dbHelper.close();
+            closeDBHelper();
         }
 
         Log.e( TAG, "end registrarPadron" );
@@ -492,7 +493,7 @@ public class PadronDAO {
     }
 
     public Date setearFecha( String stringFecha ) {
-
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         Date dateFecha = null;
 
         try
