@@ -6,11 +6,11 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import ordanel.ednom.BD.DBHelper;
+import java.util.ArrayList;
+
 import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.LocalE;
-import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Library.ConstantsUtils;
 
 /**
@@ -28,6 +28,8 @@ public class DocentesDAO extends BaseDAO {
 
     Cursor cursor = null;
     ContentValues contentValues = null;
+
+    DocentesE docentesE;
 
     public static DocentesDAO getInstance( Context paramContext ) {
 
@@ -47,7 +49,7 @@ public class DocentesDAO extends BaseDAO {
 
         Log.e( TAG, "start searchPerson" );
 
-        DocentesE docentesE = new DocentesE();
+        docentesE = new DocentesE();
 
         try
         {
@@ -188,6 +190,60 @@ public class DocentesDAO extends BaseDAO {
         Log.e( TAG, "end asistenciaAula" );
 
         return valueInteger;
+    }
+
+    public ArrayList<DocentesE> getAllforSync() {
+
+        Log.e( TAG, "start getAllforSync" );
+
+        ArrayList<DocentesE> docentesEArrayList = new ArrayList<DocentesE>();
+
+        try
+        {
+            openDBHelper();
+
+            String SQL = "SELECT nro_doc, estado, f_registro, estado_aula, f_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla, nro_aula_cambio FROM docentes";
+            Log.e( TAG, "string sql : " + SQL );
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            if ( cursor.moveToFirst() )
+            {
+                while ( !cursor.isAfterLast() )
+                {
+                    docentesE = new DocentesE();
+                    docentesE.setNro_doc( cursor.getString( cursor.getColumnIndex( "nro_doc" ) ) );
+                    docentesE.setEstado( cursor.getInt( cursor.getColumnIndex( "estado" ) ) );
+                    docentesE.setF_registro( cursor.getString( cursor.getColumnIndex( "f_registro" ) ) );
+                    docentesE.setEstado_aula( cursor.getInt( cursor.getColumnIndex( "estado_aula" ) ) );
+                    docentesE.setF_aula( cursor.getString( cursor.getColumnIndex( "f_aula" ) ) );
+                    docentesE.setEstado_ficha( cursor.getInt( cursor.getColumnIndex( "estado_ficha" ) ) );
+                    docentesE.setF_ficha( cursor.getString( cursor.getColumnIndex( "f_ficha" ) ) );
+                    docentesE.setEstado_cartilla( cursor.getInt( cursor.getColumnIndex( "estado_cartilla" ) ) );
+                    docentesE.setF_caritlla( cursor.getString( cursor.getColumnIndex( "f_cartilla" ) ) );
+                    docentesE.setNro_aula_cambio( cursor.getInt( cursor.getColumnIndex( "nro_aula_cambio" ) ) );
+
+                    docentesEArrayList.add( docentesE );
+
+                    cursor.moveToNext();
+
+                }
+
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e( TAG, "getAllforSync : " + e.toString() );
+        }
+        finally
+        {
+            closeDBHelper();
+        }
+
+        Log.e( TAG, "end getAllforSync" );
+
+        return docentesEArrayList;
     }
 
 }

@@ -2,6 +2,8 @@ package ordanel.ednom.Business;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import ordanel.ednom.DAO.AulaLocalDAO;
 import ordanel.ednom.DAO.DocentesDAO;
 import ordanel.ednom.Entity.DocentesE;
@@ -61,6 +63,10 @@ public class DocentesBL {
         }
 
         return docentesE;
+    }
+
+    public ArrayList<DocentesE> getAllforSync() {
+        return docentesDAO.getAllforSync();
     }
 
 }
