@@ -9,6 +9,8 @@ import android.util.Log;
 import ordanel.ednom.BD.DBHelper;
 import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DocentesE;
+import ordanel.ednom.Entity.LocalE;
+import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Library.ConstantsUtils;
 
 /**
@@ -51,7 +53,7 @@ public class DocentesDAO extends BaseDAO {
         {
             openDBHelper();
 
-            String SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula FROM docentes WHERE " + paramConditional;
+            String SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula, lc.nombreLocal FROM docentes dc INNER JOIN local lc ON dc.cod_sede_operativa = lc.cod_sede_operativa AND dc.cod_local_sede = lc.cod_local_sede WHERE " + paramConditional;
             Log.e( TAG, "string sql : " + SQL );
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
@@ -60,7 +62,11 @@ public class DocentesDAO extends BaseDAO {
                 while ( !cursor.isAfterLast() )
                 {
 
+                    LocalE localE = new LocalE();
+                    localE.setNombreLocal( cursor.getString( cursor.getColumnIndex( "nombreLocal" ) ) );
+
                     AulaLocalE aulaLocalE = new AulaLocalE();
+                    aulaLocalE.setLocalE( localE );
                     aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( "nro_aula" ) ) );
 
                     docentesE.setNro_doc( cursor.getString( cursor.getColumnIndex( "nro_doc" ) ) );

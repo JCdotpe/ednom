@@ -19,7 +19,7 @@
         android:layout_marginStart="10dp" />
 
     <EditText
-        android:id="@+id/edtDNI_Local"
+        android:id="@+id/edtDNI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
@@ -34,7 +34,7 @@
         android:layout_width="fill_parent"
         android:layout_height="3dp"
         android:background="#000"
-        android:layout_below="@+id/edtDNI_Local" />
+        android:layout_below="@+id/edtDNI" />
 
     <LinearLayout
         android:orientation="vertical"
@@ -142,7 +142,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:background="@drawable/border"
-        android:layout_below="@id/edtDNI_Local"
+        android:layout_below="@id/edtDNI"
         android:layout_alignParentRight="true"
         android:layout_marginRight="100dp"
         >

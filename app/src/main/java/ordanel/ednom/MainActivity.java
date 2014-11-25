@@ -237,6 +237,8 @@ public class MainActivity extends Activity
             txtNombres.setText( docentesE.getNombres().toString() );
 
             txtAula.setText( docentesE.getAulaLocalE().getNro_aula().toString() );
+
+            txtLocalAplicacion.setText( docentesE.getAulaLocalE().getLocalE().getNombreLocal() );
         }
         else
         {
