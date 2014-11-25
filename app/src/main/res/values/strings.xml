@@ -64,7 +64,7 @@
     <string name="nombres_text_hint">Nombres</string>
     <string name="local_de_aplicacion">Local de Aplicación</string>
     <string name="aula_aplicacion">Aula</string>
-    <string name="aula_aplicacion_text_hint">Nro Aula</string>
+    <string name="aula_aplicacion_text_hint">Nro</string>
     <!-- /Ingreso al Local -->
 
     <!-- Asistencia -->
