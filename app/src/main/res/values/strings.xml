@@ -65,6 +65,7 @@
     <string name="local_de_aplicacion">Local de Aplicación</string>
     <string name="aula_aplicacion">Aula</string>
     <string name="aula_aplicacion_text_hint">Nro</string>
+    <string name="apellidos_text_hint">Apellidos Completos</string>
     <!-- /Ingreso al Local -->
 
     <!-- Asistencia -->

@@ -43,7 +43,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:text="@string/numero_documento_abrev"
-    android:textSize="20dp"
+    android:textSize="30dp"
     android:textColor="#000"
     android:textStyle="bold"
     android:layout_marginTop="43dp"
@@ -58,50 +58,36 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/numero_documento_text_hint"
-        android:textSize="20dp"
+        android:textSize="30dp"
         android:textStyle="bold"
         android:layout_alignBottom="@id/txtR_DNI"
         android:layout_toRightOf="@id/txtR_DNI"
         android:layout_toEndOf="@id/txtR_DNI"
         android:layout_marginLeft="20dp" />
-    <TextView
-        android:id="@+id/txtApePaterno"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/apellido_paterno_text_hint"
-        android:textSize="35dp"
-        android:textColor="#000"
-        android:textStyle="bold"
-        android:layout_marginTop="40dp"
-        android:layout_below="@+id/txtR_DNI"
-        android:layout_alignLeft="@+id/txtR_DNI"
-        android:layout_alignStart="@+id/txtR_DNI" />
 
     <TextView
-        android:id="@+id/txtApeMaterno"
+        android:id="@+id/txtApellidos"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:hint="@string/apellido_materno_text_hint"
-        android:textSize="35dp"
+        android:hint="@string/apellidos_text_hint"
+        android:textSize="45dp"
         android:textStyle="bold"
-        android:textColor="#000"
+        android:layout_marginTop="5dp"
         android:layout_below="@+id/txtR_DNI"
-        android:layout_toEndOf="@+id/txtApePaterno"
-        android:layout_marginTop="40dp"
-        android:layout_centerVertical="true"
-        android:layout_toRightOf="@+id/txtApePaterno" />
+        android:layout_alignLeft="@+id/txtR_DNI"
+        android:layout_alignStart="@+id/txtR_DNI"/>
 
     <TextView
         android:id="@+id/txtNombres"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:hint="@string/nombres_text_hint"
-        android:textSize="35dp"
+        android:textSize="45dp"
         android:textStyle="bold"
         android:layout_marginTop="20dp"
-        android:layout_below="@+id/txtApePaterno"
-        android:layout_alignLeft="@+id/txtApePaterno"
-        android:layout_alignStart="@+id/txtApePaterno" />
+        android:layout_below="@+id/txtApellidos"
+        android:layout_alignLeft="@+id/txtApellidos"
+        android:layout_alignStart="@+id/txtApellidos" />
 
     <TextView
         android:id="@+id/txtR_NombreLocal"
@@ -127,7 +113,7 @@
         android:layout_below="@+id/txtR_NombreLocal"
         android:layout_alignLeft="@+id/txtR_NombreLocal"
         android:layout_alignStart="@+id/txtR_NombreLocal"
-        android:layout_marginTop="39dp" />
+        android:layout_marginTop="25dp" />
 
     <TableLayout
         android:layout_width="wrap_content"
@@ -135,7 +121,7 @@
         android:background="@drawable/border"
         android:layout_below="@id/edtDNI"
         android:layout_alignParentRight="true"
-        android:layout_marginRight="100dp"
+        android:layout_marginRight="10dp"
         android:layout_marginTop="50dp"
         android:id="@+id/tableLayout">
         <TableRow>
