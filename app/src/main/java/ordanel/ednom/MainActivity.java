@@ -216,15 +216,13 @@ public class MainActivity extends Activity
         progressDialog.dismiss();
 
         TextView txtDni = (TextView) findViewById( R.id.txtDNI );
-        TextView txtApePaterno = (TextView) findViewById( R.id.txtApePaterno );
-        TextView txtApeMaterno = (TextView) findViewById( R.id.txtApeMaterno );
+        TextView txtApellidos = (TextView) findViewById( R.id.txtApellidos );
         TextView txtNombres = (TextView) findViewById( R.id.txtNombres );
         TextView txtLocalAplicacion = (TextView) findViewById( R.id.txtLocalAplicacion );
         TextView txtAula = (TextView) findViewById( R.id.txtAula );
 
         txtDni.setText( "" );
-        txtApePaterno.setText( "" );
-        txtApeMaterno.setText( "" );
+        txtApellidos.setText( "" );
         txtNombres.setText( "" );
         txtLocalAplicacion.setText( "" );
         txtAula.setText( "" );
@@ -232,8 +230,7 @@ public class MainActivity extends Activity
         if ( docentesE.getStatus() == 0 )
         {
             txtDni.setText( docentesE.getNro_doc().toString() );
-            txtApePaterno.setText( docentesE.getApe_pat().toString() );
-            txtApeMaterno.setText( docentesE.getApe_mat().toString() );
+            txtApellidos.setText( docentesE.getApe_pat().toString() + ' ' + docentesE.getApe_mat().toString() );
             txtNombres.setText( docentesE.getNombres().toString() );
 
             txtAula.setText( docentesE.getAulaLocalE().getNro_aula().toString() );
