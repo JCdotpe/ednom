@@ -19,7 +19,7 @@ public class VersionDAO extends BaseDAO {
     private static final String TAG = VersionDAO.class.getSimpleName();
     private static VersionDAO versionDAO;
 
-    String URL_Connect = ConstantsUtils.BASE_URL + "version";// "version.php" "version"
+    String URL_Connect = ConstantsUtils.BASE_URL + "version.php";// "version.php" "version"
 
     Integer valueInteger;
     Long valueLong;

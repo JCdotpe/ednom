@@ -65,8 +65,8 @@ public class DocentesBL {
         return docentesE;
     }
 
-    public ArrayList<DocentesE> getAllforSync() {
-        return docentesDAO.getAllforSync();
+    public void getAllforSync() {
+        docentesDAO.getAllforSync();
     }
 
 }

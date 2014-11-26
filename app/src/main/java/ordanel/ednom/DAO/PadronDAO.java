@@ -30,7 +30,7 @@ public class PadronDAO extends BaseDAO {
     private static final String TAG = PadronDAO.class.getSimpleName();
     private static PadronDAO padronDAO;
 
-    String URL_Connect = ConstantsUtils.BASE_URL + "padron"; // "padron.php" "padron"
+    String URL_Connect = ConstantsUtils.BASE_URL + "padron.php"; // "padron.php" "padron"
     Integer cod_sede_operativa, cod_local_sede, nro_aula;
     Long valueLong;
     Integer valueInteger;

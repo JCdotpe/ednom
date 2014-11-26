@@ -16,6 +16,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+import ordanel.ednom.Asyncs.SyncAsync;
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.MainActivity;
@@ -64,45 +65,7 @@ public class Welcome extends Fragment {
 
     public void pruebaJSon() {
 
-        ArrayList<DocentesE> docentesEArrayList = new DocentesBL( getActivity().getApplicationContext() ).getAllforSync();
-
-        Integer cantidad = docentesEArrayList.size();
-
-        try
-        {
-            JSONObject jsonObjectGeneral = new JSONObject();
-            JSONArray jsonArray = new JSONArray();
-
-            for ( DocentesE docentesE : docentesEArrayList )
-            {
-                JSONObject jsonObjectTemp = new JSONObject();
-                jsonObjectTemp.put( "nro_doc", docentesE.getNro_doc() );
-                jsonObjectTemp.put( "estado", docentesE.getEstado() );
-                jsonObjectTemp.put( "f_registro", docentesE.getF_registro() );
-                jsonObjectTemp.put( "estado_aula", docentesE.getEstado_aula() );
-                jsonObjectTemp.put( "f_aula", docentesE.getF_aula() );
-                jsonObjectTemp.put( "estado_ficha", docentesE.getEstado_ficha() );
-                jsonObjectTemp.put( "f_ficha", docentesE.getF_ficha() );
-                jsonObjectTemp.put( "estado_cartilla", docentesE.getEstado_cartilla() );
-                jsonObjectTemp.put( "f_cartilla", docentesE.getF_caritlla() );
-                jsonObjectTemp.put( "nro_aula_cambio", docentesE.getNro_aula_cambio() );
-
-                jsonArray.put( jsonObjectTemp );
-
-            }
-
-            jsonObjectGeneral.put( "DOCENTES", jsonArray );
-
-            Log.e( "Welcome", "json : " + jsonObjectGeneral.toString() );
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            Log.e( "Welcome", "pruebaJSon : " + e.toString() );
-        }
-
-        Toast.makeText( getActivity().getApplicationContext(), "Probando JSON : " + cantidad.toString(), Toast.LENGTH_LONG ).show();
+        new SyncAsync( getActivity() ).execute();
 
     }
 
