@@ -27,7 +27,7 @@ public class AulaLocalBL {
 
         for ( AulaLocalE aulaLocalE : aulaLocalEArrayList )
         {
-            stringArrayList.add( aulaLocalE.getNro_aula().toString() );
+            stringArrayList.add( "Aula " + aulaLocalE.getNro_aula().toString() );
         }
 
         return stringArrayList;
