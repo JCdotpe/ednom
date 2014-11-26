@@ -38,18 +38,18 @@
         android:layout_marginTop="15dp"
         android:id="@+id/view" />
 
-    <TextView
-        android:id="@+id/txtR_DNI"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/numero_documento_abrev"
-        android:textSize="30dp"
-        android:textColor="#000"
-        android:textStyle="bold"
-        android:layout_marginTop="43dp"
-        android:layout_below="@+id/view"
-        android:layout_alignLeft="@+id/txtE_DNI"
-        android:layout_alignStart="@+id/txtE_DNI" />
+<TextView
+    android:id="@+id/txtR_DNI"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="@string/numero_documento_abrev"
+    android:textSize="30dp"
+    android:textColor="#000"
+    android:textStyle="bold"
+    android:layout_marginTop="43dp"
+    android:layout_below="@+id/view"
+    android:layout_alignLeft="@+id/txtE_DNI"
+    android:layout_alignStart="@+id/txtE_DNI" />
 
 
 
@@ -67,8 +67,8 @@
 
     <TextView
         android:id="@+id/txtApellidos"
-        android:layout_width="250dp"
-        android:layout_height="120dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="@string/apellidos_text_hint"
         android:textSize="45dp"
         android:textStyle="bold"
@@ -79,11 +79,12 @@
 
     <TextView
         android:id="@+id/txtNombres"
-        android:layout_width="250dp"
-        android:layout_height="100dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:hint="@string/nombres_text_hint"
         android:textSize="45dp"
         android:textStyle="bold"
+        android:layout_marginTop="20dp"
         android:layout_below="@+id/txtApellidos"
         android:layout_alignLeft="@+id/txtApellidos"
         android:layout_alignStart="@+id/txtApellidos" />
@@ -95,8 +96,8 @@
         android:text="@string/local_de_aplicacion"
         android:textSize="30dp"
         android:textStyle="bold"
-        android:layout_marginTop="15dp"
         android:textColor="#c8757575"
+        android:layout_marginTop="30dp"
         android:layout_below="@+id/txtNombres"
         android:layout_alignLeft="@+id/txtNombres"
         android:layout_alignStart="@+id/txtNombres" />
@@ -151,7 +152,7 @@
                 android:layout_toRightOf="@+id/txtApeMaterno"
                 android:layout_toEndOf="@+id/txtApeMaterno"/>
         </TableRow>
-    </TableLayout>
+        </TableLayout>
 
 </RelativeLayout>
 
