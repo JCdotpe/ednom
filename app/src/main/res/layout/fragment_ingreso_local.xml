@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:text="@string/numero_documento"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:textColor="#000"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:textSize="20dp"
+        android:textSize="25dp"
         android:hint="@string/numero_documento_text_hint"
         android:layout_alignBaseline="@id/txtE_DNI"
         android:layout_toRightOf="@id/txtE_DNI"
@@ -67,7 +67,7 @@
 
     <TextView
         android:id="@+id/txtApellidos"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:hint="@string/apellidos_text_hint"
         android:textSize="45dp"
@@ -84,7 +84,6 @@
         android:hint="@string/nombres_text_hint"
         android:textSize="45dp"
         android:textStyle="bold"
-        android:layout_marginTop="20dp"
         android:layout_below="@+id/txtApellidos"
         android:layout_alignLeft="@+id/txtApellidos"
         android:layout_alignStart="@+id/txtApellidos" />

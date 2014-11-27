@@ -19,7 +19,7 @@
                 android:layout_marginStart="10dp"
                 android:text="Aula : " />
             <Spinner
-                android:layout_width="750dp"
+                android:layout_width="720dp"
                 android:layout_height="50dp"
                 android:id="@+id/spinnerAula"
                 android:layout_alignLeft="@id/txtR_DNI"

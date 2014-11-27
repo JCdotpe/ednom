@@ -61,7 +61,7 @@ public class AsistenciaAula extends Fragment {
 
         // source de spinner
         ArrayList<String> stringArrayList = new AulaLocalBL( this.getActivity() ).getAllNroAula();;
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>( this.getActivity(),android.R.layout.simple_spinner_item, stringArrayList );
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>( this.getActivity(),R.layout.selected_item, stringArrayList );
 
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter( adapter );
