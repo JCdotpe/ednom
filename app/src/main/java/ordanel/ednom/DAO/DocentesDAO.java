@@ -206,7 +206,7 @@ public class DocentesDAO extends BaseDAO {
         {
             openDBHelper();
 
-            String SQL = "SELECT nro_doc, estado, f_registro, estado_aula, f_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla, nro_aula_cambio FROM docentes";
+            String SQL = "SELECT nro_doc, estado, f_registro, estado_aula, f_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla, nro_aula_cambio FROM docentes WHERE estado = 1 or estado_aula = 1 or estado_ficha = 1 or estado_cartilla = 1";
             Log.e( TAG, "string sql : " + SQL );
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
@@ -219,16 +219,16 @@ public class DocentesDAO extends BaseDAO {
 
                     JSONObject jsonObjectTemp = new JSONObject();
 
-                    jsonObjectTemp.put("nro_doc", cursor.getString(cursor.getColumnIndex("nro_doc")));
-                    jsonObjectTemp.put("estado", cursor.getInt(cursor.getColumnIndex("estado")));
-                    jsonObjectTemp.put("f_registro", cursor.getString(cursor.getColumnIndex("f_registro")));
-                    jsonObjectTemp.put("estado_aula", cursor.getInt(cursor.getColumnIndex("estado_aula")));
-                    jsonObjectTemp.put("f_aula", cursor.getString(cursor.getColumnIndex("f_aula")));
-                    jsonObjectTemp.put("estado_ficha", cursor.getInt(cursor.getColumnIndex("estado_ficha")));
-                    jsonObjectTemp.put("f_ficha", cursor.getString(cursor.getColumnIndex("f_ficha")));
-                    jsonObjectTemp.put("estado_cartilla", cursor.getInt(cursor.getColumnIndex("estado_cartilla")));
-                    jsonObjectTemp.put("f_cartilla", cursor.getString(cursor.getColumnIndex("f_cartilla")));
-                    jsonObjectTemp.put("nro_aula_cambio", cursor.getInt(cursor.getColumnIndex("nro_aula_cambio")));
+                    jsonObjectTemp.put( "nro_doc", cursor.getString( cursor.getColumnIndex( "nro_doc" ) ) );
+                    jsonObjectTemp.put( "estado", cursor.getInt( cursor.getColumnIndex( "estado" ) ) );
+                    jsonObjectTemp.put( "f_registro", cursor.getString( cursor.getColumnIndex( "f_registro" ) ) );
+                    jsonObjectTemp.put( "estado_aula", cursor.getInt( cursor.getColumnIndex( "estado_aula" ) ) );
+                    jsonObjectTemp.put( "f_aula", cursor.getString( cursor.getColumnIndex( "f_aula" ) ) );
+                    jsonObjectTemp.put( "estado_ficha", cursor.getInt( cursor.getColumnIndex( "estado_ficha" ) ) );
+                    jsonObjectTemp.put( "f_ficha", cursor.getString( cursor.getColumnIndex( "f_ficha" ) ) );
+                    jsonObjectTemp.put( "estado_cartilla", cursor.getInt( cursor.getColumnIndex( "estado_cartilla" ) ) );
+                    jsonObjectTemp.put( "f_cartilla", cursor.getString( cursor.getColumnIndex( "f_cartilla" ) ) );
+                    jsonObjectTemp.put( "nro_aula_cambio", cursor.getInt( cursor.getColumnIndex( "nro_aula_cambio" ) ) );
 
                     jsonArray.put(jsonObjectTemp);
 
@@ -236,44 +236,42 @@ public class DocentesDAO extends BaseDAO {
 
                 }
 
-            }
+                String json = jsonArray.toString();
 
-            /*jsonObjectGeneral.put( "data", jsonArray );*/
+                ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
+                parametersPost.add( new BasicNameValuePair( "data", json ) );
 
-            String json = jsonArray.toString();
+                Log.e( "Welcome", "json : " + jsonArray.toString() );
+                String URL_Connect = ConstantsUtils.BASE_URL + "sync.php";
 
-            ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
-            parametersPost.add( new BasicNameValuePair( "data", json ) );
+                JSONArray jsonArrayGet = httpPostAux.getServerData( parametersPost, URL_Connect );
+                Log.e( "Welcome", "get json : " + jsonArrayGet.toString() );
 
-            Log.e( "Welcome", "json : " + jsonArray.toString() );
-            String URL_Connect = ConstantsUtils.BASE_URL + "sync.php";
+                JSONObject jsonObject;
 
-            JSONArray jsonArrayGet = httpPostAux.getServerData( parametersPost, URL_Connect );
-            Log.e( "Welcome", "get json : " + jsonArrayGet.toString() );
-
-            JSONObject jsonObject;
-
-            if ( jsonArrayGet != null && jsonArrayGet.length() > 0 )
-            {
-                for ( int i = 0; i < jsonArrayGet.length(); i++ )
+                if ( jsonArrayGet != null && jsonArrayGet.length() > 0 )
                 {
-                    jsonObject = (JSONObject) jsonArrayGet.get(i) ;
+                    for ( int i = 0; i < jsonArrayGet.length(); i++ )
+                    {
+                        jsonObject = (JSONObject) jsonArrayGet.get(i) ;
 
-                    contentValues = new ContentValues();
-                    contentValues.put( "estado", jsonObject.getInt( "estado" ) );
-                    contentValues.put( "estado_aula", jsonObject.getInt( "estado_aula" ) );
-                    contentValues.put( "estado_ficha", jsonObject.getInt( "estado_ficha" ) );
-                    contentValues.put( "estado_cartilla", jsonObject.getInt( "estado_cartilla" ) );
+                        contentValues = new ContentValues();
+                        contentValues.put( "estado", jsonObject.getInt( "estado" ) );
+                        contentValues.put( "estado_aula", jsonObject.getInt( "estado_aula" ) );
+                        contentValues.put( "estado_ficha", jsonObject.getInt( "estado_ficha" ) );
+                        contentValues.put( "estado_cartilla", jsonObject.getInt( "estado_cartilla" ) );
 
-                    String nro_doc = jsonObject.getString( "nro_doc" );
-                    String Where = "nro_doc = '" + nro_doc + "'";
-                    Log.e( TAG, "where : " + Where );
-                    Integer valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
-                    Log.e( TAG, "sync update : " + String.valueOf( valueInteger ) );
+                        String nro_doc = jsonObject.getString( "nro_doc" );
+                        String Where = "nro_doc = '" + nro_doc + "'";
+                        Log.e( TAG, "where : " + Where );
+                        Integer valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
+                        Log.e( TAG, "sync update : " + String.valueOf( valueInteger ) );
 
+                    }
+
+                    dbHelper.setTransactionSuccessful();
                 }
 
-                dbHelper.setTransactionSuccessful();
             }
 
         }

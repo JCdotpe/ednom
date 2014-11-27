@@ -88,6 +88,7 @@ public class HttpPostAux {
             error = 1;
         }
 
+
     }
 
     public void getPostResponse() {
@@ -104,6 +105,7 @@ public class HttpPostAux {
             }
 
             bufferedReader.close();
+            inputStream.close();
 
             result = stringBuilder.toString();
 
@@ -114,7 +116,6 @@ public class HttpPostAux {
             Log.e( TAG, "Error converting result : " + e.toString() );
             error = 1;
         }
-
 
     }
 

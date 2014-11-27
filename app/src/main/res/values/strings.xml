@@ -33,6 +33,7 @@
     <!-- /UbigeoVerify -->
 
     <!-- Versión -->
+    <string name="version_validate">Validando versión del padrón!</string>
     <string name="version_error_local">Error: Problemas al acceder a la versión actual!</string>
     <string name="version_error_check">Error: No se pudo verificar la versión!</string>
     <string name="version_error_register">Error: No se pudo registrar la versión!</string>
