@@ -79,8 +79,8 @@
 
     <TextView
         android:id="@+id/txtNombres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="190dp"
+        android:layout_height="150dp"
         android:hint="@string/nombres_text_hint"
         android:textSize="45dp"
         android:textStyle="bold"
