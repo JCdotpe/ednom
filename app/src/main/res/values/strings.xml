@@ -77,6 +77,11 @@
     <string name="docente_not_register_aula">Error. No se registro asistencia del docente en aula!.</string>
     <!-- /Asistencia -->
 
+    <!-- Fichas -->
+    <string name="numero_ficha">Número de Ficha :</string>
+    <string name="codigo_ficha">Código de Ficha :</string>
+    <string name="nro_ficha">Número de Ficha</string>
+    <!-- Ficha -->
 
 
     <!-- Array de Aulas -->
