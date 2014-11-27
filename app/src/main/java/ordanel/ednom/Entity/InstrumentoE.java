@@ -8,6 +8,17 @@ import android.os.Parcelable;
  */
 public class InstrumentoE implements Parcelable {
 
+    // table instrumento
+    public static final String ID_INST = "id_inst";
+    public static final String COD_FICHA = "cod_ficha";
+    public static final String COD_CARTILLA = "cod_cartilla";
+    public static final String NRO_AULA = "nro_aula";
+    public static final String ESTADO_FICHA = "estado_ficha";
+    public static final String F_FICHA = "f_ficha";
+    public static final String ESTADO_CARTILLA = "estado_cartilla";
+    public static final String F_CARTILLA = "f_cartilla";
+    // .table instrumento
+
     private Integer id_inst;
     private LocalE localE;
     private String cod_ficha;

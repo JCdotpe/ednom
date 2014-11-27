@@ -8,6 +8,13 @@ import android.os.Parcelable;
  */
 public class UsuarioLocalE implements Parcelable {
 
+    // table usuario_local
+    public static final String IDUSUARIO = "idUsuario";
+    public static final String USUARIO = "usuario";
+    public static final String CLAVE = "clave";
+    public static final String ROL = "rol";
+    // .table usuario_local
+
     private Integer idUsuario;
     private String usuario;
     private String clave;

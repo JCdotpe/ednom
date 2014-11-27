@@ -11,6 +11,11 @@ import java.util.List;
  */
 public class SedeOperativaE implements Parcelable {
 
+    // table sede_operativa
+    public static final String COD_SEDE_OPERATIVA = "cod_sede_operativa";
+    public static final String SEDE_OPERATIVA = "sede_operativa";
+    // .table sede_operativa
+
     private Integer cod_sede_operativa;
     private String sede_operativa;
     private List<LocalE> localEList;

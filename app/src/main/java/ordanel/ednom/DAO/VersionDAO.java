@@ -103,13 +103,13 @@ public class VersionDAO extends BaseDAO {
                 {
                     jsonObject = (JSONObject) jsonArray.get(0);
 
-                    versionNube = jsonObject.getInt( "v_padron" );
+                    versionNube = jsonObject.getInt( versionE.V_PADRON );
 
-                    versionE.setVercod( jsonObject.getInt( "vercod" ) );
+                    versionE.setVercod( jsonObject.getInt( versionE.VERCOD ) );
                     versionE.setV_padron( versionNube );
-                    versionE.setV_sistem(jsonObject.getInt( "v_sistem" ) );
-                    versionE.setFecha( jsonObject.getString( "fecha" ) );
-                    versionE.setObserva( jsonObject.getString( "observa" ) );
+                    versionE.setV_sistem(jsonObject.getInt( versionE.V_SISTEM ) );
+                    versionE.setFecha( jsonObject.getString( versionE.FECHA ) );
+                    versionE.setObserva( jsonObject.getString( versionE.OBSERVA ) );
 
                     if ( !versionNube.equals(versionLocal) )
                     {
@@ -158,11 +158,11 @@ public class VersionDAO extends BaseDAO {
 
             contentValues =  new ContentValues();
 
-            contentValues.put( "vercod", versionE.getVercod() );
-            contentValues.put( "v_padron", versionE.getV_padron() );
-            contentValues.put( "v_sistem", versionE.getV_sistem() );
-            contentValues.put( "fecha", versionE.getFecha() );
-            contentValues.put( "observa", versionE.getObserva() );
+            contentValues.put( versionE.VERCOD, versionE.getVercod() );
+            contentValues.put( versionE.V_PADRON, versionE.getV_padron() );
+            contentValues.put( versionE.V_SISTEM, versionE.getV_sistem() );
+            contentValues.put( versionE.FECHA, versionE.getFecha() );
+            contentValues.put( versionE.OBSERVA, versionE.getObserva() );
 
             valueLong = dbHelper.getDatabase().insertOrThrow( "version", null, contentValues );
             Log.e( TAG, "register : " + String.valueOf(valueLong) ); // -1 => error register

@@ -8,6 +8,14 @@ import android.os.Parcelable;
  */
 public class VersionE implements Parcelable {
 
+    // table version
+    public static final String VERCOD = "vercod";
+    public static final String V_PADRON = "v_padron";
+    public static final String V_SISTEM = "v_sistem";
+    public static final String FECHA = "fecha";
+    public static final String OBSERVA = "observa";
+    // .table version
+
     private Integer vercod;
     private Integer v_padron;
     private Integer v_sistem;

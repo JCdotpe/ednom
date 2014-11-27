@@ -88,12 +88,12 @@ public class PadronDAO extends BaseDAO {
             if ( cursor.moveToFirst() )
             {
                 SedeOperativaE sedeOperativaE = new SedeOperativaE();
-                sedeOperativaE.setCod_sede_operativa( cursor.getInt( cursor.getColumnIndex( "cod_sede_operativa" ) )  );
+                sedeOperativaE.setCod_sede_operativa( cursor.getInt( cursor.getColumnIndex( sedeOperativaE.COD_SEDE_OPERATIVA ) )  );
 
                 localE.setSedeOperativaE( sedeOperativaE );
-                localE.setCod_local_sede( cursor.getInt( cursor.getColumnIndex( "cod_local_sede" ) ) );
+                localE.setCod_local_sede( cursor.getInt( cursor.getColumnIndex( localE.COD_LOCAL_SEDE ) ) );
 
-                valueInteger = cursor.getInt( cursor.getColumnIndex( "cod_local_sede" ) );
+                valueInteger = cursor.getInt( cursor.getColumnIndex( localE.COD_LOCAL_SEDE ) );
                 Log.e( TAG, "numero de local : " + valueInteger.toString() );
 
                 localE.setStatus( 0 );
@@ -142,7 +142,7 @@ public class PadronDAO extends BaseDAO {
                     jsonObject = jsonArray.getJSONObject(0);
 
                     // set array AULAS
-                    jsonArrayAulaLocal = jsonObject.getJSONArray("AULAS");
+                    jsonArrayAulaLocal = jsonObject.getJSONArray( "AULAS" );
                     aulaLocalEArrayList = new ArrayList<AulaLocalE>();
 
                     for ( int i = 0; i < jsonArrayAulaLocal.length(); i++ )
@@ -151,12 +151,12 @@ public class PadronDAO extends BaseDAO {
 
                         AulaLocalE aulaLocalE = new AulaLocalE();
                         aulaLocalE.setLocalE( paramLocalE );
-                        aulaLocalE.setNro_aula( jsonObjectTemp.getInt( "nro_aula" ) );
-                        aulaLocalE.setTipo( jsonObjectTemp.getString("tipo") );
-                        aulaLocalE.setCant_docente( jsonObjectTemp.getInt( "cant_docente" ) );
+                        aulaLocalE.setNro_aula( jsonObjectTemp.getInt( aulaLocalE.NRO_AULA ) );
+                        aulaLocalE.setTipo( jsonObjectTemp.getString( aulaLocalE.TIPO ) );
+                        aulaLocalE.setCant_docente( jsonObjectTemp.getInt( aulaLocalE.CANT_DOCENTE ) );
 
                         // set array DOCENTES
-                        jsonArray = (JSONArray) jsonObjectTemp.get("DOCENTES");
+                        jsonArray = (JSONArray) jsonObjectTemp.get( "DOCENTES" );
                         docentesEArrayList = new ArrayList<DocentesE>();
 
                         for ( int j = 0; j < jsonArray.length(); j++ )
@@ -164,36 +164,36 @@ public class PadronDAO extends BaseDAO {
                             jsonObjectTemp = (JSONObject) jsonArray.get(j);
 
                             DiscapacidadE discapacidadE = new DiscapacidadE();
-                            discapacidadE.setCod_discap( jsonObjectTemp.getInt( "cod_discap" ) );
+                            discapacidadE.setCod_discap( jsonObjectTemp.getInt( discapacidadE.COD_DISCAP ) );
 
                             ModalidadE modalidadE = new ModalidadE();
-                            modalidadE.setCod_modal( jsonObjectTemp.getInt( "cod_modal" ) );
+                            modalidadE.setCod_modal( jsonObjectTemp.getInt( modalidadE.COD_MODAL ) );
 
                             DocentesE docentesE = new DocentesE();
                             docentesE.setAulaLocalE( aulaLocalE );
                             docentesE.setDiscapacidadE( discapacidadE );
                             docentesE.setModalidadE( modalidadE );
-                            docentesE.setDre_des( jsonObjectTemp.getString( "dre_des" ) );
-                            docentesE.setUgel_des( jsonObjectTemp.getString( "ugel_des" ) );
-                            docentesE.setTipo_doc( jsonObjectTemp.getString( "tipo_doc" ) );
-                            docentesE.setNro_doc( jsonObjectTemp.getString( "nro_doc" ) );
-                            docentesE.setApe_pat( jsonObjectTemp.getString( "ape_pat" ) );
-                            docentesE.setApe_mat( jsonObjectTemp.getString( "ape_mat" ) );
-                            docentesE.setNombres( jsonObjectTemp.getString( "nombres" ) );
-                            docentesE.setSexo( jsonObjectTemp.getString( "sexo" ) );
-                            docentesE.setFecha_nac( jsonObjectTemp.getString( "fecha_nac" ) );
-                            docentesE.setEdad( jsonObjectTemp.getInt( "edad" ) );
-                            docentesE.setCod_ficha( jsonObjectTemp.getString( "cod_ficha" ) );
-                            docentesE.setCod_cartilla( jsonObjectTemp.getString( "cod_cartilla" ) );
-                            docentesE.setEstado( jsonObjectTemp.getInt( "estado" ) );
-                            docentesE.setF_registro( jsonObjectTemp.getString( "f_registro" ) );
-                            docentesE.setEstado_aula( jsonObjectTemp.getInt( "estado_aula" ) );
-                            docentesE.setF_aula( jsonObjectTemp.getString( "f_aula" ) );
-                            docentesE.setEstado_ficha( jsonObjectTemp.getInt( "estado_ficha" ) );
-                            docentesE.setF_ficha( jsonObjectTemp.getString( "f_ficha" ) );
-                            docentesE.setEstado_cartilla( jsonObjectTemp.getInt( "estado_cartilla" ) );
-                            docentesE.setF_caritlla( jsonObjectTemp.getString( "f_cartilla" ) );
-                            docentesE.setNro_aula_cambio( jsonObjectTemp.getInt( "nro_aula_cambio" ) );
+                            docentesE.setDre_des( jsonObjectTemp.getString( docentesE.DRE_DES ) );
+                            docentesE.setUgel_des( jsonObjectTemp.getString( docentesE.UGEL_DES ) );
+                            docentesE.setTipo_doc( jsonObjectTemp.getString( docentesE.TIPO_DOC ) );
+                            docentesE.setNro_doc( jsonObjectTemp.getString( docentesE.NRO_DOC ) );
+                            docentesE.setApe_pat( jsonObjectTemp.getString( docentesE.APE_PAT ) );
+                            docentesE.setApe_mat( jsonObjectTemp.getString( docentesE.APE_MAT ) );
+                            docentesE.setNombres( jsonObjectTemp.getString( docentesE.NOMBRES ) );
+                            docentesE.setSexo( jsonObjectTemp.getString( docentesE.SEXO ) );
+                            docentesE.setFecha_nac( jsonObjectTemp.getString( docentesE.FECHA_NAC ) );
+                            docentesE.setEdad( jsonObjectTemp.getInt( docentesE.EDAD ) );
+                            docentesE.setCod_ficha( jsonObjectTemp.getString( docentesE.COD_FICHA ) );
+                            docentesE.setCod_cartilla( jsonObjectTemp.getString( docentesE.COD_CARTILLA ) );
+                            docentesE.setEstado( jsonObjectTemp.getInt( docentesE.ESTADO ) );
+                            docentesE.setF_registro( jsonObjectTemp.getString( docentesE.F_REGISTRO ) );
+                            docentesE.setEstado_aula( jsonObjectTemp.getInt( docentesE.ESTADO_AULA ) );
+                            docentesE.setF_aula( jsonObjectTemp.getString( docentesE.F_AULA ) );
+                            docentesE.setEstado_ficha( jsonObjectTemp.getInt( docentesE.ESTADO_FICHA ) );
+                            docentesE.setF_ficha( jsonObjectTemp.getString( docentesE.F_FICHA ) );
+                            docentesE.setEstado_cartilla( jsonObjectTemp.getInt( docentesE.ESTADO_CARTILLA ) );
+                            docentesE.setF_caritlla( jsonObjectTemp.getString( docentesE.F_CARTILLA ) );
+                            docentesE.setNro_aula_cambio( jsonObjectTemp.getInt( docentesE.NRO_AULA_CAMBIO ) );
 
                             docentesEArrayList.add( docentesE );
 
@@ -213,7 +213,7 @@ public class PadronDAO extends BaseDAO {
 
 
                     // set array DISCAPACIDAD
-                    jsonArrayDiscapacidad = jsonObject.getJSONArray("DISCAPACIDAD");
+                    jsonArrayDiscapacidad = jsonObject.getJSONArray( "DISCAPACIDAD" );
                     discapacidadEArrayList = new ArrayList<DiscapacidadE>();
 
                     for ( int i = 0; i < jsonArrayDiscapacidad.length(); i++ )
@@ -221,8 +221,8 @@ public class PadronDAO extends BaseDAO {
                         jsonObjectTemp = (JSONObject) jsonArrayDiscapacidad.get(i);
 
                         DiscapacidadE discapacidadE = new DiscapacidadE();
-                        discapacidadE.setCod_discap( jsonObjectTemp.getInt( "cod_discap" ) );
-                        discapacidadE.setDiscapacidad( jsonObjectTemp.getString( "discapacidad" ) );
+                        discapacidadE.setCod_discap( jsonObjectTemp.getInt( discapacidadE.COD_DISCAP ) );
+                        discapacidadE.setDiscapacidad( jsonObjectTemp.getString( discapacidadE.DISCAPACIDAD ) );
 
                         discapacidadEArrayList.add( discapacidadE );
                     }
@@ -234,7 +234,7 @@ public class PadronDAO extends BaseDAO {
 
 
                     // set array MODALIDAD
-                    jsonArrayModalidad = jsonObject.getJSONArray("MODALIDAD");
+                    jsonArrayModalidad = jsonObject.getJSONArray( "MODALIDAD" );
                     modalidadEArrayList = new ArrayList<ModalidadE>();
 
                     for ( int i = 0; i < jsonArrayModalidad.length(); i++ )
@@ -242,8 +242,8 @@ public class PadronDAO extends BaseDAO {
                         jsonObjectTemp = (JSONObject) jsonArrayModalidad.get(i);
 
                         ModalidadE modalidadE = new ModalidadE();
-                        modalidadE.setCod_modal( jsonObjectTemp.getInt( "cod_modal" ) );
-                        modalidadE.setModalidad( jsonObjectTemp.getString( "modalidad" ) );
+                        modalidadE.setCod_modal( jsonObjectTemp.getInt( modalidadE.COD_MODAL ) );
+                        modalidadE.setModalidad( jsonObjectTemp.getString( modalidadE.MODALIDAD ) );
 
                         modalidadEArrayList.add( modalidadE );
                     }
@@ -254,7 +254,7 @@ public class PadronDAO extends BaseDAO {
                     // .set array MODALIDAD
 
                     // set array INSTRUMENTO
-                    jsonArrayInstrumento = jsonObject.getJSONArray("INSTRUMENTO");
+                    jsonArrayInstrumento = jsonObject.getJSONArray( "INSTRUMENTO" );
                     instrumentoEArrayList = new ArrayList<InstrumentoE>();
 
                     for ( int i = 0; i < jsonArrayInstrumento.length(); i++ )
@@ -262,14 +262,14 @@ public class PadronDAO extends BaseDAO {
                         jsonObjectTemp = (JSONObject) jsonArrayInstrumento.get(i);
 
                         InstrumentoE instrumentoE = new InstrumentoE();
-                        instrumentoE.setId_inst( jsonObjectTemp.getInt( "id_inst" ) );
-                        instrumentoE.setCod_ficha( jsonObjectTemp.getString( "cod_ficha" ) );
-                        instrumentoE.setCod_cartilla( jsonObjectTemp.getString( "cod_cartilla" ) );
-                        instrumentoE.setNro_aula( jsonObjectTemp.getInt( "nro_aula" ) );
-                        instrumentoE.setEstado_ficha( jsonObjectTemp.getInt( "estado_ficha" ) );
-                        instrumentoE.setF_ficha( jsonObjectTemp.getString( "f_ficha" ) );
-                        instrumentoE.setEstado_cartilla( jsonObjectTemp.getInt( "estado_cartilla" ) );
-                        instrumentoE.setF_cartilla( jsonObjectTemp.getString( "f_cartilla" ) );
+                        instrumentoE.setId_inst( jsonObjectTemp.getInt( instrumentoE.ID_INST ) );
+                        instrumentoE.setCod_ficha( jsonObjectTemp.getString( instrumentoE.COD_FICHA ) );
+                        instrumentoE.setCod_cartilla( jsonObjectTemp.getString( instrumentoE.COD_CARTILLA ) );
+                        instrumentoE.setNro_aula( jsonObjectTemp.getInt( instrumentoE.NRO_AULA ) );
+                        instrumentoE.setEstado_ficha( jsonObjectTemp.getInt( instrumentoE.ESTADO_FICHA ) );
+                        instrumentoE.setF_ficha( jsonObjectTemp.getString( instrumentoE.F_FICHA ) );
+                        instrumentoE.setEstado_cartilla( jsonObjectTemp.getInt( instrumentoE.ESTADO_CARTILLA ) );
+                        instrumentoE.setF_cartilla( jsonObjectTemp.getString( instrumentoE.F_CARTILLA ) );
 
                         instrumentoE.setLocalE( paramLocalE );
 
@@ -335,11 +335,11 @@ public class PadronDAO extends BaseDAO {
 
                     contentValues = new ContentValues();
 
-                    contentValues.put( "cod_sede_operativa", cod_sede_operativa );
-                    contentValues.put( "cod_local_sede", cod_local_sede);
-                    contentValues.put( "nro_aula", nro_aula);
-                    contentValues.put( "tipo", aulaLocalE.getTipo() );
-                    contentValues.put( "cant_docente", aulaLocalE.getCant_docente() );
+                    contentValues.put( aulaLocalE.getLocalE().getSedeOperativaE().COD_SEDE_OPERATIVA, cod_sede_operativa );
+                    contentValues.put( aulaLocalE.getLocalE().COD_LOCAL_SEDE, cod_local_sede);
+                    contentValues.put( aulaLocalE.NRO_AULA, nro_aula);
+                    contentValues.put( aulaLocalE.TIPO, aulaLocalE.getTipo() );
+                    contentValues.put( aulaLocalE.CANT_DOCENTE, aulaLocalE.getCant_docente() );
 
                     valueLong = dbHelper.getDatabase().insertOrThrow( "aula_local", null, contentValues );
                     Log.e( TAG, "aula_local insert : " + String.valueOf(valueLong) );
@@ -349,32 +349,32 @@ public class PadronDAO extends BaseDAO {
                     {
                         contentValues = new ContentValues();
 
-                        contentValues.put( "cod_sede_operativa", cod_sede_operativa );
-                        contentValues.put( "cod_local_sede", cod_local_sede );
-                        contentValues.put( "nro_aula", nro_aula );
-                        contentValues.put( "cod_discap", docentesE.getDiscapacidadE().getCod_discap() );
-                        contentValues.put( "cod_modal", docentesE.getModalidadE().getCod_modal() );
-                        contentValues.put( "dre_des", docentesE.getDre_des() );
-                        contentValues.put( "ugel_des", docentesE.getUgel_des() );
-                        contentValues.put( "tipo_doc", docentesE.getTipo_doc() );
-                        contentValues.put( "nro_doc", docentesE.getNro_doc() );
-                        contentValues.put( "ape_pat", docentesE.getApe_pat() );
-                        contentValues.put( "ape_mat", docentesE.getApe_mat() );
-                        contentValues.put( "nombres", docentesE.getNombres() );
-                        contentValues.put( "sexo", docentesE.getSexo() );
-                        contentValues.put( "fecha_nac", docentesE.getFecha_nac() );
-                        contentValues.put( "edad", docentesE.getEdad() );
-                        contentValues.put( "cod_ficha", docentesE.getCod_ficha() );
-                        contentValues.put( "cod_cartilla", docentesE.getCod_cartilla() );
-                        contentValues.put( "estado", docentesE.getEstado() );
-                        contentValues.put( "f_registro", docentesE.getF_registro() );
-                        contentValues.put( "estado_aula", docentesE.getEstado_aula() );
-                        contentValues.put( "f_aula", docentesE.getF_aula() );
-                        contentValues.put( "estado_ficha", docentesE.getEstado_ficha() );
-                        contentValues.put( "f_ficha", docentesE.getF_ficha() );
-                        contentValues.put( "estado_cartilla", docentesE.getEstado_cartilla() );
-                        contentValues.put( "f_cartilla", docentesE.getF_caritlla() );
-                        contentValues.put( "nro_aula_cambio", docentesE.getNro_aula_cambio() );
+                        contentValues.put( docentesE.getAulaLocalE().getLocalE().getSedeOperativaE().COD_SEDE_OPERATIVA, cod_sede_operativa );
+                        contentValues.put( docentesE.getAulaLocalE().getLocalE().COD_LOCAL_SEDE, cod_local_sede );
+                        contentValues.put( docentesE.getAulaLocalE().NRO_AULA, nro_aula );
+                        contentValues.put( docentesE.getDiscapacidadE().COD_DISCAP, docentesE.getDiscapacidadE().getCod_discap() );
+                        contentValues.put( docentesE.getModalidadE().COD_MODAL, docentesE.getModalidadE().getCod_modal() );
+                        contentValues.put( docentesE.DRE_DES, docentesE.getDre_des() );
+                        contentValues.put( docentesE.UGEL_DES, docentesE.getUgel_des() );
+                        contentValues.put( docentesE.TIPO_DOC, docentesE.getTipo_doc() );
+                        contentValues.put( docentesE.NRO_DOC, docentesE.getNro_doc() );
+                        contentValues.put( docentesE.APE_PAT, docentesE.getApe_pat() );
+                        contentValues.put( docentesE.APE_MAT, docentesE.getApe_mat() );
+                        contentValues.put( docentesE.NOMBRES, docentesE.getNombres() );
+                        contentValues.put( docentesE.SEXO, docentesE.getSexo() );
+                        contentValues.put( docentesE.FECHA_NAC, docentesE.getFecha_nac() );
+                        contentValues.put( docentesE.EDAD, docentesE.getEdad() );
+                        contentValues.put( docentesE.COD_FICHA, docentesE.getCod_ficha() );
+                        contentValues.put( docentesE.COD_CARTILLA, docentesE.getCod_cartilla() );
+                        contentValues.put( docentesE.ESTADO, docentesE.getEstado() );
+                        contentValues.put( docentesE.F_REGISTRO, docentesE.getF_registro() );
+                        contentValues.put( docentesE.ESTADO_AULA, docentesE.getEstado_aula() );
+                        contentValues.put( docentesE.F_AULA, docentesE.getF_aula() );
+                        contentValues.put( docentesE.ESTADO_FICHA, docentesE.getEstado_ficha() );
+                        contentValues.put( docentesE.F_FICHA, docentesE.getF_ficha() );
+                        contentValues.put( docentesE.ESTADO_CARTILLA, docentesE.getEstado_cartilla() );
+                        contentValues.put( docentesE.F_CARTILLA, docentesE.getF_caritlla() );
+                        contentValues.put( docentesE.NRO_AULA_CAMBIO, docentesE.getNro_aula_cambio() );
 
                         valueLong = dbHelper.getDatabase().insertOrThrow( "docentes", null, contentValues );
                         Log.e( TAG, "docentes insert : " + String.valueOf(valueLong) );
@@ -390,8 +390,8 @@ public class PadronDAO extends BaseDAO {
                 {
                     contentValues = new ContentValues();
 
-                    contentValues.put( "cod_discap", discapacidadE.getCod_discap() );
-                    contentValues.put( "discapacidad", discapacidadE.getDiscapacidad() );
+                    contentValues.put( discapacidadE.COD_DISCAP, discapacidadE.getCod_discap() );
+                    contentValues.put( discapacidadE.DISCAPACIDAD, discapacidadE.getDiscapacidad() );
 
                     valueLong = dbHelper.getDatabase().insertOrThrow( "discapacidad", null, contentValues );
                     Log.e( TAG, "discapacidad insert : " + String.valueOf(valueLong) );
@@ -403,8 +403,8 @@ public class PadronDAO extends BaseDAO {
                 {
                     contentValues = new ContentValues();
 
-                    contentValues.put( "cod_modal", modalidadE.getCod_modal() );
-                    contentValues.put( "modalidad", modalidadE.getModalidad() );
+                    contentValues.put( modalidadE.COD_MODAL, modalidadE.getCod_modal() );
+                    contentValues.put(  modalidadE.MODALIDAD, modalidadE.getModalidad() );
 
                     valueLong = dbHelper.getDatabase().insertOrThrow( "modalidad", null, contentValues );
                     Log.e( TAG, "modalidad insert : " + String.valueOf(valueLong) );
@@ -417,16 +417,16 @@ public class PadronDAO extends BaseDAO {
                 {
                     contentValues = new ContentValues();
 
-                    contentValues.put( "id_inst", instrumentoE.getId_inst() );
-                    contentValues.put( "cod_sede_operativa", instrumentoE.getLocalE().getSedeOperativaE().getCod_sede_operativa() );
-                    contentValues.put( "cod_local_sede", instrumentoE.getLocalE().getCod_local_sede() );
-                    contentValues.put( "cod_ficha", instrumentoE.getCod_ficha() );
-                    contentValues.put( "cod_cartilla", instrumentoE.getCod_cartilla() );
-                    contentValues.put( "nro_aula", instrumentoE.getNro_aula() );
-                    contentValues.put( "estado_ficha", instrumentoE.getEstado_ficha() );
-                    contentValues.put( "f_ficha", instrumentoE.getF_ficha() );
-                    contentValues.put( "estado_cartilla", instrumentoE.getEstado_cartilla() );
-                    contentValues.put( "f_cartilla", instrumentoE.getF_cartilla() );
+                    contentValues.put( instrumentoE.ID_INST, instrumentoE.getId_inst() );
+                    contentValues.put( instrumentoE.getLocalE().getSedeOperativaE().COD_SEDE_OPERATIVA, instrumentoE.getLocalE().getSedeOperativaE().getCod_sede_operativa() );
+                    contentValues.put( instrumentoE.getLocalE().COD_LOCAL_SEDE, instrumentoE.getLocalE().getCod_local_sede() );
+                    contentValues.put( instrumentoE.COD_FICHA, instrumentoE.getCod_ficha() );
+                    contentValues.put( instrumentoE.COD_CARTILLA, instrumentoE.getCod_cartilla() );
+                    contentValues.put( instrumentoE.NRO_AULA, instrumentoE.getNro_aula() );
+                    contentValues.put( instrumentoE.ESTADO_FICHA, instrumentoE.getEstado_ficha() );
+                    contentValues.put( instrumentoE.F_FICHA, instrumentoE.getF_ficha() );
+                    contentValues.put( instrumentoE.ESTADO_CARTILLA, instrumentoE.getEstado_cartilla() );
+                    contentValues.put( instrumentoE.F_CARTILLA, instrumentoE.getF_cartilla() );
 
                     valueLong = dbHelper.getDatabase().insertOrThrow( "instrumento", null, contentValues );
                     Log.e( TAG, "instrumento insert : " + String.valueOf(valueLong) );

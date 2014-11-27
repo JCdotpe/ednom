@@ -8,6 +8,30 @@ import android.os.Parcelable;
  */
 public class DocentesE implements Parcelable {
 
+    // table docentes
+    public static final String DRE_DES = "dre_des";
+    public static final String UGEL_DES = "ugel_des";
+    public static final String TIPO_DOC = "tipo_doc";
+    public static final String NRO_DOC = "nro_doc";
+    public static final String APE_PAT = "ape_pat";
+    public static final String APE_MAT = "ape_mat";
+    public static final String NOMBRES = "nombres";
+    public static final String SEXO = "sexo";
+    public static final String FECHA_NAC = "fecha_nac";
+    public static final String EDAD = "edad";
+    public static final String COD_FICHA = "cod_ficha";
+    public static final String COD_CARTILLA = "cod_cartilla";
+    public static final String ESTADO = "estado";
+    public static final String F_REGISTRO = "f_registro";
+    public static final String ESTADO_AULA = "estado_aula";
+    public static final String F_AULA = "f_aula";
+    public static final String ESTADO_FICHA = "estado_ficha";
+    public static final String F_FICHA = "f_ficha";
+    public static final String ESTADO_CARTILLA = "estado_cartilla";
+    public static final String F_CARTILLA = "f_cartilla";
+    public static final String NRO_AULA_CAMBIO = "nro_aula_cambio";
+    // .table docentes
+
     private AulaLocalE aulaLocalE;
     private DiscapacidadE discapacidadE;
     private ModalidadE modalidadE;

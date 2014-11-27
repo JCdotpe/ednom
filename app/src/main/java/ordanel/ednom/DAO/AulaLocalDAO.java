@@ -22,6 +22,7 @@ public class AulaLocalDAO extends BaseDAO {
 
     Cursor cursor = null;
 
+    AulaLocalE aulaLocalE;
     ArrayList<AulaLocalE> aulaLocalEArrayList;
 
     public static AulaLocalDAO getInstance( Context paramContext ) {
@@ -57,10 +58,10 @@ public class AulaLocalDAO extends BaseDAO {
             {
                 while ( !cursor.isAfterLast() )
                 {
-                    AulaLocalE aulaLocalE = new AulaLocalE();
+                    aulaLocalE = new AulaLocalE();
 
-                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( "nro_aula" ) ) );
-                    aulaLocalE.setTipo( cursor.getString( cursor.getColumnIndex( "tipo" ) ) );
+                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( aulaLocalE.NRO_AULA ) ) );
+                    aulaLocalE.setTipo( cursor.getString( cursor.getColumnIndex( aulaLocalE.TIPO ) ) );
 
                     aulaLocalEArrayList.add( aulaLocalE );
 
@@ -97,7 +98,7 @@ public class AulaLocalDAO extends BaseDAO {
 
             if ( cursor.moveToFirst() )
             {
-                valueString = cursor.getString( cursor.getColumnIndex( "tipo" ) );
+                valueString = cursor.getString( cursor.getColumnIndex( aulaLocalE.TIPO ) );
             }
 
             if ( valueString.equals( "C" ) ) // tipo CONTINGENCIA

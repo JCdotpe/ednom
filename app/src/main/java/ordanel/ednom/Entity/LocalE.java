@@ -11,6 +11,18 @@ import java.util.List;
  */
 public class LocalE implements Parcelable {
 
+    // table local
+    public static final String COD_LOCAL_SEDE = "cod_local_sede";
+    public static final String NOMBRE_LOCAL = "nombreLocal";
+    public static final String DIRECCION = "direccion";
+    public static final String NAULA_T = "naula_t";
+    public static final String NAULA_N = "naula_n";
+    public static final String NAULA_DISCAPACIDAD = "naula_discapacidad";
+    public static final String NAULA_CONTINGENCIA = "naula_contingencia";
+    public static final String NFICHA = "nficha";
+    public static final String NCARTILLA = "ncartilla";
+    // .table local
+
     private SedeOperativaE sedeOperativaE;
     private Integer cod_local_sede;
     private String nombreLocal;

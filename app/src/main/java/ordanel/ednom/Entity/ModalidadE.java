@@ -8,6 +8,11 @@ import android.os.Parcelable;
  */
 public class ModalidadE implements Parcelable {
 
+    // table modalidad
+    public static final String COD_MODAL = "cod_modal";
+    public static final String MODALIDAD = "modalidad";
+    // .table modalidad
+
     private Integer cod_modal;
     private String modalidad;
 
