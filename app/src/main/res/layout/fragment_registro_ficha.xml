@@ -22,7 +22,6 @@
                 android:layout_width="450sp"
                 android:layout_height="50sp"
                 android:id="@+id/spinnerAula"
-                android:layout_alignLeft="@id/txtR_Ficha"
                 android:spinnerMode="dropdown" />
         </TableRow>
     </TableLayout>
