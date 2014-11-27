@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
+import ordanel.ednom.Business.DocentesBL;
+
 /**
  * Created by OrdNael on 26/11/2014.
  */
@@ -12,11 +14,12 @@ public class UpdaterService extends Service {
 
     private static final String TAG = UpdaterService.class.getSimpleName();
 
-    static final int DELAY = 60000;
+    static final int DELAY = 300000;
     private boolean runFlag = false;
 
     private Updater updater;
     private EdnomApplication ednomApplication;
+    private DocentesBL docentesBL;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -27,8 +30,10 @@ public class UpdaterService extends Service {
     public void onCreate() {
         super.onCreate();
         Log.e( TAG, "onCreate UpdaterService" );
-        updater = new Updater();
         ednomApplication = (EdnomApplication) getApplication();
+        updater = new Updater();
+        docentesBL = new DocentesBL(this);
+
     }
 
     @Override
@@ -47,9 +52,13 @@ public class UpdaterService extends Service {
         super.onStartCommand(intent, flags, startId);
         Log.e( TAG, "onStartCommand UpdaterService" );
 
-        runFlag = true;
-        ednomApplication.setServiceRunningFlag( true );
-        updater.start();
+        if (!runFlag)
+        {
+            runFlag = true;
+            ednomApplication.setServiceRunningFlag( true );
+            updater.start();
+        }
+
         return START_STICKY;
     }
 
@@ -70,6 +79,7 @@ public class UpdaterService extends Service {
 
                 try
                 {
+                    docentesBL.getAllforSync();
                     Thread.sleep( DELAY );
                 }
                 catch (InterruptedException e)

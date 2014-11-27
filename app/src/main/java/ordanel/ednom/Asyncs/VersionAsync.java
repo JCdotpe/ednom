@@ -1,5 +1,6 @@
 package ordanel.ednom.Asyncs;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -17,9 +18,17 @@ import ordanel.ednom.R;
 public class VersionAsync extends AsyncTask< Void, VersionE, VersionE> {
 
     Context context;
+    ProgressDialog dialog;
 
     public VersionAsync(Context context) {
         this.context = context;
+
+        dialog = new ProgressDialog( this.context );
+        dialog.setMessage( this.context.getString( R.string.version_validate ) );
+        dialog.setIndeterminate( false );
+        dialog.setCancelable( false );
+        dialog.show();
+
     }
 
     @Override
@@ -32,6 +41,8 @@ public class VersionAsync extends AsyncTask< Void, VersionE, VersionE> {
     @Override
     protected void onPostExecute(VersionE versionE) {
         super.onPostExecute(versionE);
+
+        dialog.dismiss();
 
         Integer statusVersion = versionE.getStatus();
 
