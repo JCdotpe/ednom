@@ -23,6 +23,7 @@ import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
+import ordanel.ednom.Fragments.InventarioFicha;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
 
@@ -82,6 +83,10 @@ public class MainActivity extends Activity
                 fragment = new AsistenciaAula().newInstance( position + 1 );
                 break;
 
+            case 3:
+                fragment = new InventarioFicha().newInstance( position + 1 );
+                break;
+
         }
 
         fragmentManager.beginTransaction()
@@ -104,6 +109,9 @@ public class MainActivity extends Activity
                 break;
             case 3:
                 mTitle = getString(R.string.title_section3);
+                break;
+            case 4:
+                mTitle = getString( R.string.title_section4 );
                 break;
         }
     }
