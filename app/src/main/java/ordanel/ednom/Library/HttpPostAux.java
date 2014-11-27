@@ -31,10 +31,9 @@ public class HttpPostAux {
 
     public static HttpPostAux getInstance() {
 
-        Log.e( TAG, "start HttpPostAux" );
-
         if ( httpPostAux == null )
         {
+            Log.e( TAG, "start HttpPostAux" );
             httpPostAux = new HttpPostAux();
         }
 

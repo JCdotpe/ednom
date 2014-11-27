@@ -14,9 +14,10 @@
         android:allowBackup="true"
         android:icon="@drawable/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:name=".EdnomApplication" >
         <activity
-            android:name="ordanel.ednom.Login"
+            android:name=".Login"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,12 +25,13 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="ordanel.ednom.UbigeoVerify" />
-        <activity android:name="ordanel.ednom.ObtainCensus" />
+        <activity android:name=".UbigeoVerify" />
+        <activity android:name=".ObtainCensus" />
         <activity
-            android:name="ordanel.ednom.MainActivity"
+            android:name=".MainActivity"
             android:label="@string/title_activity_main" >
         </activity>
+        <service android:name=".UpdaterService" />
     </application>
 
 </manifest>
