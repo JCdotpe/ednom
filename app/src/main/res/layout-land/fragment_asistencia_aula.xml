@@ -22,7 +22,6 @@
                 android:layout_width="750dp"
                 android:layout_height="50dp"
                 android:id="@+id/spinnerAula"
-                android:background="@drawable/button_cr"
                 android:layout_alignLeft="@id/txtR_DNI"
                 android:spinnerMode="dropdown" />
         </TableRow>
