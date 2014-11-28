@@ -1,6 +1,7 @@
 package ordanel.ednom.DAO;
 
 import android.content.Context;
+import android.database.Cursor;
 import android.util.Log;
 
 import ordanel.ednom.BD.DBHelper;
@@ -15,6 +16,9 @@ public class BaseDAO {
 
     public DBHelper dbHelper;
     public HttpPostAux httpPostAux;
+
+    public String SQL;
+    Cursor cursor;
 
     public void initHttPostAux() {
 

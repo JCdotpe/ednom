@@ -37,6 +37,7 @@
     <string name="version_error_local">Error: Problemas al acceder a la versión actual!</string>
     <string name="version_error_check">Error: No se pudo verificar la versión!</string>
     <string name="version_error_register">Error: No se pudo registrar la versión!</string>
+    <string name="version_error_not_data">Error: El Aplicativo no cuenta con un Padrón!</string>
     <!-- /Versión -->
 
     <!-- Padrón -->

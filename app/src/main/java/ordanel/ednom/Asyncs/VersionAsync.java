@@ -8,6 +8,7 @@ import android.widget.Toast;
 
 import ordanel.ednom.Business.VersionBL;
 import ordanel.ednom.Entity.VersionE;
+import ordanel.ednom.Library.NetworkUtils;
 import ordanel.ednom.MainActivity;
 import ordanel.ednom.ObtainCensus;
 import ordanel.ednom.R;
@@ -34,7 +35,17 @@ public class VersionAsync extends AsyncTask< Void, VersionE, VersionE> {
     @Override
     protected VersionE doInBackground(Void... params) {
 
-        return new VersionBL( this.context ).checkVersion();
+        NetworkUtils networkUtils = new NetworkUtils();
+        Boolean connection = networkUtils.haveNetworkConnection( this.context );
+
+        if ( connection )
+        {
+            return new VersionBL( this.context ).checkVersion();
+        }
+        else
+        {
+            return new VersionBL( this.context ).checkVersionOffline();
+        }
 
     }
 
@@ -82,6 +93,10 @@ public class VersionAsync extends AsyncTask< Void, VersionE, VersionE> {
                 break;
             case 4:
                 msg_error = this.context.getString( R.string.version_error_check );
+                break;
+
+            case 5:
+                msg_error = this.context.getString( R.string.version_error_not_data );
                 break;
         }
 

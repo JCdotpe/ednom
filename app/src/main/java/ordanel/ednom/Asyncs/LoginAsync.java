@@ -8,6 +8,8 @@ import android.os.AsyncTask;
 import android.widget.Toast;
 
 import ordanel.ednom.Business.SedeOperativaBL;
+import ordanel.ednom.Business.UsuarioLocalBL;
+import ordanel.ednom.Library.NetworkUtils;
 import ordanel.ednom.R;
 import ordanel.ednom.UbigeoVerify;
 
@@ -32,7 +34,17 @@ public class LoginAsync extends AsyncTask< String, Integer, Integer > {
     @Override
     protected Integer doInBackground( String... params ) {
 
-        return new SedeOperativaBL( this.context ).checkLogin( params );
+        NetworkUtils networkUtils = new NetworkUtils();
+        Boolean connection = networkUtils.haveNetworkConnection( this.context );
+
+        if ( connection )
+        {
+            return new SedeOperativaBL( this.context ).checkLogin( params );
+        }
+        else
+        {
+            return new UsuarioLocalBL( this.context ).checkLoginOffline( params );
+        }
 
     }
 

@@ -20,6 +20,7 @@ public class UsuarioLocalE implements Parcelable {
     private String clave;
     private Integer rol;
     private LocalE localE;
+    private Integer status;
 
 
     public UsuarioLocalE() {
@@ -102,5 +103,13 @@ public class UsuarioLocalE implements Parcelable {
 
     public void setLocalE(LocalE localE) {
         this.localE = localE;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }

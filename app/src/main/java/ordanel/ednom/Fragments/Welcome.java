@@ -4,21 +4,12 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
 
 import ordanel.ednom.Asyncs.SyncAsync;
-import ordanel.ednom.Business.DocentesBL;
-import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.MainActivity;
 import ordanel.ednom.R;
 

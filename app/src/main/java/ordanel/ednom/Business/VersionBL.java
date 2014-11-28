@@ -35,5 +35,30 @@ public class VersionBL {
         return versionE;
     }
 
+    public static VersionE checkVersionOffline() {
+
+        currentVersion = versionDAO.currentVersion();
+        versionE = new VersionE();
+
+        if ( currentVersion != null )
+        {
+
+            if ( currentVersion == 0 )
+            {
+                versionE.setStatus( 5 ); // no hay datos ni padron
+            }
+            else
+            {
+                versionE.setStatus( 100 ); // tod bien
+            }
+
+        }
+        else
+        {
+            versionE.setStatus( 1 ); // error en currentVersion
+        }
+
+        return versionE;
+    }
 
 }
