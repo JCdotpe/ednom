@@ -19,8 +19,6 @@ public class VersionDAO extends BaseDAO {
     private static final String TAG = VersionDAO.class.getSimpleName();
     private static VersionDAO versionDAO;
 
-    String URL_Connect = ConstantsUtils.BASE_URL + "version.php";// "version.php" "version"
-
     Integer valueInteger;
     Long valueLong;
 
@@ -89,7 +87,7 @@ public class VersionDAO extends BaseDAO {
 
         Log.e( TAG, "start checkVersion - version local: " + versionLocal.toString() );
 
-        JSONArray jsonArray = httpPostAux.getServerData( null, URL_Connect );
+        JSONArray jsonArray = httpPostAux.getServerData( null, ConstantsUtils.URL_VERSION );
 
         versionE = new VersionE();
 

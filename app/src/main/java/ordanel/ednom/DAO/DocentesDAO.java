@@ -242,9 +242,8 @@ public class DocentesDAO extends BaseDAO {
                 parametersPost.add( new BasicNameValuePair( "data", json ) );
 
                 Log.e( "Welcome", "json : " + jsonArray.toString() );
-                String URL_Connect = ConstantsUtils.BASE_URL + "sync.php";
 
-                JSONArray jsonArrayGet = httpPostAux.getServerData( parametersPost, URL_Connect );
+                JSONArray jsonArrayGet = httpPostAux.getServerData( parametersPost, ConstantsUtils.URL_SYNC );
                 Log.e( "Welcome", "get json : " + jsonArrayGet.toString() );
 
                 JSONObject jsonObject;

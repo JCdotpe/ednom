@@ -26,7 +26,6 @@ public class SedeOperativaDAO extends BaseDAO {
     private static final String TAG = SedeOperativaDAO.class.getSimpleName();
     private static SedeOperativaDAO sedeOperativaDAO;
 
-    String URL_Connect = ConstantsUtils.BASE_URL + "acces.php"; // "acces.php" "logeo"
     Integer cod_sede_operativa, cod_local_sede;
     String SQL, Where;
     Integer valueInteger;
@@ -65,9 +64,9 @@ public class SedeOperativaDAO extends BaseDAO {
         Log.e( TAG, "start CheckLogin" );
 
         ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
-        parametersPost.add( new BasicNameValuePair( "password", password ) ); // "password" "sendPass"
+        parametersPost.add( new BasicNameValuePair( "sendPass", password ) ); // "password" "sendPass"
 
-        jsonArray = httpPostAux.getServerData( parametersPost, URL_Connect );
+        jsonArray = httpPostAux.getServerData( parametersPost, ConstantsUtils.URL_ACCESS );
 
         sedeOperativaE = new SedeOperativaE();
 
