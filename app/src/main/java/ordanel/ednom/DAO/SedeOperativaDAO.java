@@ -8,7 +8,6 @@ import android.util.Log;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
@@ -25,17 +24,6 @@ public class SedeOperativaDAO extends BaseDAO {
 
     private static final String TAG = SedeOperativaDAO.class.getSimpleName();
     private static SedeOperativaDAO sedeOperativaDAO;
-
-    Integer cod_sede_operativa, cod_local_sede;
-    String SQL, Where;
-    Integer valueInteger;
-    Long valueLong;
-
-    Cursor cursor = null;
-    ContentValues contentValues = null;
-
-    JSONObject jsonObject;
-    JSONArray jsonArray;
 
     SedeOperativaE sedeOperativaE;
 
@@ -81,8 +69,8 @@ public class SedeOperativaDAO extends BaseDAO {
                     {
                         jsonObject = (JSONObject) jsonArray.get(i);
 
-                        sedeOperativaE.setCod_sede_operativa( jsonObject.getInt( sedeOperativaE.COD_SEDE_OPERATIVA ) );
-                        sedeOperativaE.setSede_operativa( jsonObject.getString( sedeOperativaE.SEDE_OPERATIVA ) );
+                        sedeOperativaE.setCod_sede_operativa( jsonObject.getInt( SedeOperativaE.COD_SEDE_OPERATIVA ) );
+                        sedeOperativaE.setSede_operativa( jsonObject.getString( SedeOperativaE.SEDE_OPERATIVA ) );
 
                         localEArrayList = new ArrayList<LocalE>();
 
@@ -93,15 +81,15 @@ public class SedeOperativaDAO extends BaseDAO {
                             jsonObject = (JSONObject) jsonArray.get(j);
 
                             localE.setSedeOperativaE( sedeOperativaE );
-                            localE.setCod_local_sede( jsonObject.getInt( localE.COD_LOCAL_SEDE ) );
-                            localE.setNombreLocal( jsonObject.getString( localE.NOMBRE_LOCAL ) );
-                            localE.setDireccion( jsonObject.getString( localE.DIRECCION ) );
-                            localE.setNaula_t( jsonObject.getInt( localE.NAULA_T ) );
-                            localE.setNaula_n( jsonObject.getInt( localE.NAULA_N ) );
-                            localE.setNaula_discapacidad( jsonObject.getInt( localE.NAULA_DISCAPACIDAD ) );
-                            localE.setNaula_contingencia( jsonObject.getInt( localE.NAULA_CONTINGENCIA ) );
-                            localE.setNficha( jsonObject.getInt( localE.NFICHA ) );
-                            localE.setNcartilla( jsonObject.getInt( localE.NCARTILLA ) );
+                            localE.setCod_local_sede( jsonObject.getInt( LocalE.COD_LOCAL_SEDE ) );
+                            localE.setNombreLocal( jsonObject.getString( LocalE.NOMBRE_LOCAL ) );
+                            localE.setDireccion( jsonObject.getString( LocalE.DIRECCION ) );
+                            localE.setNaula_t( jsonObject.getInt( LocalE.NAULA_T ) );
+                            localE.setNaula_n( jsonObject.getInt( LocalE.NAULA_N ) );
+                            localE.setNaula_discapacidad( jsonObject.getInt( LocalE.NAULA_DISCAPACIDAD ) );
+                            localE.setNaula_contingencia( jsonObject.getInt( LocalE.NAULA_CONTINGENCIA ) );
+                            localE.setNficha( jsonObject.getInt( LocalE.NFICHA ) );
+                            localE.setNcartilla( jsonObject.getInt( LocalE.NCARTILLA ) );
 
                             usuarioLocalEArrayList = new ArrayList<UsuarioLocalE>();
 
@@ -112,10 +100,10 @@ public class SedeOperativaDAO extends BaseDAO {
                                 UsuarioLocalE usuarioLocalE = new UsuarioLocalE();
                                 jsonObject = (JSONObject) jsonArray.get(x);
 
-                                usuarioLocalE.setIdUsuario( jsonObject.getInt( usuarioLocalE.IDUSUARIO ) );
-                                usuarioLocalE.setUsuario(jsonObject.getString( usuarioLocalE.USUARIO ) );
-                                usuarioLocalE.setClave( jsonObject.getString( usuarioLocalE.CLAVE ) );
-                                usuarioLocalE.setRol( jsonObject.getInt( usuarioLocalE.ROL ) );
+                                usuarioLocalE.setIdUsuario( jsonObject.getInt( UsuarioLocalE.IDUSUARIO ) );
+                                usuarioLocalE.setUsuario(jsonObject.getString( UsuarioLocalE.USUARIO ) );
+                                usuarioLocalE.setClave( jsonObject.getString( UsuarioLocalE.CLAVE ) );
+                                usuarioLocalE.setRol( jsonObject.getInt( UsuarioLocalE.ROL ) );
                                 usuarioLocalE.setLocalE( localE );
 
                                 usuarioLocalEArrayList.add( usuarioLocalE );
@@ -175,8 +163,8 @@ public class SedeOperativaDAO extends BaseDAO {
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
             contentValues = new ContentValues();
-            contentValues.put( sedeOperativaE.COD_SEDE_OPERATIVA , cod_sede_operativa );
-            contentValues.put( sedeOperativaE.SEDE_OPERATIVA , paramSedeOperativaE.getSede_operativa() );
+            contentValues.put( SedeOperativaE.COD_SEDE_OPERATIVA , cod_sede_operativa );
+            contentValues.put( SedeOperativaE.SEDE_OPERATIVA , paramSedeOperativaE.getSede_operativa() );
 
             if ( cursor.moveToFirst() )
             {
@@ -202,16 +190,16 @@ public class SedeOperativaDAO extends BaseDAO {
                 cod_local_sede = localE.getCod_local_sede();
 
                 contentValues =  new ContentValues();
-                contentValues.put( localE.getSedeOperativaE().COD_SEDE_OPERATIVA, cod_sede_operativa );
-                contentValues.put( localE.COD_LOCAL_SEDE, cod_local_sede );
-                contentValues.put( localE.NOMBRE_LOCAL, localE.getNombreLocal() );
-                contentValues.put( localE.DIRECCION, localE.getDireccion() );
-                contentValues.put( localE.NAULA_T, localE.getNaula_t() );
-                contentValues.put( localE.NAULA_N, localE.getNaula_n() );
-                contentValues.put( localE.NAULA_DISCAPACIDAD, localE.getNaula_discapacidad() );
-                contentValues.put( localE.NAULA_CONTINGENCIA, localE.getNaula_contingencia() );
-                contentValues.put( localE.NFICHA, localE.getNficha() );
-                contentValues.put( localE.NCARTILLA, localE.getNcartilla() );
+                contentValues.put( SedeOperativaE.COD_SEDE_OPERATIVA, cod_sede_operativa );
+                contentValues.put( LocalE.COD_LOCAL_SEDE, cod_local_sede );
+                contentValues.put( LocalE.NOMBRE_LOCAL, localE.getNombreLocal() );
+                contentValues.put( LocalE.DIRECCION, localE.getDireccion() );
+                contentValues.put( LocalE.NAULA_T, localE.getNaula_t() );
+                contentValues.put( LocalE.NAULA_N, localE.getNaula_n() );
+                contentValues.put( LocalE.NAULA_DISCAPACIDAD, localE.getNaula_discapacidad() );
+                contentValues.put( LocalE.NAULA_CONTINGENCIA, localE.getNaula_contingencia() );
+                contentValues.put( LocalE.NFICHA, localE.getNficha() );
+                contentValues.put( LocalE.NCARTILLA, localE.getNcartilla() );
 
                 SQL = "SELECT * FROM local WHERE cod_sede_operativa = " + cod_sede_operativa + " and cod_local_sede = " + cod_local_sede;
                 cursor = dbHelper.getDatabase().rawQuery( SQL, null );
@@ -241,12 +229,12 @@ public class SedeOperativaDAO extends BaseDAO {
                 {
 
                     contentValues = new ContentValues();
-                    contentValues.put( usuarioLocalE.IDUSUARIO, usuarioLocalE.getIdUsuario() );
-                    contentValues.put( usuarioLocalE.USUARIO, usuarioLocalE.getUsuario() );
-                    contentValues.put( usuarioLocalE.CLAVE, usuarioLocalE.getClave() );
-                    contentValues.put( usuarioLocalE.ROL, usuarioLocalE.getRol() );
-                    contentValues.put( sedeOperativaE.COD_SEDE_OPERATIVA, cod_sede_operativa );
-                    contentValues.put( localE.COD_LOCAL_SEDE, cod_local_sede );
+                    contentValues.put( UsuarioLocalE.IDUSUARIO, usuarioLocalE.getIdUsuario() );
+                    contentValues.put( UsuarioLocalE.USUARIO, usuarioLocalE.getUsuario() );
+                    contentValues.put( UsuarioLocalE.CLAVE, usuarioLocalE.getClave() );
+                    contentValues.put( UsuarioLocalE.ROL, usuarioLocalE.getRol() );
+                    contentValues.put( SedeOperativaE.COD_SEDE_OPERATIVA, cod_sede_operativa );
+                    contentValues.put( LocalE.COD_LOCAL_SEDE, cod_local_sede );
 
                     valueLong = dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentValues );
                     Log.e( TAG, "usuario_local insert : " + String.valueOf(valueLong) );
@@ -344,9 +332,9 @@ public class SedeOperativaDAO extends BaseDAO {
 
                 while ( !cursor.isAfterLast() )
                 {
-                    cod_sede_operativa = cursor.getInt( cursor.getColumnIndex( sedeOperativaE.COD_SEDE_OPERATIVA ) );
+                    cod_sede_operativa = cursor.getInt( cursor.getColumnIndex( SedeOperativaE.COD_SEDE_OPERATIVA ) );
                     sedeOperativaE.setCod_sede_operativa( cod_sede_operativa );
-                    sedeOperativaE.setSede_operativa( cursor.getString( cursor.getColumnIndex( sedeOperativaE.SEDE_OPERATIVA ) ) );
+                    sedeOperativaE.setSede_operativa( cursor.getString( cursor.getColumnIndex( SedeOperativaE.SEDE_OPERATIVA ) ) );
 
 
                     // set array LOCAL
@@ -362,16 +350,16 @@ public class SedeOperativaDAO extends BaseDAO {
                     {
                         LocalE localE = new LocalE();
 
-                        cod_local_sede = cursorLocal.getInt( cursorLocal.getColumnIndex( localE.COD_LOCAL_SEDE ) );
+                        cod_local_sede = cursorLocal.getInt( cursorLocal.getColumnIndex( LocalE.COD_LOCAL_SEDE ) );
                         localE.setCod_local_sede( cod_local_sede );
-                        localE.setNombreLocal( cursorLocal.getString( cursorLocal.getColumnIndex( localE.NOMBRE_LOCAL ) ) );
-                        localE.setDireccion( cursorLocal.getString( cursorLocal.getColumnIndex( localE.DIRECCION ) ) );
-                        localE.setNaula_t( cursorLocal.getInt( cursorLocal.getColumnIndex( localE.NAULA_T ) ) );
-                        localE.setNaula_n( cursorLocal.getInt( cursorLocal.getColumnIndex( localE.NAULA_N ) ) );
-                        localE.setNaula_discapacidad( cursorLocal.getInt( cursorLocal.getColumnIndex( localE.NAULA_DISCAPACIDAD ) ) );
-                        localE.setNaula_contingencia( cursorLocal.getInt( cursorLocal.getColumnIndex( localE.NAULA_CONTINGENCIA ) ) );
-                        localE.setNficha( cursorLocal.getInt( cursorLocal.getColumnIndex( localE.NFICHA ) ) );
-                        localE.setNcartilla( cursorLocal.getInt( cursorLocal.getColumnIndex( localE.NCARTILLA ) ) );
+                        localE.setNombreLocal( cursorLocal.getString( cursorLocal.getColumnIndex( LocalE.NOMBRE_LOCAL ) ) );
+                        localE.setDireccion( cursorLocal.getString( cursorLocal.getColumnIndex( LocalE.DIRECCION ) ) );
+                        localE.setNaula_t( cursorLocal.getInt( cursorLocal.getColumnIndex( LocalE.NAULA_T ) ) );
+                        localE.setNaula_n( cursorLocal.getInt( cursorLocal.getColumnIndex( LocalE.NAULA_N ) ) );
+                        localE.setNaula_discapacidad( cursorLocal.getInt( cursorLocal.getColumnIndex( LocalE.NAULA_DISCAPACIDAD ) ) );
+                        localE.setNaula_contingencia( cursorLocal.getInt( cursorLocal.getColumnIndex( LocalE.NAULA_CONTINGENCIA ) ) );
+                        localE.setNficha( cursorLocal.getInt( cursorLocal.getColumnIndex( LocalE.NFICHA ) ) );
+                        localE.setNcartilla( cursorLocal.getInt( cursorLocal.getColumnIndex( LocalE.NCARTILLA ) ) );
 
 
                         // set array USUARIO_LOCAL
@@ -385,9 +373,9 @@ public class SedeOperativaDAO extends BaseDAO {
                         {
                             UsuarioLocalE usuarioLocalE = new UsuarioLocalE();
 
-                            usuarioLocalE.setIdUsuario( cursorUsuarioLocal.getInt( cursorUsuarioLocal.getColumnIndex( usuarioLocalE.IDUSUARIO ) ) );
-                            usuarioLocalE.setUsuario( cursorUsuarioLocal.getString( cursorUsuarioLocal.getColumnIndex( usuarioLocalE.USUARIO ) ) );
-                            usuarioLocalE.setRol( cursorUsuarioLocal.getInt( cursorUsuarioLocal.getColumnIndex( usuarioLocalE.ROL ) ) );
+                            usuarioLocalE.setIdUsuario( cursorUsuarioLocal.getInt( cursorUsuarioLocal.getColumnIndex( UsuarioLocalE.IDUSUARIO ) ) );
+                            usuarioLocalE.setUsuario( cursorUsuarioLocal.getString( cursorUsuarioLocal.getColumnIndex( UsuarioLocalE.USUARIO ) ) );
+                            usuarioLocalE.setRol( cursorUsuarioLocal.getInt( cursorUsuarioLocal.getColumnIndex( UsuarioLocalE.ROL ) ) );
 
                             usuarioLocalEArrayList.add( usuarioLocalE );
                             cursorUsuarioLocal.moveToNext();

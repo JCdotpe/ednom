@@ -5,8 +5,10 @@ import android.content.Context;
 import android.database.Cursor;
 import android.util.Log;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import ordanel.ednom.BD.DBHelper;
-import ordanel.ednom.Library.ConstantsUtils;
 import ordanel.ednom.Library.HttpPostAux;
 
 /**
@@ -18,14 +20,21 @@ public class BaseDAO {
 
     public DBHelper dbHelper;
     public HttpPostAux httpPostAux;
-    public ConstantsUtils constantsUtils;
+
+    public Integer cod_sede_operativa, cod_local_sede;
 
     public String SQL;
+    public String Where;
+    public String valueString;
     public Integer valueInteger;
     public Long valueLong;
 
-    Cursor cursor = null;
-    ContentValues contentValues = null;
+    public JSONObject jsonObject;
+    public JSONArray jsonArray;
+
+    public Cursor cursor = null;
+    public ContentValues contentValues = null;
+
 
     public void initHttPostAux() {
 

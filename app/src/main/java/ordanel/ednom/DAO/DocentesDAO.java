@@ -62,16 +62,16 @@ public class DocentesDAO extends BaseDAO {
                 {
 
                     LocalE localE = new LocalE();
-                    localE.setNombreLocal( cursor.getString( cursor.getColumnIndex( localE.NOMBRE_LOCAL) ) );
+                    localE.setNombreLocal( cursor.getString( cursor.getColumnIndex( LocalE.NOMBRE_LOCAL) ) );
 
                     AulaLocalE aulaLocalE = new AulaLocalE();
                     aulaLocalE.setLocalE( localE );
-                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( aulaLocalE.NRO_AULA ) ) );
+                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( AulaLocalE.NRO_AULA ) ) );
 
-                    docentesE.setNro_doc( cursor.getString( cursor.getColumnIndex( docentesE.NRO_DOC ) ) );
-                    docentesE.setApe_pat( cursor.getString( cursor.getColumnIndex( docentesE.APE_PAT ) ) );
-                    docentesE.setApe_mat( cursor.getString( cursor.getColumnIndex( docentesE.APE_MAT ) ) );
-                    docentesE.setNombres( cursor.getString( cursor.getColumnIndex( docentesE.NOMBRES ) ) );
+                    docentesE.setNro_doc( cursor.getString( cursor.getColumnIndex( DocentesE.NRO_DOC ) ) );
+                    docentesE.setApe_pat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_PAT ) ) );
+                    docentesE.setApe_mat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_MAT ) ) );
+                    docentesE.setNombres( cursor.getString( cursor.getColumnIndex( DocentesE.NOMBRES ) ) );
                     docentesE.setAulaLocalE( aulaLocalE );
 
                     cursor.moveToNext();
@@ -111,8 +111,8 @@ public class DocentesDAO extends BaseDAO {
             openDBHelper();
 
             contentValues =  new ContentValues();
-            contentValues.put( docentesE.ESTADO, 1 );
-            contentValues.put( docentesE.F_REGISTRO, constantsUtils.fecha_registro() );
+            contentValues.put( DocentesE.ESTADO, 1 );
+            contentValues.put( DocentesE.F_REGISTRO, ConstantsUtils.fecha_registro() );
 
             SQL = "nro_doc = '" + paramDNI + "'";
 
@@ -147,8 +147,8 @@ public class DocentesDAO extends BaseDAO {
             openDBHelper();
 
             contentValues =  new ContentValues();
-            contentValues.put( docentesE.ESTADO_AULA, 1 );
-            contentValues.put( docentesE.F_AULA, constantsUtils.fecha_registro() );
+            contentValues.put( DocentesE.ESTADO_AULA, 1 );
+            contentValues.put( DocentesE.F_AULA, ConstantsUtils.fecha_registro() );
 
             if ( paramContingencia == 0 )
             {
@@ -157,7 +157,7 @@ public class DocentesDAO extends BaseDAO {
             else
             {
                 SQL = "nro_doc = '" + number_doc + "' and estado > 0";
-                contentValues.put( docentesE.NRO_AULA_CAMBIO, nro_aula );
+                contentValues.put( DocentesE.NRO_AULA_CAMBIO, nro_aula );
             }
 
             valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
@@ -198,8 +198,8 @@ public class DocentesDAO extends BaseDAO {
             openDBHelper();
 
             contentValues = new ContentValues();
-            contentValues.put( docentesE.ESTADO_FICHA, 1 );
-            contentValues.put( docentesE.F_FICHA, constantsUtils.fecha_registro() );
+            contentValues.put( DocentesE.ESTADO_FICHA, 1 );
+            contentValues.put( DocentesE.F_FICHA, ConstantsUtils.fecha_registro() );
 
             SQL = "cod_ficha = '" + paramCodFicha + "'";
 
@@ -243,11 +243,11 @@ public class DocentesDAO extends BaseDAO {
         {
             openDBHelper();
 
-            String SQL = "SELECT nro_doc, estado, f_registro, estado_aula, f_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla, nro_aula_cambio FROM docentes WHERE estado = 1 or estado_aula = 1 or estado_ficha = 1 or estado_cartilla = 1";
+            SQL = "SELECT nro_doc, estado, f_registro, estado_aula, f_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla, nro_aula_cambio FROM docentes WHERE estado = 1 or estado_aula = 1 or estado_ficha = 1 or estado_cartilla = 1";
             Log.e( TAG, "string sql : " + SQL );
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
-            JSONArray jsonArray = new JSONArray();
+            jsonArray = new JSONArray();
 
             if ( cursor.moveToFirst() )
             {
@@ -256,16 +256,16 @@ public class DocentesDAO extends BaseDAO {
 
                     JSONObject jsonObjectTemp = new JSONObject();
 
-                    jsonObjectTemp.put( docentesE.NRO_DOC, cursor.getString( cursor.getColumnIndex( docentesE.NRO_DOC ) ) );
-                    jsonObjectTemp.put( docentesE.ESTADO, cursor.getInt( cursor.getColumnIndex( docentesE.ESTADO ) ) );
-                    jsonObjectTemp.put( docentesE.F_REGISTRO, cursor.getString( cursor.getColumnIndex( docentesE.F_REGISTRO ) ) );
-                    jsonObjectTemp.put( docentesE.ESTADO_AULA, cursor.getInt( cursor.getColumnIndex( docentesE.ESTADO_AULA ) ) );
-                    jsonObjectTemp.put( docentesE.F_AULA, cursor.getString( cursor.getColumnIndex( docentesE.F_AULA ) ) );
-                    jsonObjectTemp.put( docentesE.ESTADO_FICHA, cursor.getInt( cursor.getColumnIndex( docentesE.ESTADO_FICHA ) ) );
-                    jsonObjectTemp.put( docentesE.F_FICHA, cursor.getString( cursor.getColumnIndex( docentesE.F_FICHA ) ) );
-                    jsonObjectTemp.put( docentesE.ESTADO_CARTILLA, cursor.getInt( cursor.getColumnIndex( docentesE.ESTADO_CARTILLA ) ) );
-                    jsonObjectTemp.put( docentesE.F_CARTILLA, cursor.getString( cursor.getColumnIndex( docentesE.F_CARTILLA ) ) );
-                    jsonObjectTemp.put( docentesE.NRO_AULA_CAMBIO, cursor.getInt( cursor.getColumnIndex( docentesE.NRO_AULA_CAMBIO ) ) );
+                    jsonObjectTemp.put( DocentesE.NRO_DOC, cursor.getString( cursor.getColumnIndex( DocentesE.NRO_DOC ) ) );
+                    jsonObjectTemp.put( DocentesE.ESTADO, cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO ) ) );
+                    jsonObjectTemp.put( DocentesE.F_REGISTRO, cursor.getString( cursor.getColumnIndex( DocentesE.F_REGISTRO ) ) );
+                    jsonObjectTemp.put( DocentesE.ESTADO_AULA, cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO_AULA ) ) );
+                    jsonObjectTemp.put( DocentesE.F_AULA, cursor.getString( cursor.getColumnIndex( DocentesE.F_AULA ) ) );
+                    jsonObjectTemp.put( DocentesE.ESTADO_FICHA, cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO_FICHA ) ) );
+                    jsonObjectTemp.put( DocentesE.F_FICHA, cursor.getString( cursor.getColumnIndex( DocentesE.F_FICHA ) ) );
+                    jsonObjectTemp.put( DocentesE.ESTADO_CARTILLA, cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO_CARTILLA ) ) );
+                    jsonObjectTemp.put( DocentesE.F_CARTILLA, cursor.getString( cursor.getColumnIndex( DocentesE.F_CARTILLA ) ) );
+                    jsonObjectTemp.put( DocentesE.NRO_AULA_CAMBIO, cursor.getInt( cursor.getColumnIndex( DocentesE.NRO_AULA_CAMBIO ) ) );
 
                     jsonArray.put(jsonObjectTemp);
 
@@ -283,8 +283,6 @@ public class DocentesDAO extends BaseDAO {
                 JSONArray jsonArrayGet = httpPostAux.getServerData( parametersPost, ConstantsUtils.URL_SYNC );
                 Log.e( "Welcome", "get json : " + jsonArrayGet.toString() );
 
-                JSONObject jsonObject;
-
                 if ( jsonArrayGet != null && jsonArrayGet.length() > 0 )
                 {
                     for ( int i = 0; i < jsonArrayGet.length(); i++ )
@@ -292,15 +290,15 @@ public class DocentesDAO extends BaseDAO {
                         jsonObject = (JSONObject) jsonArrayGet.get(i) ;
 
                         contentValues = new ContentValues();
-                        contentValues.put( docentesE.ESTADO, jsonObject.getInt( docentesE.ESTADO ) );
-                        contentValues.put( docentesE.ESTADO_AULA, jsonObject.getInt( docentesE.ESTADO_AULA ) );
-                        contentValues.put( docentesE.ESTADO_FICHA, jsonObject.getInt( docentesE.ESTADO_FICHA ) );
-                        contentValues.put( docentesE.ESTADO_CARTILLA, jsonObject.getInt( docentesE.ESTADO_CARTILLA ) );
+                        contentValues.put( DocentesE.ESTADO, jsonObject.getInt( DocentesE.ESTADO ) );
+                        contentValues.put( DocentesE.ESTADO_AULA, jsonObject.getInt( DocentesE.ESTADO_AULA ) );
+                        contentValues.put( DocentesE.ESTADO_FICHA, jsonObject.getInt( DocentesE.ESTADO_FICHA ) );
+                        contentValues.put( DocentesE.ESTADO_CARTILLA, jsonObject.getInt( DocentesE.ESTADO_CARTILLA ) );
 
                         String nro_doc = jsonObject.getString( "nro_doc" );
-                        String Where = "nro_doc = '" + nro_doc + "'";
+                        Where = "nro_doc = '" + nro_doc + "'";
                         Log.e( TAG, "where : " + Where );
-                        Integer valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
+                        valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
                         Log.e( TAG, "sync update : " + String.valueOf( valueInteger ) );
 
                     }

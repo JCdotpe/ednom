@@ -2,10 +2,8 @@ package ordanel.ednom.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.util.Log;
 
-import org.json.JSONArray;
 import org.json.JSONObject;
 
 import ordanel.ednom.Entity.VersionE;
@@ -18,14 +16,6 @@ public class VersionDAO extends BaseDAO {
 
     private static final String TAG = VersionDAO.class.getSimpleName();
     private static VersionDAO versionDAO;
-
-    Integer valueInteger;
-    Long valueLong;
-
-    Cursor cursor = null;
-    ContentValues contentValues = null;
-
-    JSONObject jsonObject;
 
     VersionE versionE;
 
@@ -56,7 +46,7 @@ public class VersionDAO extends BaseDAO {
         {
             openDBHelper();
 
-            String SQL = "SELECT MAX(v_padron) AS currentVersion FROM version";
+            SQL = "SELECT MAX(v_padron) AS currentVersion FROM version";
 
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
@@ -87,7 +77,7 @@ public class VersionDAO extends BaseDAO {
 
         Log.e( TAG, "start checkVersion - version local: " + versionLocal.toString() );
 
-        JSONArray jsonArray = httpPostAux.getServerData( null, ConstantsUtils.URL_VERSION );
+        jsonArray = httpPostAux.getServerData( null, ConstantsUtils.URL_VERSION );
 
         versionE = new VersionE();
 
@@ -101,13 +91,13 @@ public class VersionDAO extends BaseDAO {
                 {
                     jsonObject = (JSONObject) jsonArray.get(0);
 
-                    versionNube = jsonObject.getInt( versionE.V_PADRON );
+                    versionNube = jsonObject.getInt( VersionE.V_PADRON );
 
-                    versionE.setVercod( jsonObject.getInt( versionE.VERCOD ) );
+                    versionE.setVercod( jsonObject.getInt( VersionE.VERCOD ) );
                     versionE.setV_padron( versionNube );
-                    versionE.setV_sistem(jsonObject.getInt( versionE.V_SISTEM ) );
-                    versionE.setFecha( jsonObject.getString( versionE.FECHA ) );
-                    versionE.setObserva( jsonObject.getString( versionE.OBSERVA ) );
+                    versionE.setV_sistem(jsonObject.getInt( VersionE.V_SISTEM ) );
+                    versionE.setFecha( jsonObject.getString( VersionE.FECHA ) );
+                    versionE.setObserva( jsonObject.getString( VersionE.OBSERVA ) );
 
                     if ( !versionNube.equals(versionLocal) )
                     {
@@ -156,11 +146,11 @@ public class VersionDAO extends BaseDAO {
 
             contentValues =  new ContentValues();
 
-            contentValues.put( versionE.VERCOD, versionE.getVercod() );
-            contentValues.put( versionE.V_PADRON, versionE.getV_padron() );
-            contentValues.put( versionE.V_SISTEM, versionE.getV_sistem() );
-            contentValues.put( versionE.FECHA, versionE.getFecha() );
-            contentValues.put( versionE.OBSERVA, versionE.getObserva() );
+            contentValues.put( VersionE.VERCOD, versionE.getVercod() );
+            contentValues.put( VersionE.V_PADRON, versionE.getV_padron() );
+            contentValues.put( VersionE.V_SISTEM, versionE.getV_sistem() );
+            contentValues.put( VersionE.FECHA, versionE.getFecha() );
+            contentValues.put( VersionE.OBSERVA, versionE.getObserva() );
 
             valueLong = dbHelper.getDatabase().insertOrThrow( "version", null, contentValues );
             Log.e( TAG, "register : " + String.valueOf(valueLong) ); // -1 => error register

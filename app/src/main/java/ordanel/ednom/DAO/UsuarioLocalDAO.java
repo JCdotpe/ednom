@@ -13,6 +13,8 @@ public class UsuarioLocalDAO extends BaseDAO {
     private static final String TAG = UsuarioLocalDAO.class.getSimpleName();
     private static UsuarioLocalDAO usuarioLocalDAO;
 
+    public UsuarioLocalE usuarioLocalE;
+
     public static UsuarioLocalDAO getInstance( Context paramContext ) {
 
         if ( usuarioLocalDAO == null )
@@ -27,8 +29,6 @@ public class UsuarioLocalDAO extends BaseDAO {
     private UsuarioLocalDAO( Context paramContext ) {
         initDBHelper( paramContext );
     }
-
-    public UsuarioLocalE usuarioLocalE;
 
     public UsuarioLocalE searchUserByPass( String paramPassword ) {
 
@@ -46,9 +46,9 @@ public class UsuarioLocalDAO extends BaseDAO {
 
             if ( cursor.moveToFirst() )
             {
-                usuarioLocalE.setIdUsuario( cursor.getInt( cursor.getColumnIndex( usuarioLocalE.IDUSUARIO ) ) );
-                usuarioLocalE.setUsuario( cursor.getString( cursor.getColumnIndex( usuarioLocalE.USUARIO ) ) );
-                usuarioLocalE.setRol( cursor.getInt( cursor.getColumnIndex( usuarioLocalE.ROL ) ) );
+                usuarioLocalE.setIdUsuario( cursor.getInt( cursor.getColumnIndex( UsuarioLocalE.IDUSUARIO ) ) );
+                usuarioLocalE.setUsuario( cursor.getString( cursor.getColumnIndex( UsuarioLocalE.USUARIO ) ) );
+                usuarioLocalE.setRol( cursor.getInt( cursor.getColumnIndex( UsuarioLocalE.ROL ) ) );
 
                 usuarioLocalE.setStatus( 0 ); // todo bien
             }

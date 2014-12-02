@@ -1,7 +1,6 @@
 package ordanel.ednom.DAO;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -15,12 +14,6 @@ public class AulaLocalDAO extends BaseDAO {
 
     private static final String TAG = AulaLocalDAO.class.getSimpleName();
     private static AulaLocalDAO aulaLocalDAO;
-
-    String SQL;
-    Integer valueInteger;
-    String valueString;
-
-    Cursor cursor = null;
 
     AulaLocalE aulaLocalE;
     ArrayList<AulaLocalE> aulaLocalEArrayList;
@@ -60,8 +53,8 @@ public class AulaLocalDAO extends BaseDAO {
                 {
                     aulaLocalE = new AulaLocalE();
 
-                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( aulaLocalE.NRO_AULA ) ) );
-                    aulaLocalE.setTipo( cursor.getString( cursor.getColumnIndex( aulaLocalE.TIPO ) ) );
+                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( AulaLocalE.NRO_AULA ) ) );
+                    aulaLocalE.setTipo( cursor.getString( cursor.getColumnIndex( AulaLocalE.TIPO ) ) );
 
                     aulaLocalEArrayList.add( aulaLocalE );
 
@@ -98,7 +91,7 @@ public class AulaLocalDAO extends BaseDAO {
 
             if ( cursor.moveToFirst() )
             {
-                valueString = cursor.getString( cursor.getColumnIndex( aulaLocalE.TIPO ) );
+                valueString = cursor.getString( cursor.getColumnIndex( AulaLocalE.TIPO ) );
             }
 
             if ( valueString.equals( "C" ) ) // tipo CONTINGENCIA

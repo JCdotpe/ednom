@@ -76,7 +76,7 @@ public class InventarioFicha extends Fragment {
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
 
-                if ( s.length() == 7 )
+                if ( s.length() == 5 )
                 {
                     cod_ficha = s.toString();
                     nro_aula = Integer.parseInt( spinner.getSelectedItem().toString() );
@@ -88,7 +88,7 @@ public class InventarioFicha extends Fragment {
             @Override
             public void afterTextChanged(Editable s) {
 
-                if ( s.length() == 7 )
+                if ( s.length() == 5 )
                 {
                     edtFicha.setText( "" );
                 }

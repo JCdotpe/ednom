@@ -4,7 +4,6 @@ import android.content.Context;
 
 import ordanel.ednom.DAO.DocentesDAO;
 import ordanel.ednom.DAO.InstrumentoDAO;
-import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
 
 /**
