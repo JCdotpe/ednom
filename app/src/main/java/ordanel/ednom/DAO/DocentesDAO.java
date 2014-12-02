@@ -2,7 +2,6 @@ package ordanel.ednom.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
-import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
@@ -25,14 +24,6 @@ public class DocentesDAO extends BaseDAO {
 
     private static final String TAG = DocentesDAO.class.getSimpleName();
     private static DocentesDAO docentesDAO;
-
-    String SQL;
-    Integer valueInteger;
-
-    ConstantsUtils constantsUtils;
-
-    Cursor cursor = null;
-    ContentValues contentValues = null;
 
     DocentesE docentesE;
 
@@ -61,7 +52,7 @@ public class DocentesDAO extends BaseDAO {
         {
             openDBHelper();
 
-            String SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula, lc.nombreLocal FROM docentes dc INNER JOIN local lc ON dc.cod_sede_operativa = lc.cod_sede_operativa AND dc.cod_local_sede = lc.cod_local_sede WHERE " + paramConditional;
+            SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula, lc.nombreLocal FROM docentes dc INNER JOIN local lc ON dc.cod_sede_operativa = lc.cod_sede_operativa AND dc.cod_local_sede = lc.cod_local_sede WHERE " + paramConditional;
             Log.e( TAG, "string sql : " + SQL );
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
@@ -196,6 +187,52 @@ public class DocentesDAO extends BaseDAO {
         Log.e( TAG, "end asistenciaAula" );
 
         return valueInteger;
+    }
+
+    public Integer inventarioFichaDocente( String paramCodFicha ) {
+
+        Log.e( TAG, "start InventarioFichaDocente" );
+
+        try
+        {
+            openDBHelper();
+
+            contentValues = new ContentValues();
+            contentValues.put( docentesE.ESTADO_FICHA, 1 );
+            contentValues.put( docentesE.F_FICHA, constantsUtils.fecha_registro() );
+
+            SQL = "cod_ficha = '" + paramCodFicha + "'";
+
+            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
+            Log.e( TAG, "inventario ficha docente : " + valueInteger.toString() );
+
+            if ( !valueInteger.equals(0) ) // el registro es correcto
+            {
+                valueInteger = 0;
+            }
+            else
+            {
+                valueInteger = 1; // el docente no fue registrado al ingreso del local
+            }
+
+            dbHelper.setTransactionSuccessful();
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+            valueInteger = 4;// error al registrar asistencia al aula;
+        }
+        finally
+        {
+            closeDBHelper();
+        }
+
+        Log.e( TAG, "end InventarioFichaDocente" );
+
+        return valueInteger;
+
     }
 
     public void getAllforSync() {

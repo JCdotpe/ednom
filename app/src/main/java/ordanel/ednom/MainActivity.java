@@ -20,7 +20,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ordanel.ednom.Business.DocentesBL;
+import ordanel.ednom.Business.InstrumentoBL;
 import ordanel.ednom.Entity.DocentesE;
+import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
 import ordanel.ednom.Fragments.InventarioFicha;
@@ -34,6 +36,8 @@ public class MainActivity extends Activity
     ProgressDialog progressDialog;
     DocentesE docentesE;
     DocentesBL docentesBL;
+    InstrumentoE instrumentoE;
+    InstrumentoBL instrumentoBL;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -51,6 +55,7 @@ public class MainActivity extends Activity
         setContentView(R.layout.activity_main);
 
         docentesBL = new DocentesBL( MainActivity.this );
+        instrumentoBL = new InstrumentoBL( MainActivity.this );
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -251,6 +256,64 @@ public class MainActivity extends Activity
             String msg = "";
 
             switch ( docentesE.getStatus() )
+            {
+                case 1:
+                    msg = getString( R.string.docente_not_found );
+                    break;
+
+                case 2:
+                    msg = getString( R.string.docente_not_access );
+                    break;
+
+                case 5:
+                case 3:
+                    msg = getString( R.string.docente_not_register_local );
+                    break;
+
+                case 4:
+                    msg = getString( R.string.docente_not_register_aula);
+                    break;
+            }
+
+            Toast.makeText( MainActivity.this, msg, Toast.LENGTH_LONG ).show();
+        }
+
+    }
+
+    @Override
+    public void inventarioFicha(String paramCodFicha, Integer paramNroAula) {
+
+        this.showDialog("Buscando Ficha!");
+        instrumentoE = instrumentoBL.inventarioFicha( paramCodFicha, paramNroAula );
+
+        this.showInstrumento( instrumentoE );
+
+    }
+
+    public void showInstrumento( InstrumentoE instrumentoE ) {
+
+        progressDialog.dismiss();
+
+        TextView txtFicha = (TextView) findViewById( R.id.txtFicha );
+        TextView txtAula = (TextView) findViewById( R.id.txtAula );
+        TextView txtLocalAplicacion = (TextView) findViewById( R.id.txtLocalAplicacion );
+
+        txtFicha.setText( "" );
+        txtLocalAplicacion.setText( "" );
+        txtAula.setText( "" );
+
+        if ( instrumentoE.getStatus() == 0 )
+        {
+            txtFicha.setText( instrumentoE.getCod_ficha().toString() );
+            txtAula.setText( instrumentoE.getNro_aula().toString() );
+            txtLocalAplicacion.setText( instrumentoE.getLocalE().getNombreLocal() );
+        }
+        else
+        {
+
+            String msg = "";
+
+            switch ( instrumentoE.getStatus() )
             {
                 case 1:
                     msg = getString( R.string.docente_not_found );

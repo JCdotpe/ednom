@@ -11,4 +11,6 @@ public interface MainI {
 
     public void asistenciaAula( String paramDNI, Integer paramNroAula );
 
+    public void inventarioFicha( String paramCodFicha, Integer paramNroAula );
+
 }

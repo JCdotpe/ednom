@@ -28,6 +28,7 @@ public class InstrumentoE implements Parcelable {
     private String f_ficha;
     private Integer estado_cartilla;
     private String f_cartilla;
+    private Integer status;
 
     public InstrumentoE() {
         super();
@@ -44,6 +45,7 @@ public class InstrumentoE implements Parcelable {
         f_ficha = parcel.readString();
         estado_cartilla = parcel.readInt();
         f_cartilla = parcel.readString();
+        status = parcel.readInt();
 
     }
 
@@ -59,6 +61,7 @@ public class InstrumentoE implements Parcelable {
         dest.writeString( f_ficha );
         dest.writeInt( estado_cartilla );
         dest.writeString( f_cartilla );
+        dest.writeInt( status );
 
     }
 
@@ -149,5 +152,13 @@ public class InstrumentoE implements Parcelable {
 
     public void setF_cartilla(String f_cartilla) {
         this.f_cartilla = f_cartilla;
+    }
+
+    public Integer getStatus() {
+        return status;
+    }
+
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 }
