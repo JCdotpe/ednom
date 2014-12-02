@@ -30,21 +30,21 @@ public class InstrumentoBL {
         conditional = "cod_ficha = '" + paramCodFicha +"'";
         instrumentoE = instrumentoDAO.searchInstrumentoDocente( conditional );
 
-        if ( instrumentoE.getStatus() == 0 )
+        if ( instrumentoE.getStatus() == 0 ) // encontro la ficha en docentes.
         {
-            docentesDAO.inventarioFichaDocente( paramCodFicha );
+            docentesDAO.inventarioFichaDocente( paramCodFicha ); // registra el inventario de ficha en docentes.
         }
         else if ( instrumentoE.getStatus() == 1 )
         {
             instrumentoE = instrumentoDAO.searchInstrumento( conditional );
 
-            if ( instrumentoE.getStatus() == 0 )
+            if ( instrumentoE.getStatus() == 0 ) // encontro la ficha en instrumento
             {
-                instrumentoE.setStatus( instrumentoDAO.inventarioFicha( paramCodFicha, paramNroAula ) );
+                instrumentoE.setStatus( instrumentoDAO.inventarioFicha( paramCodFicha, paramNroAula ) ); // registra la ficha en instrumento
 
                 if ( instrumentoE.getStatus() == 0 )
                 {
-                    instrumentoE = instrumentoDAO.searchInstrumento( conditional );
+                    instrumentoE = instrumentoDAO.searchInstrumento( conditional ); // devuelve los datos a mostrar de la ficha.
                 }
             }
         }

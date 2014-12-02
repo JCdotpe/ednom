@@ -79,11 +79,14 @@
     <string name="docente_not_register_aula">Error. No se registro asistencia del docente en aula!.</string>
     <!-- /Asistencia -->
 
-    <!-- Fichas -->
+    <!-- Fichas / Cuadernillo -->
     <string name="numero_ficha">Número de Ficha :</string>
     <string name="codigo_ficha">Código de Ficha :</string>
     <string name="nro_ficha">Número de Ficha</string>
-    <!-- Ficha -->
+    <string name="instrumento_not_found">No se encontro instrumento!.</string>
+    <string name="instrumento_not_access">Error. Problemas al acceder a la BD!.</string>
+    <string name="instrumento_not_register">Error. No se registro inventario de instrumento!.</string>
+    <!-- Ficha / Cuadernillo -->
 
 
     <!-- Array de Aulas -->

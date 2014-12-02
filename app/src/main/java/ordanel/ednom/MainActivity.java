@@ -316,20 +316,15 @@ public class MainActivity extends Activity
             switch ( instrumentoE.getStatus() )
             {
                 case 1:
-                    msg = getString( R.string.docente_not_found );
+                    msg = getString( R.string.instrumento_not_found );// No se encontro Instrumento.
                     break;
 
                 case 2:
-                    msg = getString( R.string.docente_not_access );
+                    msg = getString( R.string.instrumento_not_access );// Error al acceder a bd.
                     break;
 
-                case 5:
                 case 3:
-                    msg = getString( R.string.docente_not_register_local );
-                    break;
-
-                case 4:
-                    msg = getString( R.string.docente_not_register_aula);
+                    msg = getString( R.string.instrumento_not_register ); // error al registrar instrumento.
                     break;
             }
 

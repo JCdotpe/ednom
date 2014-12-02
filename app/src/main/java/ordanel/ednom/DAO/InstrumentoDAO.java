@@ -166,7 +166,7 @@ public class InstrumentoDAO extends BaseDAO {
             }
             else
             {
-                valueInteger = 1; // el docente no fue registrado al ingreso del local
+                valueInteger = 3;// error al registrar inventario de ficha;
             }
 
             dbHelper.setTransactionSuccessful();
@@ -176,7 +176,7 @@ public class InstrumentoDAO extends BaseDAO {
         {
             e.printStackTrace();
             Log.e( TAG, e.toString() );
-            valueInteger = 4;// error al registrar asistencia al aula;
+            valueInteger = 3;// error al registrar inventario de ficha;
         }
         finally
         {
