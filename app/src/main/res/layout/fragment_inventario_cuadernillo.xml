@@ -1,0 +1,163 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="ordanel.ednom.Fragments.InventarioCuadernillo">
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10sp">
+        <TableRow>
+            <TextView
+                android:layout_width="100sp"
+                android:layout_height="wrap_content"
+                android:textSize="25sp"
+                android:textStyle="bold"
+                android:textColor="#000"
+                android:layout_marginLeft="10sp"
+                android:layout_marginStart="10sp"
+                android:text="Aula : " />
+            <Spinner
+                android:layout_width="450sp"
+                android:layout_height="50sp"
+                android:id="@+id/spinnerAula"
+                android:spinnerMode="dropdown" />
+        </TableRow>
+    </TableLayout>
+
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/txtE_ficha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/label_cuadernillo"
+            android:textStyle="bold"
+            android:textSize="25sp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:textColor="#000"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginStart="10dp" />
+
+        <EditText
+            android:id="@+id/edtCuadernillo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textSize="25dp"
+            android:maxLength="5"
+            android:hint="@string/numero_documento_text_hint"
+            android:layout_alignBaseline="@id/txtE_ficha"
+            android:layout_toRightOf="@id/txtE_ficha"
+            android:layout_toEndOf="@id/txtE_ficha"
+            android:layout_marginLeft="20dp"
+            android:layout_marginStart="20dp" />
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:layout_below="@+id/edtCuadernillo"
+            android:layout_marginTop="15dp"
+            android:id="@+id/view" />
+
+        <TextView
+            android:id="@+id/txtR_Ficha"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/codigo_cuadernillo"
+            android:textSize="38sp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_below="@+id/txtE_ficha"
+            android:layout_alignLeft="@+id/txtE_ficha"
+            android:layout_alignStart="@+id/txtE_ficha"
+            android:layout_marginTop="60sp" />
+
+        <TextView
+            android:id="@+id/txtFicha"
+            android:layout_width="300sp"
+            android:layout_height="200sp"
+            android:hint="@string/ie_cuadernillo"
+            android:textSize="65sp"
+            android:textStyle="bold"
+            android:layout_marginTop="5sp"
+            android:layout_below="@+id/txtR_Ficha"
+            android:layout_alignLeft="@+id/txtR_Ficha"
+            android:layout_alignStart="@+id/txtR_Ficha"/>
+
+        <TextView
+            android:id="@+id/txtR_NombreLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/local_de_aplicacion"
+            android:textSize="30sp"
+            android:textStyle="bold"
+            android:textColor="#c8757575"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/txtFicha"
+            android:layout_alignLeft="@+id/txtFicha"
+            android:layout_alignStart="@+id/txtFicha" />
+
+        <TextView
+            android:id="@+id/txtLocalAplicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/local_de_aplicacion"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_below="@+id/txtR_NombreLocal"
+            android:layout_alignLeft="@+id/txtR_NombreLocal"
+            android:layout_alignStart="@+id/txtR_NombreLocal"
+            android:layout_marginTop="35dp" />
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+            android:layout_below="@id/edtCuadernillo"
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="50dp"
+            android:id="@+id/tableLayout">
+            <TableRow>
+                <TextView
+                    android:id="@+id/txtR_Aula"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aula_aplicacion"
+                    android:textSize="40dp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_alignTop="@+id/txtApeMaterno"
+                    android:layout_alignRight="@+id/txtAula"
+                    android:layout_alignEnd="@+id/txtAula" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/txtAula"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/aula_aplicacion_text_hint"
+                    android:textSize="160sp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:gravity="center"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_alignTop="@+id/txtNombres"
+                    android:layout_toRightOf="@+id/txtApeMaterno"
+                    android:layout_toEndOf="@+id/txtApeMaterno"/>
+            </TableRow>
+        </TableLayout>
+
+    </RelativeLayout>
+
+</LinearLayout>

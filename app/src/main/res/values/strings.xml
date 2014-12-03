@@ -12,6 +12,7 @@
     <string name="httppostaux_msg_error_data">Error: Problemas con datos en la nube!</string>
     <!-- /HttpPostAux -->
 
+
     <!-- Login -->
     <string name="inei_content_description">INEI</string>
     <string name="password_text_hint">Password</string>
@@ -21,7 +22,8 @@
     <string name="login_msg_error_data">Error: Problemas en el checking del login!</string>
     <string name="login_msg_error_register">Error: Falló registro de login!</string>
     <!-- /Login -->
-    
+
+
     <!-- UbigeoVerify -->
     <string name="verify_usuario">Usuario</string>
     <string name="verify_nombre_local">Nombre de la I.E</string>
@@ -32,6 +34,7 @@
     <string name="verify_error_data">Error: No se encontraron datos!</string>
     <!-- /UbigeoVerify -->
 
+
     <!-- Versión -->
     <string name="version_validate">Validando versión del padrón!</string>
     <string name="version_error_local">Error: Problemas al acceder a la versión actual!</string>
@@ -39,6 +42,7 @@
     <string name="version_error_register">Error: No se pudo registrar la versión!</string>
     <string name="version_error_not_data">Error: El Aplicativo no cuenta con un Padrón!</string>
     <!-- /Versión -->
+
 
     <!-- Padrón -->
     <string name="padron_msg_download">Descargando Padrón. Esto puede tomar varios minutos!</string>
@@ -54,6 +58,7 @@
     <string name="title_section2">Ingreso al Local</string>
     <string name="title_section3">Asistencia en Aula</string>
     <string name="title_section4">Inventario de Ficha</string>
+    <string name="title_section5">Inventario de Cuadernillo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -71,6 +76,7 @@
     <string name="apellidos_text_hint">Apellidos Completos</string>
     <!-- /Ingreso al Local -->
 
+
     <!-- Asistencia -->
     <string name="docente_found">Buscando Datos del Docente</string>
     <string name="docente_not_found">No se encontraron Datos del Docente!</string>
@@ -79,10 +85,14 @@
     <string name="docente_not_register_aula">Error. No se registro asistencia del docente en aula!.</string>
     <!-- /Asistencia -->
 
+
     <!-- Fichas / Cuadernillo -->
     <string name="numero_ficha">Número de Ficha :</string>
     <string name="codigo_ficha">Código de Ficha :</string>
     <string name="nro_ficha">Número de Ficha</string>
+    <string name="label_cuadernillo">Cuadernillo :</string>
+    <string name="codigo_cuadernillo">Cod. Cuadernillo :</string>
+    <string name="ie_cuadernillo">00000</string>
     <string name="instrumento_not_found">No se encontro instrumento!.</string>
     <string name="instrumento_not_access">Error. Problemas al acceder a la BD!.</string>
     <string name="instrumento_not_register">Error. No se registro inventario de instrumento!.</string>
@@ -96,5 +106,7 @@
         <item>3</item>
     </string-array>
     <!-- /Array de Aulas -->
+
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 </resources>
