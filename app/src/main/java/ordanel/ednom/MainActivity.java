@@ -215,7 +215,7 @@ public class MainActivity extends Activity
     @Override
     public void asistenciaLocal( String paramDNI ) {
 
-        this.showDialog("Buscando Docente!");
+        this.showDialog( "Buscando Docente!" );
         docentesE = docentesBL.asistenciaLocal( paramDNI );
 
         this.showPerson( docentesE );
@@ -225,7 +225,7 @@ public class MainActivity extends Activity
     @Override
     public void asistenciaAula( String paramDNI, Integer paramNroAula ) {
 
-        this.showDialog("Buscando Docente!");
+        this.showDialog( "Buscando Docente!" );
         docentesE = docentesBL.asistenciaAula( paramDNI, paramNroAula );
 
         this.showPerson( docentesE );
@@ -259,45 +259,49 @@ public class MainActivity extends Activity
         }
         else
         {
-
-            String msg = "";
-
-            switch ( docentesE.getStatus() )
-            {
-                case 1:
-                    msg = getString( R.string.docente_not_found );
-                    break;
-
-                case 2:
-                    msg = getString( R.string.docente_not_access );
-                    break;
-
-                case 5:
-                case 3:
-                    msg = getString( R.string.docente_not_register_local );
-                    break;
-
-                case 4:
-                    msg = getString( R.string.docente_not_register_aula);
-                    break;
-            }
-
-            Toast.makeText( MainActivity.this, msg, Toast.LENGTH_LONG ).show();
+            errorPerson( docentesE.getStatus() );
         }
 
+    }
+
+    public void errorPerson( Integer status ) {
+
+        String msg = "";
+
+        switch ( status )
+        {
+            case 1:
+                msg = getString( R.string.docente_not_found );
+                break;
+
+            case 2:
+                msg = getString( R.string.docente_not_access );
+                break;
+
+            case 5:
+            case 3:
+                msg = getString( R.string.docente_not_register_local );
+                break;
+
+            case 4:
+                msg = getString( R.string.docente_not_register_aula);
+                break;
+        }
+
+        Toast.makeText( MainActivity.this, msg, Toast.LENGTH_LONG ).show();
     }
 
     @Override
     public void inventarioFicha(String paramCodFicha, Integer paramNroAula) {
 
-        this.showDialog("Buscando Ficha!");
+        this.showDialog( "Buscando Ficha!" );
         instrumentoE = instrumentoBL.inventarioFicha( paramCodFicha, paramNroAula );
 
-        this.showInstrumento( instrumentoE );
+        this.showInstrumentoFicha( instrumentoE );
 
     }
 
-    public void showInstrumento( InstrumentoE instrumentoE ) {
+    public void showInstrumentoFicha( InstrumentoE instrumentoE ) {
 
         progressDialog.dismiss();
 
@@ -317,26 +321,65 @@ public class MainActivity extends Activity
         }
         else
         {
-
-            String msg = "";
-
-            switch ( instrumentoE.getStatus() )
-            {
-                case 1:
-                    msg = getString( R.string.instrumento_not_found );// No se encontro Instrumento.
-                    break;
-
-                case 2:
-                    msg = getString( R.string.instrumento_not_access );// Error al acceder a bd.
-                    break;
-
-                case 3:
-                    msg = getString( R.string.instrumento_not_register ); // error al registrar instrumento.
-                    break;
-            }
-
-            Toast.makeText( MainActivity.this, msg, Toast.LENGTH_LONG ).show();
+            errorInstrumento( instrumentoE.getStatus() );
         }
+
+    }
+
+    @Override
+    public void inventarioCuadernillo(String paramCodCuadernillo, Integer paramNroAula) {
+
+        this.showDialog( "Buscando Cuadernillo!" );
+        instrumentoE = instrumentoBL.inventarioCuadernillo( paramCodCuadernillo, paramNroAula );
+
+        this.showInstrumentoCuadernillo( instrumentoE );
+
+    }
+    public void showInstrumentoCuadernillo( InstrumentoE instrumentoE ) {
+
+        progressDialog.dismiss();
+
+        TextView txtCuadernillo = (TextView) findViewById( R.id.txtCuadernillo );
+        TextView txtAula = (TextView) findViewById( R.id.txtAula );
+        TextView txtLocalAplicacion = (TextView) findViewById( R.id.txtLocalAplicacion );
+
+        txtCuadernillo.setText( "" );
+        txtLocalAplicacion.setText( "" );
+        txtAula.setText( "" );
+
+        if ( instrumentoE.getStatus() == 0 )
+        {
+            txtCuadernillo.setText( instrumentoE.getCod_cartilla().toString() );
+            txtAula.setText( instrumentoE.getNro_aula().toString() );
+            txtLocalAplicacion.setText( instrumentoE.getLocalE().getNombreLocal() );
+        }
+        else
+        {
+            errorInstrumento( instrumentoE.getStatus() );
+        }
+
+    }
+
+    public void errorInstrumento( Integer status ) {
+
+        String msg = "";
+
+        switch ( status )
+        {
+            case 1:
+                msg = getString( R.string.instrumento_not_found );// No se encontro Instrumento.
+                break;
+
+            case 2:
+                msg = getString( R.string.instrumento_not_access );// Error al acceder a bd.
+                break;
+
+            case 3:
+                msg = getString( R.string.instrumento_not_register ); // error al registrar instrumento.
+                break;
+        }
+
+        Toast.makeText( MainActivity.this, msg, Toast.LENGTH_LONG ).show();
 
     }
 

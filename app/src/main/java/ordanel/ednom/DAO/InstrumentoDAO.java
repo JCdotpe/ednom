@@ -155,9 +155,9 @@ public class InstrumentoDAO extends BaseDAO {
             contentValues.put( InstrumentoE.F_FICHA, ConstantsUtils.fecha_registro() );
             contentValues.put( InstrumentoE.NRO_AULA, paramNroAula );
 
-            SQL = "cod_ficha = '" + paramCodFicha + "'";
+            Where = "cod_ficha = '" + paramCodFicha + "'";
 
-            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "instrumento", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
+            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "instrumento", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
             Log.e( TAG, "inventario ficha : " + valueInteger.toString() );
 
             if ( !valueInteger.equals(0) ) // el registro es correcto
@@ -184,6 +184,51 @@ public class InstrumentoDAO extends BaseDAO {
         }
 
         Log.e( TAG, "end inventarioFicha" );
+
+        return valueInteger;
+    }
+
+    public Integer inventarioCuadernillo( String paramCodCuadernillo ) {
+
+        Log.e( TAG, "start inventarioCuadernillo" );
+
+        try
+        {
+            openDBHelper();
+
+            contentValues = new ContentValues();
+            contentValues.put( InstrumentoE.ESTADO_CARTILLA, 1 );
+            contentValues.put( InstrumentoE.F_CARTILLA, ConstantsUtils.fecha_registro() );
+
+            Where = "cod_cartilla = '" + paramCodCuadernillo + "'";
+
+            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "instrumento", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
+            Log.e( TAG, "inventario cuadernillo : " + valueInteger.toString() );
+
+            if ( !valueInteger.equals(0) ) // el registro es correcto
+            {
+                valueInteger = 0;
+            }
+            else
+            {
+                valueInteger = 3;// error al registrar inventario de ficha;
+            }
+
+            dbHelper.setTransactionSuccessful();
+
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+            valueInteger = 3;// error al registrar inventario de ficha;
+        }
+        finally
+        {
+            closeDBHelper();
+        }
+
+        Log.e( TAG, "end inventarioCuadernillo" );
 
         return valueInteger;
     }

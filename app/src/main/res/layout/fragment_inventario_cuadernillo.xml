@@ -82,7 +82,7 @@
             android:layout_marginTop="60sp" />
 
         <TextView
-            android:id="@+id/txtFicha"
+            android:id="@+id/txtCuadernillo"
             android:layout_width="300sp"
             android:layout_height="200sp"
             android:hint="@string/ie_cuadernillo"
@@ -102,9 +102,9 @@
             android:textStyle="bold"
             android:textColor="#c8757575"
             android:layout_marginTop="30dp"
-            android:layout_below="@+id/txtFicha"
-            android:layout_alignLeft="@+id/txtFicha"
-            android:layout_alignStart="@+id/txtFicha" />
+            android:layout_below="@+id/txtCuadernillo"
+            android:layout_alignLeft="@+id/txtCuadernillo"
+            android:layout_alignStart="@+id/txtCuadernillo" />
 
         <TextView
             android:id="@+id/txtLocalAplicacion"

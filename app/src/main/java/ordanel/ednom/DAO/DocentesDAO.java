@@ -191,7 +191,7 @@ public class DocentesDAO extends BaseDAO {
 
     public Integer inventarioFichaDocente( String paramCodFicha ) {
 
-        Log.e( TAG, "start InventarioFichaDocente" );
+        Log.e( TAG, "start inventarioFichaDocente" );
 
         try
         {
@@ -201,9 +201,9 @@ public class DocentesDAO extends BaseDAO {
             contentValues.put( DocentesE.ESTADO_FICHA, 1 );
             contentValues.put( DocentesE.F_FICHA, ConstantsUtils.fecha_registro() );
 
-            SQL = "cod_ficha = '" + paramCodFicha + "'";
+            Where = "cod_ficha = '" + paramCodFicha + "'";
 
-            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
+            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
             Log.e( TAG, "inventario ficha docente : " + valueInteger.toString() );
 
             if ( !valueInteger.equals(0) ) // el registro es correcto
@@ -229,10 +229,56 @@ public class DocentesDAO extends BaseDAO {
             closeDBHelper();
         }
 
-        Log.e( TAG, "end InventarioFichaDocente" );
+        Log.e( TAG, "end inventarioFichaDocente" );
 
         return valueInteger;
 
+    }
+
+
+    public Integer inventarioCuadernilloDocente( String paramCodCuadernillo ) {
+
+        Log.e( TAG, "start inventarioCuadernilloDocente" );
+
+        try
+        {
+            openDBHelper();
+
+            contentValues = new ContentValues();
+            contentValues.put( DocentesE.COD_CARTILLA, 1 );
+            contentValues.put( DocentesE.F_CARTILLA, ConstantsUtils.fecha_registro() );
+
+            Where = "cod_cartilla = '" + paramCodCuadernillo + "'";
+
+            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
+            Log.e( TAG, "inventario cuadernillo docente : " + valueInteger.toString() );
+
+            if ( !valueInteger.equals(0) ) // el registro es correcto
+            {
+                valueInteger = 0;
+            }
+            else
+            {
+                valueInteger = 3; // error al registrar inventario de cuadernillo
+            }
+
+            dbHelper.setTransactionSuccessful();
+
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+            valueInteger = 3;// error al registrar inventario de cuadernillo;
+        }
+        finally
+        {
+            closeDBHelper();
+        }
+
+        Log.e( TAG, "end inventarioCuadernilloDocente" );
+
+        return valueInteger;
     }
 
     public void getAllforSync() {
