@@ -52,7 +52,7 @@ public class SedeOperativaDAO extends BaseDAO {
         Log.e( TAG, "start CheckLogin" );
 
         ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
-        parametersPost.add( new BasicNameValuePair( "sendPass", password ) ); // "password" "sendPass"
+        parametersPost.add( new BasicNameValuePair( ConstantsUtils.PARAM_LOGIN, password ) );
 
         jsonArray = httpPostAux.getServerData( parametersPost, ConstantsUtils.URL_ACCESS );
 

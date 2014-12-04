@@ -14,7 +14,9 @@ import java.util.ArrayList;
 
 import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DocentesE;
+import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Entity.LocalE;
+import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Library.ConstantsUtils;
 
 /**
@@ -290,16 +292,19 @@ public class DocentesDAO extends BaseDAO {
             openDBHelper();
 
             SQL = "SELECT nro_doc, estado, f_registro, estado_aula, f_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla, nro_aula_cambio FROM docentes WHERE estado = 1 or estado_aula = 1 or estado_ficha = 1 or estado_cartilla = 1";
-            Log.e( TAG, "string sql : " + SQL );
+            Log.e( TAG, "string sql docentes : " + SQL );
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
+            jsonObject = new JSONObject();
+
             jsonArray = new JSONArray();
+
+            Boolean syncronizar = false;
 
             if ( cursor.moveToFirst() )
             {
                 while ( !cursor.isAfterLast() )
                 {
-
                     JSONObject jsonObjectTemp = new JSONObject();
 
                     jsonObjectTemp.put( DocentesE.NRO_DOC, cursor.getString( cursor.getColumnIndex( DocentesE.NRO_DOC ) ) );
@@ -319,12 +324,57 @@ public class DocentesDAO extends BaseDAO {
 
                 }
 
+                jsonObject.put( "DOCENTES", jsonArray );
+
+                syncronizar = true;
+            }
+
+
+            SQL = "SELECT id_inst, cod_sede_operativa, cod_local_sede, cod_ficha, cod_cartilla, nro_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla FROM instrumento WHERE estado_ficha = 1 or estado_cartilla = 1";
+            Log.e( TAG, "string sql instrumento : " + SQL );
+
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            jsonArray = new JSONArray();
+
+            if ( cursor.moveToFirst() )
+            {
+                while ( !cursor.isAfterLast() )
+                {
+                    JSONObject jsonObjectTemp = new JSONObject();
+
+                    jsonObjectTemp.put( InstrumentoE.ID_INST, cursor.getInt( cursor.getColumnIndex( InstrumentoE.ID_INST ) ) );
+                    jsonObjectTemp.put( SedeOperativaE.COD_SEDE_OPERATIVA, cursor.getInt( cursor.getColumnIndex( SedeOperativaE.COD_SEDE_OPERATIVA ) ) );
+                    jsonObjectTemp.put( LocalE.COD_LOCAL_SEDE, cursor.getInt( cursor.getColumnIndex( LocalE.COD_LOCAL_SEDE ) ) );
+                    jsonObjectTemp.put( InstrumentoE.COD_FICHA, cursor.getString( cursor.getColumnIndex( InstrumentoE.COD_FICHA ) ) );
+                    jsonObjectTemp.put( InstrumentoE.COD_CARTILLA, cursor.getString( cursor.getColumnIndex( InstrumentoE.COD_CARTILLA ) ) );
+                    jsonObjectTemp.put( InstrumentoE.NRO_AULA, cursor.getInt(cursor.getColumnIndex(InstrumentoE.NRO_AULA)) );
+                    jsonObjectTemp.put( InstrumentoE.ESTADO_FICHA, cursor.getInt(cursor.getColumnIndex(InstrumentoE.ESTADO_FICHA)) );
+                    jsonObjectTemp.put( InstrumentoE.F_FICHA, cursor.getString( cursor.getColumnIndex( InstrumentoE.F_FICHA ) ) );
+                    jsonObjectTemp.put( InstrumentoE.ESTADO_CARTILLA, cursor.getInt(cursor.getColumnIndex(InstrumentoE.ESTADO_CARTILLA)) );
+                    jsonObjectTemp.put( InstrumentoE.F_CARTILLA, cursor.getString( cursor.getColumnIndex( InstrumentoE.F_CARTILLA ) ) );
+
+                    jsonArray.put( jsonObjectTemp );
+
+                    cursor.moveToNext();
+
+                }
+
+                jsonObject.put( "INSTRUMENTO", jsonArray );
+
+                syncronizar = true;
+            }
+
+            if ( syncronizar )
+            {
+                jsonArray = new JSONArray();
+                jsonArray.put( jsonObject );
                 String json = jsonArray.toString();
 
                 ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
                 parametersPost.add( new BasicNameValuePair( "data", json ) );
 
-                Log.e( "Welcome", "json : " + jsonArray.toString() );
+                Log.e( "Welcome", "json : " + json );
 
                 JSONArray jsonArrayGet = httpPostAux.getServerData( parametersPost, ConstantsUtils.URL_SYNC );
                 Log.e( "Welcome", "get json : " + jsonArrayGet.toString() );
@@ -351,8 +401,10 @@ public class DocentesDAO extends BaseDAO {
 
                     dbHelper.setTransactionSuccessful();
                 }
-
             }
+
+
+
 
         }
         catch (Exception e)
