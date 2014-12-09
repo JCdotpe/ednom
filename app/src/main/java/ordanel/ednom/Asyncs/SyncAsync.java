@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.AsyncTask;
 
 import ordanel.ednom.Business.DocentesBL;
+import ordanel.ednom.Business.PadronBL;
 
 /**
  * Created by OrdNael on 26/11/2014.
@@ -27,7 +28,7 @@ public class SyncAsync extends AsyncTask<Void, Void, Void> {
 
     @Override
     protected Void doInBackground(Void... params) {
-        new DocentesBL( this.context ).getAllforSync();
+        new PadronBL( this.context ).getAllforSync();
         return null;
     }
 

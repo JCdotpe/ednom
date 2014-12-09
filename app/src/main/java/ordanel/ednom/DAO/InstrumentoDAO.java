@@ -111,8 +111,9 @@ public class InstrumentoDAO extends BaseDAO {
                     localE.setNombreLocal( cursor.getString( cursor.getColumnIndex( LocalE.NOMBRE_LOCAL ) ) );
 
                     instrumentoE.setLocalE( localE );
-                    instrumentoE.setCod_ficha( cursor.getString( cursor.getColumnIndex( InstrumentoE.COD_FICHA ) ) );
                     instrumentoE.setNro_aula( cursor.getInt(cursor.getColumnIndex ( InstrumentoE.NRO_AULA ) ) );
+                    instrumentoE.setCod_ficha( cursor.getString( cursor.getColumnIndex( InstrumentoE.COD_FICHA ) ) );
+                    instrumentoE.setCod_cartilla( cursor.getString( cursor.getColumnIndex( InstrumentoE.COD_CARTILLA ) ) );
 
                     cursor.moveToNext();
                 }

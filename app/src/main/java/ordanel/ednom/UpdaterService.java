@@ -5,7 +5,7 @@ import android.content.Intent;
 import android.os.IBinder;
 import android.util.Log;
 
-import ordanel.ednom.Business.DocentesBL;
+import ordanel.ednom.Business.PadronBL;
 
 /**
  * Created by OrdNael on 26/11/2014.
@@ -19,7 +19,7 @@ public class UpdaterService extends Service {
 
     private Updater updater;
     private EdnomApplication ednomApplication;
-    private DocentesBL docentesBL;
+    private PadronBL padronBL;
 
     @Override
     public IBinder onBind(Intent intent) {
@@ -32,7 +32,7 @@ public class UpdaterService extends Service {
         Log.e( TAG, "onCreate UpdaterService" );
         ednomApplication = (EdnomApplication) getApplication();
         updater = new Updater();
-        docentesBL = new DocentesBL(this);
+        padronBL = new PadronBL(this);
 
     }
 
@@ -79,7 +79,7 @@ public class UpdaterService extends Service {
 
                 try
                 {
-                    docentesBL.getAllforSync();
+                    padronBL.getAllforSync();
                     Thread.sleep( DELAY );
                 }
                 catch (InterruptedException e)

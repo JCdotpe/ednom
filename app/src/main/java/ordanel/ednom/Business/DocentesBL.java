@@ -5,7 +5,6 @@ import android.content.Context;
 import ordanel.ednom.DAO.AulaLocalDAO;
 import ordanel.ednom.DAO.DocentesDAO;
 import ordanel.ednom.Entity.DocentesE;
-import ordanel.ednom.Library.NetworkUtils;
 
 /**
  * Created by OrdNael on 24/11/2014.
@@ -16,18 +15,12 @@ public class DocentesBL {
     private static DocentesE docentesE;
     private static AulaLocalDAO aulaLocalDAO;
 
-    private static NetworkUtils networkUtils;
-
     private static String conditional;
-    private static Boolean connection;
 
     public DocentesBL( Context paramContext ) {
 
         docentesDAO = DocentesDAO.getInstance( paramContext );
         aulaLocalDAO = AulaLocalDAO.getInstance( paramContext );
-
-        networkUtils = new NetworkUtils();
-        connection = networkUtils.haveNetworkConnection( paramContext );
 
     }
 
@@ -68,15 +61,6 @@ public class DocentesBL {
         }
 
         return docentesE;
-    }
-
-    public void getAllforSync() {
-
-        if ( connection )
-        {
-            docentesDAO.getAllforSync();
-        }
-
     }
 
 }

@@ -5,18 +5,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
-import org.apache.http.NameValuePair;
-import org.apache.http.message.BasicNameValuePair;
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
 import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DocentesE;
-import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Entity.LocalE;
-import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Library.ConstantsUtils;
 
 /**
@@ -283,143 +274,6 @@ public class DocentesDAO extends BaseDAO {
         return valueInteger;
     }
 
-    public void getAllforSync() {
 
-        Log.e( TAG, "start getAllforSync" );
-
-        try
-        {
-            openDBHelper();
-
-            SQL = "SELECT nro_doc, estado, f_registro, estado_aula, f_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla, nro_aula_cambio FROM docentes WHERE estado = 1 or estado_aula = 1 or estado_ficha = 1 or estado_cartilla = 1";
-            Log.e( TAG, "string sql docentes : " + SQL );
-            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
-
-            jsonObject = new JSONObject();
-
-            jsonArray = new JSONArray();
-
-            Boolean syncronizar = false;
-
-            if ( cursor.moveToFirst() )
-            {
-                while ( !cursor.isAfterLast() )
-                {
-                    JSONObject jsonObjectTemp = new JSONObject();
-
-                    jsonObjectTemp.put( DocentesE.NRO_DOC, cursor.getString( cursor.getColumnIndex( DocentesE.NRO_DOC ) ) );
-                    jsonObjectTemp.put( DocentesE.ESTADO, cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO ) ) );
-                    jsonObjectTemp.put( DocentesE.F_REGISTRO, cursor.getString( cursor.getColumnIndex( DocentesE.F_REGISTRO ) ) );
-                    jsonObjectTemp.put( DocentesE.ESTADO_AULA, cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO_AULA ) ) );
-                    jsonObjectTemp.put( DocentesE.F_AULA, cursor.getString( cursor.getColumnIndex( DocentesE.F_AULA ) ) );
-                    jsonObjectTemp.put( DocentesE.ESTADO_FICHA, cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO_FICHA ) ) );
-                    jsonObjectTemp.put( DocentesE.F_FICHA, cursor.getString( cursor.getColumnIndex( DocentesE.F_FICHA ) ) );
-                    jsonObjectTemp.put( DocentesE.ESTADO_CARTILLA, cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO_CARTILLA ) ) );
-                    jsonObjectTemp.put( DocentesE.F_CARTILLA, cursor.getString( cursor.getColumnIndex( DocentesE.F_CARTILLA ) ) );
-                    jsonObjectTemp.put( DocentesE.NRO_AULA_CAMBIO, cursor.getInt( cursor.getColumnIndex( DocentesE.NRO_AULA_CAMBIO ) ) );
-
-                    jsonArray.put(jsonObjectTemp);
-
-                    cursor.moveToNext();
-
-                }
-
-                jsonObject.put( "DOCENTES", jsonArray );
-
-                syncronizar = true;
-            }
-
-
-            SQL = "SELECT id_inst, cod_sede_operativa, cod_local_sede, cod_ficha, cod_cartilla, nro_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla FROM instrumento WHERE estado_ficha = 1 or estado_cartilla = 1";
-            Log.e( TAG, "string sql instrumento : " + SQL );
-
-            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
-
-            jsonArray = new JSONArray();
-
-            if ( cursor.moveToFirst() )
-            {
-                while ( !cursor.isAfterLast() )
-                {
-                    JSONObject jsonObjectTemp = new JSONObject();
-
-                    jsonObjectTemp.put( InstrumentoE.ID_INST, cursor.getInt( cursor.getColumnIndex( InstrumentoE.ID_INST ) ) );
-                    jsonObjectTemp.put( SedeOperativaE.COD_SEDE_OPERATIVA, cursor.getInt( cursor.getColumnIndex( SedeOperativaE.COD_SEDE_OPERATIVA ) ) );
-                    jsonObjectTemp.put( LocalE.COD_LOCAL_SEDE, cursor.getInt( cursor.getColumnIndex( LocalE.COD_LOCAL_SEDE ) ) );
-                    jsonObjectTemp.put( InstrumentoE.COD_FICHA, cursor.getString( cursor.getColumnIndex( InstrumentoE.COD_FICHA ) ) );
-                    jsonObjectTemp.put( InstrumentoE.COD_CARTILLA, cursor.getString( cursor.getColumnIndex( InstrumentoE.COD_CARTILLA ) ) );
-                    jsonObjectTemp.put( InstrumentoE.NRO_AULA, cursor.getInt(cursor.getColumnIndex(InstrumentoE.NRO_AULA)) );
-                    jsonObjectTemp.put( InstrumentoE.ESTADO_FICHA, cursor.getInt(cursor.getColumnIndex(InstrumentoE.ESTADO_FICHA)) );
-                    jsonObjectTemp.put( InstrumentoE.F_FICHA, cursor.getString( cursor.getColumnIndex( InstrumentoE.F_FICHA ) ) );
-                    jsonObjectTemp.put( InstrumentoE.ESTADO_CARTILLA, cursor.getInt(cursor.getColumnIndex(InstrumentoE.ESTADO_CARTILLA)) );
-                    jsonObjectTemp.put( InstrumentoE.F_CARTILLA, cursor.getString( cursor.getColumnIndex( InstrumentoE.F_CARTILLA ) ) );
-
-                    jsonArray.put( jsonObjectTemp );
-
-                    cursor.moveToNext();
-
-                }
-
-                jsonObject.put( "INSTRUMENTO", jsonArray );
-
-                syncronizar = true;
-            }
-
-            if ( syncronizar )
-            {
-                jsonArray = new JSONArray();
-                jsonArray.put( jsonObject );
-                String json = jsonArray.toString();
-
-                ArrayList<NameValuePair> parametersPost = new ArrayList<NameValuePair>();
-                parametersPost.add( new BasicNameValuePair( "data", json ) );
-
-                Log.e( "Welcome", "json : " + json );
-
-                JSONArray jsonArrayGet = httpPostAux.getServerData( parametersPost, ConstantsUtils.URL_SYNC );
-                Log.e( "Welcome", "get json : " + jsonArrayGet.toString() );
-
-                if ( jsonArrayGet != null && jsonArrayGet.length() > 0 )
-                {
-                    for ( int i = 0; i < jsonArrayGet.length(); i++ )
-                    {
-                        jsonObject = (JSONObject) jsonArrayGet.get(i) ;
-
-                        contentValues = new ContentValues();
-                        contentValues.put( DocentesE.ESTADO, jsonObject.getInt( DocentesE.ESTADO ) );
-                        contentValues.put( DocentesE.ESTADO_AULA, jsonObject.getInt( DocentesE.ESTADO_AULA ) );
-                        contentValues.put( DocentesE.ESTADO_FICHA, jsonObject.getInt( DocentesE.ESTADO_FICHA ) );
-                        contentValues.put( DocentesE.ESTADO_CARTILLA, jsonObject.getInt( DocentesE.ESTADO_CARTILLA ) );
-
-                        String nro_doc = jsonObject.getString( "nro_doc" );
-                        Where = "nro_doc = '" + nro_doc + "'";
-                        Log.e( TAG, "where : " + Where );
-                        valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
-                        Log.e( TAG, "sync update : " + String.valueOf( valueInteger ) );
-
-                    }
-
-                    dbHelper.setTransactionSuccessful();
-                }
-            }
-
-
-
-
-        }
-        catch (Exception e)
-        {
-            e.printStackTrace();
-            Log.e( TAG, "getAllforSync : " + e.toString() );
-        }
-        finally
-        {
-            closeDBHelper();
-            cursor.close();
-        }
-
-        Log.e( TAG, "end getAllforSync" );
-
-    }
 
 }

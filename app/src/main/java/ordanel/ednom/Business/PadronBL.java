@@ -7,6 +7,7 @@ import ordanel.ednom.DAO.VersionDAO;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.PadronE;
 import ordanel.ednom.Entity.VersionE;
+import ordanel.ednom.Library.NetworkUtils;
 
 /**
  * Created by Leandro on 21/11/2014.
@@ -18,11 +19,17 @@ public class PadronBL {
     private static VersionDAO versionDAO;
     private static LocalE localE;
 
+    private static NetworkUtils networkUtils;
+
+    private static Boolean connection;
 
     public PadronBL( Context paramContext ) {
 
         padronDAO = PadronDAO.getInstance( paramContext );
         versionDAO = VersionDAO.getInstance( paramContext );
+
+        networkUtils = new NetworkUtils();
+        connection = networkUtils.haveNetworkConnection( paramContext );
 
     }
 
@@ -55,5 +62,13 @@ public class PadronBL {
         return padronE.getStatus();
     }
 
+    public void getAllforSync() {
+
+        if ( connection )
+        {
+            padronDAO.getAllforSync();
+        }
+
+    }
 
 }
