@@ -78,7 +78,7 @@ public class InventarioCuadernillo extends Fragment {
                 if ( s.length() == 5 )
                 {
                     cod_cuadernillo = s.toString();
-                    nro_aula = Integer.parseInt( spinner.getSelectedItem().toString() );
+                    nro_aula = ( (AulaLocalE) spinner.getSelectedItem() ).getNro_aula();
                     mListener.inventarioCuadernillo( cod_cuadernillo, nro_aula );
                 }
 

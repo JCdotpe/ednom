@@ -80,7 +80,7 @@ public class InventarioFicha extends Fragment {
                 if ( s.length() == 5 )
                 {
                     cod_ficha = s.toString();
-                    nro_aula = Integer.parseInt( spinner.getSelectedItem().toString() );
+                    nro_aula = ( (AulaLocalE) spinner.getSelectedItem() ).getNro_aula();
                     mListener.inventarioFicha( cod_ficha, nro_aula );
                 }
 
