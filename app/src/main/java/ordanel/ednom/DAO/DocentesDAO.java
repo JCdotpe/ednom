@@ -238,7 +238,7 @@ public class DocentesDAO extends BaseDAO {
             openDBHelper();
 
             contentValues = new ContentValues();
-            contentValues.put( DocentesE.COD_CARTILLA, 1 );
+            contentValues.put( DocentesE.ESTADO_CARTILLA, 1 );
             contentValues.put( DocentesE.F_CARTILLA, ConstantsUtils.fecha_registro() );
 
             Where = "cod_cartilla = '" + paramCodCuadernillo + "'";
