@@ -34,7 +34,7 @@ public class AulaLocalE implements Parcelable {
         nro_aula = parcel.readInt();
         tipo = parcel.readString();
         cant_docente = parcel.readInt();
-        docentesEList = new ArrayList<DocentesE>();
+        docentesEList = new ArrayList<>();
         parcel.readTypedList( docentesEList, DocentesE.CREATOR );
 
     }
@@ -105,5 +105,30 @@ public class AulaLocalE implements Parcelable {
 
     public void setDocentesEList(List<DocentesE> docentesEList) {
         this.docentesEList = docentesEList;
+    }
+
+    @Override
+    public String toString() {
+
+        String textTipo;
+
+        switch ( tipo )
+        {
+            case "C":
+                textTipo = " ( Contingencia ) ";
+                break;
+
+            case "D":
+                textTipo = " ( Discapacidad ) ";
+                break;
+
+            default:
+                textTipo = "";
+                break;
+        }
+
+        String displayText = "Aula " + nro_aula + textTipo;
+
+        return displayText;
     }
 }

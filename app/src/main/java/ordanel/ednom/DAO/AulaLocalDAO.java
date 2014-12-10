@@ -38,7 +38,7 @@ public class AulaLocalDAO extends BaseDAO {
 
         Log.e( TAG, "start getAllNroAula" );
 
-        aulaLocalEArrayList = new ArrayList<AulaLocalE>();
+        aulaLocalEArrayList = new ArrayList<>();
 
         try
         {

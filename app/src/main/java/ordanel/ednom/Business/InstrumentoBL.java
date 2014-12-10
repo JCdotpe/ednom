@@ -28,7 +28,7 @@ public class InstrumentoBL {
 
     }
 
-    public static InstrumentoE inventarioFicha( String paramCodFicha, Integer paramNroAula ) {
+    public InstrumentoE inventarioFicha( String paramCodFicha, Integer paramNroAula ) {
 
         Integer contingencia = aulaLocalDAO.searchTipoAula( paramNroAula );
 
@@ -68,7 +68,7 @@ public class InstrumentoBL {
 
     }
 
-    public static InstrumentoE inventarioCuadernillo( String paramCodCuadernillo, Integer paramNroAula ) {
+    public InstrumentoE inventarioCuadernillo( String paramCodCuadernillo, Integer paramNroAula ) {
 
         Integer contingencia = aulaLocalDAO.searchTipoAula( paramNroAula );
 

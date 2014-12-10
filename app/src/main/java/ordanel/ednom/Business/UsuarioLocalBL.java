@@ -20,7 +20,7 @@ public class UsuarioLocalBL {
         usuarioLocalDAO = UsuarioLocalDAO.getInstance( paramContext );
     }
 
-    public static Integer checkLoginOffline( String... params ) {
+    public Integer checkLoginOffline( String... params ) {
 
         password = params[0];
 

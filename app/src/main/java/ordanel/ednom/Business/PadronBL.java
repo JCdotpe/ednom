@@ -33,7 +33,7 @@ public class PadronBL {
 
     }
 
-    public static Integer asyncPadron( VersionE versionE ) {
+    public Integer asyncPadron( VersionE versionE ) {
 
         localE = padronDAO.searchNroLocal();
 

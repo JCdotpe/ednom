@@ -13,25 +13,13 @@ import ordanel.ednom.Entity.AulaLocalE;
 public class AulaLocalBL {
 
     private static AulaLocalDAO aulaLocalDAO;
-    private static ArrayList<AulaLocalE> aulaLocalEArrayList;
-    private static ArrayList<String> stringArrayList;
 
     public AulaLocalBL( Context paramContext ) {
         aulaLocalDAO = AulaLocalDAO.getInstance( paramContext );
     }
 
-    public static ArrayList<String> getAllNroAula() {
-
-        stringArrayList = new ArrayList<String>();
-        aulaLocalEArrayList = aulaLocalDAO.getAllNroAula();
-
-        for ( AulaLocalE aulaLocalE : aulaLocalEArrayList )
-        {
-            stringArrayList.add(aulaLocalE.getNro_aula().toString() );
-        }
-
-        return stringArrayList;
-
+    public ArrayList<AulaLocalE> getAllNroAula() {
+        return  aulaLocalDAO.getAllNroAula();
     }
 
 }

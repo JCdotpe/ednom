@@ -20,7 +20,7 @@ public class SedeOperativaBL {
         sedeOperativaDAO = SedeOperativaDAO.getInstance( paramContext );
     }
 
-    public static Integer checkLogin( String... params ) {
+    public Integer checkLogin( String... params ) {
 
         password = params[0];
 
@@ -35,7 +35,7 @@ public class SedeOperativaBL {
 
     }
 
-    public static SedeOperativaE showInfo() {
+    public SedeOperativaE showInfo() {
 
         sedeOperativaE = sedeOperativaDAO.showInfo();
 

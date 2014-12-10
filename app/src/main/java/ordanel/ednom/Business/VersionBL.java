@@ -19,7 +19,7 @@ public class VersionBL {
         versionDAO = VersionDAO.getInstance( paramContext );
     }
 
-    public static VersionE checkVersion() {
+    public VersionE checkVersion() {
 
         currentVersion = versionDAO.currentVersion();
 
@@ -35,7 +35,7 @@ public class VersionBL {
         return versionE;
     }
 
-    public static VersionE checkVersionOffline() {
+    public VersionE checkVersionOffline() {
 
         currentVersion = versionDAO.currentVersion();
         versionE = new VersionE();

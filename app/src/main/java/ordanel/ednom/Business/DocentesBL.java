@@ -24,7 +24,7 @@ public class DocentesBL {
 
     }
 
-    public static DocentesE asistenciaLocal( String paramDNI ) {
+    public DocentesE asistenciaLocal( String paramDNI ) {
 
         conditional = "nro_doc = '" + paramDNI + "'";
 
@@ -39,7 +39,7 @@ public class DocentesBL {
 
     }
 
-    public static DocentesE asistenciaAula( String paramDNI, Integer paramNroAula ) {
+    public DocentesE asistenciaAula( String paramDNI, Integer paramNroAula ) {
 
         Integer contingencia = aulaLocalDAO.searchTipoAula( paramNroAula );
 

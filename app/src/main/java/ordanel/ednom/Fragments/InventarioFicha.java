@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 import ordanel.ednom.Business.AulaLocalBL;
+import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Interfaces.MainI;
 import ordanel.ednom.R;
 
@@ -60,8 +61,8 @@ public class InventarioFicha extends Fragment {
         edtFicha = (EditText) view.findViewById( R.id.edtFicha );
 
         // source de spinner
-        ArrayList<String> stringArrayList = new AulaLocalBL( this.getActivity() ).getAllNroAula();
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>( this.getActivity(), R.layout.selected_item, stringArrayList );
+        ArrayList<AulaLocalE> stringArrayList = new AulaLocalBL( this.getActivity() ).getAllNroAula();
+        ArrayAdapter<AulaLocalE> adapter = new ArrayAdapter<>( this.getActivity(), R.layout.selected_item, stringArrayList );
 
         adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
         spinner.setAdapter( adapter );

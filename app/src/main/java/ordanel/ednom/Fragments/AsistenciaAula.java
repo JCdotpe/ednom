@@ -16,6 +16,7 @@ import android.widget.Spinner;
 import java.util.ArrayList;
 
 import ordanel.ednom.Business.AulaLocalBL;
+import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Interfaces.MainI;
 import ordanel.ednom.R;
 
@@ -60,10 +61,10 @@ public class AsistenciaAula extends Fragment {
         edtDNI = (EditText) view.findViewById( R.id.edtDNI );
 
         // source de spinner
-        ArrayList<String> stringArrayList = new AulaLocalBL( this.getActivity() ).getAllNroAula();;
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>( this.getActivity(),R.layout.selected_item, stringArrayList );
+        ArrayList<AulaLocalE> stringArrayList = new AulaLocalBL( this.getActivity() ).getAllNroAula();
+        ArrayAdapter<AulaLocalE> adapter = new ArrayAdapter<>( this.getActivity(),R.layout.selected_item, stringArrayList );
 
-        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item);
+        adapter.setDropDownViewResource( android.R.layout.simple_spinner_dropdown_item );
         spinner.setAdapter( adapter );
         // .source de spinner
 
@@ -79,7 +80,7 @@ public class AsistenciaAula extends Fragment {
                 if ( s.length() == 8 )
                 {
                     number_dni = s.toString();
-                    nro_aula = Integer.parseInt( spinner.getSelectedItem().toString() ) ;
+                    nro_aula = ( (AulaLocalE) spinner.getSelectedItem() ).getNro_aula();
                     mListener.asistenciaAula( number_dni, nro_aula );
                 }
 
