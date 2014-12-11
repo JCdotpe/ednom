@@ -113,6 +113,10 @@
 
     <!-- ListView (Prueba) -->
     <string name="test">test</string>
+    <string name="title_dni">Nro DNI</string>
+    <string name="title_nombre_completo">Nombres y Apellidos</string>
+    <string name="title_aula">Nro Aula</string>
+    <string name="title_fecha_hora">Fecha y Hora</string>
     <string name="nombre_completo">Nombres y Apellidos</string>
     <string name="nro_aula">Nro Aula</string>
     <string name="fechahora">Fecha y Hora</string>
