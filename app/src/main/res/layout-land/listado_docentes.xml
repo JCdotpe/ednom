@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView
+        android:id="@+id/txtDNI"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/numero_documento_text_hint"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginLeft="5dp" />
+
+    <TextView
+        android:id="@+id/txtNombresApellidos"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nombre_completo"
+        android:layout_toRightOf="@+id/txtDNI"
+        android:layout_toEndOf="@+id/txtDNI"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/txtAula"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/nro_aula"
+        android:layout_toRightOf="@+id/txtNombresApellidos"
+        android:layout_toEndOf="@+id/txtNombresApellidos"
+        android:layout_marginStart="5dp"
+        android:layout_marginLeft="5dp"
+        android:layout_alignParentTop="true" />
+
+    <TextView
+        android:id="@+id/txtFechaHora"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/fechahora"
+        android:layout_toRightOf="@+id/txtAula"
+        android:layout_toEndOf="@+id/txtAula"
+        android:layout_marginLeft="5dp"
+        android:layout_marginStart="5dp"
+        android:layout_alignParentTop="true" />
+
+</RelativeLayout>

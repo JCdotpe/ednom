@@ -113,6 +113,9 @@
 
     <!-- ListView (Prueba) -->
     <string name="test">test</string>
+    <string name="nombre_completo">Nombres y Apellidos</string>
+    <string name="nro_aula">Nro Aula</string>
+    <string name="fechahora">Fecha y Hora</string>
     <string name="display">Displaying %1$s of %2$s</string>
     <!-- /ListView (Prueba) -->
 
