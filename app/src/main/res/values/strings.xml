@@ -7,6 +7,19 @@
     <string name="action_logout">Salir</string>
     <string name="button_login">Iniciar Sesión</string>
 
+    <!-- Menu -->
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_section1">Home</string>
+    <string name="title_section2">Ingreso al Local</string>
+    <string name="title_section3">Asistencia en Aula</string>
+    <string name="title_section4">Inventario de Ficha</string>
+    <string name="title_section5">Inventario de Cuadernillo</string>
+    <string name="title_section6">Prueba Reporte</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <!-- /Menu -->
+
     <!-- HttpPostAux -->
     <string name="httppostaux_msg_error_conexion">Error: Falló la conexión con la nube!</string>
     <string name="httppostaux_msg_error_data">Error: Problemas con datos en la nube!</string>
@@ -53,15 +66,6 @@
     <string name="padron_msg_error_register">Error: No se pudo registrar el padrón!</string>
     <!-- /Padrón -->
 
-    <string name="title_activity_main">MainActivity</string>
-    <string name="title_section1">Home</string>
-    <string name="title_section2">Ingreso al Local</string>
-    <string name="title_section3">Asistencia en Aula</string>
-    <string name="title_section4">Inventario de Ficha</string>
-    <string name="title_section5">Inventario de Cuadernillo</string>
-    <string name="navigation_drawer_open">Open navigation drawer</string>
-    <string name="navigation_drawer_close">Close navigation drawer</string>
-    <string name="action_example">Example action</string>
 
     <!-- Ingreso al Local -->
     <string name="numero_documento">Número de DNI :</string>
@@ -99,13 +103,18 @@
     <!-- Ficha / Cuadernillo -->
 
 
-    <!-- Array de Aulas -->
+    <!-- Array de Aulas (Prueba) -->
     <string-array name="aulas">
         <item>1</item>
         <item>2</item>
         <item>3</item>
     </string-array>
-    <!-- /Array de Aulas -->
+    <!-- /Array de Aulas (Prueba) -->
+
+    <!-- ListView (Prueba) -->
+    <string name="test">test</string>
+    <string name="display">Displaying %1$s of %2$s</string>
+    <!-- /ListView (Prueba) -->
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
 

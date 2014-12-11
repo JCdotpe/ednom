@@ -27,6 +27,7 @@ import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
 import ordanel.ednom.Fragments.InventarioCuadernillo;
 import ordanel.ednom.Fragments.InventarioFicha;
+import ordanel.ednom.Fragments.PruebaReporte;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
 
@@ -78,23 +79,27 @@ public class MainActivity extends Activity
         switch ( position )
         {
             case 0:
-                fragment = new Welcome().newInstance( position + 1 );
+                fragment = Welcome.newInstance(position + 1);
                 break;
 
             case 1:
-                fragment = new IngresoLocal().newInstance( position + 1 );
+                fragment = IngresoLocal.newInstance(position + 1);
                 break;
 
             case 2:
-                fragment = new AsistenciaAula().newInstance( position + 1 );
+                fragment = AsistenciaAula.newInstance( position + 1 );
                 break;
 
             case 3:
-                fragment = new InventarioFicha().newInstance( position + 1 );
+                fragment = InventarioFicha.newInstance(position + 1);
                 break;
 
             case 4:
                 fragment = InventarioCuadernillo.newInstance( position + 1 );
+                break;
+
+            case 5:
+                fragment = PruebaReporte.newInstance( position + 1 );
                 break;
         }
 
@@ -124,6 +129,9 @@ public class MainActivity extends Activity
                 break;
             case 5:
                 mTitle = getString( R.string.title_section5 );
+                break;
+            case 6:
+                mTitle = getString( R.string.title_section6 );
                 break;
         }
     }
