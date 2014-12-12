@@ -7,4 +7,6 @@
     <color name="button_background">#2196F3</color>
     <color name="text_white">#FFFFFF</color>
 
+    <color name="header_one"></color>
+
 </resources>
