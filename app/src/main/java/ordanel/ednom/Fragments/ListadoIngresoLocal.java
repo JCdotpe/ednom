@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Interfaces.MainI;
-import ordanel.ednom.ListView.CustomArrayAdapter;
+import ordanel.ednom.Adapter.DocentesArrayAdapter;
 import ordanel.ednom.R;
 
 /**
@@ -61,7 +61,7 @@ public class ListadoIngresoLocal extends ListFragment {
 
         footerView = ( (LayoutInflater) getActivity().getSystemService( getActivity().getApplicationContext().LAYOUT_INFLATER_SERVICE ) ).inflate( R.layout.footer, null, false );
         getListView().addFooterView( footerView, null, false );
-        setListAdapter( new CustomArrayAdapter( getActivity(), docentesBL.listadoIngresoLocal( 0, PAGESIZE ) ) );
+        setListAdapter( new DocentesArrayAdapter( getActivity(), docentesBL.listadoIngresoLocal( 0, PAGESIZE ) ) );
         getListView().removeFooterView( footerView );
 
         getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -156,14 +156,14 @@ public class ListadoIngresoLocal extends ListFragment {
         @Override
         protected void onPostExecute(String s) {
 
-            CustomArrayAdapter customArrayAdapter = ( (CustomArrayAdapter) getListAdapter() );
+            DocentesArrayAdapter docentesArrayAdapter = ( (DocentesArrayAdapter) getListAdapter() );
 
             for ( DocentesE value : newData )
             {
-                customArrayAdapter.add( value );
+                docentesArrayAdapter.add( value );
             }
 
-            customArrayAdapter.notifyDataSetChanged();
+            docentesArrayAdapter.notifyDataSetChanged();
 
             getListView().removeFooterView(footerView);
             updateDisplayingTextView();

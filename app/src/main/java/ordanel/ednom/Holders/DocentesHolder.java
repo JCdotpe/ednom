@@ -1,11 +1,11 @@
-package ordanel.ednom.ListView;
+package ordanel.ednom.Holders;
 
 import android.widget.TextView;
 
 /**
  * Created by OrdNael on 11/12/2014.
  */
-public class Holder {
+public class DocentesHolder {
 
     private TextView textView1;
     private TextView textView2;
