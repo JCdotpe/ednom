@@ -12,8 +12,8 @@
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="4dp">
-    </TextView>
+        android:paddingLeft="4dp" />
+
 
     <TextView
         android:id="@+id/itemNombreCompleto"
@@ -24,8 +24,7 @@
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="4dp">
-    </TextView>
+        android:paddingLeft="4dp" />
 
     <TextView
         android:id="@+id/itemNroAula"
@@ -33,11 +32,10 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:hint="@string/display_nro_aula"
+        android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="4dp"
-        android:gravity="center">
-    </TextView>
+        android:paddingLeft="4dp" />
 
     <TextView
         android:id="@+id/itemFechaRegistro"
@@ -48,7 +46,6 @@
         android:hint="@string/display_fechahora"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
-        android:paddingLeft="4dp">
-    </TextView>
+        android:paddingLeft="4dp" />
 
 </LinearLayout>

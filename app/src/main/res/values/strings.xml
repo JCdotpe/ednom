@@ -14,7 +14,7 @@
     <string name="title_section3">Asistencia en Aula</string>
     <string name="title_section4">Inventario de Ficha</string>
     <string name="title_section5">Inventario de Cuadernillo</string>
-    <string name="title_section6">Prueba Reporte</string>
+    <string name="title_section6">Listado de Asistencia a Local</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>

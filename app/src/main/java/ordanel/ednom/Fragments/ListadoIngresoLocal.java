@@ -31,7 +31,6 @@ public class ListadoIngresoLocal extends ListFragment {
 
     View view;
     View footerView;
-    /*DataSource dataSource;*/
     DocentesBL docentesBL;
 
     protected boolean loading = false;
@@ -58,12 +57,10 @@ public class ListadoIngresoLocal extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        /*dataSource = DataSource.getInstance();*/
         docentesBL = new DocentesBL( getActivity().getApplicationContext() );
 
         footerView = ( (LayoutInflater) getActivity().getSystemService( getActivity().getApplicationContext().LAYOUT_INFLATER_SERVICE ) ).inflate( R.layout.footer, null, false );
         getListView().addFooterView( footerView, null, false );
-        /*setListAdapter( new CustomArrayAdapter( getActivity(), dataSource.getData( 0, PAGESIZE ) ) );*/
         setListAdapter( new CustomArrayAdapter( getActivity(), docentesBL.listadoIngresoLocal( 0, PAGESIZE ) ) );
         getListView().removeFooterView( footerView );
 
@@ -90,41 +87,16 @@ public class ListadoIngresoLocal extends ListFragment {
         });
 
         updateDisplayingTextView();
+
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        /*return super.onCreateView(inflater, container, savedInstanceState);*/
 
         view = inflater.inflate( R.layout.fragment_listado_ingreso_local, container, false );
         mListener.onSectionAttached( getArguments().getInt( ARG_SECTION_NUMBER ) );
 
-        /*listView.addFooterView( footerView, null, false );
-        listView.setAdapter( new CustomArrayAdapter( getActivity(), R.layout.listview, dataSource.getData( 0, PAGESIZE ) ) );
-        listView.removeFooterView( footerView );
-
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                boolean lastItem = ( firstVisibleItem + visibleItemCount == totalItemCount );
-                boolean moreRows = listView.getAdapter().getCount() < dataSource.getSize();
-
-                if ( !loading && lastItem && moreRows )
-                {
-                    loading = true;
-                    listView.addFooterView( footerView, null, false );
-                    (new LoadNextPage()).execute("");
-                }
-
-            }
-        });*/
 
         return view;
 
@@ -173,11 +145,9 @@ public class ListadoIngresoLocal extends ListFragment {
             }
             catch (Exception e)
             {
-                Log.e( "LoadNexPage", e.getMessage() );
+                Log.e( "LoadNextPage", e.getMessage() );
             }
 
-            /*newData = dataSource.getData( listView.getAdapter().getCount(), PAGESIZE );*/
-            /*newData = dataSource.getData( getListAdapter().getCount(), PAGESIZE );*/
             newData = docentesBL.listadoIngresoLocal( getListAdapter().getCount(), PAGESIZE );
 
             return null;
@@ -185,7 +155,7 @@ public class ListadoIngresoLocal extends ListFragment {
 
         @Override
         protected void onPostExecute(String s) {
-            /*CustomArrayAdapter customArrayAdapter = (CustomArrayAdapter) listView.getAdapter();*/
+
             CustomArrayAdapter customArrayAdapter = ( (CustomArrayAdapter) getListAdapter() );
 
             for ( DocentesE value : newData )
@@ -202,6 +172,5 @@ public class ListadoIngresoLocal extends ListFragment {
         }
 
     }
-
 
 }
