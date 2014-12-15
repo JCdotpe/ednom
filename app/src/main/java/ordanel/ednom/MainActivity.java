@@ -10,12 +10,14 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -27,6 +29,7 @@ import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
 import ordanel.ednom.Fragments.InventarioCuadernillo;
 import ordanel.ednom.Fragments.InventarioFicha;
+import ordanel.ednom.Fragments.ListadoAsistenciaAula;
 import ordanel.ednom.Fragments.ListadoIngresoLocal;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
@@ -40,6 +43,8 @@ public class MainActivity extends Activity
     DocentesBL docentesBL;
     InstrumentoE instrumentoE;
     InstrumentoBL instrumentoBL;
+
+    View footerView;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -79,11 +84,11 @@ public class MainActivity extends Activity
         switch ( position )
         {
             case 0:
-                fragment = Welcome.newInstance(position + 1);
+                fragment = Welcome.newInstance( position + 1 );
                 break;
 
             case 1:
-                fragment = IngresoLocal.newInstance(position + 1);
+                fragment = IngresoLocal.newInstance( position + 1 );
                 break;
 
             case 2:
@@ -91,7 +96,7 @@ public class MainActivity extends Activity
                 break;
 
             case 3:
-                fragment = InventarioFicha.newInstance(position + 1);
+                fragment = InventarioFicha.newInstance( position + 1 );
                 break;
 
             case 4:
@@ -99,7 +104,11 @@ public class MainActivity extends Activity
                 break;
 
             case 5:
-                fragment = ListadoIngresoLocal.newInstance(position + 1);
+                fragment = ListadoIngresoLocal.newInstance( position + 1 );
+                break;
+
+            case 6:
+                fragment = ListadoAsistenciaAula.newInstance( position + 1 );
                 break;
         }
 
@@ -132,6 +141,10 @@ public class MainActivity extends Activity
                 break;
             case 6:
                 mTitle = getString( R.string.title_section6 );
+                break;
+
+            case 7:
+                mTitle = getString( R.string.title_section7 );
                 break;
         }
     }
@@ -388,6 +401,19 @@ public class MainActivity extends Activity
         }
 
         Toast.makeText( MainActivity.this, msg, Toast.LENGTH_LONG ).show();
+
+    }
+
+    @Override
+    public void listadoAsistenciaAula( Integer paramNroAula ) {
+
+//        ListView listView = (ListView) findViewById( );
+
+
+        footerView = ( (LayoutInflater) getSystemService( MainActivity.LAYOUT_INFLATER_SERVICE ) ).inflate( R.layout.footer, null, false );
+
+
+
 
     }
 

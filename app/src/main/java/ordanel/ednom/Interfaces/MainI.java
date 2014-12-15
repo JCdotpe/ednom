@@ -15,4 +15,6 @@ public interface MainI {
 
     public void inventarioCuadernillo( String paramCodCuadernillo, Integer paramNroAula );
 
+    public void listadoAsistenciaAula( Integer paramNroAula );
+
 }
