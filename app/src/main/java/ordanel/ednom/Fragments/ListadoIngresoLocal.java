@@ -26,7 +26,7 @@ import ordanel.ednom.R;
 public class ListadoIngresoLocal extends ListFragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
-
+    private static ListadoIngresoLocal fragment;
     private static final int PAGESIZE = 10;
 
     View view;
@@ -42,12 +42,15 @@ public class ListadoIngresoLocal extends ListFragment {
 
     public static ListadoIngresoLocal newInstance( int position ) {
 
-        ListadoIngresoLocal fragment = new ListadoIngresoLocal();
+        if ( fragment == null )
+        {
+            fragment = new ListadoIngresoLocal();
 
-        Bundle args = new Bundle();
-        args.putInt( ARG_SECTION_NUMBER, position );
+            Bundle args = new Bundle();
+            args.putInt( ARG_SECTION_NUMBER, position );
 
-        fragment.setArguments( args );
+            fragment.setArguments( args );
+        }
 
         return fragment;
 
