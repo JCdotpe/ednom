@@ -5,6 +5,8 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import java.util.ArrayList;
+
 import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.LocalE;
@@ -19,6 +21,9 @@ public class DocentesDAO extends BaseDAO {
     private static DocentesDAO docentesDAO;
 
     DocentesE docentesE;
+
+    ArrayList<DocentesE> docentesEArrayList;
+
 
     public static DocentesDAO getInstance( Context paramContext ) {
 
@@ -228,7 +233,6 @@ public class DocentesDAO extends BaseDAO {
 
     }
 
-
     public Integer inventarioCuadernilloDocente( String paramCodCuadernillo ) {
 
         Log.e( TAG, "start inventarioCuadernilloDocente" );
@@ -274,6 +278,57 @@ public class DocentesDAO extends BaseDAO {
         return valueInteger;
     }
 
+    public ArrayList<DocentesE> listadoIngresoLocal() {
 
+        Log.e( TAG, "start listadoIngresoLocal" );
+
+        docentesEArrayList = new ArrayList<>();
+
+        try
+        {
+            openDBHelper();
+
+            SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula, estado, f_registro  FROM docentes WHERE estado > 0 ORDER BY nro_aula";
+
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            if ( cursor.moveToFirst() )
+            {
+                while ( !cursor.isAfterLast() )
+                {
+                    AulaLocalE aulaLocalE = new AulaLocalE();
+                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( AulaLocalE.NRO_AULA ) ) );
+
+                    docentesE = new DocentesE();
+                    docentesE.setAulaLocalE( aulaLocalE );
+                    docentesE.setNro_doc( cursor.getString( cursor.getColumnIndex( DocentesE.NRO_DOC ) ) );
+                    docentesE.setApe_pat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_PAT ) ) );
+                    docentesE.setApe_mat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_MAT ) ) );
+                    docentesE.setNombres( cursor.getString( cursor.getColumnIndex( DocentesE.NOMBRES ) ) );
+                    docentesE.setEstado( cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO ) ) );
+                    docentesE.setF_registro( cursor.getString( cursor.getColumnIndex( DocentesE.F_REGISTRO ) ) );
+
+                    docentesEArrayList.add( docentesE );
+
+                    cursor.moveToNext();
+
+                }
+            }
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+        }
+        finally
+        {
+            closeDBHelper();
+            cursor.close();
+        }
+
+        Log.e( TAG, "end listadoIngresoLocal" );
+
+        return docentesEArrayList;
+    }
 
 }

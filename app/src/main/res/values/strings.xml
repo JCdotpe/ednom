@@ -117,9 +117,10 @@
     <string name="title_nombre_completo">Nombres y Apellidos</string>
     <string name="title_aula">Nro Aula</string>
     <string name="title_fecha_hora">Fecha y Hora</string>
-    <string name="nombre_completo">Nombres y Apellidos</string>
-    <string name="nro_aula">Nro Aula</string>
-    <string name="fechahora">Fecha y Hora</string>
+    <string name="display_dni">Nro DNI</string>
+    <string name="display_nombre_completo">Nombres y Apellidos</string>
+    <string name="display_nro_aula">Nro Aula</string>
+    <string name="display_fechahora">Fecha y Hora</string>
     <string name="display">Displaying %1$s of %2$s</string>
     <!-- /ListView (Prueba) -->
 

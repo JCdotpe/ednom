@@ -5,18 +5,18 @@
 
     <include
         android:id="@+id/firstCol"
-        layout="@layout/cell" />
+        layout="@layout/header_one_dni" />
 
     <include
         android:id="@+id/secondCol"
-        layout="@layout/cell" />
+        layout="@layout/header_one_nombrecompleto" />
 
     <include
         android:id="@+id/thirdCol"
-        layout="@layout/cell" />
+        layout="@layout/header_one_nroaula" />
 
     <include
         android:id="@+id/fourthCol"
-        layout="@layout/cell" />
+        layout="@layout/header_one_fecharegistro" />
 
 </LinearLayout>

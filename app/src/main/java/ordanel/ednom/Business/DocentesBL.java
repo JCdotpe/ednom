@@ -2,6 +2,8 @@ package ordanel.ednom.Business;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import ordanel.ednom.DAO.AulaLocalDAO;
 import ordanel.ednom.DAO.DocentesDAO;
 import ordanel.ednom.Entity.DocentesE;
@@ -16,6 +18,10 @@ public class DocentesBL {
     private static AulaLocalDAO aulaLocalDAO;
 
     private static String conditional;
+    private static int SIZE;
+
+    ArrayList<DocentesE> docentesEArrayList;
+    ArrayList<DocentesE> docentesETempList;
 
     public DocentesBL( Context paramContext ) {
 
@@ -61,6 +67,29 @@ public class DocentesBL {
         }
 
         return docentesE;
+    }
+
+    public ArrayList<DocentesE> listadoIngresoLocal( int offset, int limit ) {
+
+        docentesETempList = docentesDAO.listadoIngresoLocal();
+        SIZE = docentesETempList.size();
+
+        docentesEArrayList = new ArrayList<>(limit);
+
+        int end = offset + limit;
+
+        if ( end > SIZE )
+        {
+            end = SIZE;
+        }
+
+        docentesEArrayList.addAll( docentesETempList.subList( offset, end ) );
+
+        return docentesEArrayList;
+    }
+
+    public int getSIZE() {
+        return SIZE;
     }
 
 }

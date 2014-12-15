@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
+
+    <TextView
+        android:id="@+id/itemDNI"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/display_dni"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="4dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/itemNombreCompleto"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/display_nombre_completo"
+        android:gravity="center"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="4dp">
+    </TextView>
+
+    <TextView
+        android:id="@+id/itemNroAula"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:hint="@string/display_nro_aula"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="4dp"
+        android:gravity="center">
+    </TextView>
+
+    <TextView
+        android:id="@+id/itemFechaRegistro"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:hint="@string/display_fechahora"
+        android:paddingTop="10dp"
+        android:paddingBottom="10dp"
+        android:paddingLeft="4dp">
+    </TextView>
+
+
+</LinearLayout>

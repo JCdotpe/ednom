@@ -1,9 +1,7 @@
 package ordanel.ednom.Fragments;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.app.ListFragment;
-import android.content.Context;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,16 +10,14 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
+import java.util.ArrayList;
 
-import java.util.List;
-
+import ordanel.ednom.Business.DocentesBL;
+import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Interfaces.MainI;
 import ordanel.ednom.ListView.CustomArrayAdapter;
-import ordanel.ednom.ListView.DataSource;
 import ordanel.ednom.R;
 
 /**
@@ -35,8 +31,8 @@ public class PruebaReporte extends ListFragment {
 
     View view;
     View footerView;
-    ListView listView;
-    DataSource dataSource;
+    /*DataSource dataSource;*/
+    DocentesBL docentesBL;
 
     protected boolean loading = false;
 
@@ -62,11 +58,13 @@ public class PruebaReporte extends ListFragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
 
-        dataSource = DataSource.getInstance();
+        /*dataSource = DataSource.getInstance();*/
+        docentesBL = new DocentesBL( getActivity().getApplicationContext() );
 
         footerView = ( (LayoutInflater) getActivity().getSystemService( getActivity().getApplicationContext().LAYOUT_INFLATER_SERVICE ) ).inflate( R.layout.footer, null, false );
         getListView().addFooterView( footerView, null, false );
-        setListAdapter( new CustomArrayAdapter( getActivity(), dataSource.getData( 0, PAGESIZE ) ) );
+        /*setListAdapter( new CustomArrayAdapter( getActivity(), dataSource.getData( 0, PAGESIZE ) ) );*/
+        setListAdapter( new CustomArrayAdapter( getActivity(), docentesBL.listadoIngresoLocal( 0, PAGESIZE ) ) );
         getListView().removeFooterView( footerView );
 
         getListView().setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -79,7 +77,7 @@ public class PruebaReporte extends ListFragment {
             public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
 
                 boolean lastItem = ( firstVisibleItem + visibleItemCount == totalItemCount );
-                boolean moreRows = getListAdapter().getCount() < dataSource.getSize();
+                boolean moreRows = getListAdapter().getCount() < docentesBL.getSIZE();
 
                 if ( !loading && lastItem && moreRows )
                 {
@@ -136,7 +134,7 @@ public class PruebaReporte extends ListFragment {
 
         TextView textViewDisplaying = (TextView) view.findViewById( R.id.displaying );
         String text = getString( R.string.display );
-        text = String.format( text, getListAdapter().getCount(), dataSource.getSize()  );
+        text = String.format( text, getListAdapter().getCount(), docentesBL.getSIZE()  );
         textViewDisplaying.setText( text );
 
     }
@@ -164,7 +162,7 @@ public class PruebaReporte extends ListFragment {
 
     private class LoadNextPage extends AsyncTask<String, Void, String> {
 
-        private List<String> newData = null;
+        private ArrayList<DocentesE> newData = null;
 
         @Override
         protected String doInBackground(String... params) {
@@ -179,7 +177,8 @@ public class PruebaReporte extends ListFragment {
             }
 
             /*newData = dataSource.getData( listView.getAdapter().getCount(), PAGESIZE );*/
-            newData = dataSource.getData( getListAdapter().getCount(), PAGESIZE );
+            /*newData = dataSource.getData( getListAdapter().getCount(), PAGESIZE );*/
+            newData = docentesBL.listadoIngresoLocal( getListAdapter().getCount(), PAGESIZE );
 
             return null;
         }
@@ -189,7 +188,7 @@ public class PruebaReporte extends ListFragment {
             /*CustomArrayAdapter customArrayAdapter = (CustomArrayAdapter) listView.getAdapter();*/
             CustomArrayAdapter customArrayAdapter = ( (CustomArrayAdapter) getListAdapter() );
 
-            for ( String value : newData )
+            for ( DocentesE value : newData )
             {
                 customArrayAdapter.add( value );
             }
