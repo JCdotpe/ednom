@@ -23,7 +23,7 @@ import ordanel.ednom.R;
 /**
  * Created by OrdNael on 11/12/2014.
  */
-public class PruebaReporte extends ListFragment {
+public class ListadoIngresoLocal extends ListFragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";
 
@@ -38,12 +38,12 @@ public class PruebaReporte extends ListFragment {
 
     private MainI mListener;
 
-    public PruebaReporte(){
+    public ListadoIngresoLocal(){
     }
 
-    public static PruebaReporte newInstance( int position ) {
+    public static ListadoIngresoLocal newInstance( int position ) {
 
-        PruebaReporte fragment = new PruebaReporte();
+        ListadoIngresoLocal fragment = new ListadoIngresoLocal();
 
         Bundle args = new Bundle();
         args.putInt( ARG_SECTION_NUMBER, position );
@@ -97,7 +97,7 @@ public class PruebaReporte extends ListFragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         /*return super.onCreateView(inflater, container, savedInstanceState);*/
 
-        view = inflater.inflate( R.layout.endless, container, false );
+        view = inflater.inflate( R.layout.fragment_listado_ingreso_local, container, false );
         mListener.onSectionAttached( getArguments().getInt( ARG_SECTION_NUMBER ) );
 
         /*listView.addFooterView( footerView, null, false );

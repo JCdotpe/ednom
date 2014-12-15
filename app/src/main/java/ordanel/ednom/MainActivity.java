@@ -27,7 +27,7 @@ import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.IngresoLocal;
 import ordanel.ednom.Fragments.InventarioCuadernillo;
 import ordanel.ednom.Fragments.InventarioFicha;
-import ordanel.ednom.Fragments.PruebaReporte;
+import ordanel.ednom.Fragments.ListadoIngresoLocal;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
 
@@ -99,7 +99,7 @@ public class MainActivity extends Activity
                 break;
 
             case 5:
-                fragment = PruebaReporte.newInstance( position + 1 );
+                fragment = ListadoIngresoLocal.newInstance(position + 1);
                 break;
         }
 
