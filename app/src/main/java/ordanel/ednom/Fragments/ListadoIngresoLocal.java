@@ -14,10 +14,10 @@ import android.widget.TextView;
 
 import java.util.ArrayList;
 
+import ordanel.ednom.Adapter.DocentesArrayAdapter;
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Interfaces.MainI;
-import ordanel.ednom.Adapter.DocentesArrayAdapter;
 import ordanel.ednom.R;
 
 /**
