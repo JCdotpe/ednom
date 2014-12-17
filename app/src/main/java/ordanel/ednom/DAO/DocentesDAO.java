@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DocentesE;
+import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Library.ConstantsUtils;
 
@@ -383,6 +384,93 @@ public class DocentesDAO extends BaseDAO {
 
         return docentesEArrayList;
 
+    }
+
+    public ArrayList<DocentesE> listadoInventarioFicha ( Integer paramNroAula ) {
+
+        Log.e( TAG, "start listadoInventarioFicha" );
+
+        docentesEArrayList = new ArrayList<>();
+
+        try
+        {
+            openDBHelper();
+
+            SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula, cod_ficha, estado_ficha, f_ficha  FROM docentes WHERE estado_ficha > 0 and nro_aula = " + paramNroAula + " ORDER BY nro_aula";
+
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            if ( cursor.moveToFirst() )
+            {
+                while ( !cursor.isAfterLast() )
+                {
+                    AulaLocalE aulaLocalE = new AulaLocalE();
+                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( AulaLocalE.NRO_AULA ) ) );
+
+                    docentesE = new DocentesE();
+                    docentesE.setAulaLocalE( aulaLocalE );
+                    docentesE.setNro_doc( cursor.getString( cursor.getColumnIndex( DocentesE.NRO_DOC ) ) );
+                    docentesE.setApe_pat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_PAT ) ) );
+                    docentesE.setApe_mat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_MAT ) ) );
+                    docentesE.setNombres( cursor.getString( cursor.getColumnIndex( DocentesE.NOMBRES ) ) );
+                    docentesE.setCod_ficha( cursor.getString( cursor.getColumnIndex( DocentesE.COD_FICHA ) ) );
+                    docentesE.setEstado_ficha(cursor.getInt(cursor.getColumnIndex(DocentesE.ESTADO_FICHA)));
+                    docentesE.setF_ficha( cursor.getString( cursor.getColumnIndex( DocentesE.F_FICHA ) ) );
+
+                    docentesEArrayList.add( docentesE );
+
+                    cursor.moveToNext();
+
+                }
+            }
+
+            cursor = null;
+
+            SQL = "SELECT nro_aula, cod_ficha,  estado_ficha, f_ficha FROM instrumento WHERE estado_ficha > 0 and nro_aula = " + paramNroAula + " ORDER BY nro_aula";
+
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            if ( cursor.moveToFirst() )
+            {
+                while ( !cursor.isAfterLast() )
+                {
+                    AulaLocalE aulaLocalE = new AulaLocalE();
+                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( InstrumentoE.NRO_AULA ) ) );
+
+                    docentesE = new DocentesE();
+                    docentesE.setAulaLocalE( aulaLocalE );
+
+                    docentesE.setNro_doc( "-" );
+                    docentesE.setApe_pat( "" );
+                    docentesE.setApe_mat( "-" );
+                    docentesE.setNombres( "" );
+
+                    docentesE.setCod_ficha( cursor.getString( cursor.getColumnIndex( InstrumentoE.COD_FICHA ) ) );
+                    docentesE.setEstado_ficha( cursor.getInt( cursor.getColumnIndex( InstrumentoE.ESTADO_FICHA ) ) );
+                    docentesE.setF_ficha( cursor.getString( cursor.getColumnIndex( InstrumentoE.F_FICHA ) ) );
+
+                    docentesEArrayList.add( docentesE );
+
+                    cursor.moveToNext();
+
+                }
+            }
+
+        }
+        catch ( Exception e )
+        {
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+        }
+        finally
+        {
+            closeDBHelper();
+            cursor.close();
+        }
+
+        Log.e( TAG, "end listadoInventarioFicha" );
+
+        return docentesEArrayList;
     }
 
 }

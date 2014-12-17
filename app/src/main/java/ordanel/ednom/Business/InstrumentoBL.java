@@ -2,9 +2,12 @@ package ordanel.ednom.Business;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import ordanel.ednom.DAO.AulaLocalDAO;
 import ordanel.ednom.DAO.DocentesDAO;
 import ordanel.ednom.DAO.InstrumentoDAO;
+import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
 
 /**
@@ -19,6 +22,10 @@ public class InstrumentoBL {
 
     private static String conditional_docente;
     private static String conditional_instrumento;
+    private static int SIZE;
+
+    ArrayList<DocentesE> docentesEArrayList;
+    ArrayList<DocentesE> docentesETempList;
 
     public InstrumentoBL(Context paramContext) {
 
@@ -106,6 +113,29 @@ public class InstrumentoBL {
 
 
         return instrumentoE;
+    }
+
+    public ArrayList<DocentesE> listadoInventarioFicha( Integer paramNroAula, int offset, int limit ) {
+
+        docentesETempList = docentesDAO.listadoInventarioFicha( paramNroAula );
+        SIZE = docentesETempList.size();
+
+        docentesEArrayList = new ArrayList<>(limit);
+
+        int end = offset + limit;
+
+        if ( end > SIZE )
+        {
+            end = SIZE;
+        }
+
+        docentesEArrayList.addAll( docentesETempList.subList( offset, end ) );
+
+        return docentesEArrayList;
+    }
+
+    public int getSIZE() {
+        return SIZE;
     }
 
 }

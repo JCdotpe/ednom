@@ -27,6 +27,8 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 import ordanel.ednom.Adapter.DocentesArrayAdapter;
+import ordanel.ednom.Adapter.InstrumentoArrayAdapter;
+import ordanel.ednom.Asyncs.ListadoInventarioFichaAsync;
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Business.InstrumentoBL;
 import ordanel.ednom.Entity.DocentesE;
@@ -37,6 +39,7 @@ import ordanel.ednom.Fragments.InventarioCuadernillo;
 import ordanel.ednom.Fragments.InventarioFicha;
 import ordanel.ednom.Fragments.ListadoAsistenciaAula;
 import ordanel.ednom.Fragments.ListadoIngresoLocal;
+import ordanel.ednom.Fragments.ListadoInventarioFicha;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
 
@@ -44,7 +47,7 @@ import ordanel.ednom.Interfaces.MainI;
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, MainI {
 
-    private static final int PAGESIZE = 10;
+    private static final int PAGESIZE = 5;
     protected boolean loading = false;
 
     ProgressDialog progressDialog;
@@ -55,6 +58,8 @@ public class MainActivity extends Activity
 
     View footerView;
     ListView listView;
+
+    private ArrayList<DocentesE> newData = null;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -73,6 +78,12 @@ public class MainActivity extends Activity
 
         docentesBL = new DocentesBL( MainActivity.this );
         instrumentoBL = new InstrumentoBL( MainActivity.this );
+
+        newData = getIntent().getParcelableArrayListExtra( "listadoInventarioFicha" );
+        if ( newData != null )
+        {
+            updateDataListadoInventarioFicha();
+        }
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -120,6 +131,10 @@ public class MainActivity extends Activity
             case 6:
                 fragment = ListadoAsistenciaAula.newInstance( position + 1 );
                 break;
+
+            case 7:
+                fragment = ListadoInventarioFicha.newInstance( position + 1 );
+                break;
         }
 
         fragmentManager.beginTransaction()
@@ -155,6 +170,10 @@ public class MainActivity extends Activity
 
             case 7:
                 mTitle = getString( R.string.title_section7 );
+                break;
+
+            case 8:
+                mTitle = getString( R.string.title_section8 );
                 break;
         }
     }
@@ -446,15 +465,69 @@ public class MainActivity extends Activity
         });
 
 
-        updateDisplayingTextView();
+        /*updateDisplayingTextView( listView.getAdapter().getCount(), docentesBL.getSIZE() );*/
 
     }
 
-    private void updateDisplayingTextView() {
+    @Override
+    public void listadoInventarioFicha( final Integer paramNroAula ) {
+
+        footerView = ( (LayoutInflater) getSystemService( MainActivity.LAYOUT_INFLATER_SERVICE ) ).inflate( R.layout.footer, null, false );
+        listView = (ListView) findViewById( android.R.id.list );
+        listView.addFooterView( footerView, null, false );
+        listView.setAdapter( new InstrumentoArrayAdapter( MainActivity.this, instrumentoBL.listadoInventarioFicha(paramNroAula, 0, PAGESIZE) ) );
+        listView.removeFooterView( footerView );
+
+        listView.setOnScrollListener( new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                boolean lastItem = ( firstVisibleItem + visibleItemCount == totalItemCount );
+                boolean moreRows = listView.getAdapter().getCount() < instrumentoBL.getSIZE();
+
+                if ( !loading && lastItem && moreRows )
+                {
+                    loading = true;
+                    listView.addFooterView( footerView, null, false );
+                    new ListadoInventarioFichaAsync( MainActivity.this ).execute( paramNroAula, listView.getAdapter().getCount(), PAGESIZE );
+                }
+
+            }
+        });
+
+
+        updateDisplayingTextView( listView.getAdapter().getCount(), instrumentoBL.getSIZE() );
+
+    }
+
+    private void updateDataListadoInventarioFicha() {
+
+        InstrumentoArrayAdapter instrumentoArrayAdapter = ( (InstrumentoArrayAdapter) listView.getAdapter() );
+
+        for ( DocentesE value : newData )
+        {
+            instrumentoArrayAdapter.add( value );
+        }
+
+        instrumentoArrayAdapter.notifyDataSetChanged();
+
+        listView.removeFooterView( footerView );
+        updateDisplayingTextView( listView.getAdapter().getCount(), instrumentoBL.getSIZE() );
+
+        loading = false;
+
+    }
+
+    private void updateDisplayingTextView( int paramCountAdapter, int paramSIZE ) {
 
         TextView textViewDisplaying = (TextView) findViewById( R.id.displaying );
         String text = getString( R.string.display );
-        text = String.format( text, listView.getAdapter().getCount(), docentesBL.getSIZE()  );
+        text = String.format( text, paramCountAdapter, paramSIZE );
         textViewDisplaying.setText( text );
 
     }
@@ -487,7 +560,7 @@ public class MainActivity extends Activity
                 Log.e("LoadNextPage", e.getMessage());
             }
 
-            newData = docentesBL.listadoAsistenciaAula( params[0], listView.getAdapter().getCount(), PAGESIZE);
+            newData = docentesBL.listadoAsistenciaAula( params[0], listView.getAdapter().getCount(), PAGESIZE );
 
             return null;
         }
@@ -495,7 +568,7 @@ public class MainActivity extends Activity
         @Override
         protected void onPostExecute(String s) {
 
-            DocentesArrayAdapter docentesArrayAdapter = ( (DocentesArrayAdapter) listView.getAdapter() );
+            DocentesArrayAdapter docentesArrayAdapter = (DocentesArrayAdapter) listView.getAdapter();
 
             for ( DocentesE value : newData )
             {
@@ -505,7 +578,7 @@ public class MainActivity extends Activity
             docentesArrayAdapter.notifyDataSetChanged();
 
             listView.removeFooterView(footerView);
-            updateDisplayingTextView();
+//            updateDisplayingTextView( listView.getAdapter().getCount(), docentesBL.getSIZE() );
             loading = false;
 
         }

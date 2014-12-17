@@ -16,6 +16,8 @@
     <string name="title_section5">Inventario de Cuadernillo</string>
     <string name="title_section6">Listado de Asistencia a Local</string>
     <string name="title_section7">Listado de Asistencia a Aula</string>
+    <string name="title_section8">Listado de Inventario Ficha</string>
+    <string name="title_section9">Listado de Inventario Cuadernillo</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <string name="action_example">Example action</string>
@@ -115,10 +117,12 @@
     <!-- ListView (Prueba) -->
     <string name="test">test</string>
     <string name="title_dni">Nro DNI</string>
+    <string name="title_codigo">Código</string>
     <string name="title_nombre_completo">Nombres y Apellidos</string>
     <string name="title_aula">Nro Aula</string>
     <string name="title_fecha_hora">Fecha y Hora</string>
     <string name="display_dni">Nro DNI</string>
+    <string name="display_codigo">Código</string>
     <string name="display_nombre_completo">Nombres y Apellidos</string>
     <string name="display_nro_aula">Nro Aula</string>
     <string name="display_fechahora">Fecha y Hora</string>

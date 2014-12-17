@@ -17,4 +17,6 @@ public interface MainI {
 
     public void listadoAsistenciaAula( Integer paramNroAula );
 
+    public void listadoInventarioFicha( Integer paramNroAula );
+
 }
