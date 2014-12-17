@@ -73,6 +73,7 @@ public class ListadoAsistenciaAula extends ListFragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
                 nro_aula = ( (AulaLocalE) spinner.getSelectedItem() ).getNro_aula();
+                mListener.listadoAsistenciaAula( nro_aula );
 
             }
 

@@ -7,8 +7,10 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -16,11 +18,15 @@ import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
+
+import ordanel.ednom.Adapter.DocentesArrayAdapter;
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Business.InstrumentoBL;
 import ordanel.ednom.Entity.DocentesE;
@@ -38,6 +44,9 @@ import ordanel.ednom.Interfaces.MainI;
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, MainI {
 
+    private static final int PAGESIZE = 10;
+    protected boolean loading = false;
+
     ProgressDialog progressDialog;
     DocentesE docentesE;
     DocentesBL docentesBL;
@@ -45,6 +54,7 @@ public class MainActivity extends Activity
     InstrumentoBL instrumentoBL;
 
     View footerView;
+    ListView listView;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -405,15 +415,47 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public void listadoAsistenciaAula( Integer paramNroAula ) {
-
-//        ListView listView = (ListView) findViewById( );
-
+    public void listadoAsistenciaAula( final Integer paramNroAula ) {
 
         footerView = ( (LayoutInflater) getSystemService( MainActivity.LAYOUT_INFLATER_SERVICE ) ).inflate( R.layout.footer, null, false );
+        listView = (ListView) findViewById( android.R.id.list );
+        listView.addFooterView( footerView, null, false );
+        listView.setAdapter( new DocentesArrayAdapter( MainActivity.this, docentesBL.listadoAsistenciaAula( paramNroAula, 0, PAGESIZE) ) );
+        listView.removeFooterView( footerView );
+
+        listView.setOnScrollListener( new AbsListView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+            }
+
+            @Override
+            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+
+                boolean lastItem = ( firstVisibleItem + visibleItemCount == totalItemCount );
+                boolean moreRows = listView.getAdapter().getCount() < docentesBL.getSIZE();
+
+                if ( !loading && lastItem && moreRows )
+                {
+                    loading = true;
+                    listView.addFooterView( footerView, null, false );
+                    (new LoadNextPage()).execute( paramNroAula );
+                }
+
+            }
+        });
 
 
+        updateDisplayingTextView();
 
+    }
+
+    private void updateDisplayingTextView() {
+
+        TextView textViewDisplaying = (TextView) findViewById( R.id.displaying );
+        String text = getString( R.string.display );
+        text = String.format( text, listView.getAdapter().getCount(), docentesBL.getSIZE()  );
+        textViewDisplaying.setText( text );
 
     }
 
@@ -427,4 +469,47 @@ public class MainActivity extends Activity
 
         return super.onKeyDown( keyCode, event );
     }
+
+    private class LoadNextPage extends AsyncTask<Integer, Void, String> {
+
+
+        private ArrayList<DocentesE> newData = null;
+
+        @Override
+        protected String doInBackground(Integer... params) {
+            try
+            {
+                Thread.sleep(1500);
+
+            }
+            catch (Exception e)
+            {
+                Log.e("LoadNextPage", e.getMessage());
+            }
+
+            newData = docentesBL.listadoAsistenciaAula( params[0], listView.getAdapter().getCount(), PAGESIZE);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String s) {
+
+            DocentesArrayAdapter docentesArrayAdapter = ( (DocentesArrayAdapter) listView.getAdapter() );
+
+            for ( DocentesE value : newData )
+            {
+                docentesArrayAdapter.add( value );
+            }
+
+            docentesArrayAdapter.notifyDataSetChanged();
+
+            listView.removeFooterView(footerView);
+            updateDisplayingTextView();
+            loading = false;
+
+        }
+
+    }
+
 }

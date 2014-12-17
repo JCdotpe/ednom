@@ -331,4 +331,58 @@ public class DocentesDAO extends BaseDAO {
         return docentesEArrayList;
     }
 
+    public ArrayList<DocentesE> listadoAsistenciaAula( Integer paramNroAula ) {
+
+        Log.e( TAG, "start listadoAsistenciaAula" );
+
+        docentesEArrayList = new ArrayList<>();
+
+        try
+        {
+            openDBHelper();
+
+            SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula, estado_aula, f_aula  FROM docentes WHERE estado_aula > 0 and nro_aula = " + paramNroAula + " ORDER BY nro_aula";
+
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            if ( cursor.moveToFirst() )
+            {
+                while ( !cursor.isAfterLast() )
+                {
+                    AulaLocalE aulaLocalE = new AulaLocalE();
+                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( AulaLocalE.NRO_AULA ) ) );
+
+                    docentesE = new DocentesE();
+                    docentesE.setAulaLocalE( aulaLocalE );
+                    docentesE.setNro_doc( cursor.getString( cursor.getColumnIndex( DocentesE.NRO_DOC ) ) );
+                    docentesE.setApe_pat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_PAT ) ) );
+                    docentesE.setApe_mat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_MAT ) ) );
+                    docentesE.setNombres( cursor.getString( cursor.getColumnIndex( DocentesE.NOMBRES ) ) );
+                    docentesE.setEstado_aula( cursor.getInt( cursor.getColumnIndex( DocentesE.ESTADO_AULA ) ) );
+                    docentesE.setF_aula( cursor.getString( cursor.getColumnIndex( DocentesE.F_AULA ) ) );
+
+                    docentesEArrayList.add( docentesE );
+
+                    cursor.moveToNext();
+
+                }
+            }
+        }
+        catch ( Exception  e )
+        {
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+        }
+        finally
+        {
+            closeDBHelper();
+            cursor.close();
+        }
+
+        Log.e( TAG, "end listadoAsistenciaAula" );
+
+        return docentesEArrayList;
+
+    }
+
 }

@@ -88,6 +88,27 @@ public class DocentesBL {
         return docentesEArrayList;
     }
 
+    public ArrayList<DocentesE> listadoAsistenciaAula( Integer paramNroAula, int offset, int limit ) {
+
+        docentesETempList = docentesDAO.listadoAsistenciaAula( paramNroAula );
+        SIZE = docentesETempList.size();
+
+        docentesEArrayList = new ArrayList<>(limit);
+
+        int end = offset + limit;
+
+        if ( end > SIZE )
+        {
+            end = SIZE;
+        }
+
+        docentesEArrayList.addAll( docentesETempList.subList( offset, end ) );
+
+        return docentesEArrayList;
+
+    }
+
+
     public int getSIZE() {
         return SIZE;
     }
