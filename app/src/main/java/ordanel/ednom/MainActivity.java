@@ -16,11 +16,8 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import java.util.ArrayList;
 
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Business.InstrumentoBL;
@@ -32,6 +29,7 @@ import ordanel.ednom.Fragments.InventarioCuadernillo;
 import ordanel.ednom.Fragments.InventarioFicha;
 import ordanel.ednom.Fragments.ListadoAsistenciaAula;
 import ordanel.ednom.Fragments.ListadoIngresoLocal;
+import ordanel.ednom.Fragments.ListadoInventarioCuadernillo;
 import ordanel.ednom.Fragments.ListadoInventarioFicha;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
@@ -120,6 +118,10 @@ public class MainActivity extends Activity
             case 7:
                 fragment = ListadoInventarioFicha.newInstance( position + 1 );
                 break;
+
+            case 8:
+                fragment = ListadoInventarioCuadernillo.newInstance( position + 1 );
+                break;
         }
 
         fragmentManager.beginTransaction()
@@ -159,6 +161,10 @@ public class MainActivity extends Activity
 
             case 8:
                 mTitle = getString( R.string.title_section8 );
+                break;
+
+            case 9:
+                mTitle = getString( R.string.title_section9 );
                 break;
         }
     }

@@ -134,6 +134,25 @@ public class InstrumentoBL {
         return docentesEArrayList;
     }
 
+    public ArrayList<DocentesE> listadoInventarioCuadernillo( Integer paramNroAula, int offset, int limit ) {
+
+        docentesETempList = docentesDAO.listadoInventarioCuadernillo( paramNroAula );
+        SIZE = docentesETempList.size();
+
+        docentesEArrayList = new ArrayList<>(limit);
+
+        int end = offset + limit;
+
+        if ( end > SIZE )
+        {
+            end = SIZE;
+        }
+
+        docentesEArrayList.addAll( docentesETempList.subList( offset, end ) );
+
+        return docentesEArrayList;
+    }
+
     public int getSIZE() {
         return SIZE;
     }
