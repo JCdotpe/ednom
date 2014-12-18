@@ -15,8 +15,6 @@ public interface MainI {
 
     public void inventarioCuadernillo( String paramCodCuadernillo, Integer paramNroAula );
 
-    public void listadoAsistenciaAula( Integer paramNroAula );
-
     public void listadoInventarioFicha( Integer paramNroAula );
 
 }

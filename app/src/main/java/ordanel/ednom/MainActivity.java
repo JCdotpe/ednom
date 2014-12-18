@@ -7,10 +7,8 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -26,7 +24,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ordanel.ednom.Adapter.DocentesArrayAdapter;
 import ordanel.ednom.Adapter.InstrumentoArrayAdapter;
 import ordanel.ednom.Asyncs.ListadoInventarioFichaAsync;
 import ordanel.ednom.Business.DocentesBL;
@@ -79,11 +76,11 @@ public class MainActivity extends Activity
         docentesBL = new DocentesBL( MainActivity.this );
         instrumentoBL = new InstrumentoBL( MainActivity.this );
 
-        newData = getIntent().getParcelableArrayListExtra( "listadoInventarioFicha" );
+       /* newData = getIntent().getParcelableArrayListExtra( "listadoInventarioFicha" );
         if ( newData != null )
         {
             updateDataListadoInventarioFicha();
-        }
+        }*/
 
         mNavigationDrawerFragment = (NavigationDrawerFragment)
                 getFragmentManager().findFragmentById(R.id.navigation_drawer);
@@ -433,41 +430,6 @@ public class MainActivity extends Activity
 
     }
 
-    @Override
-    public void listadoAsistenciaAula( final Integer paramNroAula ) {
-
-        footerView = ( (LayoutInflater) getSystemService( MainActivity.LAYOUT_INFLATER_SERVICE ) ).inflate( R.layout.footer, null, false );
-        listView = (ListView) findViewById( android.R.id.list );
-        listView.addFooterView( footerView, null, false );
-        listView.setAdapter( new DocentesArrayAdapter( MainActivity.this, docentesBL.listadoAsistenciaAula( paramNroAula, 0, PAGESIZE) ) );
-        listView.removeFooterView( footerView );
-
-        listView.setOnScrollListener( new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                boolean lastItem = ( firstVisibleItem + visibleItemCount == totalItemCount );
-                boolean moreRows = listView.getAdapter().getCount() < docentesBL.getSIZE();
-
-                if ( !loading && lastItem && moreRows )
-                {
-                    loading = true;
-                    listView.addFooterView( footerView, null, false );
-                    (new LoadNextPage()).execute( paramNroAula );
-                }
-
-            }
-        });
-
-
-        /*updateDisplayingTextView( listView.getAdapter().getCount(), docentesBL.getSIZE() );*/
-
-    }
 
     @Override
     public void listadoInventarioFicha( final Integer paramNroAula ) {
@@ -500,37 +462,8 @@ public class MainActivity extends Activity
             }
         });
 
-
-        updateDisplayingTextView( listView.getAdapter().getCount(), instrumentoBL.getSIZE() );
-
     }
 
-    private void updateDataListadoInventarioFicha() {
-
-        InstrumentoArrayAdapter instrumentoArrayAdapter = ( (InstrumentoArrayAdapter) listView.getAdapter() );
-
-        for ( DocentesE value : newData )
-        {
-            instrumentoArrayAdapter.add( value );
-        }
-
-        instrumentoArrayAdapter.notifyDataSetChanged();
-
-        listView.removeFooterView( footerView );
-        updateDisplayingTextView( listView.getAdapter().getCount(), instrumentoBL.getSIZE() );
-
-        loading = false;
-
-    }
-
-    private void updateDisplayingTextView( int paramCountAdapter, int paramSIZE ) {
-
-        TextView textViewDisplaying = (TextView) findViewById( R.id.displaying );
-        String text = getString( R.string.display );
-        text = String.format( text, paramCountAdapter, paramSIZE );
-        textViewDisplaying.setText( text );
-
-    }
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
@@ -543,46 +476,6 @@ public class MainActivity extends Activity
         return super.onKeyDown( keyCode, event );
     }
 
-    private class LoadNextPage extends AsyncTask<Integer, Void, String> {
 
-
-        private ArrayList<DocentesE> newData = null;
-
-        @Override
-        protected String doInBackground(Integer... params) {
-            try
-            {
-                Thread.sleep(1500);
-
-            }
-            catch (Exception e)
-            {
-                Log.e("LoadNextPage", e.getMessage());
-            }
-
-            newData = docentesBL.listadoAsistenciaAula( params[0], listView.getAdapter().getCount(), PAGESIZE );
-
-            return null;
-        }
-
-        @Override
-        protected void onPostExecute(String s) {
-
-            DocentesArrayAdapter docentesArrayAdapter = (DocentesArrayAdapter) listView.getAdapter();
-
-            for ( DocentesE value : newData )
-            {
-                docentesArrayAdapter.add( value );
-            }
-
-            docentesArrayAdapter.notifyDataSetChanged();
-
-            listView.removeFooterView(footerView);
-//            updateDisplayingTextView( listView.getAdapter().getCount(), docentesBL.getSIZE() );
-            loading = false;
-
-        }
-
-    }
 
 }

@@ -29,11 +29,11 @@ public class ListadoIngresoLocal extends ListFragment {
     private static ListadoIngresoLocal fragment;
     private static final int PAGESIZE = 10;
 
+    protected boolean loading = false;
+
     View view;
     View footerView;
     DocentesBL docentesBL;
-
-    protected boolean loading = false;
 
     private MainI mListener;
 
@@ -83,7 +83,7 @@ public class ListadoIngresoLocal extends ListFragment {
                 {
                     loading = true;
                     getListView().addFooterView( footerView, null, false );
-                    (new LoadNextPage()).execute("");
+                    (new ListadoIngresoLocalAsync()).execute("");
                 }
 
             }
@@ -135,7 +135,7 @@ public class ListadoIngresoLocal extends ListFragment {
         mListener = null;
     }
 
-    private class LoadNextPage extends AsyncTask<String, Void, String> {
+    private class ListadoIngresoLocalAsync extends AsyncTask<String, Void, String> {
 
         private ArrayList<DocentesE> newData = null;
 
