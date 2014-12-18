@@ -10,13 +10,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AbsListView;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -24,8 +22,6 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
-import ordanel.ednom.Adapter.InstrumentoArrayAdapter;
-import ordanel.ednom.Asyncs.ListadoInventarioFichaAsync;
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Business.InstrumentoBL;
 import ordanel.ednom.Entity.DocentesE;
@@ -44,19 +40,11 @@ import ordanel.ednom.Interfaces.MainI;
 public class MainActivity extends Activity
         implements NavigationDrawerFragment.NavigationDrawerCallbacks, MainI {
 
-    private static final int PAGESIZE = 5;
-    protected boolean loading = false;
-
     ProgressDialog progressDialog;
     DocentesE docentesE;
     DocentesBL docentesBL;
     InstrumentoE instrumentoE;
     InstrumentoBL instrumentoBL;
-
-    View footerView;
-    ListView listView;
-
-    private ArrayList<DocentesE> newData = null;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -382,6 +370,7 @@ public class MainActivity extends Activity
         this.showInstrumentoCuadernillo( instrumentoE );
 
     }
+
     public void showInstrumentoCuadernillo( InstrumentoE instrumentoE ) {
 
         progressDialog.dismiss();
@@ -430,41 +419,6 @@ public class MainActivity extends Activity
 
     }
 
-
-    @Override
-    public void listadoInventarioFicha( final Integer paramNroAula ) {
-
-        footerView = ( (LayoutInflater) getSystemService( MainActivity.LAYOUT_INFLATER_SERVICE ) ).inflate( R.layout.footer, null, false );
-        listView = (ListView) findViewById( android.R.id.list );
-        listView.addFooterView( footerView, null, false );
-        listView.setAdapter( new InstrumentoArrayAdapter( MainActivity.this, instrumentoBL.listadoInventarioFicha(paramNroAula, 0, PAGESIZE) ) );
-        listView.removeFooterView( footerView );
-
-        listView.setOnScrollListener( new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-
-            }
-
-            @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-
-                boolean lastItem = ( firstVisibleItem + visibleItemCount == totalItemCount );
-                boolean moreRows = listView.getAdapter().getCount() < instrumentoBL.getSIZE();
-
-                if ( !loading && lastItem && moreRows )
-                {
-                    loading = true;
-                    listView.addFooterView( footerView, null, false );
-                    new ListadoInventarioFichaAsync( MainActivity.this ).execute( paramNroAula, listView.getAdapter().getCount(), PAGESIZE );
-                }
-
-            }
-        });
-
-    }
-
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -475,7 +429,5 @@ public class MainActivity extends Activity
 
         return super.onKeyDown( keyCode, event );
     }
-
-
 
 }
