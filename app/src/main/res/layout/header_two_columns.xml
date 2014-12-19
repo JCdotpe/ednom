@@ -13,6 +13,7 @@
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
+        android:textStyle="bold"
         android:background="@color/button_background" />
 
     <TextView
@@ -20,6 +21,7 @@
         android:layout_height="match_parent"
         android:layout_weight="1"
         android:text="@string/title_codigo"
+        android:textStyle="bold"
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
@@ -34,6 +36,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
+        android:textStyle="bold"
         android:paddingRight="4dp"
         android:text="@string/title_nombre_completo"
         android:gravity="center"
@@ -48,6 +51,7 @@
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
         android:text="@string/title_aula"
+        android:textStyle="bold"
         android:gravity="center"
         android:background="@color/button_background" />
 
@@ -58,6 +62,7 @@
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
+        android:textStyle="bold"
         android:paddingRight="4dp"
         android:text="@string/title_fecha_hora"
         android:gravity="center"

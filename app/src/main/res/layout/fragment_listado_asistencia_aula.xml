@@ -6,8 +6,8 @@
 
     <Spinner
         android:id="@+id/spinnerAula"
-        android:layout_width="720dp"
-        android:layout_height="50dp"
+        android:layout_width="600dp"
+        android:layout_height="60dp"
         android:spinnerMode="dropdown" />
 
     <include

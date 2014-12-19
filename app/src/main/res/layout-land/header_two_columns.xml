@@ -13,7 +13,8 @@
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:background="@color/button_background" />
+        android:background="@color/button_background"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="0dp"
@@ -25,7 +26,8 @@
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:background="@color/button_background" />
+        android:background="@color/button_background"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="0dp"
@@ -37,7 +39,8 @@
         android:paddingRight="4dp"
         android:text="@string/title_nombre_completo"
         android:gravity="center"
-        android:background="@color/button_background" />
+        android:background="@color/button_background"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="0dp"
@@ -49,7 +52,8 @@
         android:paddingRight="4dp"
         android:text="@string/title_aula"
         android:gravity="center"
-        android:background="@color/button_background" />
+        android:background="@color/button_background"
+        android:textStyle="bold"/>
 
     <TextView
         android:layout_width="0dp"
@@ -61,6 +65,7 @@
         android:paddingRight="4dp"
         android:text="@string/title_fecha_hora"
         android:gravity="center"
-        android:background="@color/button_background" />
+        android:background="@color/button_background"
+        android:textStyle="bold"/>
 
 </LinearLayout>

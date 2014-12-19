@@ -83,7 +83,7 @@
         <TextView
             android:id="@+id/txtFicha"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_height="100sp"
             android:hint="@string/nro_ficha"
             android:textSize="65sp"
             android:textStyle="bold"

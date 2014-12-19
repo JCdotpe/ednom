@@ -20,7 +20,7 @@
                 android:layout_marginStart="10sp"
                 android:text="Aula : " />
             <Spinner
-                android:layout_width="450sp"
+                android:layout_width="720sp"
                 android:layout_height="50sp"
                 android:id="@+id/spinnerAula"
                 android:spinnerMode="dropdown" />
@@ -83,7 +83,7 @@
         <TextView
             android:id="@+id/txtCuadernillo"
             android:layout_width="300sp"
-            android:layout_height="200sp"
+            android:layout_height="100sp"
             android:hint="@string/ie_cuadernillo"
             android:textSize="65sp"
             android:textStyle="bold"
