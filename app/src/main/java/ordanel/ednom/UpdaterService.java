@@ -14,7 +14,7 @@ public class UpdaterService extends Service {
 
     private static final String TAG = UpdaterService.class.getSimpleName();
 
-    static final int DELAY = 60000; // 300000
+    static final int DELAY = 120000; // 300000
     private boolean runFlag = false;
 
     private Updater updater;

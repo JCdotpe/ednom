@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 
+import ordanel.ednom.Asyncs.SyncAsync;
 import ordanel.ednom.MainActivity;
 import ordanel.ednom.R;
 
@@ -55,7 +56,7 @@ public class Welcome extends Fragment {
 
     public void pruebaJSon() {
 
-        //new SyncAsync( getActivity() ).execute();
+        new SyncAsync( getActivity() ).execute();
 
     }
 

@@ -20,6 +20,7 @@ public class PadronBL {
     private static LocalE localE;
 
     private static NetworkUtils networkUtils;
+    private Context context;
 
     private static Boolean connection;
 
@@ -28,8 +29,7 @@ public class PadronBL {
         padronDAO = PadronDAO.getInstance( paramContext );
         versionDAO = VersionDAO.getInstance( paramContext );
 
-        networkUtils = new NetworkUtils();
-        connection = networkUtils.haveNetworkConnection( paramContext );
+        this.context = paramContext;
 
     }
 
@@ -63,6 +63,9 @@ public class PadronBL {
     }
 
     public void getAllforSync() {
+
+        networkUtils = new NetworkUtils();
+        connection = networkUtils.haveNetworkConnection( this.context );
 
         if ( connection )
         {

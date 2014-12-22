@@ -542,6 +542,8 @@ public class PadronDAO extends BaseDAO {
 
             if ( syncronizar )
             {
+                initHttPostAux();
+
                 jsonArray = new JSONArray();
                 jsonArray.put( jsonObject );
                 String json = jsonArray.toString();
