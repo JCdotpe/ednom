@@ -198,10 +198,7 @@ public class MainActivity extends Activity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        else if ( id == R.id.action_logout )
+        if ( id == R.id.action_logout )
         {
             logOut();
         }
