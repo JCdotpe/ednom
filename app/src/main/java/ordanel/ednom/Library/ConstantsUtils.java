@@ -16,6 +16,7 @@ public class ConstantsUtils {
     public static final String URL_SYNC = BASE_URL + "recibirPadron"; // "sync.php" "recibirPadron"
     public static final String PARAM_LOGIN = "sendPass"; // "password" "sendPass"
     public static final String URL_REPORTE_ACCESS = " http://172.16.100.61/ednom2015i/login";
+    public static String getPass = "pass";
 
     public static String fecha_registro() {
 

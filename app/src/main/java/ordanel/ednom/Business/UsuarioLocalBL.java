@@ -1,6 +1,7 @@
 package ordanel.ednom.Business;
 
 import android.content.Context;
+import android.util.Log;
 
 import ordanel.ednom.DAO.UsuarioLocalDAO;
 import ordanel.ednom.Entity.UsuarioLocalE;
@@ -18,6 +19,7 @@ public class UsuarioLocalBL {
 
     public UsuarioLocalBL( Context paramContext ) {
         usuarioLocalDAO = UsuarioLocalDAO.getInstance( paramContext );
+
     }
 
     public Integer checkLoginOffline( String... params ) {
