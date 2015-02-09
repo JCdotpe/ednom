@@ -46,16 +46,21 @@ public class ReporteGeneral extends Fragment {
         mListener.onSectionAttached( getArguments().getInt( ARG_SECTION_NUMBER ) );
         View view = inflater.inflate(R.layout.fragment_reporte_general, container, false);
         webview = (WebView) view.findViewById(R.id.webView);
+        pass = ConstantsUtils.getPass;
+        webview.loadUrl(ConstantsUtils.URL_REPORTE_ACCESS + "?sendPass=" + pass);
         webview.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                view.loadUrl(ConstantsUtils.URL_REPORTE_ACCESS + "?sendPass" + pass);
+                view.loadUrl(url);
                 return true;
             }
         });
-        webview.getSettings().setJavaScriptEnabled(true);
 
-
+        if (savedInstanceState != null) {
+            webview.restoreState(savedInstanceState);
+        } else {
+            webview.getSettings().setJavaScriptEnabled(true);
+        }
         return view;
     }
 
