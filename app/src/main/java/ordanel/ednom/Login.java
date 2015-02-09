@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import ordanel.ednom.Asyncs.LoginAsync;
+import ordanel.ednom.Library.ConstantsUtils;
 
 public class Login extends Activity {
 
@@ -33,6 +34,7 @@ public class Login extends Activity {
 
     public void initLogin(View view) {
         String password = txtPassword.getText().toString();
+        ConstantsUtils.getPass = password;
 
         if ( checkLoginData( password ) )
         {

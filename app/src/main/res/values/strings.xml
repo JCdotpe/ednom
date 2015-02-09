@@ -17,6 +17,7 @@
     <string name="title_section7">Listado de Asistencia a Aula</string>
     <string name="title_section8">Listado de Inventario Ficha</string>
     <string name="title_section9">Listado de Inventario Cuadernillo</string>
+    <string name="title_section10">Reporte General</string>
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
     <!-- /Menu -->

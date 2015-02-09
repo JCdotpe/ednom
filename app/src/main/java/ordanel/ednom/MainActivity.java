@@ -31,6 +31,7 @@ import ordanel.ednom.Fragments.ListadoAsistenciaAula;
 import ordanel.ednom.Fragments.ListadoIngresoLocal;
 import ordanel.ednom.Fragments.ListadoInventarioCuadernillo;
 import ordanel.ednom.Fragments.ListadoInventarioFicha;
+import ordanel.ednom.Fragments.ReporteGeneral;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
 
@@ -122,6 +123,9 @@ public class MainActivity extends Activity
             case 8:
                 fragment = ListadoInventarioCuadernillo.newInstance( position + 1 );
                 break;
+            case 9:
+                fragment = ReporteGeneral.newInstance(position + 1);
+                break;
         }
 
         fragmentManager.beginTransaction()
@@ -165,6 +169,9 @@ public class MainActivity extends Activity
 
             case 9:
                 mTitle = getString( R.string.title_section9 );
+                break;
+            case 10:
+                mTitle = getString(R.string.title_section10);
                 break;
         }
     }
