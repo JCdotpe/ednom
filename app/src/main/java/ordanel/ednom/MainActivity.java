@@ -7,15 +7,20 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.Gravity;
 import android.view.KeyEvent;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -285,55 +290,73 @@ public class MainActivity extends Activity
         TextView txtNombres = (TextView) findViewById( R.id.txtNombres );
         TextView txtLocalAplicacion = (TextView) findViewById( R.id.txtLocalAplicacion );
         TextView txtAula = (TextView) findViewById( R.id.txtAula );
-
         txtDni.setText( "" );
         txtApellidos.setText( "" );
         txtNombres.setText( "" );
         txtLocalAplicacion.setText( "" );
         txtAula.setText( "" );
 
-        if ( docentesE.getStatus() == 0 )
+
+        if ( docentesE.getStatus() == 0 || docentesE.getStatus() == 6 )
         {
-            txtDni.setText( docentesE.getNro_doc().toString() );
-            txtApellidos.setText( docentesE.getApe_pat().toString() + ' ' + docentesE.getApe_mat().toString() );
-            txtNombres.setText( docentesE.getNombres().toString() );
-
+            txtDni.setText( docentesE.getNro_doc() );
+            txtApellidos.setText( docentesE.getApe_pat() + ' ' + docentesE.getApe_mat() );
+            txtNombres.setText( docentesE.getNombres());
             txtAula.setText( docentesE.getAulaLocalE().getNro_aula().toString() );
-
             txtLocalAplicacion.setText( docentesE.getAulaLocalE().getLocalE().getNombreLocal() );
         }
-        else
-        {
-            errorPerson( docentesE.getStatus() );
-        }
+        errorPerson( docentesE.getStatus() );
 
     }
 
     public void errorPerson( Integer status ) {
 
         String msg = "";
-
+        View view = findViewById(R.id.layout_datos);
         switch ( status )
         {
+            case 0:
+                msg = getString(R.string.docente_register);
+                view.setBackgroundColor(getResources().getColor(R.color.correct));
+                toastCustomize(msg, R.drawable.check);
+                break;
+
             case 1:
                 msg = getString( R.string.docente_not_found );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                toastCustomize(msg, R.drawable.error);
                 break;
 
             case 2:
                 msg = getString( R.string.docente_not_access );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                toastCustomize(msg, R.drawable.bd_fail);
                 break;
 
-            case 5:
             case 3:
                 msg = getString( R.string.docente_not_register_local );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                toastCustomize(msg, R.drawable.error);
                 break;
 
             case 4:
                 msg = getString( R.string.docente_not_register_aula);
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                toastCustomize(msg, R.drawable.error);
+                break;
+
+            case 5:
+                msg = getString( R.string.docente_not_register_local );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                toastCustomize(msg, R.drawable.error);
+                break;
+
+            case 6:
+                msg = getString(R.string.docente_double_register);
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                toastCustomize(msg, R.drawable.warning);
                 break;
         }
-
-        Toast.makeText( MainActivity.this, msg, Toast.LENGTH_LONG ).show();
     }
 
     @Override
@@ -440,5 +463,22 @@ public class MainActivity extends Activity
         return super.onKeyDown( keyCode, event );
     }
 
+    public void toastCustomize (String message, int icon) {
+        LayoutInflater layoutInflater = getLayoutInflater();
+        View view = layoutInflater.inflate(R.layout.toast_warning, (ViewGroup) findViewById(R.id.linear_toast));
+        view.setBackgroundColor(Color.WHITE);
+
+        TextView textView = (TextView) view.findViewById(R.id.txt_message);
+        textView.setText(message);
+        textView.setTextSize(20);
+        ImageView imageView = (ImageView) view.findViewById(R.id.image_warning);
+        imageView.setImageResource(icon);
+
+        Toast toast = new Toast(getApplicationContext());
+        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
+        toast.setDuration(Toast.LENGTH_SHORT);
+        toast.setView(view);
+        toast.show();
+    }
 
 }

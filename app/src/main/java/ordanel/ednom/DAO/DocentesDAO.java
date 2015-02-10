@@ -108,7 +108,9 @@ public class DocentesDAO extends BaseDAO {
         try
         {
             openDBHelper();
-
+            if (isFechaRegistro(paramDNI, DocentesE.F_REGISTRO)){
+                valueInteger = 6 ;
+            } else {
             contentValues =  new ContentValues();
             contentValues.put( DocentesE.ESTADO, 1 );
             contentValues.put( DocentesE.F_REGISTRO, ConstantsUtils.fecha_registro() );
@@ -120,7 +122,7 @@ public class DocentesDAO extends BaseDAO {
 
             valueInteger = 0;
 
-            dbHelper.setTransactionSuccessful();
+            dbHelper.setTransactionSuccessful(); }
         }
         catch (Exception e)
         {
@@ -144,34 +146,32 @@ public class DocentesDAO extends BaseDAO {
         try
         {
             openDBHelper();
+            if (isFechaRegistro(number_doc, DocentesE.F_AULA)){
+                valueInteger = 6 ;
+            } else {
+                contentValues = new ContentValues();
+                contentValues.put(DocentesE.ESTADO_AULA, 1);
+                contentValues.put(DocentesE.F_AULA, ConstantsUtils.fecha_registro());
 
-            contentValues =  new ContentValues();
-            contentValues.put( DocentesE.ESTADO_AULA, 1 );
-            contentValues.put( DocentesE.F_AULA, ConstantsUtils.fecha_registro() );
+                if (paramContingencia == 0) {
+                    SQL = "nro_doc = '" + number_doc + "' and nro_aula = " + nro_aula + " and estado > 0";
+                } else {
+                    SQL = "nro_doc = '" + number_doc + "' and estado > 0";
+                    contentValues.put(DocentesE.NRO_AULA_CAMBIO, nro_aula);
+                }
 
-            if ( paramContingencia == 0 )
-            {
-                SQL = "nro_doc = '" + number_doc + "' and nro_aula = " + nro_aula + " and estado > 0";
+                valueInteger = dbHelper.getDatabase().updateWithOnConflict("docentes", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
+                Log.e(TAG, "asistencia aula : " + valueInteger.toString());
+
+                if (!valueInteger.equals(0)) // el registro es correcto
+                {
+                    valueInteger = 0;
+                } else {
+                    valueInteger = 5; // el docente no fue registrado al ingreso del local
+                }
+
+                dbHelper.setTransactionSuccessful();
             }
-            else
-            {
-                SQL = "nro_doc = '" + number_doc + "' and estado > 0";
-                contentValues.put( DocentesE.NRO_AULA_CAMBIO, nro_aula );
-            }
-
-            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "docentes", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
-            Log.e( TAG, "asistencia aula : " + valueInteger.toString() );
-
-            if ( !valueInteger.equals(0) ) // el registro es correcto
-            {
-                valueInteger = 0;
-            }
-            else
-            {
-                valueInteger = 5; // el docente no fue registrado al ingreso del local
-            }
-
-            dbHelper.setTransactionSuccessful();
         }
         catch (Exception e)
         {
@@ -558,6 +558,25 @@ public class DocentesDAO extends BaseDAO {
         Log.e( TAG, "end listadoInventarioCuadernillo" );
 
         return docentesEArrayList;
+    }
+
+    public Boolean isFechaRegistro (String dni, String column){
+        boolean isDate = false;
+
+        SQL = "SELECT " + column + " from docentes where nro_doc like '" + dni + "'";
+        cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+        if ( cursor.moveToFirst() ) {
+            while (!cursor.isAfterLast()) {
+                String date = "vacio";
+                date = cursor.getString(cursor.getColumnIndex(column));
+                if (!date.isEmpty()) {
+                    Log.i(TAG, "fecha vacia: " + date);
+                    isDate = true;
+                }
+            cursor.moveToNext();
+            }
+        }
+        return isDate;
     }
 
 }

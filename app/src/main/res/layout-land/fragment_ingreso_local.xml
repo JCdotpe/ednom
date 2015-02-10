@@ -2,14 +2,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
-
+<LinearLayout
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:layout_marginTop="10dp"
+    >
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/txtE_DNI"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/numero_documento"
         android:textStyle="bold"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:textColor="#000"
         android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
@@ -23,13 +31,16 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="number"
-        android:textSize="20dp"
+        android:textSize="20sp"
         android:hint="@string/numero_documento_text_hint"
         android:layout_alignBaseline="@id/txtE_DNI"
         android:layout_toRightOf="@id/txtE_DNI"
         android:layout_toEndOf="@id/txtE_DNI"
         android:layout_marginLeft="20dp"
         android:layout_marginStart="20dp" />
+    </RelativeLayout>
+
+
     <View
         android:layout_width="fill_parent"
         android:layout_height="2dp"
@@ -37,122 +48,128 @@
         android:layout_below="@+id/edtDNI"
         android:layout_marginTop="15dp"
         android:id="@+id/view" />
-
-<TextView
-    android:id="@+id/txtR_DNI"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:text="@string/numero_documento_abrev"
-    android:textSize="30dp"
-    android:textColor="#000"
-    android:textStyle="bold"
-    android:layout_marginTop="43dp"
-    android:layout_below="@+id/view"
-    android:layout_alignLeft="@+id/txtE_DNI"
-    android:layout_alignStart="@+id/txtE_DNI" />
-
-
-
-    <TextView
-        android:id="@+id/txtDNI"
+    <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/numero_documento_text_hint"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:layout_alignBottom="@id/txtR_DNI"
-        android:layout_toRightOf="@id/txtR_DNI"
-        android:layout_toEndOf="@id/txtR_DNI"
-        android:layout_marginLeft="20dp" />
+        android:layout_height="match_parent"
+        android:id="@+id/layout_datos"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp" >
+        <TextView
+            android:id="@+id/txtR_DNI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/numero_documento_abrev"
+            android:textSize="30dp"
+            android:textColor="#000"
+            android:textStyle="bold"
+            android:layout_marginTop="43dp"
+             />
 
-    <TextView
-        android:id="@+id/txtApellidos"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/apellidos_text_hint"
-        android:textSize="45dp"
-        android:textStyle="bold"
-        android:layout_marginTop="5dp"
-        android:layout_below="@+id/txtR_DNI"
-        android:layout_alignLeft="@+id/txtR_DNI"
-        android:layout_alignStart="@+id/txtR_DNI"/>
 
-    <TextView
-        android:id="@+id/txtNombres"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/nombres_text_hint"
-        android:textSize="45dp"
-        android:textStyle="bold"
-        android:layout_marginTop="20dp"
-        android:layout_below="@+id/txtApellidos"
-        android:layout_alignLeft="@+id/txtApellidos"
-        android:layout_alignStart="@+id/txtApellidos" />
 
-    <TextView
-        android:id="@+id/txtR_NombreLocal"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/local_de_aplicacion"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:textColor="#c8757575"
-        android:layout_marginTop="30dp"
-        android:layout_below="@+id/txtNombres"
-        android:layout_alignLeft="@+id/txtNombres"
-        android:layout_alignStart="@+id/txtNombres" />
+        <TextView
+            android:id="@+id/txtDNI"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/numero_documento_text_hint"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:layout_alignBottom="@id/txtR_DNI"
+            android:layout_toRightOf="@id/txtR_DNI"
+            android:layout_toEndOf="@id/txtR_DNI"
+            android:layout_marginLeft="20dp" />
 
-    <TextView
-        android:id="@+id/txtLocalAplicacion"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:hint="@string/local_de_aplicacion"
-        android:textSize="30dp"
-        android:textStyle="bold"
-        android:textColor="#000"
-        android:layout_below="@+id/txtR_NombreLocal"
-        android:layout_alignLeft="@+id/txtR_NombreLocal"
-        android:layout_alignStart="@+id/txtR_NombreLocal"
-        android:layout_marginTop="25dp" />
+        <TextView
+            android:id="@+id/txtApellidos"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/apellidos_text_hint"
+            android:textSize="45dp"
+            android:textStyle="bold"
+            android:layout_marginTop="5dp"
+            android:layout_below="@+id/txtR_DNI"
+            android:layout_alignLeft="@+id/txtR_DNI"
+            android:layout_alignStart="@+id/txtR_DNI"/>
 
-    <TableLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@drawable/border"
-        android:layout_below="@id/edtDNI"
-        android:layout_alignParentRight="true"
-        android:layout_marginRight="10dp"
-        android:layout_marginTop="50dp"
-        android:id="@+id/tableLayout">
-        <TableRow>
-            <TextView
-                android:id="@+id/txtR_Aula"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/aula_aplicacion"
-                android:textSize="40dp"
-                android:textStyle="bold"
-                android:gravity="center"
-                android:layout_alignTop="@+id/txtApeMaterno"
-                android:layout_alignRight="@+id/txtAula"
-                android:layout_alignEnd="@+id/txtAula" />
-        </TableRow>
-        <TableRow>
-            <TextView
-                android:id="@+id/txtAula"
-                android:layout_width="280dp"
-                android:layout_height="wrap_content"
-                android:hint="@string/aula_aplicacion_text_hint"
-                android:textSize="160sp"
-                android:textStyle="bold"
-                android:textColor="#000"
-                android:gravity="center"
-                android:layout_alignWithParentIfMissing="false"
-                android:layout_alignTop="@+id/txtNombres"
-                android:layout_toRightOf="@+id/txtApeMaterno"
-                android:layout_toEndOf="@+id/txtApeMaterno"/>
-        </TableRow>
+        <TextView
+            android:id="@+id/txtNombres"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/nombres_text_hint"
+            android:textSize="45dp"
+            android:textStyle="bold"
+            android:layout_marginTop="20dp"
+            android:layout_below="@+id/txtApellidos"
+            android:layout_alignLeft="@+id/txtApellidos"
+            android:layout_alignStart="@+id/txtApellidos" />
+
+        <TextView
+            android:id="@+id/txtR_NombreLocal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/local_de_aplicacion"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#c8757575"
+            android:layout_marginTop="30dp"
+            android:layout_below="@+id/txtNombres"
+            android:layout_alignLeft="@+id/txtNombres"
+            android:layout_alignStart="@+id/txtNombres" />
+
+        <TextView
+            android:id="@+id/txtLocalAplicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="@string/local_de_aplicacion"
+            android:textSize="30dp"
+            android:textStyle="bold"
+            android:textColor="#000"
+            android:layout_below="@+id/txtR_NombreLocal"
+            android:layout_alignLeft="@+id/txtR_NombreLocal"
+            android:layout_alignStart="@+id/txtR_NombreLocal"
+            android:layout_marginTop="25dp" />
+
+        <TableLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/border"
+
+            android:layout_alignParentRight="true"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="50dp"
+            android:id="@+id/tableLayout">
+            <TableRow>
+                <TextView
+                    android:id="@+id/txtR_Aula"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/aula_aplicacion"
+                    android:textSize="40dp"
+                    android:textStyle="bold"
+                    android:gravity="center"
+                    android:layout_alignTop="@+id/txtApeMaterno"
+                    android:layout_alignRight="@+id/txtAula"
+                    android:layout_alignEnd="@+id/txtAula" />
+            </TableRow>
+            <TableRow>
+                <TextView
+                    android:id="@+id/txtAula"
+                    android:layout_width="280dp"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/aula_aplicacion_text_hint"
+                    android:textSize="160sp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:gravity="center"
+                    android:layout_alignWithParentIfMissing="false"
+                    android:layout_alignTop="@+id/txtNombres"
+                    android:layout_toRightOf="@+id/txtApeMaterno"
+                    android:layout_toEndOf="@+id/txtApeMaterno"/>
+            </TableRow>
         </TableLayout>
+        </RelativeLayout>
+</LinearLayout>
+
 
 </RelativeLayout>
 

@@ -37,13 +37,13 @@
 
             <Button
                 android:id="@+id/btnCorrecto"
-                android:layout_width="60dp"
+                android:layout_width="55dp"
                 android:layout_height="60dp"
                 android:text="Son Correctos"
                 android:textStyle="bold"
                 android:background="@drawable/button_correct"
                 android:onClick="clickCorrecto"
-                android:textSize="20dp"
+                android:textSize="24sp"
                 android:focusable="true"
                 android:textColor="#FFFFFF"
                 android:drawableLeft="@drawable/correct"
@@ -54,14 +54,14 @@
 
             <Button
                 android:id="@+id/btnIncorrecto"
-                android:layout_width="60dp"
+                android:layout_width="55dp"
                 android:layout_height="60dp"
                 android:text="No son los Datos"
                 android:textStyle="bold"
                 android:textColor="#FFFFFF"
                 android:background="@drawable/button_incorrect"
                 android:onClick="clickIncorrecto"
-                android:textSize="20dp"
+                android:textSize="24sp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:drawableLeft="@drawable/incorrect"
