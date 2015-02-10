@@ -13,13 +13,14 @@
         android:id="@+id/textView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textSize="25dp"
         android:text="Bienvenido" />
 
     <Button
         android:id="@+id/btnJSON"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="JSON"
+        android:text="Sincronizar"
         android:layout_below="@+id/textView"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"

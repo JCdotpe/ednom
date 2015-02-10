@@ -47,6 +47,7 @@
     <string name="verify_sede">Sede</string>
     <string name="verify_error_query">Error: Falló al acceder a la información!</string>
     <string name="verify_error_data">Error: No se encontraron datos!</string>
+    <string name="title_ubigeo_activity">Verificación de Local de Aplicación</string>
     <!-- /UbigeoVerify -->
 
 

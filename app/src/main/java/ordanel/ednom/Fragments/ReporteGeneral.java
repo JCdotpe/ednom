@@ -55,7 +55,6 @@ public class ReporteGeneral extends Fragment {
                 return true;
             }
         });
-
         if (savedInstanceState != null) {
             webview.restoreState(savedInstanceState);
         } else {
