@@ -29,6 +29,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".UbigeoVerify"
+            android:label="@string/title_ubigeo_activity"
             android:screenOrientation="landscape"/>
         <activity android:name=".ObtainCensus"
             android:screenOrientation="landscape"/>
