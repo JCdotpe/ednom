@@ -6,9 +6,9 @@
 
     <color name="button_background">#2196F3</color>
     <color name="text_white">#FFFFFF</color>
-    <color name="warning">#FFBB33</color>
+    <color name="warning">#FFC107</color>
     <color name="correct">#009688</color>
-    <color name="error">#EF9A9A</color>
+    <color name="error">#FF8A80</color>
     <!--<color name="header_one"></color>-->
 
 </resources>

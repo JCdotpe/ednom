@@ -151,27 +151,28 @@ public class InstrumentoDAO extends BaseDAO {
         {
             openDBHelper();
 
-            contentValues = new ContentValues();
-            contentValues.put( InstrumentoE.ESTADO_FICHA, 1 );
-            contentValues.put( InstrumentoE.F_FICHA, ConstantsUtils.fecha_registro() );
-            contentValues.put( InstrumentoE.NRO_AULA, paramNroAula );
+            if (isFechaRegistroInstrumento(paramCodFicha, "f_ficha", "cod_ficha")) {
+                valueInteger = 4;
+            } else {
+                contentValues = new ContentValues();
+                contentValues.put(InstrumentoE.ESTADO_FICHA, 1);
+                contentValues.put(InstrumentoE.F_FICHA, ConstantsUtils.fecha_registro());
+                contentValues.put(InstrumentoE.NRO_AULA, paramNroAula);
 
-            Where = "cod_ficha = '" + paramCodFicha + "'";
+                Where = "cod_ficha = '" + paramCodFicha + "'";
 
-            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "instrumento", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
-            Log.e( TAG, "inventario ficha : " + valueInteger.toString() );
+                valueInteger = dbHelper.getDatabase().updateWithOnConflict("instrumento", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE);
+                Log.e(TAG, "inventario ficha : " + valueInteger.toString());
 
-            if ( !valueInteger.equals(0) ) // el registro es correcto
-            {
-                valueInteger = 0;
+                if (!valueInteger.equals(0)) // el registro es correcto
+                {
+                    valueInteger = 0;
+                } else {
+                    valueInteger = 3;// error al registrar inventario de ficha;
+                }
+
+                dbHelper.setTransactionSuccessful();
             }
-            else
-            {
-                valueInteger = 3;// error al registrar inventario de ficha;
-            }
-
-            dbHelper.setTransactionSuccessful();
-
         }
         catch ( Exception e )
         {
@@ -196,26 +197,28 @@ public class InstrumentoDAO extends BaseDAO {
         try
         {
             openDBHelper();
+            if (isFechaRegistroInstrumento(paramCodCuadernillo, "f_cartilla", "cod_cartilla")) {
+                valueInteger = 4;
+            } else {
 
-            contentValues = new ContentValues();
-            contentValues.put( InstrumentoE.ESTADO_CARTILLA, 1 );
-            contentValues.put( InstrumentoE.F_CARTILLA, ConstantsUtils.fecha_registro() );
+                contentValues = new ContentValues();
+                contentValues.put(InstrumentoE.ESTADO_CARTILLA, 1);
+                contentValues.put(InstrumentoE.F_CARTILLA, ConstantsUtils.fecha_registro());
 
-            Where = "cod_cartilla = '" + paramCodCuadernillo + "'";
+                Where = "cod_cartilla = '" + paramCodCuadernillo + "'";
 
-            valueInteger = dbHelper.getDatabase().updateWithOnConflict( "instrumento", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE );
-            Log.e( TAG, "inventario cuadernillo : " + valueInteger.toString() );
+                valueInteger = dbHelper.getDatabase().updateWithOnConflict("instrumento", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE);
+                Log.e(TAG, "inventario cuadernillo : " + valueInteger.toString());
 
-            if ( !valueInteger.equals(0) ) // el registro es correcto
-            {
-                valueInteger = 0;
+                if (!valueInteger.equals(0)) // el registro es correcto
+                {
+                    valueInteger = 0;
+                } else {
+                    valueInteger = 3;// error al registrar inventario de ficha;
+                }
+
+                dbHelper.setTransactionSuccessful();
             }
-            else
-            {
-                valueInteger = 3;// error al registrar inventario de ficha;
-            }
-
-            dbHelper.setTransactionSuccessful();
 
         }
         catch ( Exception e )
@@ -232,6 +235,25 @@ public class InstrumentoDAO extends BaseDAO {
         Log.e( TAG, "end inventarioCuadernillo" );
 
         return valueInteger;
+    }
+
+    public Boolean isFechaRegistroInstrumento (String codigo, String column_fecha, String column_codigo ){
+        boolean isDate = false;
+
+        SQL = "SELECT " + column_fecha + " from instrumento where " + column_codigo + " like '" + codigo + "'";
+        cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+        if ( cursor.moveToFirst() ) {
+            while (!cursor.isAfterLast()) {
+                String date = "vacio";
+                date = cursor.getString(cursor.getColumnIndex(column_fecha));
+                if (!date.isEmpty()) {
+                    Log.i(TAG, "fecha: " + date);
+                    isDate = true;
+                }
+                cursor.moveToNext();
+            }
+        }
+        return isDate;
     }
 
 }

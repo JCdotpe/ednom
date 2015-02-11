@@ -88,9 +88,9 @@
     <string name="docente_register">El docente se ha registrado correctamente</string>
     <string name="docente_found">Buscando Datos del Docente</string>
     <string name="docente_not_found">No se encontraron Datos del Docente!</string>
-    <string name="docente_not_access">Error. Problemas al acceder a la BD!.</string>
-    <string name="docente_not_register_local">Error. No se registro asistencia del docente al local!.</string>
-    <string name="docente_not_register_aula">Error. No se registro asistencia del docente en aula!.</string>
+    <string name="docente_not_access">Error. Problemas al acceder a la BD!</string>
+    <string name="docente_not_register_local">Error. No se registro asistencia del docente al local!</string>
+    <string name="docente_not_register_aula">Error. No se registro asistencia del docente en aula!</string>
     <string name="docente_double_register">El docente ya ha sido registrado anteriormente</string>
     <!-- /Asistencia -->
 
@@ -102,9 +102,11 @@
     <string name="label_cuadernillo">Cuadernillo :</string>
     <string name="codigo_cuadernillo">Cod. Cuadernillo :</string>
     <string name="ie_cuadernillo">00000</string>
-    <string name="instrumento_not_found">No se encontro instrumento!.</string>
-    <string name="instrumento_not_access">Error. Problemas al acceder a la BD!.</string>
-    <string name="instrumento_not_register">Error. No se registro inventario de instrumento!.</string>
+    <string name="instrumento_not_found">No se encontro instrumento!</string>
+    <string name="instrumento_not_access">Error. Problemas al acceder a la BD!</string>
+    <string name="instrumento_not_register">Error. No se registro inventario de instrumento!</string>
+    <string name="instrumento_double_register">El instrumento ya ha sido registrado anteriormente</string>
+    <string name="instrumento_register">El instrumento se ha agregado correctamente</string>
     <!-- Ficha / Cuadernillo -->
 
 

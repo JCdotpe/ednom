@@ -305,11 +305,11 @@ public class MainActivity extends Activity
             txtAula.setText( docentesE.getAulaLocalE().getNro_aula().toString() );
             txtLocalAplicacion.setText( docentesE.getAulaLocalE().getLocalE().getNombreLocal() );
         }
-        errorPerson( docentesE.getStatus() );
+        showMessageDocente(docentesE.getStatus());
 
     }
 
-    public void errorPerson( Integer status ) {
+    public void showMessageDocente( Integer status ) {
 
         String msg = "";
         View view = findViewById(R.id.layout_datos);
@@ -381,16 +381,14 @@ public class MainActivity extends Activity
         txtLocalAplicacion.setText( "" );
         txtAula.setText( "" );
 
-        if ( instrumentoE.getStatus() == 0 )
+        if ( instrumentoE.getStatus() == 0 || instrumentoE.getStatus() == 4 )
         {
-            txtFicha.setText( instrumentoE.getCod_ficha().toString() );
+            txtFicha.setText( instrumentoE.getCod_ficha() );
             txtAula.setText( instrumentoE.getNro_aula().toString() );
             txtLocalAplicacion.setText( instrumentoE.getLocalE().getNombreLocal() );
         }
-        else
-        {
-            errorInstrumento( instrumentoE.getStatus() );
-        }
+
+        showMessageInstrumento( instrumentoE.getStatus() );
 
     }
 
@@ -416,39 +414,52 @@ public class MainActivity extends Activity
         txtLocalAplicacion.setText( "" );
         txtAula.setText( "" );
 
-        if ( instrumentoE.getStatus() == 0 )
+        if ( instrumentoE.getStatus() == 0 || instrumentoE.getStatus() == 4 )
         {
-            txtCuadernillo.setText( instrumentoE.getCod_cartilla().toString() );
+            txtCuadernillo.setText( instrumentoE.getCod_cartilla() );
             txtAula.setText( instrumentoE.getNro_aula().toString() );
             txtLocalAplicacion.setText( instrumentoE.getLocalE().getNombreLocal() );
         }
-        else
-        {
-            errorInstrumento( instrumentoE.getStatus() );
-        }
+
+         showMessageInstrumento( instrumentoE.getStatus() );
 
     }
 
-    public void errorInstrumento( Integer status ) {
+    public void showMessageInstrumento( Integer status ) {
 
         String msg = "";
+        View view = findViewById(R.id.layout_datos);
+        switch ( status ) {
+            case 0:
+                msg = getString(R.string.instrumento_register);
+                view.setBackgroundColor(getResources().getColor(R.color.correct));
+                toastCustomize(msg, R.drawable.check);
+                break;
 
-        switch ( status )
-        {
             case 1:
-                msg = getString( R.string.instrumento_not_found );// No se encontro Instrumento.
+                msg = getString(R.string.instrumento_not_found);
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                toastCustomize(msg, R.drawable.error);
                 break;
 
             case 2:
-                msg = getString( R.string.instrumento_not_access );// Error al acceder a bd.
+                msg = getString(R.string.instrumento_not_access);
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                toastCustomize(msg, R.drawable.bd_fail);
                 break;
 
             case 3:
-                msg = getString( R.string.instrumento_not_register ); // error al registrar instrumento.
+                msg = getString(R.string.instrumento_not_register);
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                toastCustomize(msg, R.drawable.error);
+                break;
+
+            case 4:
+                msg = getString(R.string.instrumento_double_register);
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                toastCustomize(msg, R.drawable.warning);
                 break;
         }
-
-        Toast.makeText( MainActivity.this, msg, Toast.LENGTH_LONG ).show();
 
     }
 
