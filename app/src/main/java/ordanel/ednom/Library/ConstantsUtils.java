@@ -8,12 +8,12 @@ import java.util.Date;
  */
 public class ConstantsUtils {
 
-    public static final String IP_SERVER = "jc.pe";
-    public static final String BASE_URL = "http://" + IP_SERVER + "/portafolio/isi/";// "/portafolio/ednom/" "/portafolio/isi/"
+    public static final String IP_SERVER = "172.16.100.61"; //"172.16.100.61" "jc.pe"
+    public static final String BASE_URL = "http://" + IP_SERVER + "/ednom2015i/tablet-";// "/portafolio/ednom/" "/portafolio/isi/"
     public static final String URL_PADRON = BASE_URL + "padron";// "padron.php" "padron"
     public static final String URL_ACCESS = BASE_URL + "logeo"; // "acces.php" "logeo"
     public static final String URL_VERSION = BASE_URL + "version";// "version.php" "version"
-    public static final String URL_SYNC = BASE_URL + "recibirPadron"; // "sync.php" "recibirPadron"
+    public static final String URL_SYNC = BASE_URL + "recibirpadron"; // "sync.php" "recibirPadron"
     public static final String PARAM_LOGIN = "sendPass"; // "password" "sendPass"
     public static final String URL_REPORTE_ACCESS = "http://172.16.100.61/ednom2015i/login";
     public static String getPass = "pass";
