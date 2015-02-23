@@ -108,7 +108,7 @@ public class DocentesDAO extends BaseDAO {
         try
         {
             openDBHelper();
-            if (isFechaRegistroDocente(paramDNI, DocentesE.F_REGISTRO)){
+            if (isEstadoRegistroDocente(paramDNI, DocentesE.ESTADO)){
                 valueInteger = 6 ;
             } else {
             contentValues =  new ContentValues();
@@ -146,7 +146,7 @@ public class DocentesDAO extends BaseDAO {
         try
         {
             openDBHelper();
-            if (isFechaRegistroDocente(number_doc, DocentesE.F_AULA)){
+            if (isEstadoRegistroDocente(number_doc, DocentesE.ESTADO_AULA)){
                 valueInteger = 6 ;
             } else {
                 contentValues = new ContentValues();
@@ -196,7 +196,7 @@ public class DocentesDAO extends BaseDAO {
         {
             openDBHelper();
 
-            if (isFechaRegistroInstrumento(paramCodFicha, "f_ficha", "cod_ficha")) {
+            if (isEstadoRegistroInstrumento(paramCodFicha, DocentesE.ESTADO_FICHA, DocentesE.COD_FICHA)) {
                 valueInteger = 4;
             } else {
                 contentValues = new ContentValues();
@@ -243,7 +243,7 @@ public class DocentesDAO extends BaseDAO {
         {
             openDBHelper();
 
-            if (isFechaRegistroInstrumento(paramCodCuadernillo, "f_cartilla", "cod_cartilla")) {
+            if (isEstadoRegistroInstrumento(paramCodCuadernillo, DocentesE.ESTADO_CARTILLA, DocentesE.COD_CARTILLA)) {
                 valueInteger = 4;
             } else {
                 contentValues = new ContentValues();
@@ -562,38 +562,38 @@ public class DocentesDAO extends BaseDAO {
         return docentesEArrayList;
     }
 
-    public Boolean isFechaRegistroDocente (String dni, String column){
+    public Boolean isEstadoRegistroDocente (String dni, String column){
         boolean isDate = false;
 
         SQL = "SELECT " + column + " from docentes where nro_doc like '" + dni + "'";
         cursor = dbHelper.getDatabase().rawQuery( SQL, null );
         if ( cursor.moveToFirst() ) {
             while (!cursor.isAfterLast()) {
-                String date = "vacio";
-                date = cursor.getString(cursor.getColumnIndex(column));
-                if (!date.isEmpty()) {
-                    Log.i(TAG, "fecha vacia: " + date);
+                int estado = 0;
+                estado = cursor.getInt(cursor.getColumnIndex(column));
+                if (estado != 0) {
                     isDate = true;
                 }
+                Log.i(TAG, column + ": " + Integer.toString(estado));
             cursor.moveToNext();
             }
         }
         return isDate;
     }
 
-    public Boolean isFechaRegistroInstrumento (String codigo, String column_fecha, String column_codigo ){
+    public Boolean isEstadoRegistroInstrumento (String codigo, String column_estado, String column_codigo ){
         boolean isDate = false;
 
-        SQL = "SELECT " + column_fecha + " from docentes where " + column_codigo + " like '" + codigo + "'";
+        SQL = "SELECT " + column_estado + " from docentes where " + column_codigo + " like '" + codigo + "'";
         cursor = dbHelper.getDatabase().rawQuery( SQL, null );
         if ( cursor.moveToFirst() ) {
             while (!cursor.isAfterLast()) {
-                String date = "vacio";
-                date = cursor.getString(cursor.getColumnIndex(column_fecha));
-                if (!date.isEmpty()) {
-                    Log.i(TAG, "fecha: " + date);
+                int estado = 0;
+                estado = cursor.getInt(cursor.getColumnIndex(column_estado));
+                if (estado != 0) {
                     isDate = true;
                 }
+                Log.i(TAG, column_estado + ": " + Integer.toString(estado));
                 cursor.moveToNext();
             }
         }

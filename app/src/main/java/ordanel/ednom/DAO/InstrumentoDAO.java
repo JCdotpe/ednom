@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Library.ConstantsUtils;
@@ -151,7 +152,7 @@ public class InstrumentoDAO extends BaseDAO {
         {
             openDBHelper();
 
-            if (isFechaRegistroInstrumento(paramCodFicha, "f_ficha", "cod_ficha")) {
+            if (isEstadoRegistroInstrumento(paramCodFicha, DocentesE.ESTADO_FICHA, DocentesE.COD_FICHA)) {
                 valueInteger = 4;
             } else {
                 contentValues = new ContentValues();
@@ -197,7 +198,7 @@ public class InstrumentoDAO extends BaseDAO {
         try
         {
             openDBHelper();
-            if (isFechaRegistroInstrumento(paramCodCuadernillo, "f_cartilla", "cod_cartilla")) {
+            if (isEstadoRegistroInstrumento(paramCodCuadernillo, DocentesE.ESTADO_CARTILLA, DocentesE.COD_CARTILLA)) {
                 valueInteger = 4;
             } else {
 
@@ -237,19 +238,19 @@ public class InstrumentoDAO extends BaseDAO {
         return valueInteger;
     }
 
-    public Boolean isFechaRegistroInstrumento (String codigo, String column_fecha, String column_codigo ){
+    public Boolean isEstadoRegistroInstrumento (String codigo, String column_estado, String column_codigo ){
         boolean isDate = false;
 
-        SQL = "SELECT " + column_fecha + " from instrumento where " + column_codigo + " like '" + codigo + "'";
+        SQL = "SELECT " + column_estado + " from docentes where " + column_codigo + " like '" + codigo + "'";
         cursor = dbHelper.getDatabase().rawQuery( SQL, null );
         if ( cursor.moveToFirst() ) {
             while (!cursor.isAfterLast()) {
-                String date = "vacio";
-                date = cursor.getString(cursor.getColumnIndex(column_fecha));
-                if (!date.isEmpty()) {
-                    Log.i(TAG, "fecha: " + date);
+                int estado = 0;
+                estado = cursor.getInt(cursor.getColumnIndex(column_estado));
+                if (estado != 0) {
                     isDate = true;
                 }
+                Log.i(TAG, column_estado + ": " + Integer.toString(estado));
                 cursor.moveToNext();
             }
         }

@@ -16,10 +16,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 
-
-/**
- * Created by OrdNael on 24/10/2014.
- */
 public class HttpPostAux {
 
     private static final String TAG = HttpPostAux.class.getSimpleName();
@@ -97,7 +93,7 @@ public class HttpPostAux {
         {
             BufferedReader bufferedReader = new BufferedReader( new InputStreamReader( inputStream, "iso-8859-1" ), 8 );
             StringBuilder stringBuilder = new StringBuilder();
-            String line = null;
+            String line;
 
             while ( ( line = bufferedReader.readLine() ) != null )
             {
