@@ -320,48 +320,63 @@ public class MainActivity extends Activity
 
         String msg = "";
         View view = findViewById(R.id.layout_datos);
+        TextView textView = (TextView) findViewById(R.id.label_mensaje);
         switch ( status )
         {
             case 0:
                 msg = getString(R.string.docente_register);
                 view.setBackgroundColor(getResources().getColor(R.color.correct));
-                toastCustomize(msg, R.drawable.check);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.correct));
+                textView.setText(msg);
                 break;
 
             case 1:
                 msg = getString( R.string.docente_not_found );
                 view.setBackgroundColor(getResources().getColor(R.color.error));
-                toastCustomize(msg, R.drawable.error);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
                 break;
 
             case 2:
                 msg = getString( R.string.docente_not_access );
                 view.setBackgroundColor(getResources().getColor(R.color.error));
-                toastCustomize(msg, R.drawable.bd_fail);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
                 break;
 
             case 3:
                 msg = getString( R.string.docente_not_register_local );
                 view.setBackgroundColor(getResources().getColor(R.color.error));
-                toastCustomize(msg, R.drawable.error);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
                 break;
 
             case 4:
                 msg = getString( R.string.docente_not_register_aula);
                 view.setBackgroundColor(getResources().getColor(R.color.error));
-                toastCustomize(msg, R.drawable.error);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
                 break;
 
             case 5:
                 msg = getString( R.string.docente_not_register_local );
                 view.setBackgroundColor(getResources().getColor(R.color.error));
-                toastCustomize(msg, R.drawable.error);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
                 break;
 
             case 6:
                 msg = getString(R.string.docente_double_register);
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
-                toastCustomize(msg, R.drawable.warning);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
                 break;
         }
     }
@@ -436,35 +451,46 @@ public class MainActivity extends Activity
 
         String msg = "";
         View view = findViewById(R.id.layout_datos);
+        TextView textView = (TextView) findViewById(R.id.label_mensaje);
         switch ( status ) {
             case 0:
                 msg = getString(R.string.instrumento_register);
                 view.setBackgroundColor(getResources().getColor(R.color.correct));
-                toastCustomize(msg, R.drawable.check);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.correct));
+                textView.setText(msg);
                 break;
 
             case 1:
                 msg = getString(R.string.instrumento_not_found);
                 view.setBackgroundColor(getResources().getColor(R.color.error));
-                toastCustomize(msg, R.drawable.error);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
                 break;
 
             case 2:
                 msg = getString(R.string.instrumento_not_access);
                 view.setBackgroundColor(getResources().getColor(R.color.error));
-                toastCustomize(msg, R.drawable.bd_fail);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
                 break;
 
             case 3:
                 msg = getString(R.string.instrumento_not_register);
                 view.setBackgroundColor(getResources().getColor(R.color.error));
-                toastCustomize(msg, R.drawable.error);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
                 break;
 
             case 4:
                 msg = getString(R.string.instrumento_double_register);
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
-                toastCustomize(msg, R.drawable.warning);
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
                 break;
         }
 
@@ -481,22 +507,6 @@ public class MainActivity extends Activity
         return super.onKeyDown( keyCode, event );
     }
 
-    public void toastCustomize (String message, int icon) {
-        LayoutInflater layoutInflater = getLayoutInflater();
-        View view = layoutInflater.inflate(R.layout.toast_warning, (ViewGroup) findViewById(R.id.linear_toast));
-        view.setBackgroundColor(Color.WHITE);
 
-        TextView textView = (TextView) view.findViewById(R.id.txt_message);
-        textView.setText(message);
-        textView.setTextSize(20);
-        ImageView imageView = (ImageView) view.findViewById(R.id.image_warning);
-        imageView.setImageResource(icon);
-
-        Toast toast = new Toast(getApplicationContext());
-        toast.setGravity(Gravity.CENTER_VERTICAL, 0, 0);
-        toast.setDuration(Toast.LENGTH_SHORT);
-        toast.setView(view);
-        toast.show();
-    }
 
 }

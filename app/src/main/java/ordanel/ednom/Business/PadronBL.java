@@ -9,9 +9,7 @@ import ordanel.ednom.Entity.PadronE;
 import ordanel.ednom.Entity.VersionE;
 import ordanel.ednom.Library.NetworkUtils;
 
-/**
- * Created by Leandro on 21/11/2014.
- */
+
 public class PadronBL {
 
     private static PadronDAO padronDAO;
