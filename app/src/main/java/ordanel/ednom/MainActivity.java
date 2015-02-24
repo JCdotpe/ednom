@@ -29,6 +29,7 @@ import ordanel.ednom.Business.InstrumentoBL;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Fragments.AsistenciaAula;
+import ordanel.ednom.Fragments.BusquedaDocentes;
 import ordanel.ednom.Fragments.IngresoLocal;
 import ordanel.ednom.Fragments.InventarioCuadernillo;
 import ordanel.ednom.Fragments.InventarioFicha;
@@ -131,6 +132,9 @@ public class MainActivity extends Activity
             case 9:
                 fragment = ReporteGeneral.newInstance(position + 1);
                 break;
+            case 10:
+                fragment = BusquedaDocentes.newInstance(position + 1);
+                break;
         }
 
         fragmentManager.beginTransaction()
@@ -177,6 +181,9 @@ public class MainActivity extends Activity
                 break;
             case 10:
                 mTitle = getString(R.string.title_section10);
+                break;
+            case 11:
+                mTitle = getString(R.string.title_section11);
                 break;
         }
     }

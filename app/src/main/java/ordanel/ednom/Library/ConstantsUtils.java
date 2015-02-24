@@ -15,7 +15,9 @@ public class ConstantsUtils {
     public static final String URL_VERSION = BASE_URL + "version";// "version.php" "version"
     public static final String URL_SYNC = BASE_URL + "recibirpadron"; // "sync.php" "recibirPadron"
     public static final String PARAM_LOGIN = "sendPass"; // "password" "sendPass"
-    public static final String URL_REPORTE_ACCESS = "http://172.16.100.61/ednom2015i/login";
+    public static final String URL_REPORTE = "http://webinei.inei.gob.pe/oted/monitoreo/";
+    public static final String URL_REPORTE_ACCESS = URL_REPORTE + "login";
+    public static final String URL_REPORTE_SEARCH_DOCENTE = URL_REPORTE + "search-docente";
     public static String getPass = "pass";
 
     public static String fecha_registro() {
