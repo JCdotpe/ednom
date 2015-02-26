@@ -19,7 +19,7 @@ public class VersionDAO extends BaseDAO {
 
     VersionE versionE;
 
-    public static VersionDAO getInstance( Context paramContext ) {
+    public synchronized static VersionDAO getInstance( Context paramContext ) {
 
         if ( versionDAO == null )
         {

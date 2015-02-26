@@ -50,7 +50,7 @@ public class PadronDAO extends BaseDAO {
     ArrayList<InstrumentoE> instrumentoEArrayList;
 
 
-    public static PadronDAO getInstance( Context paramContext ) {
+    public synchronized static PadronDAO getInstance( Context paramContext ) {
 
         if ( padronDAO == null )
         {

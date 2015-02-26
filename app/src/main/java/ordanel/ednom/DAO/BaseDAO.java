@@ -36,7 +36,7 @@ public class BaseDAO {
     public ContentValues contentValues = null;
 
 
-    public void initHttPostAux() {
+    public synchronized void initHttPostAux() {
 
         httpPostAux = HttpPostAux.getInstance();
 
@@ -48,7 +48,7 @@ public class BaseDAO {
 
     }
 
-    public void openDBHelper() {
+    public synchronized void openDBHelper() {
 
         try
         {
@@ -63,7 +63,7 @@ public class BaseDAO {
 
     }
 
-    public void closeDBHelper() {
+    public synchronized void closeDBHelper() {
 
         try
         {

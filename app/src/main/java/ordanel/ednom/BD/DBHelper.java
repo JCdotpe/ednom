@@ -1,9 +1,11 @@
 package ordanel.ednom.BD;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -12,9 +14,6 @@ import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
 
-/**
- * Created by OrdNael on 29/10/2014.
- */
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String TAG = DBHelper.class.getSimpleName();
@@ -102,10 +101,10 @@ public class DBHelper extends SQLiteOpenHelper {
         return  database;
     }
 
-    public void openDataBase() throws SQLException
+    public synchronized void openDataBase() throws SQLException
     {
-        String myPath = DB_PATH + DB_NAME;
-        database = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.OPEN_READWRITE);
+            String myPath = DB_PATH + DB_NAME;
+            database = SQLiteDatabase.openDatabase(myPath, null, SQLiteDatabase.ENABLE_WRITE_AHEAD_LOGGING & SQLiteDatabase.OPEN_READWRITE);
     }
 
     public void beginTransaction()

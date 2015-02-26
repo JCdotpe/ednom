@@ -20,7 +20,7 @@ public class InstrumentoDAO extends BaseDAO {
     private static InstrumentoDAO instrumentoDAO;
     private InstrumentoE instrumentoE;
 
-    public static InstrumentoDAO getInstance( Context paramContext ) {
+    public synchronized static InstrumentoDAO getInstance( Context paramContext ) {
 
         if ( instrumentoDAO == null )
         {

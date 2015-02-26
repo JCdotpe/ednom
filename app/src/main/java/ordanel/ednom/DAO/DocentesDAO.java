@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
@@ -12,6 +13,7 @@ import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Library.ConstantsUtils;
+import ordanel.ednom.MainActivity;
 
 /**
  * Created by OrdNael on 05/11/2014.
@@ -26,7 +28,7 @@ public class DocentesDAO extends BaseDAO {
     ArrayList<DocentesE> docentesEArrayList;
 
 
-    public static DocentesDAO getInstance( Context paramContext ) {
+    public synchronized static DocentesDAO getInstance( Context paramContext ) {
 
         if ( docentesDAO == null )
         {
@@ -49,39 +51,40 @@ public class DocentesDAO extends BaseDAO {
 
         try
         {
-            openDBHelper();
+            if (dbHelper.getDatabase().isOpen()){
+                Log.e("sdfsdfsd", "asdasdasd");
+            }else {
+                openDBHelper();
 
-            SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula, lc.nombreLocal FROM docentes dc INNER JOIN local lc ON dc.cod_sede_operativa = lc.cod_sede_operativa AND dc.cod_local_sede = lc.cod_local_sede WHERE " + paramConditional;
-            Log.e( TAG, "string sql : " + SQL );
-            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+                SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula, lc.nombreLocal FROM docentes dc INNER JOIN local lc ON dc.cod_sede_operativa = lc.cod_sede_operativa AND dc.cod_local_sede = lc.cod_local_sede WHERE " + paramConditional;
+                Log.e(TAG, "string sql : " + SQL);
+                cursor = dbHelper.getDatabase().rawQuery(SQL, null);
 
-            if ( cursor.moveToFirst() )
-            {
-                while ( !cursor.isAfterLast() )
-                {
+                if (cursor.moveToFirst()) {
+                    while (!cursor.isAfterLast()) {
 
-                    LocalE localE = new LocalE();
-                    localE.setNombreLocal( cursor.getString( cursor.getColumnIndex( LocalE.NOMBRE_LOCAL) ) );
+                        LocalE localE = new LocalE();
+                        localE.setNombreLocal(cursor.getString(cursor.getColumnIndex(LocalE.NOMBRE_LOCAL)));
 
-                    AulaLocalE aulaLocalE = new AulaLocalE();
-                    aulaLocalE.setLocalE( localE );
-                    aulaLocalE.setNro_aula( cursor.getInt( cursor.getColumnIndex( AulaLocalE.NRO_AULA ) ) );
+                        AulaLocalE aulaLocalE = new AulaLocalE();
+                        aulaLocalE.setLocalE(localE);
+                        aulaLocalE.setNro_aula(cursor.getInt(cursor.getColumnIndex(AulaLocalE.NRO_AULA)));
 
-                    docentesE.setNro_doc( cursor.getString( cursor.getColumnIndex( DocentesE.NRO_DOC ) ) );
-                    docentesE.setApe_pat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_PAT ) ) );
-                    docentesE.setApe_mat( cursor.getString( cursor.getColumnIndex( DocentesE.APE_MAT ) ) );
-                    docentesE.setNombres( cursor.getString( cursor.getColumnIndex( DocentesE.NOMBRES ) ) );
-                    docentesE.setAulaLocalE( aulaLocalE );
+                        docentesE.setNro_doc(cursor.getString(cursor.getColumnIndex(DocentesE.NRO_DOC)));
+                        docentesE.setApe_pat(cursor.getString(cursor.getColumnIndex(DocentesE.APE_PAT)));
+                        docentesE.setApe_mat(cursor.getString(cursor.getColumnIndex(DocentesE.APE_MAT)));
+                        docentesE.setNombres(cursor.getString(cursor.getColumnIndex(DocentesE.NOMBRES)));
+                        docentesE.setAulaLocalE(aulaLocalE);
 
-                    cursor.moveToNext();
+                        cursor.moveToNext();
+                    }
+
+                    docentesE.setStatus(0);
+                } else {
+                    docentesE.setStatus(1);// alerta. sin datos;
                 }
+            }
 
-                docentesE.setStatus( 0 );
-            }
-            else
-            {
-                docentesE.setStatus( 1 );// alerta. sin datos;
-            }
 
         }
         catch (Exception e)
