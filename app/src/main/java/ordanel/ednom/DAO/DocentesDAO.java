@@ -1,8 +1,10 @@
 package ordanel.ednom.DAO;
 
+import android.app.ProgressDialog;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -51,9 +53,6 @@ public class DocentesDAO extends BaseDAO {
 
         try
         {
-            if (dbHelper.getDatabase().isOpen()){
-                Log.e("sdfsdfsd", "asdasdasd");
-            }else {
                 openDBHelper();
 
                 SQL = "SELECT nro_doc, ape_pat, ape_mat, nombres, nro_aula, lc.nombreLocal FROM docentes dc INNER JOIN local lc ON dc.cod_sede_operativa = lc.cod_sede_operativa AND dc.cod_local_sede = lc.cod_local_sede WHERE " + paramConditional;
@@ -83,11 +82,8 @@ public class DocentesDAO extends BaseDAO {
                 } else {
                     docentesE.setStatus(1);// alerta. sin datos;
                 }
-            }
-
-
         }
-        catch (Exception e)
+          catch (Exception e)
         {
             e.printStackTrace();
             docentesE.setStatus( 2 ); // error al acceder.
@@ -127,6 +123,10 @@ public class DocentesDAO extends BaseDAO {
 
             dbHelper.setTransactionSuccessful(); }
         }
+        catch (SQLiteDatabaseLockedException e){
+            valueInteger = 7;
+
+        }
         catch (Exception e)
         {
             e.printStackTrace();
@@ -141,6 +141,7 @@ public class DocentesDAO extends BaseDAO {
 
         return valueInteger;
     }
+
 
     public Integer asistenciaAula( String number_doc, Integer nro_aula, Integer paramContingencia ) {
 

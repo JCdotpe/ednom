@@ -1,6 +1,7 @@
 package ordanel.ednom;
 
 import android.app.Application;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.util.Log;
 
@@ -32,7 +33,6 @@ public class EdnomApplication extends Application {
         Log.e( TAG, "start EdnomApplication" );
         ednomApplication = this;
         startService( new Intent( EdnomApplication.this, UpdaterService.class ) );
-
     }
 
     @Override

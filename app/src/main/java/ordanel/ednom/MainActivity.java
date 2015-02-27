@@ -378,6 +378,14 @@ public class MainActivity extends Activity
                 textView.setTextColor(getResources().getColor(R.color.warning));
                 textView.setText(msg);
                 break;
+
+            case 7:
+                msg = "sincronizando, espere unos segundos";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
         }
     }
 
