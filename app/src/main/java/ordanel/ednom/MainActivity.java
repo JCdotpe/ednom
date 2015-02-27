@@ -382,9 +382,9 @@ public class MainActivity extends Activity
             case 7:
                 msg = "sincronizando, espere unos segundos";
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
-                textView.setVisibility(View.VISIBLE);
-                textView.setTextColor(getResources().getColor(R.color.warning));
-                textView.setText(msg);
+                ProgressDialog progressDialog = ProgressDialog.show(getApplicationContext(), "Sincronizando", "Sincronizando datos");
+                progressDialog.setMax(12000);
+                progressDialog.dismiss();
                 break;
         }
     }

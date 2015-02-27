@@ -16,6 +16,7 @@ import java.util.ArrayList;
 
 import ordanel.ednom.Adapter.DocentesArrayAdapter;
 import ordanel.ednom.Business.DocentesBL;
+import ordanel.ednom.Business.PadronBL;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Interfaces.MainI;
 import ordanel.ednom.R;
@@ -88,7 +89,6 @@ public class ListadoIngresoLocal extends ListFragment {
 
             }
         });
-
         updateDisplayingTextView();
 
     }
@@ -111,6 +111,8 @@ public class ListadoIngresoLocal extends ListFragment {
         String text = getString( R.string.display );
         text = String.format( text, getListAdapter().getCount(), docentesBL.getSIZE()  );
         textViewDisplaying.setText( text );
+        TextView textViewSincronizado = (TextView) view.findViewById(R.id.txt_sincronizado);
+        textViewSincronizado.setText( docentesBL.getNroDatosSincronizados(DocentesE.ESTADO)+ " docentes sincronizados");
 
     }
 

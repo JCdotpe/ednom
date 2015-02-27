@@ -604,4 +604,23 @@ public class DocentesDAO extends BaseDAO {
         return isDate;
     }
 
+    public Integer nroDatosSincronizados(String columnEstado){
+        int datosSincronizados = 0;
+        try {
+            openDBHelper();
+            SQL = "SELECT count(*) FROM docentes WHERE " + columnEstado + " = 2";
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+            cursor.moveToFirst();
+            datosSincronizados = cursor.getInt(0);
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+        }
+        finally {
+            closeDBHelper();
+            cursor.close();
+        }
+        return datosSincronizados;
+    }
+
 }
