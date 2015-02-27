@@ -15,7 +15,7 @@ public class UsuarioLocalDAO extends BaseDAO {
 
     public UsuarioLocalE usuarioLocalE;
 
-    public static UsuarioLocalDAO getInstance( Context paramContext ) {
+    public synchronized static UsuarioLocalDAO getInstance( Context paramContext ) {
 
         if ( usuarioLocalDAO == null )
         {

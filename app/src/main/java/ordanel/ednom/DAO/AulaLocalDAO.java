@@ -7,9 +7,6 @@ import java.util.ArrayList;
 
 import ordanel.ednom.Entity.AulaLocalE;
 
-/**
- * Created by OrdNael on 24/11/2014.
- */
 public class AulaLocalDAO extends BaseDAO {
 
     private static final String TAG = AulaLocalDAO.class.getSimpleName();
@@ -18,7 +15,7 @@ public class AulaLocalDAO extends BaseDAO {
     AulaLocalE aulaLocalE;
     ArrayList<AulaLocalE> aulaLocalEArrayList;
 
-    public static AulaLocalDAO getInstance( Context paramContext ) {
+    public static synchronized AulaLocalDAO getInstance( Context paramContext ) {
 
         if ( aulaLocalDAO == null )
         {

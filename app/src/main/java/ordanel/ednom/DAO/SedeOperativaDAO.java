@@ -30,7 +30,7 @@ public class SedeOperativaDAO extends BaseDAO {
     ArrayList<LocalE> localEArrayList;
     ArrayList<UsuarioLocalE> usuarioLocalEArrayList;
 
-    public static SedeOperativaDAO getInstance( Context paramContext ) {
+    public synchronized static SedeOperativaDAO getInstance( Context paramContext ) {
 
         if ( sedeOperativaDAO == null )
         {
