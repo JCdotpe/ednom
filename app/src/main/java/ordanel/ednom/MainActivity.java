@@ -220,6 +220,8 @@ public class MainActivity extends Activity
         if ( id == R.id.action_logout )
         {
             logOut();
+        } else if (id == R.id.action_settings){
+            settings();
         }
 
         return super.onOptionsItemSelected(item);
@@ -228,6 +230,13 @@ public class MainActivity extends Activity
     public void logOut() {
         Intent intent = new Intent( getApplicationContext(), Login.class );
         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        startActivity(intent);
+    }
+
+    public void settings(){
+        int rol = 2;
+        Intent intent = new Intent(getApplicationContext(), Settings.class);
+        intent.putExtra("ROL", rol);
         startActivity(intent);
     }
 

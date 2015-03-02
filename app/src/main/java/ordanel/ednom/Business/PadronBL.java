@@ -1,12 +1,15 @@
 package ordanel.ednom.Business;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import ordanel.ednom.DAO.PadronDAO;
+import ordanel.ednom.DAO.UsuarioLocalDAO;
 import ordanel.ednom.DAO.VersionDAO;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.PadronE;
 import ordanel.ednom.Entity.VersionE;
+import ordanel.ednom.Library.ConstantsUtils;
 import ordanel.ednom.Library.NetworkUtils;
 
 
@@ -16,6 +19,7 @@ public class PadronBL {
     private static PadronE padronE;
     private static VersionDAO versionDAO;
     private static LocalE localE;
+    private static UsuarioLocalDAO usuarioLocalDAO;
 
     private static NetworkUtils networkUtils;
     private Context context;
@@ -26,6 +30,7 @@ public class PadronBL {
 
         padronDAO = PadronDAO.getInstance( paramContext );
         versionDAO = VersionDAO.getInstance( paramContext );
+        usuarioLocalDAO = UsuarioLocalDAO.getInstance(paramContext);
 
         this.context = paramContext;
 
@@ -70,6 +75,17 @@ public class PadronBL {
             padronDAO.getAllforSync();
         }
 
+    }
+
+    public void clearDataLocal(){
+        String password = ConstantsUtils.getPass;
+
+        if (usuarioLocalDAO.isInformatico(password)){
+            padronDAO.clearDataLocal();
+            Toast.makeText(context, "Se han borrado los datos de manera local", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(context, "Solo el informático de local puede realizar esta función", Toast.LENGTH_SHORT).show();
+        }
     }
 
 }

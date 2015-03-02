@@ -75,4 +75,39 @@ public class UsuarioLocalDAO extends BaseDAO {
         return usuarioLocalE;
     }
 
+    public boolean isInformatico(String password){
+        Log.e( TAG, "start isInformatico" );
+
+        SQL = "SELECT rol FROM usuario_local WHERE clave = '" + password + "'";
+
+        boolean isInformatico = false;
+        int rol = 0;
+        try
+        {
+            openDBHelper();
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+
+            if ( cursor.moveToFirst() )
+            {
+                rol = cursor.getInt(0);
+                if (rol == 2){ // Rol 2 de informatico de local
+                    isInformatico = true;
+                }
+            }
+            Log.e( TAG, "end isInformatico" );
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            Log.e( TAG, "isInformatico : " + e.toString() );
+        }
+        finally
+        {
+            closeDBHelper();
+            cursor.close();
+        }
+        return isInformatico;
+
+    }
+
 }

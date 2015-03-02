@@ -3,6 +3,7 @@ package ordanel.ednom.DAO;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -20,6 +21,7 @@ import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.ModalidadE;
 import ordanel.ednom.Entity.PadronE;
 import ordanel.ednom.Entity.SedeOperativaE;
+import ordanel.ednom.Entity.UsuarioLocalE;
 import ordanel.ednom.Library.ConstantsUtils;
 
 /**
@@ -33,7 +35,7 @@ public class PadronDAO extends BaseDAO {
     Integer nro_aula;
 
     JSONObject jsonObjectTemp;
-    JSONArray jsonArrayAulaLocal, jsonArrayDiscapacidad, jsonArrayModalidad, jsonArrayInstrumento;
+    JSONArray jsonArrayAulaLocal, jsonArrayDiscapacidad, jsonArrayModalidad, jsonArrayInstrumento, jsonArrayUsuarioLocal;
 
     LocalE localE;
     PadronE padronE;
@@ -42,12 +44,14 @@ public class PadronDAO extends BaseDAO {
     ModalidadE modalidadE;
     DocentesE docentesE;
     InstrumentoE instrumentoE;
+    UsuarioLocalE usuarioLocalE;
 
     ArrayList<AulaLocalE> aulaLocalEArrayList;
     ArrayList<DocentesE> docentesEArrayList;
     ArrayList<DiscapacidadE> discapacidadEArrayList;
     ArrayList<ModalidadE> modalidadEArrayList;
     ArrayList<InstrumentoE> instrumentoEArrayList;
+    ArrayList<UsuarioLocalE> usuarioLocalEArrayList;
 
 
     public synchronized static PadronDAO getInstance( Context paramContext ) {
@@ -279,6 +283,31 @@ public class PadronDAO extends BaseDAO {
                     padronE.setInstrumentoEList(instrumentoEArrayList);
                     // .set array INSTRUMENTO
 
+                    // set array USUARIOS
+                    jsonArrayUsuarioLocal = jsonObject.getJSONArray( "USUARIOS" );
+                    usuarioLocalEArrayList = new ArrayList<UsuarioLocalE>();
+
+                    for ( int i = 0; i < jsonArrayUsuarioLocal.length(); i++ )
+                    {
+                        jsonObjectTemp = (JSONObject) jsonArrayUsuarioLocal.get(i);
+
+                        usuarioLocalE = new UsuarioLocalE();
+                        usuarioLocalE.setIdUsuario( jsonObjectTemp.getInt( UsuarioLocalE.IDUSUARIO ) );
+                        usuarioLocalE.setClave( jsonObjectTemp.getString( UsuarioLocalE.CLAVE ) );
+                        usuarioLocalE.setRol( jsonObjectTemp.getInt( UsuarioLocalE.ROL ) );
+                        usuarioLocalE.setUsuario( jsonObjectTemp.getString( UsuarioLocalE.USUARIO ) );
+
+                        usuarioLocalE.setLocalE( paramLocalE );
+
+                        usuarioLocalEArrayList.add( usuarioLocalE );
+
+                    }
+
+                    valueInteger = usuarioLocalEArrayList.size();
+                    Log.e( TAG, "cantidad de usuarios : " + valueInteger.toString() );
+                    padronE.setUsuarioLocalEList(usuarioLocalEArrayList);
+                    // .set array USUARIOS
+
                     padronE.setStatus( 0 );
 
                 }
@@ -321,6 +350,7 @@ public class PadronDAO extends BaseDAO {
                 discapacidadEArrayList = (ArrayList<DiscapacidadE>) paramPadronE.getDiscapacidadEList();
                 modalidadEArrayList = (ArrayList<ModalidadE>) paramPadronE.getModalidadEList();
                 instrumentoEArrayList = (ArrayList<InstrumentoE>) paramPadronE.getInstrumentoEList();
+                usuarioLocalEArrayList = (ArrayList<UsuarioLocalE>) paramPadronE.getUsuarioLocalEList();
                 // .set de Arrays
 
                 // registro de AULAS
@@ -340,6 +370,7 @@ public class PadronDAO extends BaseDAO {
 
                     valueLong = dbHelper.getDatabase().insertOrThrow( "aula_local", null, contentValues );
                     Log.e( TAG, "aula_local insert : " + String.valueOf(valueLong) );
+
 
                     // registro de Docentes
                     for ( DocentesE docentesE : aulaLocalE.getDocentesEList() )
@@ -429,6 +460,27 @@ public class PadronDAO extends BaseDAO {
                     Log.e( TAG, "instrumento insert : " + String.valueOf(valueLong) );
                 }
                 // .registro de INSTRUMENTO
+
+                // registrar Usuario_Local
+                for (UsuarioLocalE usuarioLocalE : usuarioLocalEArrayList){
+                    cod_sede_operativa = usuarioLocalE.getLocalE().getSedeOperativaE().getCod_sede_operativa();
+                    cod_local_sede = aulaLocalE.getLocalE().getCod_local_sede();
+
+                    contentValues = new ContentValues();
+
+                    contentValues.put( SedeOperativaE.COD_SEDE_OPERATIVA, cod_sede_operativa );
+                    contentValues.put( LocalE.COD_LOCAL_SEDE, cod_local_sede);
+                    contentValues.put( UsuarioLocalE.IDUSUARIO, usuarioLocalE.getIdUsuario());
+                    contentValues.put( UsuarioLocalE.CLAVE, usuarioLocalE.getClave());
+                    contentValues.put( UsuarioLocalE.ROL, usuarioLocalE.getRol());
+                    contentValues.put( UsuarioLocalE.USUARIO, usuarioLocalE.getUsuario());
+
+                    valueLong = dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentValues );
+                    Log.e( TAG, "usuario_local insert : " + String.valueOf(valueLong) );
+
+                }
+
+                // registrar Usuario_Local
 
                 dbHelper.setTransactionSuccessful();
 
@@ -634,6 +686,9 @@ public class PadronDAO extends BaseDAO {
             dbHelper.getDatabase().delete( "aula_local", null, null );
             Log.e( TAG, "Se elimino aula_local!" );
 
+            dbHelper.getDatabase().delete( "usuario_local", null, null );
+            Log.e( TAG, "Se elimino usuario local!" );
+
             dbHelper.getDatabase().delete( "docentes", null, null );
             Log.e( TAG, "Se elimino docentes!" );
 
@@ -656,6 +711,51 @@ public class PadronDAO extends BaseDAO {
         }
 
     }
+
+    public void clearDataLocal(){
+        try{
+            Log.e(TAG, "Eliminando registro locales");
+            openDBHelper();
+
+            // Update docentes Table
+            ContentValues docentesValues = new ContentValues();
+            docentesValues.putNull(DocentesE.ESTADO);
+            docentesValues.putNull(DocentesE.ESTADO_AULA);
+            docentesValues.putNull(DocentesE.F_AULA);
+            docentesValues.putNull(DocentesE.ESTADO_FICHA);
+            docentesValues.putNull(DocentesE.ESTADO_CARTILLA);
+            docentesValues.putNull(DocentesE.F_CARTILLA);
+            docentesValues.putNull(DocentesE.NRO_AULA_CAMBIO);
+
+            dbHelper.getDatabase().update("docentes", docentesValues, null, null);
+            // Finish Update docentes table
+
+            // Update instrumento Table
+            ContentValues instrumentoValues = new ContentValues();
+            instrumentoValues.putNull(InstrumentoE.NRO_AULA);
+            instrumentoValues.putNull(InstrumentoE.ESTADO_FICHA);
+            instrumentoValues.putNull(InstrumentoE.F_FICHA);
+            instrumentoValues.putNull(InstrumentoE.ESTADO_CARTILLA);
+            instrumentoValues.putNull(InstrumentoE.F_CARTILLA);
+
+            dbHelper.getDatabase().update("instrumento", instrumentoValues, null, null);
+            // Finish Update instrumento table
+
+            Log.e(TAG, "Se eliminó registro locales");
+
+            dbHelper.setTransactionSuccessful();
+        }catch (SQLiteDatabaseLockedException l){
+            l.printStackTrace();
+            Log.e(TAG, "Error: " + l);
+        } catch(Exception e){
+            e.printStackTrace();
+            Log.e(TAG, "Error: " + e);
+        } finally {
+            closeDBHelper();
+        }
+
+    }
+
 
     /*public Date setearFecha( String stringFecha ) {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");

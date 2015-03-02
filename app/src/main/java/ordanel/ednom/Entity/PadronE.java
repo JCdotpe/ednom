@@ -16,7 +16,16 @@ public class PadronE implements Parcelable {
     private List<DiscapacidadE> discapacidadEList = new ArrayList<DiscapacidadE>();
     private List<ModalidadE> modalidadEList = new ArrayList<ModalidadE>();
     private List<InstrumentoE> instrumentoEList = new ArrayList<InstrumentoE>();
+    private List<UsuarioLocalE> usuarioLocalEList = new ArrayList<UsuarioLocalE>();
     private Integer status;
+
+    public List<UsuarioLocalE> getUsuarioLocalEList() {
+        return usuarioLocalEList;
+    }
+
+    public void setUsuarioLocalEList(List<UsuarioLocalE> usuarioLocalEList) {
+        this.usuarioLocalEList = usuarioLocalEList;
+    }
 
     public PadronE() {
         super();
@@ -29,6 +38,7 @@ public class PadronE implements Parcelable {
         parcel.readTypedList( discapacidadEList, DiscapacidadE.CREATOR );
         parcel.readTypedList( modalidadEList, ModalidadE.CREATOR );
         parcel.readTypedList( instrumentoEList, InstrumentoE.CREATOR );
+        parcel.readTypedList( usuarioLocalEList, UsuarioLocalE.CREATOR );
         status = parcel.readInt();
 
     }
@@ -46,6 +56,7 @@ public class PadronE implements Parcelable {
         dest.writeTypedList( discapacidadEList );
         dest.writeTypedList( modalidadEList );
         dest.writeTypedList(instrumentoEList);
+        dest.writeTypedList(usuarioLocalEList);
         dest.writeInt( status );
 
     }
