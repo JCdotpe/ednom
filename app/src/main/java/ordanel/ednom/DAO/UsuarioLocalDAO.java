@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 import ordanel.ednom.Entity.UsuarioLocalE;
+import ordanel.ednom.Library.ConstantsUtils;
 
 /**
  * Created by OrdNael on 28/11/2014.
@@ -49,7 +50,7 @@ public class UsuarioLocalDAO extends BaseDAO {
                 usuarioLocalE.setIdUsuario( cursor.getInt( cursor.getColumnIndex( UsuarioLocalE.IDUSUARIO ) ) );
                 usuarioLocalE.setUsuario( cursor.getString( cursor.getColumnIndex( UsuarioLocalE.USUARIO ) ) );
                 usuarioLocalE.setRol( cursor.getInt( cursor.getColumnIndex( UsuarioLocalE.ROL ) ) );
-
+                ConstantsUtils.getRol = usuarioLocalE.getRol();
                 usuarioLocalE.setStatus( 0 ); // todo bien
             }
             else

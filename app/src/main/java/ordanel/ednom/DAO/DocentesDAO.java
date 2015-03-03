@@ -123,14 +123,16 @@ public class DocentesDAO extends BaseDAO {
 
             dbHelper.setTransactionSuccessful(); }
         }
-        catch (SQLiteDatabaseLockedException e){
+        catch (SQLiteDatabaseLockedException l){
+            l.printStackTrace();
             valueInteger = 7;
-
+            Log.e(TAG, "Error: " + l);
         }
         catch (Exception e)
         {
             e.printStackTrace();
             valueInteger = 3;// error al registra asistencia al local;
+            Log.e(TAG, "Error: " + e);
         }
         finally
         {
@@ -177,10 +179,16 @@ public class DocentesDAO extends BaseDAO {
                 dbHelper.setTransactionSuccessful();
             }
         }
+        catch (SQLiteDatabaseLockedException l){
+            l.printStackTrace();
+            valueInteger = 7;
+            Log.e(TAG, "Error: " + l);
+        }
         catch (Exception e)
         {
             e.printStackTrace();
             valueInteger = 4;// error al registrar asistencia al aula;
+            Log.e(TAG, "Error: " + e);
         }
         finally
         {

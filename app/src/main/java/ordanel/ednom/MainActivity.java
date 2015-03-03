@@ -7,22 +7,16 @@ import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.view.Gravity;
 import android.view.KeyEvent;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
-import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Business.InstrumentoBL;
@@ -40,6 +34,7 @@ import ordanel.ednom.Fragments.ListadoInventarioFicha;
 import ordanel.ednom.Fragments.ReporteGeneral;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
+import ordanel.ednom.Library.ConstantsUtils;
 
 
 public class MainActivity extends Activity
@@ -91,7 +86,49 @@ public class MainActivity extends Activity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = null;
+        if (ConstantsUtils.getRol == 1){
+            switch ( position )
+            {
+                case 0:
+                    fragment = Welcome.newInstance( position + 1 );
+                    break;
 
+                case 1:
+                    fragment = IngresoLocal.newInstance( position + 1 );
+                    break;
+
+                case 2:
+                    fragment = AsistenciaAula.newInstance( position + 1 );
+                    break;
+
+                case 3:
+                    fragment = InventarioFicha.newInstance( position + 1 );
+                    break;
+
+                case 4:
+                    fragment = InventarioCuadernillo.newInstance( position + 1 );
+                    break;
+
+                case 5:
+                    fragment = ListadoIngresoLocal.newInstance( position + 1 );
+                    break;
+
+                case 6:
+                    fragment = ListadoAsistenciaAula.newInstance( position + 1 );
+                    break;
+
+                case 7:
+                    fragment = ListadoInventarioFicha.newInstance( position + 1 );
+                    break;
+
+                case 8:
+                    fragment = ListadoInventarioCuadernillo.newInstance( position + 1 );
+                    break;
+                case 9:
+                    fragment = BusquedaDocentes.newInstance(position + 1);
+                    break;
+            }
+        } else if (ConstantsUtils.getRol == 2){
         switch ( position )
         {
             case 0:
@@ -135,6 +172,13 @@ public class MainActivity extends Activity
             case 10:
                 fragment = BusquedaDocentes.newInstance(position + 1);
                 break;
+        }} else if (ConstantsUtils.getRol == 6){
+            switch ( position )
+            {
+                case 0:
+                    fragment =  BusquedaDocentes.newInstance(position + 1);
+                    break;
+            }
         }
 
         fragmentManager.beginTransaction()
@@ -148,43 +192,88 @@ public class MainActivity extends Activity
 
     @Override
     public void onSectionAttached(int number) {
-        switch (number) {
-            case 1:
-                mTitle = getString(R.string.title_section1);
-                break;
-            case 2:
-                mTitle = getString(R.string.title_section2);
-                break;
-            case 3:
-                mTitle = getString(R.string.title_section3);
-                break;
-            case 4:
-                mTitle = getString( R.string.title_section4 );
-                break;
-            case 5:
-                mTitle = getString( R.string.title_section5 );
-                break;
-            case 6:
-                mTitle = getString( R.string.title_section6 );
-                break;
+        if (ConstantsUtils.getRol == 1){
+            switch (number) {
+                case 1:
+                    mTitle = getString(R.string.title_section1);
+                    break;
+                case 2:
+                    mTitle = getString(R.string.title_section2);
+                    break;
+                case 3:
+                    mTitle = getString(R.string.title_section3);
+                    break;
+                case 4:
+                    mTitle = getString( R.string.title_section4 );
+                    break;
+                case 5:
+                    mTitle = getString( R.string.title_section5 );
+                    break;
+                case 6:
+                    mTitle = getString( R.string.title_section6 );
+                    break;
 
-            case 7:
-                mTitle = getString( R.string.title_section7 );
-                break;
+                case 7:
+                    mTitle = getString( R.string.title_section7 );
+                    break;
 
-            case 8:
-                mTitle = getString( R.string.title_section8 );
-                break;
+                case 8:
+                    mTitle = getString( R.string.title_section8 );
+                    break;
 
-            case 9:
-                mTitle = getString( R.string.title_section9 );
-                break;
-            case 10:
-                mTitle = getString(R.string.title_section10);
-                break;
-            case 11:
-                mTitle = getString(R.string.title_section11);
-                break;
+                case 9:
+                    mTitle = getString( R.string.title_section9 );
+                    break;
+                case 10:
+                    mTitle = getString(R.string.title_section11);
+                    break;
+
+            }
+        } else if (ConstantsUtils.getRol == 2){
+            switch (number) {
+                case 1:
+                    mTitle = getString(R.string.title_section1);
+                    break;
+                case 2:
+                    mTitle = getString(R.string.title_section2);
+                    break;
+                case 3:
+                    mTitle = getString(R.string.title_section3);
+                    break;
+                case 4:
+                    mTitle = getString( R.string.title_section4 );
+                    break;
+                case 5:
+                    mTitle = getString( R.string.title_section5 );
+                    break;
+                case 6:
+                    mTitle = getString( R.string.title_section6 );
+                    break;
+
+                case 7:
+                    mTitle = getString( R.string.title_section7 );
+                    break;
+
+                case 8:
+                    mTitle = getString( R.string.title_section8 );
+                    break;
+
+                case 9:
+                    mTitle = getString( R.string.title_section9 );
+                    break;
+                case 10:
+                    mTitle = getString(R.string.title_section10);
+                    break;
+                case 11:
+                    mTitle = getString(R.string.title_section11);
+                    break;
+            }
+        } else if (ConstantsUtils.getRol == 6){
+            switch (number) {
+                case 1:
+                    mTitle = getString(R.string.title_section11);
+                    break;
+            }
         }
     }
 
@@ -207,6 +296,16 @@ public class MainActivity extends Activity
             return true;
         }
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        MenuItem settitng = menu.findItem(R.id.action_settings);
+        if(ConstantsUtils.getRol == 2)
+        {
+            settitng.setVisible(true);
+        }
+        return true;
     }
 
     @Override
@@ -234,9 +333,7 @@ public class MainActivity extends Activity
     }
 
     public void settings(){
-        int rol = 2;
         Intent intent = new Intent(getApplicationContext(), Settings.class);
-        intent.putExtra("ROL", rol);
         startActivity(intent);
     }
 
@@ -389,11 +486,19 @@ public class MainActivity extends Activity
                 break;
 
             case 7:
-                msg = "sincronizando, espere unos segundos";
+                msg = getString(R.string.docente_sync);
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
                 ProgressDialog progressDialog = ProgressDialog.show(getApplicationContext(), "Sincronizando", "Sincronizando datos");
                 progressDialog.setMax(12000);
                 progressDialog.dismiss();
+                break;
+
+            case 8:
+                msg = getString(R.string.docente_aula_not_found);
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
                 break;
         }
     }

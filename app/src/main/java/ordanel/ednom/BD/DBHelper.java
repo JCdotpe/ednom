@@ -30,8 +30,8 @@ public class DBHelper extends SQLiteOpenHelper {
     {
         super(context, DB_NAME, null, DB_VERSION);
         mContext = context;
-        //DB_PATH = "data/data/" + mContext.getPackageName() + "/databases/";
-        DB_PATH = "storage/sdcard0/" + mContext.getPackageName();
+        DB_PATH = "data/data/" + mContext.getPackageName() + "/databases/";
+        //DB_PATH = "storage/sdcard0/" + mContext.getPackageName();
     }
 
     public static DBHelper getUtilDb( Context context )

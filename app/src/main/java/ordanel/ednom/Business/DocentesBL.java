@@ -40,7 +40,6 @@ public class DocentesBL {
         {
             docentesE.setStatus( docentesDAO.asistenciaLocal( paramDNI ) );
         }
-
         return docentesE;
 
     }
@@ -64,7 +63,10 @@ public class DocentesBL {
         {
             docentesE.setStatus( docentesDAO.asistenciaAula( paramDNI, paramNroAula, contingencia ) );
 
+        }  else if (docentesE.getStatus() == 1){
+            docentesE.setStatus (8);
         }
+
 
         return docentesE;
     }

@@ -238,7 +238,7 @@ public class SedeOperativaDAO extends BaseDAO {
 
                     valueLong = dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentValues );
                     Log.e( TAG, "usuario_local insert : " + String.valueOf(valueLong) );
-
+                    ConstantsUtils.getRol = usuarioLocalE.getRol();
                 }
                 // .registro de USUARIO_LOCAL
 
