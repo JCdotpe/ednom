@@ -181,7 +181,7 @@ public class ListadoInventarioCuadernillo extends ListFragment {
             }
             catch ( Exception e )
             {
-                Log.e("ListadoInventarioFichaAsync", e.getMessage());
+                Log.e("ListadoInventarioFicha", e.getMessage());
             }
 
             newData = instrumentoBL.listadoInventarioCuadernillo( nro_aula, offset, limit );

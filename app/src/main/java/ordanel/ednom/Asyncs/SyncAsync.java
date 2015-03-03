@@ -3,6 +3,7 @@ package ordanel.ednom.Asyncs;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
+import android.widget.Toast;
 
 import ordanel.ednom.Business.PadronBL;
 
@@ -34,9 +35,8 @@ public class SyncAsync extends AsyncTask<Void, Void, Void> {
     @Override
     protected void onPostExecute(Void aVoid) {
         super.onPostExecute(aVoid);
-
         dialog.dismiss();
-
+        Toast.makeText(context, "Se han sincronizado " + "" + " datos", Toast.LENGTH_SHORT).show();
     }
 
 }
