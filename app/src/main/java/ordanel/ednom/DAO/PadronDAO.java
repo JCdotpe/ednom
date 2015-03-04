@@ -552,9 +552,9 @@ public class PadronDAO extends BaseDAO {
                 }
 
                 jsonObject.put( "DOCENTES", jsonArray );
-
                 syncronizar = true;
             }
+            Log.e(TAG, "DOCENTES: " + jsonArray.toString());
 
 
             SQL = "SELECT id_inst, cod_sede_operativa, cod_local_sede, cod_ficha, cod_cartilla, nro_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla FROM instrumento WHERE estado_ficha = 1 or estado_cartilla = 1";
@@ -591,6 +591,8 @@ public class PadronDAO extends BaseDAO {
 
                 syncronizar = true;
             }
+            Log.e(TAG, "INSTRUMENTO: " + jsonArray.toString());
+
 
             if ( syncronizar )
             {

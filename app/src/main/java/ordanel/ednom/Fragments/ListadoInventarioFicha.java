@@ -23,6 +23,7 @@ import ordanel.ednom.Business.AulaLocalBL;
 import ordanel.ednom.Business.InstrumentoBL;
 import ordanel.ednom.Entity.AulaLocalE;
 import ordanel.ednom.Entity.DocentesE;
+import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Interfaces.MainI;
 import ordanel.ednom.R;
 
@@ -141,6 +142,8 @@ public class ListadoInventarioFicha extends ListFragment {
         String text = getString( R.string.display );
         text = String.format( text, getListAdapter().getCount(), instrumentoBL.getSIZE()  );
         textViewDisplaying.setText( text );
+        TextView textViewSincronizado = (TextView) view.findViewById(R.id.txt_sincronizado);
+        textViewSincronizado.setText( instrumentoBL.getNroDatosSincronizados(InstrumentoE.ESTADO_FICHA)+ " fichas sincronizadas");
 
     }
 

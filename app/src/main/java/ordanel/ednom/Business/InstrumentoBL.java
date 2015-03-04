@@ -157,4 +157,7 @@ public class InstrumentoBL {
         return SIZE;
     }
 
+    public Integer getNroDatosSincronizados(String columnEstado){
+        return instrumentoDAO.nroDatosSincronizados(columnEstado);
+    }
 }

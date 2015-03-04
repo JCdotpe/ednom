@@ -612,11 +612,15 @@ public class DocentesDAO extends BaseDAO {
         return isDate;
     }
 
-    public Integer nroDatosSincronizados(String columnEstado){
+    public Integer nroDatosSincronizados(String columnEstado, int nroAula){
         int datosSincronizados = 0;
+        if (nroAula == 0 ) {
+            SQL = "SELECT count(*) FROM docentes WHERE " + columnEstado + " = 2";
+        } else {
+            SQL = "SELECT count(*) FROM docentes WHERE " + columnEstado + " = 2" + " AND ";
+        }
         try {
             openDBHelper();
-            SQL = "SELECT count(*) FROM docentes WHERE " + columnEstado + " = 2";
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
             cursor.moveToFirst();
             datosSincronizados = cursor.getInt(0);
