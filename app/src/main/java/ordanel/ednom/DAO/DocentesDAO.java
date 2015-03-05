@@ -575,7 +575,7 @@ public class DocentesDAO extends BaseDAO {
     }
 
     public Boolean isEstadoRegistroDocente (String dni, String column){
-        boolean isDate = false;
+        boolean isEstado = false;
 
         SQL = "SELECT " + column + " from docentes where nro_doc like '" + dni + "'";
         cursor = dbHelper.getDatabase().rawQuery( SQL, null );
@@ -584,13 +584,13 @@ public class DocentesDAO extends BaseDAO {
                 int estado = 0;
                 estado = cursor.getInt(cursor.getColumnIndex(column));
                 if (estado != 0) {
-                    isDate = true;
+                    isEstado = true;
                 }
                 Log.i(TAG, column + ": " + Integer.toString(estado));
             cursor.moveToNext();
             }
         }
-        return isDate;
+        return isEstado;
     }
 
     public Boolean isEstadoRegistroInstrumento (String codigo, String column_estado, String column_codigo ){

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 
@@ -26,6 +27,7 @@ public class BusquedaDocentes extends Fragment {
         webview = (WebView) view.findViewById(R.id.webView);
         pass = ConstantsUtils.getPass;
         webview.loadUrl(ConstantsUtils.URL_REPORTE_ACCESS + "?sendPass=" + pass);
+        webview.setWebChromeClient(new WebChromeClient());
         Log.i("Url cargada: ", ConstantsUtils.URL_REPORTE_ACCESS + "?sendPass=" + pass);
         webview.setWebViewClient(new WebViewClient(){
             @Override

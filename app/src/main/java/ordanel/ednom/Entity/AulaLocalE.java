@@ -110,24 +110,27 @@ public class AulaLocalE implements Parcelable {
     @Override
     public String toString() {
 
-        String textTipo;
+        String text =  "Aula " + nro_aula;
+        String displayText;
 
         switch ( tipo )
         {
             case "C":
-                textTipo = " ( Contingencia ) ";
+                displayText = text + " ( Contingencia ) ";
                 break;
 
             case "D":
-                textTipo = " ( Discapacidad ) ";
+                displayText = text + " ( Discapacidad ) ";
+                break;
+
+            case "A":
+                displayText = "Centro de Acopio";
                 break;
 
             default:
-                textTipo = "";
+                displayText = text;
                 break;
         }
-
-        String displayText = "Aula " + nro_aula + textTipo;
 
         return displayText;
     }

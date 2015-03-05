@@ -84,6 +84,7 @@ public class AulaLocalDAO extends BaseDAO {
             openDBHelper();
 
             SQL = "SELECT tipo FROM aula_local WHERE nro_aula = " + paramNroAula;
+            Log.e(TAG, SQL);
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
 
             if ( cursor.moveToFirst() )

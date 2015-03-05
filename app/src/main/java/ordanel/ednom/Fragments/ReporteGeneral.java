@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -47,6 +48,7 @@ public class ReporteGeneral extends Fragment {
         webview = (WebView) view.findViewById(R.id.webView);
         pass = ConstantsUtils.getPass;
         webview.loadUrl(ConstantsUtils.URL_REPORTE_ACCESS + "?sendPass=" + pass);
+        webview.setWebChromeClient(new WebChromeClient());
         webview.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
