@@ -115,7 +115,7 @@ public class DocentesBL {
         return SIZE;
     }
 
-    public Integer getNroDatosSincronizados(String columnEstado){
-        return docentesDAO.nroDatosSincronizados(columnEstado);
+    public Integer getNroDatosSincronizados(String columnEstado, int nroAula){
+        return docentesDAO.nroDatosSincronizados(columnEstado, nroAula);
     }
 }

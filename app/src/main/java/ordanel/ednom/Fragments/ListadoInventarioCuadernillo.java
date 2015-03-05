@@ -140,7 +140,7 @@ public class ListadoInventarioCuadernillo extends ListFragment {
         text = String.format( text, getListAdapter().getCount(), instrumentoBL.getSIZE()  );
         textViewDisplaying.setText( text );
         TextView textViewSincronizado = (TextView) view.findViewById(R.id.txt_sincronizado);
-        textViewSincronizado.setText( instrumentoBL.getNroDatosSincronizados(InstrumentoE.ESTADO_CARTILLA)+ " cuadernillos sincronizados");
+        textViewSincronizado.setText( instrumentoBL.getNroDatosSincronizados(InstrumentoE.ESTADO_CARTILLA, nro_aula)+ " cuadernillos sincronizados");
     }
 
     @Override

@@ -112,7 +112,7 @@ public class ListadoIngresoLocal extends ListFragment {
         text = String.format( text, getListAdapter().getCount(), docentesBL.getSIZE()  );
         textViewDisplaying.setText( text );
         TextView textViewSincronizado = (TextView) view.findViewById(R.id.txt_sincronizado);
-        textViewSincronizado.setText( docentesBL.getNroDatosSincronizados(DocentesE.ESTADO)+ " docentes sincronizados");
+        textViewSincronizado.setText( docentesBL.getNroDatosSincronizados(DocentesE.ESTADO, 0)+ " docentes sincronizados");
 
     }
 

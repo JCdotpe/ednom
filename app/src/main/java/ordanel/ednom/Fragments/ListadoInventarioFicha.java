@@ -143,7 +143,7 @@ public class ListadoInventarioFicha extends ListFragment {
         text = String.format( text, getListAdapter().getCount(), instrumentoBL.getSIZE()  );
         textViewDisplaying.setText( text );
         TextView textViewSincronizado = (TextView) view.findViewById(R.id.txt_sincronizado);
-        textViewSincronizado.setText( instrumentoBL.getNroDatosSincronizados(InstrumentoE.ESTADO_FICHA)+ " fichas sincronizadas");
+        textViewSincronizado.setText( instrumentoBL.getNroDatosSincronizados(InstrumentoE.ESTADO_FICHA, nro_aula)+ " fichas sincronizadas");
 
     }
 

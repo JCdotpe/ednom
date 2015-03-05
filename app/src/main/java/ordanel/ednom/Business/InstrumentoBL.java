@@ -157,7 +157,10 @@ public class InstrumentoBL {
         return SIZE;
     }
 
-    public Integer getNroDatosSincronizados(String columnEstado){
-        return instrumentoDAO.nroDatosSincronizados(columnEstado);
+    public Integer getNroDatosSincronizados(String columnEstado, int nroAula){
+        int nroInstrumentosAdicioanles = instrumentoDAO.nroDatosSincronizados(columnEstado);
+        int nroInstrumentosAsignados = docentesDAO.nroDatosSincronizados(columnEstado, nroAula);
+
+        return nroInstrumentosAdicioanles + nroInstrumentosAsignados;
     }
 }

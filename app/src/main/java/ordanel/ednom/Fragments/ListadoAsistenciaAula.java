@@ -141,7 +141,7 @@ public class ListadoAsistenciaAula extends ListFragment {
         text = String.format( text, getListAdapter().getCount(), docentesBL.getSIZE()  );
         textViewDisplaying.setText( text );
         TextView textViewSincronizado = (TextView) view.findViewById(R.id.txt_sincronizado);
-        textViewSincronizado.setText( docentesBL.getNroDatosSincronizados(DocentesE.ESTADO_AULA)+ " docentes sincronizados");
+        textViewSincronizado.setText( docentesBL.getNroDatosSincronizados(DocentesE.ESTADO_AULA, nro_aula)+ " docentes sincronizados");
 
     }
 

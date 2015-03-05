@@ -617,7 +617,7 @@ public class DocentesDAO extends BaseDAO {
         if (nroAula == 0 ) {
             SQL = "SELECT count(*) FROM docentes WHERE " + columnEstado + " = 2";
         } else {
-            SQL = "SELECT count(*) FROM docentes WHERE " + columnEstado + " = 2" + " AND ";
+            SQL = "SELECT count(*) FROM docentes WHERE " + columnEstado + " = 2" + " AND nro_aula = " + nroAula;
         }
         try {
             openDBHelper();
