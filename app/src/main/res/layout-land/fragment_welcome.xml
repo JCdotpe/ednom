@@ -9,21 +9,188 @@
     android:layout_height="match_parent"
     tools:context="ordanel.ednom.MainActivity$PlaceholderFragment">
 
-    <TextView
-        android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25dp"
-        android:text="Bienvenido" />
 
-    <Button
-        android:id="@+id/btnJSON"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Sincronizar"
-        android:layout_below="@+id/textView"
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="24dp" />
+        android:collapseColumns="3"
+        android:stretchColumns="*">
 
+    <TableRow
+        android:id="@+id/tableRow1"
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_margin="2dp"
+         >
+        <TextView
+            android:id="@+id/label_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:textSize="30sp"
+            android:textColor="black"
+            android:gravity="center_horizontal"
+            android:text="Reporte de Datos Locales"
+            android:padding="20sp"
+         />
+    </TableRow>
+    <TableRow
+        android:id="@+id/tableRow2"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:padding="20sp"
+        android:background="#80DEEA"
+        >
+        <TextView
+            android:id="@+id/label_blank"
+            android:text=""
+            android:layout_weight="0"/>
+        <TextView
+            android:id="@+id/label_registro"
+            android:text="Datos Registrados"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:textSize="20sp"/>
+        <TextView
+            android:id="@+id/label_sincronizado"
+            android:text="Datos Sincronizados"
+            android:textStyle="bold"
+            android:typeface="serif"
+            android:gravity="center"
+            android:layout_weight="1"
+            android:textSize="20sp"/>
+    </TableRow>
+        <TableRow
+            android:id="@+id/tableRow3"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:padding="20sp"
+            android:background="#E0E0E0"
+            >
+            <TextView
+                android:id="@+id/label_moemento_1"
+                android:text="Ingreso de Docentes al Local de Aplicación"
+                android:layout_weight="0"
+                android:textSize="20sp"
+                android:textColor="black"/>
+            <TextView
+                android:id="@+id/txt_nro_docentes_ingresos_registrados"
+                android:textStyle="bold"
+                android:hint="Nro Docentes registrados"
+                android:typeface="serif"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/txt_nro_docentes_ingresos_sincronizados"
+                android:hint="Nro Docentes sincronizados"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow4"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:padding="20sp"
+            android:background="#E0E0E0"
+            >
+            <TextView
+                android:id="@+id/label_momento_2"
+                android:text="Ingreso de Docentes al Aula"
+                android:layout_weight="0"
+                android:textSize="20sp"
+                android:textColor="black"/>
+            <TextView
+                android:id="@+id/txt_nro_docentes_aula_registrados"
+                android:textStyle="bold"
+                android:hint="Nro Docentes registrados"
+                android:typeface="serif"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/txt_nro_docentes_aula_sincronizados"
+                android:hint="Nro Docentes sincronizados"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow5"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:padding="20sp"
+            android:background="#E0E0E0"
+            >
+            <TextView
+                android:id="@+id/label_momento_3"
+                android:text="Registro de Fichas"
+                android:layout_weight="0"
+                android:textSize="20sp"
+                android:textColor="black"/>
+            <TextView
+                android:id="@+id/txt_nro_fichas_registradas"
+                android:textStyle="bold"
+                android:hint="Nro Fichas registradas"
+                android:typeface="serif"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/txt_nro_fichas_sincronizados"
+                android:hint="Nro Fichas sincronizadas"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+        </TableRow>
+        <TableRow
+            android:id="@+id/tableRow6"
+            android:layout_height="match_parent"
+            android:layout_width="match_parent"
+            android:gravity="center"
+            android:padding="20sp"
+            android:background="#E0E0E0"
+            >
+            <TextView
+                android:id="@+id/label_momento_4"
+                android:textSize="20sp"
+                android:text="Registro de Cuadernillos"
+                android:layout_weight="0"
+                android:textColor="black"/>
+            <TextView
+                android:id="@+id/txt_nro_cuadernillos_registrados"
+                android:textStyle="bold"
+                android:hint="Nro Cuadernillos registrados"
+                android:typeface="serif"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:textSize="20sp"/>
+            <TextView
+                android:id="@+id/txt_nro_cuadernillos_sincronizados"
+                android:hint="Nro Cuadernillos sincronizados"
+                android:textStyle="bold"
+                android:typeface="serif"
+                android:gravity="center"
+                android:layout_weight="1"
+                android:textSize="20sp"/>
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>
