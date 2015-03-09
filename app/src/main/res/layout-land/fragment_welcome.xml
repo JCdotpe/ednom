@@ -33,10 +33,10 @@
             android:textStyle="bold"
             android:typeface="serif"
             android:textSize="30sp"
-            android:textColor="black"
+            android:textColor="@android:color/black"
             android:gravity="center_horizontal"
             android:text="Reporte de Datos Locales"
-            android:padding="20sp"
+            android:padding="10sp"
          />
     </TableRow>
     <TableRow
@@ -44,13 +44,14 @@
         android:layout_height="match_parent"
         android:layout_width="match_parent"
         android:gravity="center"
-        android:padding="20sp"
+        android:padding="10sp"
         android:background="#80DEEA"
         >
         <TextView
             android:id="@+id/label_blank"
             android:text=""
-            android:layout_weight="0"/>
+            android:layout_weight="0"
+        />
         <TextView
             android:id="@+id/label_registro"
             android:text="Datos Registrados"
@@ -73,15 +74,15 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:padding="20sp"
+            android:padding="10sp"
             android:background="#E0E0E0"
             >
             <TextView
                 android:id="@+id/label_moemento_1"
-                android:text="Ingreso de Docentes al Local de Aplicación"
+                android:text="Ingresoal Local de Aplicación"
                 android:layout_weight="0"
                 android:textSize="20sp"
-                android:textColor="black"/>
+                android:textColor="@android:color/black"/>
             <TextView
                 android:id="@+id/txt_nro_docentes_ingresos_registrados"
                 android:textStyle="bold"
@@ -104,7 +105,7 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:padding="20sp"
+            android:padding="10sp"
             android:background="#E0E0E0"
             >
             <TextView
@@ -112,7 +113,7 @@
                 android:text="Ingreso de Docentes al Aula"
                 android:layout_weight="0"
                 android:textSize="20sp"
-                android:textColor="black"/>
+                android:textColor="@android:color/black"/>
             <TextView
                 android:id="@+id/txt_nro_docentes_aula_registrados"
                 android:textStyle="bold"
@@ -135,7 +136,7 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:padding="20sp"
+            android:padding="10sp"
             android:background="#E0E0E0"
             >
             <TextView
@@ -143,7 +144,7 @@
                 android:text="Registro de Fichas"
                 android:layout_weight="0"
                 android:textSize="20sp"
-                android:textColor="black"/>
+                android:textColor="@android:color/black"/>
             <TextView
                 android:id="@+id/txt_nro_fichas_registradas"
                 android:textStyle="bold"
@@ -166,7 +167,7 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent"
             android:gravity="center"
-            android:padding="20sp"
+            android:padding="10sp"
             android:background="#E0E0E0"
             >
             <TextView
@@ -174,7 +175,7 @@
                 android:textSize="20sp"
                 android:text="Registro de Cuadernillos"
                 android:layout_weight="0"
-                android:textColor="black"/>
+                android:textColor="@android:color/black"/>
             <TextView
                 android:id="@+id/txt_nro_cuadernillos_registrados"
                 android:textStyle="bold"

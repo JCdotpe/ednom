@@ -18,6 +18,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import ordanel.ednom.Asyncs.SyncAsync;
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Business.InstrumentoBL;
 import ordanel.ednom.Entity.DocentesE;
@@ -316,11 +317,14 @@ public class MainActivity extends Activity
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if ( id == R.id.action_logout )
-        {
-            logOut();
-        } else if (id == R.id.action_settings){
-            settings();
+        switch (id){
+            case R.id.action_logout:
+                logOut();
+            case R.id.action_settings:
+                settings();
+            case R.id.action_sync:
+                new SyncAsync( this ).execute();
+
         }
 
         return super.onOptionsItemSelected(item);

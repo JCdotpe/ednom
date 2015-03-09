@@ -158,9 +158,9 @@ public class InstrumentoBL {
     }
 
     public Integer getNroDatosSincronizados(String columnEstado, int nroAula){
-        int nroInstrumentosAdicioanles = instrumentoDAO.nroDatosSincronizados(columnEstado);
+        int nroInstrumentosAdicionales = instrumentoDAO.nroDatosSincronizados(columnEstado);
         int nroInstrumentosAsignados = docentesDAO.nroDatosSincronizados(columnEstado, nroAula);
 
-        return nroInstrumentosAdicioanles + nroInstrumentosAsignados;
+        return nroInstrumentosAdicionales + nroInstrumentosAsignados;
     }
 }

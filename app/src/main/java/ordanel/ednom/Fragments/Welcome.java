@@ -41,25 +41,8 @@ public class Welcome extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate( R.layout.fragment_welcome, container, false );
-
-        Button btnJson = (Button) view.findViewById( R.id.btnJSON );
-        btnJson.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                pruebaJSon();
-            }
-        });
-
         return view;
-
     }
-
-    public void pruebaJSon() {
-
-        new SyncAsync( getActivity() ).execute();
-
-    }
-
 
     @Override
     public void onAttach(Activity activity) {

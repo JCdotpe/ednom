@@ -4,6 +4,8 @@
         android:orderInCategory="100" android:showAsAction="never" android:visible="false"/>
     <item android:id="@+id/action_logout" android:title="@string/action_logout"
         android:orderInCategory="100" android:showAsAction="never" />
+    <item android:id="@+id/action_sync" android:icon="@drawable/sync" android:title="Sincronizar"
+        android:showAsAction="ifRoom"/>
 
 </menu>
 
