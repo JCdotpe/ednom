@@ -99,35 +99,9 @@ public class MainActivity extends Activity
                     break;
 
                 case 2:
-                    fragment = AsistenciaAula.newInstance( position + 1 );
-                    break;
-
-                case 3:
-                    fragment = InventarioFicha.newInstance( position + 1 );
-                    break;
-
-                case 4:
-                    fragment = InventarioCuadernillo.newInstance( position + 1 );
-                    break;
-
-                case 5:
                     fragment = ListadoIngresoLocal.newInstance( position + 1 );
                     break;
 
-                case 6:
-                    fragment = ListadoAsistenciaAula.newInstance( position + 1 );
-                    break;
-
-                case 7:
-                    fragment = ListadoInventarioFicha.newInstance( position + 1 );
-                    break;
-
-                case 8:
-                    fragment = ListadoInventarioCuadernillo.newInstance( position + 1 );
-                    break;
-                case 9:
-                    fragment = BusquedaDocentes.newInstance(position + 1);
-                    break;
             }
         } else if (ConstantsUtils.getRol == 2){
         switch ( position )
@@ -202,33 +176,8 @@ public class MainActivity extends Activity
                     mTitle = getString(R.string.title_section2);
                     break;
                 case 3:
-                    mTitle = getString(R.string.title_section3);
-                    break;
-                case 4:
-                    mTitle = getString( R.string.title_section4 );
-                    break;
-                case 5:
-                    mTitle = getString( R.string.title_section5 );
-                    break;
-                case 6:
                     mTitle = getString( R.string.title_section6 );
                     break;
-
-                case 7:
-                    mTitle = getString( R.string.title_section7 );
-                    break;
-
-                case 8:
-                    mTitle = getString( R.string.title_section8 );
-                    break;
-
-                case 9:
-                    mTitle = getString( R.string.title_section9 );
-                    break;
-                case 10:
-                    mTitle = getString(R.string.title_section11);
-                    break;
-
             }
         } else if (ConstantsUtils.getRol == 2){
             switch (number) {
@@ -320,11 +269,13 @@ public class MainActivity extends Activity
         switch (id){
             case R.id.action_logout:
                 logOut();
+                break;
             case R.id.action_settings:
                 settings();
+                break;
             case R.id.action_sync:
                 new SyncAsync( this ).execute();
-
+                break;
         }
 
         return super.onOptionsItemSelected(item);

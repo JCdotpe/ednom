@@ -341,6 +341,6 @@ public class DocentesE implements Parcelable {
     }
 
     public String getNombreCompleto() {
-        return ape_pat + ' ' + ape_mat + ' ' + nombres;
+        return nombres;
     }
 }

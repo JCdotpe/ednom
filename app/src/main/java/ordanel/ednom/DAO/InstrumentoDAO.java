@@ -276,4 +276,22 @@ public class InstrumentoDAO extends BaseDAO {
         return datosSincronizados;
     }
 
+    public int nroDatosRegistrados(String columnEstado) {
+        int datosRegistrados = 0;
+        try {
+            openDBHelper();
+            SQL = "SELECT count(*) FROM instrumento WHERE " + columnEstado + " = 2 or " + columnEstado + " = 1";
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+            cursor.moveToFirst();
+            datosRegistrados = cursor.getInt(0);
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+        }
+        finally {
+            closeDBHelper();
+            cursor.close();
+        }
+        return datosRegistrados;
+    }
 }

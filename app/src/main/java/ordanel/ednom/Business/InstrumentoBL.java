@@ -163,4 +163,10 @@ public class InstrumentoBL {
 
         return nroInstrumentosAdicionales + nroInstrumentosAsignados;
     }
+    public Integer getNroDatosRegistrados(String columnEstado, int nroAula){
+        int nroInstrumentosAdicionales = instrumentoDAO.nroDatosRegistrados(columnEstado);
+        int nroInstrumentosAsignados = docentesDAO.nroDatosRegistrados(columnEstado, nroAula);
+
+        return nroInstrumentosAdicionales + nroInstrumentosAsignados;
+    }
 }

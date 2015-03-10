@@ -253,7 +253,7 @@ public class PadronDAO extends BaseDAO {
                     Log.e( TAG, "cantidad de modalidad : " + valueInteger.toString() );
                     padronE.setModalidadEList( modalidadEArrayList );
                     // .set array MODALIDAD
-
+/*
                     // set array INSTRUMENTO
                     jsonArrayInstrumento = jsonObject.getJSONArray( "INSTRUMENTO" );
                     instrumentoEArrayList = new ArrayList<InstrumentoE>();
@@ -307,7 +307,7 @@ public class PadronDAO extends BaseDAO {
                     Log.e( TAG, "cantidad de usuarios : " + valueInteger.toString() );
                     padronE.setUsuarioLocalEList(usuarioLocalEArrayList);
                     // .set array USUARIOS
-
+*/
                     padronE.setStatus( 0 );
 
                 }
@@ -439,7 +439,7 @@ public class PadronDAO extends BaseDAO {
                 }
                 // .registro de MODALIDAD
 
-
+/*
                 // registro de INSTRUMENTO
                 for ( InstrumentoE instrumentoE : instrumentoEArrayList )
                 {
@@ -481,7 +481,7 @@ public class PadronDAO extends BaseDAO {
                 }
 
                 // registrar Usuario_Local
-
+*/
                 dbHelper.setTransactionSuccessful();
 
                 padronE.setStatus( 0 );
@@ -556,7 +556,7 @@ public class PadronDAO extends BaseDAO {
             }
             Log.e(TAG, "DOCENTES: " + jsonArray.toString());
 
-
+/*
             SQL = "SELECT id_inst, cod_sede_operativa, cod_local_sede, cod_ficha, cod_cartilla, nro_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla FROM instrumento WHERE estado_ficha = 1 or estado_cartilla = 1";
             Log.e( TAG, "string sql instrumento : " + SQL );
 
@@ -592,7 +592,7 @@ public class PadronDAO extends BaseDAO {
                 syncronizar = true;
             }
             Log.e(TAG, "INSTRUMENTO: " + jsonArray.toString());
-
+*/
 
             if ( syncronizar )
             {
@@ -636,7 +636,7 @@ public class PadronDAO extends BaseDAO {
                     }
                     // .set array DOCENTES
 
-
+/*
                     // set array INSTRUMENTOS
                     jsonArray = jsonObject.getJSONArray( "INSTRUMENTO" );
 
@@ -659,7 +659,7 @@ public class PadronDAO extends BaseDAO {
 
                     }
                     // .set array INSTRUMENTOS
-
+*/
                     dbHelper.setTransactionSuccessful();
                 }
             }

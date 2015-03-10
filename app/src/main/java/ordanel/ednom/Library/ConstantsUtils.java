@@ -8,8 +8,8 @@ import java.util.Date;
  */
 public class ConstantsUtils {
 
-    public static final String IP_SERVER = "172.16.100.61"; //"172.16.100.61" "jc.pe" "webinei.inei.gob.pe"
-    public static final String BASE_URL = "http://" + IP_SERVER + "/ednom2015i/tablet-";// "/portafolio/ednom/" "/portafolio/isi/" "/oted/monitoreo/tablet-"
+    public static final String IP_SERVER = "192.95.3.149:90"; //"172.16.100.61" "jc.pe" "webinei.inei.gob.pe"
+    public static final String BASE_URL = "http://" + IP_SERVER + "/reda/tablet-";// "/portafolio/ednom/" "/portafolio/isi/" "/oted/monitoreo/tablet-"
     public static final String URL_PADRON = BASE_URL + "padron";// "padron.php" "padron"
     public static final String URL_ACCESS = BASE_URL + "logeo"; // "acces.php" "logeo"
     public static final String URL_VERSION = BASE_URL + "version";// "version.php" "version"

@@ -79,7 +79,7 @@
             >
             <TextView
                 android:id="@+id/label_moemento_1"
-                android:text="Ingresoal Local de Aplicación"
+                android:text="Ingreso al Local de Aplicación"
                 android:layout_weight="0"
                 android:textSize="20sp"
                 android:textColor="@android:color/black"/>

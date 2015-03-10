@@ -29,7 +29,6 @@ public class DocentesDAO extends BaseDAO {
 
     ArrayList<DocentesE> docentesEArrayList;
 
-
     public synchronized static DocentesDAO getInstance( Context paramContext ) {
 
         if ( docentesDAO == null )
@@ -633,6 +632,29 @@ public class DocentesDAO extends BaseDAO {
             cursor.close();
         }
         return datosSincronizados;
+    }
+
+    public Integer nroDatosRegistrados(String columnEstado, int nroAula){
+        int datosRegistrados = 0;
+        if (nroAula == 0 ) {
+            SQL = "SELECT count(*) FROM docentes WHERE " + columnEstado + " = 2 or " + columnEstado + " = 1";
+        } else {
+            SQL = "SELECT count(*) FROM docentes WHERE (" + columnEstado + " = 2 or " + columnEstado + " = 1)" + " AND nro_aula = " + nroAula;
+        }
+        try {
+            openDBHelper();
+            cursor = dbHelper.getDatabase().rawQuery( SQL, null );
+            cursor.moveToFirst();
+            datosRegistrados = cursor.getInt(0);
+        }catch (Exception e){
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+        }
+        finally {
+            closeDBHelper();
+            cursor.close();
+        }
+        return datosRegistrados;
     }
 
 }

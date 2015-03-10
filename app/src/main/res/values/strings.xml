@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">EVALUACIÓN</string>
+    <string name="app_name">Asistencia</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_logout">Salir</string>
     <string name="button_login">Iniciar Sesión</string>
