@@ -104,7 +104,7 @@ public class NavigationDrawerFragment extends Fragment {
         } else if (ConstantsUtils.getRol == 6){
             titles = new String[]{getString(R.string.title_section11)};
         } else if (ConstantsUtils.getRol == 9){
-            titles = new String[]{getString(R.string.title_section1),
+            titles = new String[]{
                     getString(R.string.title_section_12),
                     getString(R.string.title_section_13),
                     getString(R.string.title_section_14),

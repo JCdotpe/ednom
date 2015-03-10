@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseLockedException;
+import android.nfc.Tag;
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -33,7 +34,7 @@ public class PadronDAO extends BaseDAO {
     Integer nro_aula;
 
     JSONObject jsonObjectTemp;
-    JSONArray jsonArrayAulaLocal, jsonArrayInstrumento,jsonArrayDiscapacidad, jsonArrayModalidad, jsonArrayPersonal, jsonArrayUsuarioLocal;
+    JSONArray jsonArrayAulaLocal, jsonArrayInstrumento, jsonArrayDiscapacidad, jsonArrayModalidad, jsonArrayPersonal, jsonArrayUsuarioLocal;
 
     LocalE localE;
     PadronE padronE;
@@ -309,7 +310,7 @@ public class PadronDAO extends BaseDAO {
                     // .set array INSTRUMENTO
 
                     // set array PERSONAL
-                    jsonArrayPersonal = jsonObjectTemp.getJSONArray("PERSONAL");
+                    jsonArrayPersonal = jsonObject.getJSONArray("PERSONAL");
                     personalEArrayList = new ArrayList<PersonalE>();
 
                     for ( int i = 0; i < jsonArrayPersonal.length(); i++ ){
@@ -649,6 +650,49 @@ public class PadronDAO extends BaseDAO {
             }
             Log.e(TAG, "INSTRUMENTO: " + jsonArray.toString());
 
+            SQL = "SELECT dni, id_cargo, cod_sede_operativa, cod_local_sede, asistencia, hora_ingreso, cambio_tipo, r_dni, r_nombre_completo, id_cargo_cambio FROM personal WHERE asistencia = 1 OR cambio_tipo = 1";
+            Log.e(TAG, "string sql personal: " + SQL);
+
+            cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+            jsonArray = new JSONArray();
+
+            if (cursor.moveToFirst()){
+                while (!cursor.isAfterLast()){
+                    JSONObject jsonObjectTemp = new JSONObject();
+
+                    jsonObjectTemp.put(PersonalE.DNI, cursor.getString(cursor.getColumnIndex(PersonalE.DNI)));
+                    jsonObjectTemp.put(PersonalE.ID_CARGO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO)));
+                    jsonObjectTemp.put(PersonalE.COD_SEDE_OPERATIVA, cursor.getInt(cursor.getColumnIndex(PersonalE.COD_SEDE_OPERATIVA)));
+                    jsonObjectTemp.put(PersonalE.COD_LOCAL_SEDE, cursor.getInt(cursor.getColumnIndex(PersonalE.COD_LOCAL_SEDE)));
+                    jsonObjectTemp.put(PersonalE.ASISTENCIA, cursor.getInt(cursor.getColumnIndex(PersonalE.ASISTENCIA)));
+                    jsonObjectTemp.put(PersonalE.HORA_INGRESO, cursor.getString(cursor.getColumnIndex(PersonalE.HORA_INGRESO)));
+                    int cambio = cursor.getInt(cursor.getColumnIndex(PersonalE.CAMBIO));
+                    if (cambio == 0) {
+                        jsonObjectTemp.put(PersonalE.CAMBIO, "null");
+                    } else {
+                        jsonObjectTemp.put(PersonalE.CAMBIO, cambio);
+                    }
+                    int cambioCargo = cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO));
+                    if (cambioCargo == 0) {
+                        jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, "null");
+                    } else {
+                        jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cambioCargo);
+                    }
+                    jsonObjectTemp.put(PersonalE.R_DNI, cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
+                    jsonObjectTemp.put(PersonalE.R_NOMBRE_COMPLETO, cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
+                    jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO)));
+
+                    jsonArray.put(jsonObjectTemp);
+                    cursor.moveToNext();
+
+                }
+
+                jsonObject.put( "PERSONAL", jsonArray );
+
+                syncronizar = true;
+            }
+            Log.e(TAG, "PERSONAL: " + jsonArray.toString());
+
             if ( syncronizar )
             {
                 initHttPostAux();
@@ -713,6 +757,25 @@ public class PadronDAO extends BaseDAO {
 
                     }
                     // .set array INSTRUMENTOS
+
+                    // set array PERSONAL
+
+                    jsonArray = jsonObject.getJSONArray("PERSONAL");
+                    for (int i = 0; i < jsonArray.length(); i++){
+                        jsonObjectTemp = (JSONObject) jsonArray.get(i);
+
+                        contentValues = new ContentValues();
+                        contentValues.put( PersonalE.ASISTENCIA, jsonObjectTemp.getInt( PersonalE.ASISTENCIA));
+                        contentValues.put( PersonalE.CAMBIO, jsonObjectTemp.getInt( PersonalE.CAMBIO));
+                        String dni = jsonObjectTemp.getString(PersonalE.DNI);
+                        Where = PersonalE.DNI + " = " + dni;
+                        Log.e(TAG, "where : " +  Where);
+                        valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE);
+                        Log.e(TAG, "sync update personal : " + String.valueOf(valueInteger));
+
+                    }
+                    // .set array PERSONAL
+
                     dbHelper.setTransactionSuccessful();
                 }
             }
@@ -755,6 +818,9 @@ public class PadronDAO extends BaseDAO {
 
             dbHelper.getDatabase().delete( "modalidad", null, null );
             Log.e( TAG, "Se elimino modalidad!" );
+
+            dbHelper.getDatabase().delete( "personal", null, null );
+            Log.e( TAG, "Se elimino personal!" );
 
             return true;
 

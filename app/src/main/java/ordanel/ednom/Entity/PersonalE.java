@@ -13,7 +13,7 @@ public class PersonalE implements Parcelable {
     public static final String APE_MAT = "ape_materno";
     public static final String NOMBRES = "nombres";
     public static final String NOMBRE_COMPLETO = "nombre_completo";
-    public static final String ID_CARGO = "ID_CARGO";
+    public static final String ID_CARGO = "id_cargo";
     public static final String COD_SEDE_OPERATIVA = "cod_sede_operativa";
     public static final String COD_LOCAL_SEDE = "cod_local_sede";
     public static final String ASISTENCIA = "asistencia";

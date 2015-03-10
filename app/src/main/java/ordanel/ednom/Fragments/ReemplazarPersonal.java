@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import ordanel.ednom.Interfaces.MainI;
 import ordanel.ednom.R;
 
 /**
@@ -24,11 +25,25 @@ public class ReemplazarPersonal extends Fragment {
     private static final String ARG_PARAM1 = "param1";
     private static final String ARG_PARAM2 = "param2";
 
+    private static final String ARG_SECTION_NUMBER = "section_number";
+    private MainI mListener;
+
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
 
-    private OnFragmentInteractionListener mListener;
+    public static ReemplazarPersonal newInstance( int position ) {
+
+        ReemplazarPersonal fragment = new ReemplazarPersonal();
+
+        Bundle args = new Bundle();
+        args.putInt( ARG_SECTION_NUMBER, position );
+
+        fragment.setArguments( args );
+
+        return  fragment;
+
+    }
 
     /**
      * Use this factory method to create a new instance of
@@ -68,22 +83,18 @@ public class ReemplazarPersonal extends Fragment {
         return inflater.inflate(R.layout.fragment_reemplazar_personal, container, false);
     }
 
-    // TODO: Rename method, update argument and hook method into UI event
-    public void onButtonPressed(Uri uri) {
-        if (mListener != null) {
-            mListener.onFragmentInteraction(uri);
-        }
-    }
-
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        try {
-            mListener = (OnFragmentInteractionListener) activity;
-        } catch (ClassCastException e) {
-            throw new ClassCastException(activity.toString()
-                    + " must implement OnFragmentInteractionListener");
+        try
+        {
+            mListener = (MainI) activity;
         }
+        catch (Exception e)
+        {
+            throw new ClassCastException( activity.toString() + "must implement OnFragmentInteractionListener" );
+        }
+
     }
 
     @Override

@@ -25,6 +25,8 @@ import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.BusquedaDocentes;
+import ordanel.ednom.Fragments.CambiarCargo;
+import ordanel.ednom.Fragments.ConsultaPersonal;
 import ordanel.ednom.Fragments.IngresoLocal;
 import ordanel.ednom.Fragments.InventarioCuadernillo;
 import ordanel.ednom.Fragments.InventarioFicha;
@@ -32,6 +34,9 @@ import ordanel.ednom.Fragments.ListadoAsistenciaAula;
 import ordanel.ednom.Fragments.ListadoIngresoLocal;
 import ordanel.ednom.Fragments.ListadoInventarioCuadernillo;
 import ordanel.ednom.Fragments.ListadoInventarioFicha;
+import ordanel.ednom.Fragments.RedAdministrativa;
+import ordanel.ednom.Fragments.ReemplazarPersonal;
+import ordanel.ednom.Fragments.ReporteAsistencia;
 import ordanel.ednom.Fragments.ReporteGeneral;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
@@ -183,7 +188,20 @@ public class MainActivity extends Activity
         } else if (ConstantsUtils.getRol == 9) {
             switch (position) {
                 case 0:
-
+                    fragment = RedAdministrativa.newInstance(position + 1);
+                    break;
+                case 1:
+                    fragment = ReemplazarPersonal.newInstance(position + 1);
+                    break;
+                case 2:
+                    fragment = CambiarCargo.newInstance(position + 1);
+                    break;
+                case 3:
+                    fragment =  ReporteAsistencia.newInstance(position + 1);
+                    break;
+                case 4:
+                    fragment = ConsultaPersonal.newInstance(position + 1);
+                    break;
             }
         }
 
@@ -280,6 +298,24 @@ public class MainActivity extends Activity
                     mTitle = getString(R.string.title_section11);
                     break;
             }
+        } else if (ConstantsUtils.getRol == 9){
+            switch (number) {
+                case 1:
+                    mTitle = getString(R.string.title_section_12);
+                    break;
+                case 2:
+                    mTitle = getString(R.string.title_section_13);
+                    break;
+                case 3:
+                    mTitle = getString(R.string.title_section_14);
+                    break;
+                case 4:
+                    mTitle = getString(R.string.title_section_15);
+                    break;
+                case 5:
+                    mTitle = getString(R.string.title_section_16);
+                    break;
+            }
         }
     }
 
@@ -325,11 +361,13 @@ public class MainActivity extends Activity
         switch (id){
             case R.id.action_logout:
                 logOut();
+                break;
             case R.id.action_settings:
                 settings();
+                break;
             case R.id.action_sync:
                 new SyncAsync( this ).execute();
-
+                break;
         }
 
         return super.onOptionsItemSelected(item);
