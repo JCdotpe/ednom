@@ -89,13 +89,13 @@
     <!-- Asistencia -->
     <string name="docente_register">Se registró correctamente</string>
     <string name="docente_found">Buscando Datos del Docente</string>
-    <string name="docente_not_found">El docente no pertenece al local de aplicación!</string>
+    <string name="docente_not_found">El postulante no pertenece al local de aplicación!</string>
     <string name="docente_not_access">Error. Problemas al acceder a la BD!</string>
-    <string name="docente_not_register_local">Error. No se registro asistencia del docente al local!</string>
-    <string name="docente_not_register_aula">Error. No se registro asistencia del docente en aula!</string>
-    <string name="docente_double_register">El docente ya fue registrado</string>
+    <string name="docente_not_register_local">Error. No se registro asistencia del postulante al local!</string>
+    <string name="docente_not_register_aula">Error. No se registro asistencia del postulante en aula!</string>
+    <string name="docente_double_register">El postulante ya fue registrado</string>
     <string name="docente_sync">Sincronizando, espere unos segundos</string>
-    <string name="docente_aula_not_found">El docente no se encuentra en el aula de aplicación</string>
+    <string name="docente_aula_not_found">El postulante no se encuentra en el aula de aplicación</string>
     <!-- /Asistencia -->
 
 

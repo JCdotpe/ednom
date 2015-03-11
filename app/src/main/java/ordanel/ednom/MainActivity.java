@@ -444,7 +444,7 @@ public class MainActivity extends Activity
                 msg = getString(R.string.docente_sync);
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
                 ProgressDialog progressDialog = ProgressDialog.show(getApplicationContext(), "Sincronizando", "Sincronizando datos");
-                progressDialog.setMax(12000);
+                progressDialog.setMax(2000);
                 progressDialog.dismiss();
                 break;
 

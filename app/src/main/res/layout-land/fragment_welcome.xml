@@ -107,6 +107,7 @@
             android:gravity="center"
             android:padding="10sp"
             android:background="#E0E0E0"
+            android:visibility="invisible"
             >
             <TextView
                 android:id="@+id/label_momento_2"
@@ -138,6 +139,7 @@
             android:gravity="center"
             android:padding="10sp"
             android:background="#E0E0E0"
+            android:visibility="invisible"
             >
             <TextView
                 android:id="@+id/label_momento_3"
@@ -169,6 +171,7 @@
             android:gravity="center"
             android:padding="10sp"
             android:background="#E0E0E0"
+            android:visibility="invisible"
             >
             <TextView
                 android:id="@+id/label_momento_4"

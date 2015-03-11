@@ -81,6 +81,10 @@ public class DocentesDAO extends BaseDAO {
                 } else {
                     docentesE.setStatus(1);// alerta. sin datos;
                 }
+        }catch (SQLiteDatabaseLockedException l){
+            l.printStackTrace();
+            docentesE.setStatus( 7 );
+            Log.e(TAG, "Error: " + l);
         }
           catch (Exception e)
         {
