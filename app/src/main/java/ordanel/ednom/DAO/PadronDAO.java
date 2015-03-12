@@ -15,6 +15,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ordanel.ednom.Entity.AulaLocalE;
+import ordanel.ednom.Entity.CargoE;
 import ordanel.ednom.Entity.DiscapacidadE;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
@@ -34,7 +35,7 @@ public class PadronDAO extends BaseDAO {
     Integer nro_aula;
 
     JSONObject jsonObjectTemp;
-    JSONArray jsonArrayAulaLocal, jsonArrayInstrumento, jsonArrayDiscapacidad, jsonArrayModalidad, jsonArrayPersonal, jsonArrayUsuarioLocal;
+    JSONArray jsonArrayAulaLocal, jsonArrayCargo, jsonArrayInstrumento, jsonArrayDiscapacidad, jsonArrayModalidad, jsonArrayPersonal, jsonArrayUsuarioLocal;
 
     LocalE localE;
     PadronE padronE;
@@ -45,6 +46,7 @@ public class PadronDAO extends BaseDAO {
     InstrumentoE instrumentoE;
     UsuarioLocalE usuarioLocalE;
     PersonalE personalE;
+    CargoE cargoE;
 
     ArrayList<AulaLocalE> aulaLocalEArrayList;
     ArrayList<DocentesE> docentesEArrayList;
@@ -53,6 +55,7 @@ public class PadronDAO extends BaseDAO {
     ArrayList<InstrumentoE> instrumentoEArrayList;
     ArrayList<UsuarioLocalE> usuarioLocalEArrayList;
     ArrayList<PersonalE> personalEArrayList;
+    ArrayList<CargoE> cargoEArrayList;
 
 
     public synchronized static PadronDAO getInstance( Context paramContext ) {
@@ -341,6 +344,26 @@ public class PadronDAO extends BaseDAO {
                     padronE.setPersonalEList(personalEArrayList);
                     // .set array personal
 
+                    // set array CARGO
+                    jsonArrayCargo = jsonObject.getJSONArray("CARGO");
+                    cargoEArrayList = new ArrayList<CargoE>();
+
+                    for (int i = 0; i <jsonArrayCargo.length(); i++){
+                        jsonObjectTemp = (JSONObject) jsonArrayCargo.get(i);
+
+                        cargoE = new CargoE();
+                        cargoE.setIdCargo(jsonObjectTemp.getInt(CargoE.IDCARGO));
+                        cargoE.setCargo(jsonObjectTemp.getString(CargoE.CARGO));
+                        cargoE.setCargoRes(jsonObjectTemp.getString(CargoE.CARGORES));
+
+                        cargoEArrayList.add(cargoE);
+                    }
+
+                    valueInteger = cargoEArrayList.size();
+                    Log.e(TAG, "cantidad de cargos : " + valueInteger.toString());
+                    padronE.setCargoEList(cargoEArrayList);
+                    // .set array CARGO
+
                     padronE.setStatus( 0 );
 
                 }
@@ -540,6 +563,19 @@ public class PadronDAO extends BaseDAO {
                 }
                 // . registrar Personal
 
+                // registrar Cargo
+                for (CargoE cargoE : cargoEArrayList) {
+                    contentValues = new ContentValues();
+                    contentValues.put(CargoE.IDCARGO, cargoE.getIdCargo());
+                    contentValues.put(CargoE.CARGO, cargoE.getCargo());
+                    contentValues.put(CargoE.CARGORES, cargoE.getCargoRes());
+
+                    valueLong = dbHelper.getDatabase().insertOrThrow("cargo", null, contentValues);
+                    Log.e(TAG, "cargo insert : " + String.valueOf(valueLong));
+                }
+
+                // .registrar Cargo
+
                 dbHelper.setTransactionSuccessful();
 
                 padronE.setStatus( 0 );
@@ -677,10 +713,10 @@ public class PadronDAO extends BaseDAO {
                         jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, "null");
                     } else {
                         jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cambioCargo);
+                        jsonObjectTemp.put(PersonalE.R_DNI, cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
+                        jsonObjectTemp.put(PersonalE.R_NOMBRE_COMPLETO, cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
+                        jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO)));
                     }
-                    jsonObjectTemp.put(PersonalE.R_DNI, cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
-                    jsonObjectTemp.put(PersonalE.R_NOMBRE_COMPLETO, cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
-                    jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO)));
 
                     jsonArray.put(jsonObjectTemp);
                     cursor.moveToNext();
@@ -768,7 +804,7 @@ public class PadronDAO extends BaseDAO {
                         contentValues.put( PersonalE.ASISTENCIA, jsonObjectTemp.getInt( PersonalE.ASISTENCIA));
                         contentValues.put( PersonalE.CAMBIO, jsonObjectTemp.getInt( PersonalE.CAMBIO));
                         String dni = jsonObjectTemp.getString(PersonalE.DNI);
-                        Where = PersonalE.DNI + " = " + dni;
+                        Where = PersonalE.DNI + " = '" + dni + "'";
                         Log.e(TAG, "where : " +  Where);
                         valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE);
                         Log.e(TAG, "sync update personal : " + String.valueOf(valueInteger));
@@ -821,6 +857,9 @@ public class PadronDAO extends BaseDAO {
 
             dbHelper.getDatabase().delete( "personal", null, null );
             Log.e( TAG, "Se elimino personal!" );
+
+            dbHelper.getDatabase().delete( "cargo", null, null );
+            Log.e( TAG, "Se elimino cargo!" );
 
             return true;
 

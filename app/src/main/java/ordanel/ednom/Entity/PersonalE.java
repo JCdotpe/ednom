@@ -43,6 +43,7 @@ public class PersonalE implements Parcelable {
     private int id_cargo_cambio;
     private int status;
     private LocalE localE;
+    private CargoE cargoE;
 
 
     public PersonalE() { super();
@@ -66,6 +67,7 @@ public class PersonalE implements Parcelable {
         id_cargo_cambio = parcel.readInt();
         status = parcel.readInt();
         localE = parcel.readParcelable(LocalE.class.getClassLoader());
+        cargoE = parcel.readParcelable(CargoE.class.getClassLoader());
 
     }
 
@@ -94,6 +96,23 @@ public class PersonalE implements Parcelable {
         dest.writeInt(id_cargo_cambio);
         dest.writeInt(status);
         dest.writeParcelable(localE,flags);
+        dest.writeParcelable(cargoE, flags);
+    }
+
+    public LocalE getLocalE() {
+        return localE;
+    }
+
+    public void setLocalE(LocalE localE) {
+        this.localE = localE;
+    }
+
+    public CargoE getCargoE() {
+        return cargoE;
+    }
+
+    public void setCargoE(CargoE cargoE) {
+        this.cargoE = cargoE;
     }
 
     public int getStatus() {

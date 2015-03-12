@@ -124,7 +124,7 @@
                     android:textStyle="bold"
                     android:textColor="#c8757575"
                     android:layout_marginTop="20dp"
-                    android:layout_below="@+id/label_cargo"
+                    android:layout_below="@+id/txt_cargo"
                     android:layout_alignLeft="@+id/label_cargo"
                     android:layout_alignStart="@+id/label_cargo"
                     />
@@ -162,7 +162,9 @@
                     android:hint="Cargo del personal"
                     android:textSize="45sp"
                     android:id="@+id/txt_cargo"
-                    android:layout_above="@+id/txtR_NombreLocal"
+                    android:layout_marginTop="20dp"
+                    android:singleLine="false"
+                    android:layout_below="@+id/txt_nombre_completo"
                     android:layout_toRightOf="@+id/label_cargo"
                     android:layout_toEndOf="@+id/label_cargo" />
 

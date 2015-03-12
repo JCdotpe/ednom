@@ -622,8 +622,8 @@ public class MainActivity extends Activity
         {
             txtDni.setText(personalE.getDni());
             txtNombreCompleto.setText( personalE.getNombre_completo() );
-            //txtCargo.setText( docentesE.getNombres());
-            txtLocalAplicacion.setText( docentesE.getAulaLocalE().getNro_aula().toString() );
+            txtCargo.setText( personalE.getCargoE().getCargo());
+            txtLocalAplicacion.setText( personalE.getLocalE().getNombreLocal() );
         }
         showMessagePersonal(personalE.getStatus());
     }

@@ -17,6 +17,16 @@ public class PadronE implements Parcelable {
     private List<ModalidadE> modalidadEList = new ArrayList<ModalidadE>();
     private List<InstrumentoE> instrumentoEList = new ArrayList<InstrumentoE>();
     private List<UsuarioLocalE> usuarioLocalEList = new ArrayList<UsuarioLocalE>();
+    private List<PersonalE> personalEList = new ArrayList<PersonalE>();
+    private List<CargoE> cargoEList = new ArrayList<CargoE>();
+
+    public List<CargoE> getCargoEList() {
+        return cargoEList;
+    }
+
+    public void setCargoEList(List<CargoE> cargoEList) {
+        this.cargoEList = cargoEList;
+    }
 
     public List<PersonalE> getPersonalEList() {
         return personalEList;
@@ -26,7 +36,7 @@ public class PadronE implements Parcelable {
         this.personalEList = personalEList;
     }
 
-    private List<PersonalE> personalEList = new ArrayList<PersonalE>();
+
     private Integer status;
 
     public List<UsuarioLocalE> getUsuarioLocalEList() {

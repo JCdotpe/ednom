@@ -108,7 +108,7 @@
     <string name="personal_found">Buscando Datos del Personal</string>
     <string name="personal_not_found">El personal no pertenece al local de aplicación!</string>
     <string name="personal_not_access">Error. Problemas al acceder a la BD!</string>
-    <string name="personal_not_register_local">Error. No se registro asistencia del pesonal!</string>
+    <string name="personal_not_register_local">Error. No se registro asistencia del personal!</string>
     <string name="personal_double_register">El personal ya fue registrado</string>
     <string name="personal_sync">Sincronizando, espere unos segundos</string>
     <!-- /Asistencia Personal-->

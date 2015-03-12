@@ -8,6 +8,7 @@ import android.util.Log;
 
 import java.util.ArrayList;
 
+import ordanel.ednom.Entity.CargoE;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.PersonalE;
 import ordanel.ednom.Library.ConstantsUtils;
@@ -42,9 +43,7 @@ public class PersonalDAO extends BaseDAO {
         {
             openDBHelper();
 
-            SQL = "SELECT ps.dni, ps.id_cargo, cg.cargo, ps.nombre_completo, lc.nombreLocal FROM personal ps " +
-                    "INNER JOIN local lc ON ps.cod_sede_operativa = lc.cod_sede_operativa AND ps.cod_local_sede = lc.cod_local_sede " +
-                    "INNER JOIN cargo cg ON cg.id_cargo = ps.id_cargo WHERE " + conditional;
+            SQL = "SELECT ps.dni, ps.id_cargo, cg.cargo, ps.nombre_completo, lc.nombreLocal FROM personal ps INNER JOIN local lc ON ps.cod_sede_operativa = lc.cod_sede_operativa AND ps.cod_local_sede = lc.cod_local_sede INNER JOIN cargo cg ON cg.id_cargo = ps.id_cargo WHERE " + conditional;
             Log.e(TAG, "string sql : " + SQL);
             cursor = dbHelper.getDatabase().rawQuery(SQL, null);
 
@@ -54,8 +53,13 @@ public class PersonalDAO extends BaseDAO {
                     LocalE localE = new LocalE();
                     localE.setNombreLocal(cursor.getString(cursor.getColumnIndex(LocalE.NOMBRE_LOCAL)));
 
+                    CargoE cargoE = new CargoE();
+                    cargoE.setCargo(cursor.getString(cursor.getColumnIndex(CargoE.CARGO)));
+
                     personalE.setDni(cursor.getString(cursor.getColumnIndex(PersonalE.DNI)));
                     personalE.setNombre_completo(cursor.getString(cursor.getColumnIndex(PersonalE.NOMBRE_COMPLETO)));
+                    personalE.setLocalE(localE);
+                    personalE.setCargoE(cargoE);
                     cursor.moveToNext();
                 }
 
@@ -127,7 +131,7 @@ public class PersonalDAO extends BaseDAO {
     private boolean isEstadoRegistroPersonal(String nroDni, String column) {
         boolean isEstado = false;
 
-        SQL = "SELECT " + column + " from docentes where dni like '" + nroDni + "'";
+        SQL = "SELECT " + column + " from personal where dni like '" + nroDni + "'";
         cursor = dbHelper.getDatabase().rawQuery( SQL, null );
         if ( cursor.moveToFirst() ) {
             while (!cursor.isAfterLast()) {
