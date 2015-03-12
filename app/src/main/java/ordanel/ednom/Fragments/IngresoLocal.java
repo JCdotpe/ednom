@@ -13,9 +13,6 @@ import android.widget.EditText;
 import ordanel.ednom.Interfaces.MainI;
 import ordanel.ednom.R;
 
-/**
- * Created by OrdNael on 03/11/2014.
- */
 public class IngresoLocal extends Fragment {
 
     private static final String ARG_SECTION_NUMBER = "section_number";

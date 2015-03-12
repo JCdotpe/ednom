@@ -13,7 +13,19 @@ public class PersonalBL {
     private static PersonalDAO personalDAO;
     private static PersonalE personalE;
 
+    private static  String conditional;
+
     public PersonalBL(Context paramContext) {
         personalDAO = PersonalDAO.getInstance(paramContext);
+    }
+
+    public PersonalE asistenciaPersonal(String nroDni) {
+        conditional = "dni = '" + nroDni + "'";
+        personalE = personalDAO.searchPersonal(conditional);
+
+        if ( personalE.getStatus() == 0 ){
+            personalE.setStatus(personalDAO.asistenciaPersonal(nroDni));
+        }
+        return personalE;
     }
 }

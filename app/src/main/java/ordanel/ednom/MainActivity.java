@@ -21,8 +21,10 @@ import android.widget.TextView;
 import ordanel.ednom.Asyncs.SyncAsync;
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Business.InstrumentoBL;
+import ordanel.ednom.Business.PersonalBL;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
+import ordanel.ednom.Entity.PersonalE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.BusquedaDocentes;
 import ordanel.ednom.Fragments.CambiarCargo;
@@ -51,6 +53,8 @@ public class MainActivity extends Activity
     DocentesBL docentesBL;
     InstrumentoE instrumentoE;
     InstrumentoBL instrumentoBL;
+    PersonalE personalE;
+    PersonalBL personalBL;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -69,6 +73,7 @@ public class MainActivity extends Activity
 
         docentesBL = new DocentesBL( MainActivity.this );
         instrumentoBL = new InstrumentoBL( MainActivity.this );
+        personalBL = new PersonalBL(MainActivity.this);
 
        /* newData = getIntent().getParcelableArrayListExtra( "listadoInventarioFicha" );
         if ( newData != null )
@@ -535,7 +540,7 @@ public class MainActivity extends Activity
             case 7:
                 msg = getString(R.string.docente_sync);
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
-                ProgressDialog progressDialog = ProgressDialog.show(getApplicationContext(), "Sincronizando", "Sincronizando datos");
+                ProgressDialog progressDialog = ProgressDialog.show(getApplicationContext(), "Sincronizando", msg);
                 progressDialog.setMax(12000);
                 progressDialog.dismiss();
                 break;
@@ -591,6 +596,100 @@ public class MainActivity extends Activity
 
         this.showInstrumentoCuadernillo( instrumentoE );
 
+    }
+
+    @Override
+    public void asistenciaPersonal(String nroDni) {
+        this.showDialog( "Buscando personal..." );
+        personalE = personalBL.asistenciaPersonal(nroDni);
+        this.showPersonal(personalE);
+
+    }
+
+    private void showPersonal(PersonalE personalE) {
+        progressDialog.dismiss();
+
+        TextView txtDni = (TextView) findViewById( R.id.txtDNI );
+        TextView txtNombreCompleto = (TextView) findViewById( R.id.txt_nombre_completo );
+        TextView txtLocalAplicacion = (TextView) findViewById( R.id.txtLocalAplicacion );
+        TextView txtCargo = (TextView) findViewById( R.id.txt_cargo );
+        txtDni.setText( "" );
+        txtNombreCompleto.setText( "" );
+        txtCargo.setText( "" );
+        txtLocalAplicacion.setText( "" );
+
+        if ( personalE.getStatus() == 0 || personalE.getStatus() == 6 )
+        {
+            txtDni.setText(personalE.getDni());
+            txtNombreCompleto.setText( personalE.getNombre_completo() );
+            //txtCargo.setText( docentesE.getNombres());
+            txtLocalAplicacion.setText( docentesE.getAulaLocalE().getNro_aula().toString() );
+        }
+        showMessagePersonal(personalE.getStatus());
+    }
+
+    private void showMessagePersonal(int status) {
+        String msg = "";
+        View view = findViewById(R.id.layout_datos);
+        TextView textView = (TextView) findViewById(R.id.label_mensaje);
+        switch ( status )
+        {
+            case 0:
+                msg = getString(R.string.personal_register);
+                view.setBackgroundColor(getResources().getColor(R.color.correct));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.correct));
+                textView.setText(msg);
+                break;
+
+            case 1:
+                msg = getString( R.string.personal_not_found );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                break;
+
+            case 2:
+                msg = getString( R.string.personal_not_access );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                break;
+
+            case 3:
+                msg = getString( R.string.personal_not_register_local );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                break;
+
+            case 5:
+                msg = getString( R.string.personal_not_register_local );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                break;
+
+            case 6:
+                msg = getString(R.string.personal_double_register);
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
+
+            case 7:
+                msg = getString(R.string.personal_sync);
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                ProgressDialog progressDialog = ProgressDialog.show(getApplicationContext(), "Sincronizando", msg);
+                progressDialog.setMax(12000);
+                progressDialog.dismiss();
+                break;
+        }
     }
 
     public void showInstrumentoCuadernillo( InstrumentoE instrumentoE ) {

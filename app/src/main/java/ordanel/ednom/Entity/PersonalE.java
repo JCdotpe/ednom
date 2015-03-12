@@ -41,6 +41,9 @@ public class PersonalE implements Parcelable {
     private String r_dni;
     private String r_nombre_completo;
     private int id_cargo_cambio;
+    private int status;
+    private LocalE localE;
+
 
     public PersonalE() { super();
     }
@@ -61,6 +64,8 @@ public class PersonalE implements Parcelable {
         r_dni = parcel.readString();
         r_nombre_completo = parcel.readString();
         id_cargo_cambio = parcel.readInt();
+        status = parcel.readInt();
+        localE = parcel.readParcelable(LocalE.class.getClassLoader());
 
     }
 
@@ -87,7 +92,16 @@ public class PersonalE implements Parcelable {
         dest.writeString(r_dni);
         dest.writeString(r_nombre_completo);
         dest.writeInt(id_cargo_cambio);
+        dest.writeInt(status);
+        dest.writeParcelable(localE,flags);
+    }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
     }
 
     public static final Creator<PersonalE> CREATOR = new Creator<PersonalE>() {

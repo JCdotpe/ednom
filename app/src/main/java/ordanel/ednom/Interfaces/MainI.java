@@ -1,8 +1,6 @@
 package ordanel.ednom.Interfaces;
 
-/**
- * Created by OrdNael on 05/11/2014.
- */
+
 public interface MainI {
 
     public void onSectionAttached( int number );
@@ -15,4 +13,5 @@ public interface MainI {
 
     public void inventarioCuadernillo( String paramCodCuadernillo, Integer paramNroAula );
 
+    public void asistenciaPersonal(String nroDni);
 }

@@ -1,9 +1,173 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="ordanel.ednom.Fragments.RedAdministrativa">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView android:layout_width="match_parent" android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
 
-</FrameLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        >
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/txtE_DNI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/numero_documento"
+                android:textStyle="bold"
+                android:textSize="20sp"
+                android:textColor="#000"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginStart="10dp" />
+
+            <EditText
+                android:id="@+id/edtDNI"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:textSize="20sp"
+                android:hint="@string/numero_documento_text_hint"
+                android:layout_alignBaseline="@id/txtE_DNI"
+                android:layout_toRightOf="@id/txtE_DNI"
+                android:layout_toEndOf="@id/txtE_DNI"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp" />
+
+            <TextView
+                android:id="@+id/label_mensaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="20sp"
+                android:hint="mensaje"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_alignBaseline="@+id/edtDNI"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="20dp"
+                android:visibility="invisible"
+                android:layout_alignParentEnd="true" />
+        </RelativeLayout>
+
+
+        <View
+            android:layout_width="fill_parent"
+            android:layout_height="2dp"
+            android:background="#000"
+            android:layout_below="@+id/edtDNI"
+            android:layout_marginTop="15dp"
+            android:id="@+id/view" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/layout_datos"
+            >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp" >
+
+                <TextView
+                    android:id="@+id/txtR_DNI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/numero_documento_abrev"
+                    android:textSize="30sp"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    />
+
+                <TextView
+                    android:id="@+id/txtDNI"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/numero_documento_text_hint"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:layout_alignBottom="@id/txtR_DNI"
+                    android:layout_toRightOf="@id/txtR_DNI"
+                    android:layout_toEndOf="@id/txtR_DNI"
+                    android:layout_toLeftOf="@id/tableLayout"
+                    android:maxLines="4"
+                    android:singleLine="false"
+                    android:layout_marginLeft="20dp" />
+
+                <TextView
+                    android:id="@+id/txt_nombre_completo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Nombre Completo"
+                    android:textSize="45dp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/txtR_DNI"
+                    android:layout_alignLeft="@+id/txtR_DNI"
+                    android:layout_alignStart="@+id/txtR_DNI"
+                    android:maxLines="4"
+                    android:singleLine="false"/>
+
+                <TextView
+                    android:id="@+id/txtR_NombreLocal"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/local_de_aplicacion"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:textColor="#c8757575"
+                    android:layout_marginTop="20dp"
+                    android:layout_below="@+id/label_cargo"
+                    android:layout_alignLeft="@+id/label_cargo"
+                    android:layout_alignStart="@+id/label_cargo"
+                    />
+
+                <TextView
+                    android:id="@+id/txtLocalAplicacion"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/local_de_aplicacion"
+                    android:textSize="30dp"
+                    android:textStyle="bold"
+                    android:textColor="#000"
+                    android:layout_below="@+id/txtR_NombreLocal"
+                    android:layout_alignLeft="@+id/txtR_NombreLocal"
+                    android:layout_alignStart="@+id/txtR_NombreLocal"
+                    android:layout_marginTop="20dp"
+                    android:maxLines="4"
+                    android:singleLine="false"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Cargo: "
+                    android:textSize="45sp"
+                    android:textStyle="bold"
+                    android:id="@+id/label_cargo"
+                    android:layout_below="@+id/txt_nombre_completo"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_marginTop="20dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:hint="Cargo del personal"
+                    android:textSize="45sp"
+                    android:id="@+id/txt_cargo"
+                    android:layout_above="@+id/txtR_NombreLocal"
+                    android:layout_toRightOf="@+id/label_cargo"
+                    android:layout_toEndOf="@+id/label_cargo" />
+
+            </RelativeLayout>
+        </ScrollView>
+
+    </LinearLayout>
+</RelativeLayout>
