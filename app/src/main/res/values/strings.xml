@@ -9,7 +9,7 @@
 
     <!-- Menu -->
     <string name="title_activity_main">MainActivity</string>
-    <string name="title_section1">Home</string>
+    <string name="title_section1">Reporte Local</string>
     <string name="title_section2">Ingreso al Local</string>
     <string name="title_section3">Asistencia en Aula</string>
     <string name="title_section4">Inventario de Ficha</string>

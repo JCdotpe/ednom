@@ -54,7 +54,7 @@
         />
         <TextView
             android:id="@+id/label_registro"
-            android:text="Datos Registrados"
+            android:text="Registrados"
             android:textStyle="bold"
             android:typeface="serif"
             android:layout_weight="1"
@@ -62,7 +62,7 @@
             android:textSize="20sp"/>
         <TextView
             android:id="@+id/label_sincronizado"
-            android:text="Datos Sincronizados"
+            android:text="Sincronizados"
             android:textStyle="bold"
             android:typeface="serif"
             android:gravity="center"

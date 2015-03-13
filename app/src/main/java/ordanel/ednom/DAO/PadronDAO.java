@@ -282,7 +282,7 @@ public class PadronDAO extends BaseDAO {
                     Log.e( TAG, "cantidad de modalidad : " + valueInteger.toString() );
                     padronE.setInstrumentoEList(instrumentoEArrayList);
                     // .set array INSTRUMENTO
-
+*/
                     // set array USUARIOS
                     jsonArrayUsuarioLocal = jsonObject.getJSONArray( "USUARIOS" );
                     usuarioLocalEArrayList = new ArrayList<UsuarioLocalE>();
@@ -307,7 +307,7 @@ public class PadronDAO extends BaseDAO {
                     Log.e( TAG, "cantidad de usuarios : " + valueInteger.toString() );
                     padronE.setUsuarioLocalEList(usuarioLocalEArrayList);
                     // .set array USUARIOS
-*/
+
                     padronE.setStatus( 0 );
 
                 }
@@ -460,7 +460,7 @@ public class PadronDAO extends BaseDAO {
                     Log.e( TAG, "instrumento insert : " + String.valueOf(valueLong) );
                 }
                 // .registro de INSTRUMENTO
-
+*/
                 // registrar Usuario_Local
                 for (UsuarioLocalE usuarioLocalE : usuarioLocalEArrayList){
                     cod_sede_operativa = usuarioLocalE.getLocalE().getSedeOperativaE().getCod_sede_operativa();
@@ -481,7 +481,7 @@ public class PadronDAO extends BaseDAO {
                 }
 
                 // registrar Usuario_Local
-*/
+
                 dbHelper.setTransactionSuccessful();
 
                 padronE.setStatus( 0 );
@@ -731,7 +731,7 @@ public class PadronDAO extends BaseDAO {
 
             dbHelper.getDatabase().update("docentes", docentesValues, null, null);
             // Finish Update docentes table
-
+/*
             // Update instrumento Table
             ContentValues instrumentoValues = new ContentValues();
             instrumentoValues.putNull(InstrumentoE.NRO_AULA);
@@ -742,7 +742,7 @@ public class PadronDAO extends BaseDAO {
 
             dbHelper.getDatabase().update("instrumento", instrumentoValues, null, null);
             // Finish Update instrumento table
-
+*/
             Log.e(TAG, "Se eliminó registro locales");
 
             dbHelper.setTransactionSuccessful();

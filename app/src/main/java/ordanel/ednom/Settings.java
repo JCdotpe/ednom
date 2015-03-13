@@ -17,7 +17,7 @@ public class Settings extends Activity {
     private static int rol;
     private static final int ROLDEFAULT = 1;
     private ListView listSettings;
-    private  PadronBL padronBL;
+    private PadronBL padronBL;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

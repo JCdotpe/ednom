@@ -87,23 +87,6 @@ public class MainActivity extends Activity
         // update the main content by replacing fragments
         FragmentManager fragmentManager = getFragmentManager();
         Fragment fragment = null;
-        if (ConstantsUtils.getRol == 1){
-            switch ( position )
-            {
-                case 0:
-                    fragment = Welcome.newInstance( position + 1 );
-                    break;
-
-                case 1:
-                    fragment = IngresoLocal.newInstance( position + 1 );
-                    break;
-
-                case 2:
-                    fragment = ListadoIngresoLocal.newInstance( position + 1 );
-                    break;
-
-            }
-        } else if (ConstantsUtils.getRol == 2){
         switch ( position )
         {
             case 0:
@@ -115,50 +98,12 @@ public class MainActivity extends Activity
                 break;
 
             case 2:
-                fragment = AsistenciaAula.newInstance( position + 1 );
-                break;
-
-            case 3:
-                fragment = InventarioFicha.newInstance( position + 1 );
-                break;
-
-            case 4:
-                fragment = InventarioCuadernillo.newInstance( position + 1 );
-                break;
-
-            case 5:
                 fragment = ListadoIngresoLocal.newInstance( position + 1 );
                 break;
 
-            case 6:
-                fragment = ListadoAsistenciaAula.newInstance( position + 1 );
-                break;
-
-            case 7:
-                fragment = ListadoInventarioFicha.newInstance( position + 1 );
-                break;
-
-            case 8:
-                fragment = ListadoInventarioCuadernillo.newInstance( position + 1 );
-                break;
-            case 9:
-                fragment = ReporteGeneral.newInstance(position + 1);
-                break;
-            case 10:
-                fragment = BusquedaDocentes.newInstance(position + 1);
-                break;
-        }} else if (ConstantsUtils.getRol == 6){
-            switch ( position )
-            {
-                case 0:
-                    fragment =  BusquedaDocentes.newInstance(position + 1);
-                    break;
-            }
         }
 
-        fragmentManager.beginTransaction()
-                .replace(R.id.container, fragment)
-                .commit();
+        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
 
         /*fragmentManager.beginTransaction()
                 .replace(R.id.container, PlaceholderFragment.newInstance(position + 1))
@@ -167,64 +112,17 @@ public class MainActivity extends Activity
 
     @Override
     public void onSectionAttached(int number) {
-        if (ConstantsUtils.getRol == 1){
-            switch (number) {
-                case 1:
-                    mTitle = getString(R.string.title_section1);
-                    break;
-                case 2:
-                    mTitle = getString(R.string.title_section2);
-                    break;
-                case 3:
-                    mTitle = getString( R.string.title_section6 );
-                    break;
+        switch (number) {
+            case 1:
+                mTitle = getString(R.string.title_section1);
+                break;
+            case 2:
+                 mTitle = getString(R.string.title_section2);
+                 break;
+            case 3:
+                 mTitle = getString( R.string.title_section6 );
+                 break;
             }
-        } else if (ConstantsUtils.getRol == 2){
-            switch (number) {
-                case 1:
-                    mTitle = getString(R.string.title_section1);
-                    break;
-                case 2:
-                    mTitle = getString(R.string.title_section2);
-                    break;
-                case 3:
-                    mTitle = getString(R.string.title_section3);
-                    break;
-                case 4:
-                    mTitle = getString( R.string.title_section4 );
-                    break;
-                case 5:
-                    mTitle = getString( R.string.title_section5 );
-                    break;
-                case 6:
-                    mTitle = getString( R.string.title_section6 );
-                    break;
-
-                case 7:
-                    mTitle = getString( R.string.title_section7 );
-                    break;
-
-                case 8:
-                    mTitle = getString( R.string.title_section8 );
-                    break;
-
-                case 9:
-                    mTitle = getString( R.string.title_section9 );
-                    break;
-                case 10:
-                    mTitle = getString(R.string.title_section10);
-                    break;
-                case 11:
-                    mTitle = getString(R.string.title_section11);
-                    break;
-            }
-        } else if (ConstantsUtils.getRol == 6){
-            switch (number) {
-                case 1:
-                    mTitle = getString(R.string.title_section11);
-                    break;
-            }
-        }
     }
 
     public void restoreActionBar() {
@@ -250,11 +148,7 @@ public class MainActivity extends Activity
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        MenuItem settitng = menu.findItem(R.id.action_settings);
-        if(ConstantsUtils.getRol == 2)
-        {
-            settitng.setVisible(true);
-        }
+
         return true;
     }
 
