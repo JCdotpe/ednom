@@ -149,6 +149,7 @@
                     android:layout_height="wrap_content"
                     android:text="Cargo: "
                     android:textSize="45sp"
+                    android:textColor="#000"
                     android:textStyle="bold"
                     android:id="@+id/label_cargo"
                     android:layout_below="@+id/txt_nombre_completo"
