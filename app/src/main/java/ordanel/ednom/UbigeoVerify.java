@@ -63,7 +63,7 @@ public class UbigeoVerify extends Activity {
         List items = new ArrayList();
         items.add(new Item(R.drawable.home, "Sede", Sede));
         items.add(new Item(R.drawable.user, "Usuario", Usuario));
-        items.add(new Item(R.drawable.school, "Local de Aplicación", NombreLocal));
+        items.add(new Item(R.drawable.school, "Local de Capacitación", NombreLocal));
         items.add(new Item(R.drawable.location, "Dirección", Direccion));
         items.add(new Item(R.drawable.classroom, "Número Totales de Aulas", Integer.toString(NAulas_t)));
         items.add(new Item(R.drawable.classroom, "Número de Aulas de Profesores sin Discapacidad", Integer.toString(NAulas_n)));

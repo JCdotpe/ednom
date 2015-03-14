@@ -88,7 +88,7 @@
 
     <!-- Asistencia -->
     <string name="docente_register">Se registró correctamente</string>
-    <string name="docente_found">Buscando Datos del Docente</string>
+    <string name="docente_found">Buscando Datos del postulante</string>
     <string name="docente_not_found">El postulante no pertenece al local de aplicación!</string>
     <string name="docente_not_access">Error. Problemas al acceder a la BD!</string>
     <string name="docente_not_register_local">Error. No se registro asistencia del postulante al local!</string>
