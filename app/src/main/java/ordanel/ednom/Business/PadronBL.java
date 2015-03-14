@@ -65,16 +65,17 @@ public class PadronBL {
         return padronE.getStatus();
     }
 
-    public void getAllforSync() {
-
+    public boolean getAllforSync() {
+        boolean isSync = false;
         networkUtils = new NetworkUtils();
         connection = networkUtils.haveNetworkConnection( this.context );
 
         if ( connection )
         {
-            padronDAO.getAllforSync();
-        }
+            isSync = padronDAO.getAllforSync();
 
+        }
+        return isSync;
     }
 
     public void clearDataLocal(){

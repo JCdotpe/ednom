@@ -510,10 +510,10 @@ public class PadronDAO extends BaseDAO {
 
     }
 
-    public void getAllforSync() {
+    public boolean getAllforSync() {
 
         Log.e( TAG, "start getAllforSync" );
-
+        boolean isSync = false;
         try
         {
             openDBHelper();
@@ -662,6 +662,7 @@ public class PadronDAO extends BaseDAO {
 */
                     dbHelper.setTransactionSuccessful();
                 }
+                isSync = true;
             }
 
         }
@@ -669,6 +670,7 @@ public class PadronDAO extends BaseDAO {
         {
             e.printStackTrace();
             Log.e( TAG, "getAllforSync : " + e.toString() );
+            isSync = false;
         }
         finally
         {
@@ -677,7 +679,7 @@ public class PadronDAO extends BaseDAO {
         }
 
         Log.e( TAG, "end getAllforSync" );
-
+        return isSync;
     }
 
     public Boolean clearPadron() {

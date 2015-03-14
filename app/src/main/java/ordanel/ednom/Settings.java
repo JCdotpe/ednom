@@ -1,12 +1,15 @@
 package ordanel.ednom;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import ordanel.ednom.Business.PadronBL;
 
@@ -41,8 +44,24 @@ public class Settings extends Activity {
         public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
             String item = parent.getItemAtPosition(position).toString();
             if ( item.equals(getString(R.string.clear_data_local))){
-               padronBL = new PadronBL(getApplicationContext());
-               padronBL.clearDataLocal();
+                AlertDialog.Builder builder =  new AlertDialog.Builder(Settings.this);
+                builder.setTitle("Borrar Datos");
+                builder.setMessage("Deseas borrar los datos locales?");
+                builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                            padronBL = new PadronBL(Settings.this);
+                        padronBL.clearDataLocal();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Toast.makeText(Settings.this, "No se han borrado los datos", Toast.LENGTH_SHORT).show();
+                    }
+                });
+                builder.create();
+                builder.show();
             }
         }
     }
