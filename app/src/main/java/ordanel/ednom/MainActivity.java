@@ -606,6 +606,11 @@ public class MainActivity extends Activity
 
     }
 
+    @Override
+    public void reemplazarPersonal(String nroDni) {
+
+    }
+
     private void showPersonal(PersonalE personalE) {
         progressDialog.dismiss();
 
@@ -763,6 +768,8 @@ public class MainActivity extends Activity
         }
 
     }
+
+
 
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
