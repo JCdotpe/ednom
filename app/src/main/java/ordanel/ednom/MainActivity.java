@@ -9,6 +9,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.text.Layout;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -610,6 +611,20 @@ public class MainActivity extends Activity
     public void reemplazarPersonal(String nroDni) {
 
     }
+
+    @Override
+    public void searchPersonalCambio(String nroDni) {
+        this.showDialog( "Buscando personal..." );
+        personalE = personalBL.searchPersonalCambio(nroDni);
+        this.showPersonal(personalE);
+        if ( personalE.getStatus() == 0 || personalE.getStatus() == 6 ) {
+            View layoutDatos = findViewById(R.id.layout_datos);
+            layoutDatos.setVisibility(View.VISIBLE);
+            View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
+            layoutDatosCambio.setVisibility(View.VISIBLE);
+        }
+    }
+
 
     private void showPersonal(PersonalE personalE) {
         progressDialog.dismiss();

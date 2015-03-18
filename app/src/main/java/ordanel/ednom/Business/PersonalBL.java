@@ -28,4 +28,12 @@ public class PersonalBL {
         }
         return personalE;
     }
+
+
+    public PersonalE searchPersonalCambio(String nroDni) {
+        conditional = "dni = '" + nroDni + "'";
+        personalE = personalDAO.searchPersonalCambio(conditional);
+
+        return personalE;
+    }
 }

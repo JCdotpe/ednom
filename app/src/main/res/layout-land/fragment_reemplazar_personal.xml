@@ -216,6 +216,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Reemplazar"
+            android:id="@+id/btn_reemplazar"
             android:gravity="center_horizontal"
             android:layout_below="@+id/txt_nombre_cambio"
             android:layout_centerHorizontal="true"

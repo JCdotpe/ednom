@@ -16,4 +16,6 @@ public interface MainI {
     public void asistenciaPersonal(String nroDni);
 
     public void reemplazarPersonal(String nroDni);
+
+    public void searchPersonalCambio(String nroDni);
 }

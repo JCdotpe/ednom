@@ -9,6 +9,7 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.EditText;
 
 import ordanel.ednom.Interfaces.MainI;
@@ -20,6 +21,7 @@ public class ReemplazarPersonal extends Fragment {
     private MainI mListener;
     EditText editTextDni;
     private String nroDni;
+    Button btnReemplazar;
 
     public static ReemplazarPersonal newInstance( int position ) {
 
@@ -60,7 +62,7 @@ public class ReemplazarPersonal extends Fragment {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if(s.length() == 8){
                     nroDni = s.toString();
-                    mListener.reemplazarPersonal(nroDni);
+                    mListener.searchPersonalCambio(nroDni);
                 }
             }
 
@@ -72,7 +74,14 @@ public class ReemplazarPersonal extends Fragment {
             }
         });
 
-        return inflater.inflate(R.layout.fragment_reemplazar_personal, container, false);
+        btnReemplazar = (Button) view.findViewById(R.id.btn_reemplazar);
+        btnReemplazar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mListener.reemplazarPersonal(nroDni);
+            }
+        });
+        return view;
     }
 
     @Override
