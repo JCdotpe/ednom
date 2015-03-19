@@ -111,6 +111,8 @@
     <string name="personal_not_register_local">Error. No se registro asistencia del personal!</string>
     <string name="personal_double_register">El personal ya fue registrado</string>
     <string name="personal_sync">Sincronizando, espere unos segundos</string>
+    <string name="personal_correct">Personal encontrado</string>
+    <string name="personal_double_reemp">El personal ya fue reemplazado anteriormente</string>
     <!-- /Asistencia Personal-->
 
 

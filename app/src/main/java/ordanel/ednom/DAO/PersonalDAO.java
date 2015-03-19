@@ -84,7 +84,7 @@ public class PersonalDAO extends BaseDAO {
         return personalE;
     }
 
-    public int asistenciaPersonal(String nroDni) {
+    public Integer asistenciaPersonal(String nroDni) {
 
         Log.e( TAG, "start asistenciaPersonal" );
 
@@ -95,7 +95,7 @@ public class PersonalDAO extends BaseDAO {
                 valueInteger = 6 ;
             } else {
                 contentValues =  new ContentValues();
-                contentValues.put( PersonalE.ASISTENCIA, 1 );
+                contentValues.put( PersonalE.ASISTENCIA, "1" );
                 contentValues.put( PersonalE.HORA_INGRESO, ConstantsUtils.fecha_registro() );
 
                 SQL = "dni = '" + nroDni + "'";
@@ -145,5 +145,75 @@ public class PersonalDAO extends BaseDAO {
             }
         }
         return isEstado;
+    }
+
+    public Integer searchPersonalCambio(String conditional) {
+        Log.e(TAG, "start searchPersonalCambio");
+
+        try
+        {
+            openDBHelper();
+
+            SQL = "SELECT dni, estado_reemp FROM personal WHERE " + conditional;
+            Log.e(TAG, "string sql : " + SQL);
+            cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+            if (cursor.moveToFirst()){
+                String estadoReemplazo = cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOREEMPLAZO));
+               if (estadoReemplazo.equals("1") || estadoReemplazo.equals("2")){
+                   valueInteger = 9;
+               }else{
+                  valueInteger = 8;
+               }
+            } else {
+                valueInteger = 1;
+            }
+
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            personalE.setStatus(2); // error al acceder.
+            valueInteger = 1;
+        }
+        finally
+        {
+            closeDBHelper();
+            cursor.close();
+        }
+
+        Log.e( TAG, "end searchPersonalCambio" );
+
+        return valueInteger;
+    }
+
+
+    public Integer reemplazarPersonal(String dni, String dniCambio, String nombreCambio) {
+        Log.e(TAG, "start reemplazarPersonal");
+        try
+        {
+            openDBHelper();
+
+            contentValues = new ContentValues();
+            contentValues.put(PersonalE.R_DNI, dniCambio);
+            contentValues.put(PersonalE.R_NOMBRE_COMPLETO, nombreCambio);
+            contentValues.put(PersonalE.ESTADOREEMPLAZO, "1");
+            SQL = "dni = '" + dni + "'";
+
+            dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
+            valueInteger = 10;
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            valueInteger = 2; // error al acceder.
+        }
+        finally
+        {
+            closeDBHelper();
+            cursor.close();
+        }
+
+        Log.e( TAG, "end reemplazarPersonal" );
+        return valueInteger;
     }
 }

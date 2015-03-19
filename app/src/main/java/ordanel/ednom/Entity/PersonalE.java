@@ -20,7 +20,8 @@ public class PersonalE implements Parcelable {
     public static final String HORA_INGRESO = "hora_ingreso";
     public static final String HORA_SALIDA = "hora_salida";
     public static final String OBSERVACIONES = "observaciones";
-    public static final String CAMBIO = "cambio_tipo";
+    public static final String ESTADOCAMBIO = "estado_cambio";
+    public static final String ESTADOREEMPLAZO = "estado_reemp";
     public static final String R_DNI = "r_dni";
     public static final String R_NOMBRE_COMPLETO = "r_nombre_completo";
     public static final String ID_CARGO_CAMBIO = "id_cargo_cambio";
@@ -33,11 +34,12 @@ public class PersonalE implements Parcelable {
     private int id_cargo;
     private int cod_sede_operativa;
     private int cod_local_sede;
-    private int asistencia;
+    private String asistencia;
     private String hora_ingreso;
     private String hora_salida;
     private String observaciones;
-    private String cambio;
+    private String estadoCambio;
+    private String estadoReemplazo;
     private String r_dni;
     private String r_nombre_completo;
     private int id_cargo_cambio;
@@ -57,11 +59,12 @@ public class PersonalE implements Parcelable {
         id_cargo = parcel.readInt();
         cod_sede_operativa = parcel.readInt();
         cod_local_sede = parcel.readInt();
-        asistencia = parcel.readInt();
+        asistencia = parcel.readString();
         hora_ingreso = parcel.readString();
         hora_salida = parcel.readString();
         observaciones = parcel.readString();
-        cambio = parcel.readString();
+        estadoCambio = parcel.readString();
+        estadoReemplazo = parcel.readString();
         r_dni = parcel.readString();
         r_nombre_completo = parcel.readString();
         id_cargo_cambio = parcel.readInt();
@@ -86,11 +89,12 @@ public class PersonalE implements Parcelable {
         dest.writeInt(id_cargo);
         dest.writeInt(cod_sede_operativa);
         dest.writeInt(cod_local_sede);
-        dest.writeInt(asistencia);
+        dest.writeString(asistencia);
         dest.writeString(hora_ingreso);
         dest.writeString(hora_salida);
         dest.writeString(observaciones);
-        dest.writeString(cambio);
+        dest.writeString(estadoCambio);
+        dest.writeString(estadoReemplazo);
         dest.writeString(r_dni);
         dest.writeString(r_nombre_completo);
         dest.writeInt(id_cargo_cambio);
@@ -199,11 +203,11 @@ public class PersonalE implements Parcelable {
         this.cod_local_sede = cod_local_sede;
     }
 
-    public int getAsistencia() {
+    public String getAsistencia() {
         return asistencia;
     }
 
-    public void setAsistencia(int asistencia) {
+    public void setAsistencia(String asistencia) {
         this.asistencia = asistencia;
     }
 
@@ -231,12 +235,24 @@ public class PersonalE implements Parcelable {
         this.observaciones = observaciones;
     }
 
-    public String getCambio() {
-        return cambio;
+    public static String getApePat() {
+        return APE_PAT;
     }
 
-    public void setCambio(String cambio) {
-        this.cambio = cambio;
+    public String getEstadoCambio() {
+        return estadoCambio;
+    }
+
+    public void setEstadoCambio(String estadoCambio) {
+        this.estadoCambio = estadoCambio;
+    }
+
+    public String getEstadoReemplazo() {
+        return estadoReemplazo;
+    }
+
+    public void setEstadoReemplazo(String estadoReemplazo) {
+        this.estadoReemplazo = estadoReemplazo;
     }
 
     public String getR_dni() {

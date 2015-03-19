@@ -328,11 +328,12 @@ public class PadronDAO extends BaseDAO {
                         personalE.setId_cargo(jsonObjectTemp.getInt(PersonalE.ID_CARGO));
                         personalE.setCod_sede_operativa(jsonObjectTemp.getInt(PersonalE.COD_SEDE_OPERATIVA));
                         personalE.setCod_local_sede(jsonObjectTemp.getInt(PersonalE.COD_LOCAL_SEDE));
-                        personalE.setAsistencia(jsonObjectTemp.getInt(PersonalE.ASISTENCIA));
+                        personalE.setAsistencia(jsonObjectTemp.getString(PersonalE.ASISTENCIA));
                         personalE.setHora_ingreso(jsonObjectTemp.getString(PersonalE.HORA_INGRESO));
                         personalE.setHora_salida(jsonObjectTemp.getString(PersonalE.HORA_SALIDA));
                         personalE.setObservaciones(jsonObjectTemp.getString(PersonalE.OBSERVACIONES));
-                        personalE.setCambio(jsonObjectTemp.getString(PersonalE.CAMBIO));
+                        personalE.setEstadoCambio(jsonObjectTemp.getString(PersonalE.ESTADOCAMBIO));
+                        personalE.setEstadoReemplazo(jsonObjectTemp.getString(PersonalE.ESTADOREEMPLAZO));
                         personalE.setR_dni(jsonObjectTemp.getString(PersonalE.R_DNI));
                         personalE.setR_nombre_completo(jsonObjectTemp.getString(PersonalE.R_NOMBRE_COMPLETO));
                         personalE.setId_cargo_cambio(jsonObjectTemp.getInt(PersonalE.ID_CARGO_CAMBIO));
@@ -553,7 +554,8 @@ public class PadronDAO extends BaseDAO {
                     contentValues.put(PersonalE.HORA_INGRESO, personalE.getHora_ingreso());
                     contentValues.put(PersonalE.HORA_SALIDA, personalE.getHora_salida());
                     contentValues.put(PersonalE.OBSERVACIONES, personalE.getObservaciones());
-                    contentValues.put(PersonalE.CAMBIO, personalE.getCambio());
+                    contentValues.put(PersonalE.ESTADOCAMBIO, personalE.getEstadoCambio());
+                    contentValues.put(PersonalE.ESTADOREEMPLAZO, personalE.getEstadoReemplazo());
                     contentValues.put(PersonalE.R_DNI, personalE.getR_dni());
                     contentValues.put(PersonalE.R_NOMBRE_COMPLETO, personalE.getR_nombre_completo());
                     contentValues.put(PersonalE.ID_CARGO_CAMBIO, personalE.getId_cargo_cambio());
@@ -686,7 +688,7 @@ public class PadronDAO extends BaseDAO {
             }
             Log.e(TAG, "INSTRUMENTO: " + jsonArray.toString());
 
-            SQL = "SELECT dni, id_cargo, cod_sede_operativa, cod_local_sede, asistencia, hora_ingreso, cambio_tipo, r_dni, r_nombre_completo, id_cargo_cambio FROM personal WHERE asistencia = 1 OR cambio_tipo = 1";
+            SQL = "SELECT dni, id_cargo, cod_sede_operativa, cod_local_sede, asistencia, hora_ingreso, estado_cambio, estado_reemp, r_dni, r_nombre_completo, id_cargo_cambio FROM personal WHERE asistencia = '1' OR estado_cambio = '1' OR estado_reemp = '1'";
             Log.e(TAG, "string sql personal: " + SQL);
 
             cursor = dbHelper.getDatabase().rawQuery(SQL, null);
@@ -700,23 +702,16 @@ public class PadronDAO extends BaseDAO {
                     jsonObjectTemp.put(PersonalE.ID_CARGO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO)));
                     jsonObjectTemp.put(PersonalE.COD_SEDE_OPERATIVA, cursor.getInt(cursor.getColumnIndex(PersonalE.COD_SEDE_OPERATIVA)));
                     jsonObjectTemp.put(PersonalE.COD_LOCAL_SEDE, cursor.getInt(cursor.getColumnIndex(PersonalE.COD_LOCAL_SEDE)));
-                    jsonObjectTemp.put(PersonalE.ASISTENCIA, cursor.getInt(cursor.getColumnIndex(PersonalE.ASISTENCIA)));
+                    jsonObjectTemp.put(PersonalE.ASISTENCIA, cursor.getString(cursor.getColumnIndex(PersonalE.ASISTENCIA)));
                     jsonObjectTemp.put(PersonalE.HORA_INGRESO, cursor.getString(cursor.getColumnIndex(PersonalE.HORA_INGRESO)));
-                    int cambio = cursor.getInt(cursor.getColumnIndex(PersonalE.CAMBIO));
-                    if (cambio == 0) {
-                        jsonObjectTemp.put(PersonalE.CAMBIO, "null");
-                    } else {
-                        jsonObjectTemp.put(PersonalE.CAMBIO, cambio);
-                    }
+                    jsonObjectTemp.put(PersonalE.ESTADOCAMBIO, cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOCAMBIO)));
+                    jsonObjectTemp.put(PersonalE.ESTADOREEMPLAZO, cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOREEMPLAZO)));
                     int cambioCargo = cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO));
-                    if (cambioCargo == 0) {
-                        jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, "null");
-                    } else {
-                        jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cambioCargo);
-                        jsonObjectTemp.put(PersonalE.R_DNI, cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
-                        jsonObjectTemp.put(PersonalE.R_NOMBRE_COMPLETO, cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
-                        jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO)));
-                    }
+                    if (cambioCargo == 0) {jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, null);}
+                    jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cambioCargo);
+                    jsonObjectTemp.put(PersonalE.R_DNI, cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
+                    jsonObjectTemp.put(PersonalE.R_NOMBRE_COMPLETO, cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
+                    jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO)));
 
                     jsonArray.put(jsonObjectTemp);
                     cursor.moveToNext();
@@ -801,8 +796,12 @@ public class PadronDAO extends BaseDAO {
                         jsonObjectTemp = (JSONObject) jsonArray.get(i);
 
                         contentValues = new ContentValues();
-                        contentValues.put( PersonalE.ASISTENCIA, jsonObjectTemp.getInt( PersonalE.ASISTENCIA));
-                        contentValues.put( PersonalE.CAMBIO, jsonObjectTemp.getInt( PersonalE.CAMBIO));
+                        contentValues.put( PersonalE.ASISTENCIA, jsonObjectTemp.getString( PersonalE.ASISTENCIA));
+                        contentValues.put( PersonalE.ESTADOCAMBIO, jsonObjectTemp.getString( PersonalE.ESTADOCAMBIO));
+                        contentValues.put( PersonalE.ESTADOREEMPLAZO, jsonObjectTemp.getString( PersonalE.ESTADOREEMPLAZO));
+                        contentValues.put( PersonalE.R_DNI, jsonObjectTemp.getString( PersonalE.R_DNI ) );
+                        contentValues.put( PersonalE.R_NOMBRE_COMPLETO, jsonObjectTemp.getString( PersonalE.R_NOMBRE_COMPLETO ) );
+                        contentValues.put( PersonalE.ID_CARGO_CAMBIO, jsonObjectTemp.getInt( PersonalE.ID_CARGO_CAMBIO ) );
                         String dni = jsonObjectTemp.getString(PersonalE.DNI);
                         Where = PersonalE.DNI + " = '" + dni + "'";
                         Log.e(TAG, "where : " +  Where);
