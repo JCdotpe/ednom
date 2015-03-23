@@ -7,11 +7,9 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
-import android.text.Layout;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -612,42 +610,10 @@ public class MainActivity extends Activity
     }
 
     @Override
-    public void reemplazarPersonal(String nroDni) {
-        final EditText txtDniCambio = (EditText) findViewById(R.id.txt_dni_cambio);
-        final EditText txtNombreCambio = (EditText) findViewById(R.id.txt_nombre_cambio);
-        final String dniCambio = txtDniCambio.getText().toString();
-        final String nombreCambio = txtNombreCambio.getText().toString();
-        final TextView txtMensaje = (TextView) findViewById(R.id.label_mensaje);
-        final View layoutDatos = findViewById(R.id.layout_datos);
-        final View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
-        if (dniCambio.length() != 8 || nombreCambio.equals("")){
-            txtDniCambio.setText("");
-            txtNombreCambio.setText("");
-            Toast.makeText(getApplicationContext(), "No se ha llenado los campos necesarios", Toast.LENGTH_SHORT).show();
-        } else {
-            AlertDialog.Builder builder =  new AlertDialog.Builder(MainActivity.this);
-            builder.setTitle("Reemplazo de Personal");
-            builder.setMessage("Deseas reemplazar al personal?");
-            builder.setPositiveButton("Si", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    int value = personalBL.reemplazarPersonal(dni, dniCambio, nombreCambio);
-                    if (value == 10) {
-                        Toast.makeText(MainActivity.this, "Se realizó el reemplazo correctamente", Toast.LENGTH_SHORT).show();
-                    } else {
-                        Toast.makeText(MainActivity.this, "No se ha reemplazado al personal", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            });
-            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    Toast.makeText(MainActivity.this, "No se ha reemplazado al personal", Toast.LENGTH_SHORT).show();
-                }
-            });
-            builder.create();
-            builder.show();
-        }
+    public void reemplazarPersonal(String nroDni, String dniCambio, String nombreCambio) {
+        View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
+        personalBL.reemplazarPersonal(dni, dniCambio, nombreCambio);
+        layoutDatosCambio.setVisibility(View.INVISIBLE);
     }
 
     @Override
@@ -655,20 +621,48 @@ public class MainActivity extends Activity
         this.showDialog( "Buscando personal..." );
         personalE = personalBL.searchPersonalCambio(nroDni);
         this.showPersonal(personalE);
-        View layoutDatos = findViewById(R.id.layout_datos);
         View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
         if ( personalE.getStatus() == 8 || personalE.getStatus() == 9 ) {
-            layoutDatos.setVisibility(View.VISIBLE);
             if(personalE.getStatus() == 8){
                 layoutDatosCambio.setVisibility(View.VISIBLE);
             }
         } else {
-            layoutDatos.setVisibility(View.INVISIBLE);
             layoutDatosCambio.setVisibility(View.INVISIBLE);
         }
-
         this.showPersonal(personalE);
     }
+
+    @Override
+    public void registrarCambioCargo(String nroDni, String cargo) {
+        this.showDialog( "Registrando personal..." );
+        View view = findViewById(R.id.layout_datos_cambio);
+        personalE = personalBL.registrarCambioCargo(nroDni, cargo);
+        if (personalE.getStatus() == 0){
+            view.setVisibility(View.INVISIBLE);
+            Toast.makeText(getApplicationContext(), "Se cambio de cargo correctamente", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "No se pudo cambiar de cargo", Toast.LENGTH_SHORT).show();
+        }
+        progressDialog.dismiss();
+
+    }
+
+    @Override
+    public void searchPersonalCambioCargo(String nroDni) {
+        this.showDialog( "Buscando personal..." );
+        View view = findViewById(R.id.layout_datos_cambio);
+        personalE = personalBL.searchPersonalCambioCargo(nroDni);
+        switch (personalE.getStatus()){
+            case 11:case 12:case 13:
+                view.setVisibility(View.VISIBLE);
+                break;
+            default:
+                view.setVisibility(View.INVISIBLE);
+                break;
+        }
+        this.showPersonal(personalE);
+    }
+
 
     private void showPersonal(PersonalE personalE) {
         progressDialog.dismiss();
@@ -683,11 +677,12 @@ public class MainActivity extends Activity
         txtLocalAplicacion.setText( "" );
         dni = personalE.getDni();
         switch (personalE.getStatus()){
-            case 0: case 6:case 8: case 9:
+            case 0: case 6:case 8: case 9: case 11:case 12:case 13:
                 txtDni.setText(dni);
                 txtNombreCompleto.setText( personalE.getNombre_completo() );
                 txtCargo.setText( personalE.getCargoE().getCargo());
                 txtLocalAplicacion.setText( personalE.getLocalE().getNombreLocal() );
+                break;
         }
         showMessagePersonal(personalE.getStatus());
     }
@@ -769,6 +764,26 @@ public class MainActivity extends Activity
                 textView.setTextColor(getResources().getColor(R.color.warning));
                 textView.setText(msg);
                 break;
+
+            case 10:
+                Toast.makeText(this.getApplicationContext(), "Se cambio de cargo correctamente", Toast.LENGTH_SHORT);
+
+            case 11:
+                msg = "Personal de reemplazo";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
+
+            case 12:
+                msg = "No se puede cambiar de cargo a este personal";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
+
         }
     }
 

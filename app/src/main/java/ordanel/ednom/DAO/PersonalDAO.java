@@ -32,7 +32,6 @@ public class PersonalDAO extends BaseDAO {
         initHttPostAux();
     }
 
-
     public PersonalE searchPersonal(String conditional) {
 
         Log.e(TAG, "start searchPersonal");
@@ -43,7 +42,7 @@ public class PersonalDAO extends BaseDAO {
         {
             openDBHelper();
 
-            SQL = "SELECT ps.dni, ps.id_cargo, cg.cargo, ps.nombre_completo, lc.nombreLocal FROM personal ps INNER JOIN local lc ON ps.cod_sede_operativa = lc.cod_sede_operativa AND ps.cod_local_sede = lc.cod_local_sede INNER JOIN cargo cg ON cg.id_cargo = ps.id_cargo WHERE " + conditional;
+            SQL = "SELECT ps.dni, ps.id_cargo, cg.cargo, ps.nombre_completo, ps.estado_cambio, ps.estado_reemp, ps.r_dni, lc.nombreLocal FROM personal ps INNER JOIN local lc ON ps.cod_sede_operativa = lc.cod_sede_operativa AND ps.cod_local_sede = lc.cod_local_sede INNER JOIN cargo cg ON cg.id_cargo = ps.id_cargo WHERE " + conditional;
             Log.e(TAG, "string sql : " + SQL);
             cursor = dbHelper.getDatabase().rawQuery(SQL, null);
 
@@ -60,6 +59,10 @@ public class PersonalDAO extends BaseDAO {
                     personalE.setNombre_completo(cursor.getString(cursor.getColumnIndex(PersonalE.NOMBRE_COMPLETO)));
                     personalE.setLocalE(localE);
                     personalE.setCargoE(cargoE);
+                    personalE.setEstadoReemplazo(cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOREEMPLAZO)));
+                    personalE.setId_cargo(cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO)));
+                    personalE.setEstadoCambio(cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOCAMBIO)));
+                    personalE.setR_dni(cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
                     cursor.moveToNext();
                 }
 
@@ -172,7 +175,6 @@ public class PersonalDAO extends BaseDAO {
         catch (Exception e)
         {
             e.printStackTrace();
-            personalE.setStatus(2); // error al acceder.
             valueInteger = 1;
         }
         finally
@@ -186,20 +188,21 @@ public class PersonalDAO extends BaseDAO {
         return valueInteger;
     }
 
-
     public Integer reemplazarPersonal(String dni, String dniCambio, String nombreCambio) {
         Log.e(TAG, "start reemplazarPersonal");
         try
         {
             openDBHelper();
 
-            contentValues = new ContentValues();
-            contentValues.put(PersonalE.R_DNI, dniCambio);
-            contentValues.put(PersonalE.R_NOMBRE_COMPLETO, nombreCambio);
-            contentValues.put(PersonalE.ESTADOREEMPLAZO, "1");
+            contentValues =  new ContentValues();
+            contentValues.put( PersonalE.ESTADOREEMPLAZO, "1" );
+            contentValues.put( PersonalE.R_NOMBRE_COMPLETO, nombreCambio.toUpperCase() );
+            contentValues.put(PersonalE.R_DNI, dniCambio.toUpperCase());
             SQL = "dni = '" + dni + "'";
 
-            dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
+            valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
+            dbHelper.setTransactionSuccessful();
+            Log.e(TAG, String.valueOf(valueInteger) + dniCambio + nombreCambio);
             valueInteger = 10;
         }
         catch (Exception e)
@@ -214,6 +217,95 @@ public class PersonalDAO extends BaseDAO {
         }
 
         Log.e( TAG, "end reemplazarPersonal" );
+        return valueInteger;
+    }
+
+    public PersonalE searchPersonalCambioCargo(String conditional) {
+        Log.e(TAG, "start searchPersonalCambioCargo");
+
+        personalE = new PersonalE();
+
+        try
+        {
+            openDBHelper();
+
+            SQL = "SELECT ps.dni, ps.r_dni, ps.id_cargo_cambio, cg.cargo, ps.r_nombre_completo, lc.nombreLocal FROM personal ps INNER JOIN local lc ON ps.cod_sede_operativa = lc.cod_sede_operativa AND ps.cod_local_sede = lc.cod_local_sede INNER JOIN cargo cg ON cg.id_cargo = ps.id_cargo_cambio WHERE " + conditional;
+            Log.e(TAG, "string sql : " + SQL);
+            cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+
+            if (cursor.moveToFirst()) {
+                while (!cursor.isAfterLast()) {
+
+                    LocalE localE = new LocalE();
+                    localE.setNombreLocal(cursor.getString(cursor.getColumnIndex(LocalE.NOMBRE_LOCAL)));
+
+                    CargoE cargoE = new CargoE();
+                    cargoE.setCargo(cursor.getString(cursor.getColumnIndex(CargoE.CARGO)));
+
+                    personalE.setDni(cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
+                    //personalE.setR_dni(cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
+                    //personalE.setR_nombre_completo(cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
+                    personalE.setNombre_completo(cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
+                    //personalE.setId_cargo_cambio(cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO)));
+                    personalE.setId_cargo(cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO)));
+                    personalE.setLocalE(localE);
+                    personalE.setCargoE(cargoE);
+                    cursor.moveToNext();
+                }
+
+                personalE.setStatus(0);
+            } else {
+                personalE.setStatus(1);// alerta. sin datos;
+            }
+        }
+        catch (Exception e)
+        {
+            e.printStackTrace();
+            personalE.setStatus(2); // error al acceder.
+        }
+        finally
+        {
+            closeDBHelper();
+            cursor.close();
+        }
+
+        Log.e( TAG, "end searchPersonalCambioCargo" );
+
+        return personalE;
+    }
+
+    public int cambiarCargo(String dni, String cargo) {
+        Log.e(TAG, "start cambiarCargo");
+
+        try
+        {
+            openDBHelper();
+            int idCargo;
+            SQL = "SELECT id_cargo from cargo where cargo = '" + cargo + "'";
+            cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+            if (cursor.moveToFirst()){
+                idCargo = cursor.getInt(cursor.getColumnIndex(CargoE.IDCARGO));
+                contentValues = new ContentValues();
+                contentValues.put(PersonalE.ESTADOCAMBIO, "1");
+                contentValues.put(PersonalE.ID_CARGO_CAMBIO, idCargo);
+                SQL = "dni = '" + dni + "' OR r_dni = '" + dni + "'";
+                valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
+                Log.e(TAG, "Rows = " + String.valueOf(valueInteger));
+                dbHelper.setTransactionSuccessful();
+            }
+            valueInteger = valueInteger > 0 ? 0 : 1;
+        }
+        catch (Exception e){
+            e.printStackTrace();
+            valueInteger = 2;
+        }
+        finally{
+            closeDBHelper();
+            cursor.close();
+        }
+
+        Log.e( TAG, "end cambiarCargo" );
+
         return valueInteger;
     }
 }

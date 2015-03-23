@@ -15,7 +15,11 @@ public interface MainI {
 
     public void asistenciaPersonal(String nroDni);
 
-    public void reemplazarPersonal(String nroDni);
+    public void reemplazarPersonal(String nroDni, String dniCambio, String nombreCambio);
 
     public void searchPersonalCambio(String nroDni);
+
+    public void registrarCambioCargo(String nroDni, String cargo);
+
+    public void searchPersonalCambioCargo(String nroDni);
 }
