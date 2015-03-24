@@ -188,22 +188,31 @@ public class PersonalDAO extends BaseDAO {
         return valueInteger;
     }
 
-    public Integer reemplazarPersonal(String dni, String dniCambio, String nombreCambio) {
+    public Integer reemplazarPersonal(String dni, String dniCambio, String nombreCambio, int cargoCambio) {
         Log.e(TAG, "start reemplazarPersonal");
         try
         {
             openDBHelper();
+            SQL = "SELECT  * FROM personal WHERE dni = '" + dni + "' or r_dni = '" + dni + "'";
+            Log.e(TAG, "string sql : " + SQL);
+            cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+            if (cursor.moveToFirst()){
+                valueInteger = 11;
+            } else {
+                contentValues =  new ContentValues();
+                contentValues.put( PersonalE.ESTADOREEMPLAZO, "1" );
+                contentValues.put( PersonalE.R_NOMBRE_COMPLETO, nombreCambio.toUpperCase() );
+                contentValues.put(PersonalE.R_DNI, dniCambio.toUpperCase());
+                contentValues.put(PersonalE.ID_CARGO_CAMBIO, cargoCambio);
+                contentValues.put(PersonalE.HORA_INGRESO, ConstantsUtils.fecha_registro());
+                SQL = "dni = '" + dni + "'";
 
-            contentValues =  new ContentValues();
-            contentValues.put( PersonalE.ESTADOREEMPLAZO, "1" );
-            contentValues.put( PersonalE.R_NOMBRE_COMPLETO, nombreCambio.toUpperCase() );
-            contentValues.put(PersonalE.R_DNI, dniCambio.toUpperCase());
-            SQL = "dni = '" + dni + "'";
+                valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
+                dbHelper.setTransactionSuccessful();
+                Log.e(TAG, String.valueOf(valueInteger) + dniCambio + nombreCambio);
+                valueInteger = 10;
+            }
 
-            valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
-            dbHelper.setTransactionSuccessful();
-            Log.e(TAG, String.valueOf(valueInteger) + dniCambio + nombreCambio);
-            valueInteger = 10;
         }
         catch (Exception e)
         {

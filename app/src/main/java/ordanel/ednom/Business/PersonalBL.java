@@ -33,15 +33,12 @@ public class PersonalBL {
     public PersonalE searchPersonalCambio(String nroDni) {
         conditional = "dni = '" + nroDni + "'";
         personalE = personalDAO.searchPersonal(conditional);
-        if (personalE.getStatus() == 0){
-            personalE.setStatus(personalDAO.searchPersonalCambio(conditional));
-        }
         return personalE;
     }
 
 
-    public PersonalE reemplazarPersonal(String dni, String dniCambio, String nombreCambio) {
-        personalE.setStatus(personalDAO.reemplazarPersonal(dni, dniCambio, nombreCambio));
+    public PersonalE reemplazarPersonal(String dni, String dniCambio, String nombreCambio, int cargoCambio) {
+        personalE.setStatus(personalDAO.reemplazarPersonal(dni, dniCambio, nombreCambio, cargoCambio));
         return personalE;
     }
 

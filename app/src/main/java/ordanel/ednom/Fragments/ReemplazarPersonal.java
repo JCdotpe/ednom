@@ -1,6 +1,8 @@
 package ordanel.ednom.Fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import ordanel.ednom.Interfaces.MainI;
+import ordanel.ednom.MainActivity;
 import ordanel.ednom.R;
 
 public class ReemplazarPersonal extends Fragment {
@@ -27,6 +30,8 @@ public class ReemplazarPersonal extends Fragment {
     Button btnReemplazar;
     EditText txtDniCambio;
     EditText txtNombreCambio;
+    String dniCambio;
+    String nombreCambio;
 
     public static ReemplazarPersonal newInstance( int position ) {
 
@@ -85,14 +90,30 @@ public class ReemplazarPersonal extends Fragment {
         btnReemplazar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String dniCambio = txtDniCambio.getText().toString();
-                String nombreCambio = txtNombreCambio.getText().toString();
+                dniCambio = txtDniCambio.getText().toString();
+                nombreCambio = txtNombreCambio.getText().toString();
                 if (dniCambio.length() != 8 || nombreCambio.isEmpty()) {
                     Toast.makeText(getActivity(), "Falta llenar campos", Toast.LENGTH_SHORT).show();
                     txtDniCambio.setText("");
                     txtNombreCambio.setText("");
                 }else {
-                    mListener.reemplazarPersonal(nroDni, dniCambio, nombreCambio);
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity().getApplicationContext());
+                    alertDialogBuilder.setTitle("Reemplazo de Personal");
+                    alertDialogBuilder
+                            .setMessage("Esta seguro de reemplazar al personal por \n" + "NOMBRE: " + nombreCambio  + "\n"  + "DNI: " + dniCambio)
+                            .setCancelable(false)
+                            .setPositiveButton("SI",new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog,int id) {
+                                    mListener.reemplazarPersonal(nroDni, dniCambio, nombreCambio);
+                                }
+                            })
+                            .setNegativeButton("NO", new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int id) {
+                                    dialog.cancel();
+                                }
+                            });
+                    AlertDialog alertDialog = alertDialogBuilder.create();
+                    alertDialog.show();
                 }
             }
         });

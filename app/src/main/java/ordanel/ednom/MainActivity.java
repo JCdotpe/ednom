@@ -7,6 +7,7 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -612,8 +613,9 @@ public class MainActivity extends Activity
     @Override
     public void reemplazarPersonal(String nroDni, String dniCambio, String nombreCambio) {
         View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
-        personalBL.reemplazarPersonal(dni, dniCambio, nombreCambio);
+        personalBL.reemplazarPersonal(dni, dniCambio, nombreCambio, personalE.getId_cargo());
         layoutDatosCambio.setVisibility(View.INVISIBLE);
+        this.showPersonal(personalE);
     }
 
     @Override
@@ -766,10 +768,11 @@ public class MainActivity extends Activity
                 break;
 
             case 10:
-                Toast.makeText(this.getApplicationContext(), "Se cambio de cargo correctamente", Toast.LENGTH_SHORT);
+                Toast.makeText(this.getApplicationContext(), "Se reemplazo correctamente al personal", Toast.LENGTH_SHORT).show();
+                break;
 
             case 11:
-                msg = "Personal de reemplazo";
+                msg = "El personla de reemplazo";
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
                 textView.setVisibility(View.VISIBLE);
                 textView.setTextColor(getResources().getColor(R.color.warning));
@@ -859,8 +862,6 @@ public class MainActivity extends Activity
 
     }
 
-
-
     @Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 
@@ -871,7 +872,5 @@ public class MainActivity extends Activity
 
         return super.onKeyDown( keyCode, event );
     }
-
-
 
 }
