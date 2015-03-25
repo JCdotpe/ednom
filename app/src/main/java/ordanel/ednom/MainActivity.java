@@ -622,14 +622,11 @@ public class MainActivity extends Activity
         personalE = personalBL.searchPersonalCambio(nroDni);
         this.showPersonal(personalE);
         View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
-        if ( personalE.getStatus() == 8 || personalE.getStatus() == 9 ) {
-            if(personalE.getStatus() == 8){
-                layoutDatosCambio.setVisibility(View.VISIBLE);
-            }
+        if ( personalE.getStatus() == 4) {
+            layoutDatosCambio.setVisibility(View.VISIBLE);
         } else {
             layoutDatosCambio.setVisibility(View.INVISIBLE);
         }
-        this.showPersonal(personalE);
     }
 
     @Override
@@ -653,7 +650,7 @@ public class MainActivity extends Activity
         View view = findViewById(R.id.layout_datos_cambio);
         personalE = personalBL.searchPersonalCambioCargo(nroDni);
         switch (personalE.getStatus()){
-            case 11: case 12:case 13:
+            case 14: case 4:
                 view.setVisibility(View.VISIBLE);
                 break;
             default:
@@ -662,7 +659,6 @@ public class MainActivity extends Activity
         }
         this.showPersonal(personalE);
     }
-
 
     private void showPersonal(PersonalE personalE) {
         progressDialog.dismiss();
@@ -677,7 +673,7 @@ public class MainActivity extends Activity
         txtLocalAplicacion.setText( "" );
         dni = personalE.getDni();
         switch (personalE.getStatus()){
-            case 0: case 6:case 8: case 9: case 11:case 12:case 13:
+            case 0:case 4: case 6:case 8: case 9: case 11: case 12: case 13: case 14: case 15:
                 txtDni.setText(dni);
                 txtNombreCompleto.setText( personalE.getNombre_completo() );
                 txtCargo.setText( personalE.getCargoE().getCargo());
@@ -692,6 +688,9 @@ public class MainActivity extends Activity
         View view = findViewById(R.id.layout_datos);
         View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
         TextView textView = (TextView) findViewById(R.id.label_mensaje);
+        TextView textViewDniCambio = (TextView) findViewById(R.id.txt_dni_cambio);
+        TextView textViewNommbreCambio = (TextView) findViewById(R.id.txt_nombre_cambio);
+
         switch ( status )
         {
             case 0:
@@ -715,6 +714,14 @@ public class MainActivity extends Activity
                 view.setBackgroundColor(getResources().getColor(R.color.error));
                 textView.setVisibility(View.VISIBLE);
                 textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                break;
+
+            case 4:
+                msg = "Se encontro al personal";
+                view.setBackgroundColor(getResources().getColor(R.color.correct));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.correct));
                 textView.setText(msg);
                 break;
 
@@ -768,10 +775,16 @@ public class MainActivity extends Activity
 
             case 10:
                 Toast.makeText(this.getApplicationContext(), "Se reemplazó correctamente al personal", Toast.LENGTH_SHORT).show();
+                textView.setVisibility(View.INVISIBLE);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
                 break;
 
             case 11:
                 Toast.makeText(this.getApplicationContext(), "No se reemplazó al personal", Toast.LENGTH_SHORT).show();
+                textView.setVisibility(View.INVISIBLE);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
                 break;
 
             case 12:
@@ -781,6 +794,8 @@ public class MainActivity extends Activity
                 textView.setTextColor(getResources().getColor(R.color.error));
                 textView.setText(msg);
                 layoutDatosCambio.setVisibility(View.INVISIBLE);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
                 break;
 
             case 13:
@@ -789,16 +804,24 @@ public class MainActivity extends Activity
                 textView.setVisibility(View.VISIBLE);
                 textView.setTextColor(getResources().getColor(R.color.warning));
                 textView.setText(msg);
-                layoutDatosCambio.setVisibility(View.INVISIBLE);
                 break;
 
             case 14:
-                msg = "El personal de reemplazo es: ";
+                msg = "No se puede cambiar de cargo a este personal: ";
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
                 textView.setVisibility(View.VISIBLE);
                 textView.setTextColor(getResources().getColor(R.color.warning));
                 textView.setText(msg);
                 layoutDatosCambio.setVisibility(View.INVISIBLE);
+                break;
+            case 15:
+                msg = "No se puede reeemplazar a este personal: ";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
                 break;
         }
     }

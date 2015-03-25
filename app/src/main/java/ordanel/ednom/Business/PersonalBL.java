@@ -33,6 +33,15 @@ public class PersonalBL {
     public PersonalE searchPersonalCambio(String nroDni) {
         conditional = "dni = '" + nroDni + "'";
         personalE = personalDAO.searchPersonal(conditional);
+        if (personalE.getStatus() == 0 ){
+            switch (personalE.getId_cargo()){
+                case 11:case 12: case 13:
+                    personalE.setStatus(4);
+                    break;
+                default:
+                    personalE.setStatus(15);
+            };
+        }
         return personalE;
     }
 
@@ -56,7 +65,7 @@ public class PersonalBL {
             personalE = personalDAO.searchPersonalCambioCargo(conditional);
             if (personalE.getStatus() == 0){
                 switch (personalE.getId_cargo()){
-                    case 11:case 12:case 13:
+                    case 11:case 12: case 13:
                         personalE.setStatus(13);
                         break;
                     default:
@@ -67,8 +76,8 @@ public class PersonalBL {
         } else {
             if (personalE.getStatus() == 0){
                 switch (personalE.getId_cargo()){
-                    case 11:case 12:case 13:
-                        personalE.setStatus(8);
+                    case 11:case 12: case 13:
+                        personalE.setStatus(4);
                         break;
                     default:
                         personalE.setStatus(14);

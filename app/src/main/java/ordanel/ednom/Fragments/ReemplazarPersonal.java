@@ -99,10 +99,10 @@ public class ReemplazarPersonal extends Fragment {
                     txtDniCambio.setText("");
                     txtNombreCambio.setText("");
                 }else {
-                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity().getApplicationContext());
+                    AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(getActivity());
                     alertDialogBuilder.setTitle("Reemplazo de Personal");
                     alertDialogBuilder
-                            .setMessage("Esta seguro de reemplazar al personal por \n" + "NOMBRE: " + nombreCambio  + "\n"  + "DNI: " + dniCambio)
+                            .setMessage("Esta seguro de reemplazar al personal por:  \n" + "NOMBRE: " + nombreCambio.toUpperCase()  + "\n"  + "DNI: " + dniCambio)
                             .setCancelable(false)
                             .setPositiveButton("SI",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {

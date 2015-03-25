@@ -193,7 +193,7 @@ public class PersonalDAO extends BaseDAO {
         try
         {
             openDBHelper();
-            SQL = "SELECT  * FROM personal WHERE dni = '" + dni + "' or r_dni = '" + dni + "'";
+            SQL = "SELECT  * FROM personal WHERE dni = '" + dniCambio + "' or r_dni = '" + dniCambio + "'";
             Log.e(TAG, "string sql : " + SQL);
             cursor = dbHelper.getDatabase().rawQuery(SQL, null);
             if (cursor.moveToFirst()){
