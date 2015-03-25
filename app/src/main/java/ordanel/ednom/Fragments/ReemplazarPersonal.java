@@ -32,6 +32,7 @@ public class ReemplazarPersonal extends Fragment {
     EditText txtNombreCambio;
     String dniCambio;
     String nombreCambio;
+    View layoutDatosCambio;
 
     public static ReemplazarPersonal newInstance( int position ) {
 
@@ -64,6 +65,7 @@ public class ReemplazarPersonal extends Fragment {
         txtDniCambio= (EditText) view.findViewById(R.id.txt_dni_cambio);
         txtNombreCambio = (EditText) view.findViewById(R.id.txt_nombre_cambio);
         editTextDni = (EditText) view.findViewById(R.id.edtDNI);
+        layoutDatosCambio = view.findViewById(R.id.layout_datos_cambio);
         editTextDni.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -105,6 +107,7 @@ public class ReemplazarPersonal extends Fragment {
                             .setPositiveButton("SI",new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog,int id) {
                                     mListener.reemplazarPersonal(nroDni, dniCambio, nombreCambio);
+                                    layoutDatosCambio.setVisibility(View.INVISIBLE);
                                 }
                             })
                             .setNegativeButton("NO", new DialogInterface.OnClickListener() {

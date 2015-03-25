@@ -612,9 +612,7 @@ public class MainActivity extends Activity
 
     @Override
     public void reemplazarPersonal(String nroDni, String dniCambio, String nombreCambio) {
-        View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
         personalBL.reemplazarPersonal(dni, dniCambio, nombreCambio, personalE.getId_cargo());
-        layoutDatosCambio.setVisibility(View.INVISIBLE);
         this.showPersonal(personalE);
     }
 
@@ -692,6 +690,7 @@ public class MainActivity extends Activity
     private void showMessagePersonal(int status) {
         String msg = "";
         View view = findViewById(R.id.layout_datos);
+        View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
         TextView textView = (TextView) findViewById(R.id.label_mensaje);
         switch ( status )
         {
@@ -768,24 +767,40 @@ public class MainActivity extends Activity
                 break;
 
             case 10:
-                Toast.makeText(this.getApplicationContext(), "Se reemplazo correctamente al personal", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this.getApplicationContext(), "Se reemplazó correctamente al personal", Toast.LENGTH_SHORT).show();
                 break;
 
             case 11:
-                msg = "El personla de reemplazo";
-                view.setBackgroundColor(getResources().getColor(R.color.warning));
-                textView.setVisibility(View.VISIBLE);
-                textView.setTextColor(getResources().getColor(R.color.warning));
-                textView.setText(msg);
+                Toast.makeText(this.getApplicationContext(), "No se reemplazó al personal", Toast.LENGTH_SHORT).show();
                 break;
 
             case 12:
-                msg = "No se puede cambiar de cargo a este personal";
+                msg = "El personal ya existe en la BD";
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                layoutDatosCambio.setVisibility(View.INVISIBLE);
+                break;
+
+            case 13:
+                msg = "El personal de reemplazo es: ";
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
                 textView.setVisibility(View.VISIBLE);
                 textView.setTextColor(getResources().getColor(R.color.warning));
                 textView.setText(msg);
+                layoutDatosCambio.setVisibility(View.INVISIBLE);
                 break;
+
+            case 14:
+                msg = "El personal de reemplazo es: ";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                layoutDatosCambio.setVisibility(View.INVISIBLE);
+                break;
+
 
         }
     }

@@ -197,7 +197,7 @@ public class PersonalDAO extends BaseDAO {
             Log.e(TAG, "string sql : " + SQL);
             cursor = dbHelper.getDatabase().rawQuery(SQL, null);
             if (cursor.moveToFirst()){
-                valueInteger = 11;
+                valueInteger = 12;
             } else {
                 contentValues =  new ContentValues();
                 contentValues.put( PersonalE.ESTADOREEMPLAZO, "1" );
@@ -285,24 +285,30 @@ public class PersonalDAO extends BaseDAO {
 
     public int cambiarCargo(String dni, String cargo) {
         Log.e(TAG, "start cambiarCargo");
-
+        valueInteger = 1;
         try
         {
             openDBHelper();
             int idCargo;
-            SQL = "SELECT id_cargo from cargo where cargo = '" + cargo + "'";
+            SQL = "SELECT  * FROM personal WHERE dni = '" + dni + "' or r_dni = '" + dni + "'";
+            Log.e(TAG, "string sql : " + SQL);
             cursor = dbHelper.getDatabase().rawQuery(SQL, null);
             if (cursor.moveToFirst()){
-                idCargo = cursor.getInt(cursor.getColumnIndex(CargoE.IDCARGO));
-                contentValues = new ContentValues();
-                contentValues.put(PersonalE.ESTADOCAMBIO, "1");
-                contentValues.put(PersonalE.ID_CARGO_CAMBIO, idCargo);
-                SQL = "dni = '" + dni + "' OR r_dni = '" + dni + "'";
-                valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
-                Log.e(TAG, "Rows = " + String.valueOf(valueInteger));
-                dbHelper.setTransactionSuccessful();
+                SQL = "SELECT id_cargo from cargo where cargo = '" + cargo + "'";
+                cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+                if (cursor.moveToFirst()){
+                    idCargo = cursor.getInt(cursor.getColumnIndex(CargoE.IDCARGO));
+                    contentValues = new ContentValues();
+                    contentValues.put(PersonalE.ESTADOCAMBIO, "1");
+                    contentValues.put(PersonalE.ID_CARGO_CAMBIO, idCargo);
+                    SQL = "dni = '" + dni + "' OR r_dni = '" + dni + "'";
+                    valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
+                    Log.e(TAG, "Rows = " + String.valueOf(valueInteger));
+                    dbHelper.setTransactionSuccessful();
+                }
             }
-            valueInteger = valueInteger > 0 ? 0 : 1;
+
+            valueInteger = valueInteger > 0 ? 15 : 16;
         }
         catch (Exception e){
             e.printStackTrace();
