@@ -308,7 +308,7 @@ public class PersonalDAO extends BaseDAO {
                 }
             }
 
-            valueInteger = valueInteger > 0 ? 15 : 16;
+            valueInteger = valueInteger > 0 ? 0 : 1;
         }
         catch (Exception e){
             e.printStackTrace();
