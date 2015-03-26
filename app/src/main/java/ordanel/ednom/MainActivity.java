@@ -673,7 +673,7 @@ public class MainActivity extends Activity
         txtLocalAplicacion.setText( "" );
         dni = personalE.getDni();
         switch (personalE.getStatus()){
-            case 0:case 4: case 6:case 8: case 9: case 11: case 12: case 13: case 14: case 15:
+            case 0: case 4: case 6: case 8: case 9: case 11: case 12: case 13: case 14: case 15: case 16:
                 txtDni.setText(dni);
                 txtNombreCompleto.setText( personalE.getNombre_completo() );
                 txtCargo.setText( personalE.getCargoE().getCargo());
@@ -814,6 +814,7 @@ public class MainActivity extends Activity
                 textView.setText(msg);
                 layoutDatosCambio.setVisibility(View.INVISIBLE);
                 break;
+
             case 15:
                 msg = "No se puede reeemplazar a este personal: ";
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
@@ -822,6 +823,14 @@ public class MainActivity extends Activity
                 textView.setText(msg);
                 textViewDniCambio.setText("");
                 textViewNommbreCambio.setText("");
+                break;
+
+            case 16:
+                msg = "Este personal ya fue reemplazado";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
                 break;
         }
     }
@@ -844,9 +853,7 @@ public class MainActivity extends Activity
             txtAula.setText( instrumentoE.getNro_aula().toString() );
             txtLocalAplicacion.setText( instrumentoE.getLocalE().getNombreLocal() );
         }
-
          showMessageInstrumento( instrumentoE.getStatus() );
-
     }
 
     public void showMessageInstrumento( Integer status ) {
@@ -895,7 +902,6 @@ public class MainActivity extends Activity
                 textView.setText(msg);
                 break;
         }
-
     }
 
     @Override
@@ -905,7 +911,6 @@ public class MainActivity extends Activity
         {
             return true;
         }
-
         return super.onKeyDown( keyCode, event );
     }
 

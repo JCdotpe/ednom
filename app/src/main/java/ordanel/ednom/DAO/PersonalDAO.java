@@ -1,5 +1,6 @@
 package ordanel.ednom.DAO;
 
+import android.content.ContentUris;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -100,18 +101,28 @@ public class PersonalDAO extends BaseDAO {
             if (isEstadoRegistroPersonal(nroDni, PersonalE.ASISTENCIA)){
                 valueInteger = 6 ;
             } else {
-                contentValues =  new ContentValues();
-                contentValues.put( PersonalE.ASISTENCIA, "1" );
-                contentValues.put( PersonalE.HORA_INGRESO, ConstantsUtils.fecha_registro() );
+                SQL = "SELECT * FROM personal WHERE dni = '" + nroDni + "'";
+                cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+                cursor.moveToFirst();
+                String reeemplazo = cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOREEMPLAZO));
+                if(reeemplazo.equals("1") || reeemplazo.equals("2")) {
+                    valueInteger = 16;
+                } else {
+                    contentValues =  new ContentValues();
+                    contentValues.put( PersonalE.ASISTENCIA, "1" );
+                    contentValues.put( PersonalE.HORA_INGRESO, ConstantsUtils.fecha_registro() );
 
-                SQL = "dni = '" + nroDni + "'";
+                    SQL = "dni = '" + nroDni + "'";
 
-                valueInteger = dbHelper.getDatabase().updateWithOnConflict( "personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
-                Log.e( TAG, "asistencia personal : " + valueInteger.toString() );
+                    valueInteger = dbHelper.getDatabase().updateWithOnConflict( "personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE );
+                    Log.e( TAG, "asistencia personal : " + valueInteger.toString() );
 
-                valueInteger = 0;
+                    valueInteger = 0;
 
-                dbHelper.setTransactionSuccessful(); }
+                    dbHelper.setTransactionSuccessful();
+                }
+
+            }
         }
         catch (SQLiteDatabaseLockedException l){
             l.printStackTrace();

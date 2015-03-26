@@ -693,7 +693,9 @@ public class PadronDAO extends BaseDAO {
             }
             Log.e(TAG, "INSTRUMENTO: " + jsonArray.toString());
             */
+            jsonObject = new JSONObject();
 
+            jsonArray = new JSONArray();
             SQL = "SELECT dni, id_cargo, cod_sede_operativa, cod_local_sede, asistencia, hora_ingreso, estado_cambio, estado_reemp, r_dni, r_nombre_completo, id_cargo_cambio FROM personal WHERE asistencia = '1' OR estado_cambio = '1' OR estado_reemp = '1'";
             Log.e(TAG, "string sql personal: " + SQL);
 
@@ -721,7 +723,7 @@ public class PadronDAO extends BaseDAO {
                     }
                     jsonObjectTemp.put(PersonalE.R_DNI, cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
                     jsonObjectTemp.put(PersonalE.R_NOMBRE_COMPLETO, cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
-
+                    Log.e(TAG, cursor.getString(cursor.getColumnIndex(PersonalE.ASISTENCIA)));
                     jsonArray.put(jsonObjectTemp);
                     cursor.moveToNext();
 
