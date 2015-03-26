@@ -2,6 +2,8 @@ package ordanel.ednom.Business;
 
 import android.content.Context;
 
+import java.util.ArrayList;
+
 import ordanel.ednom.DAO.PersonalDAO;
 import ordanel.ednom.Entity.PersonalE;
 
@@ -14,6 +16,9 @@ public class PersonalBL {
     private static PersonalE personalE;
 
     private static  String conditional;
+    ArrayList<PersonalE> personalEArrayList;
+    ArrayList<PersonalE> personalETempList;
+
 
     public PersonalBL(Context paramContext) {
         personalDAO = PersonalDAO.getInstance(paramContext);
@@ -86,5 +91,11 @@ public class PersonalBL {
             }
         }
         return personalE;
+    }
+
+    public ArrayList<PersonalE> listadoAsitencia(){
+        personalEArrayList = new ArrayList<PersonalE>();
+        personalEArrayList = personalDAO.listadoPersonal();
+        return personalEArrayList;
     }
 }

@@ -1,24 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:orientation="horizontal">
+
+
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
         android:layout_weight="0.5"
-        android:text="@string/title_dni"
+        android:hint="@string/title_dni"
         android:gravity="center"
         android:paddingTop="10dp"
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
+        android:textSize="12sp"
         android:paddingRight="4dp"
-        android:background="@color/button_background"
-        android:textStyle="bold"/>
+        android:textStyle="bold"
+        android:id="@+id/txt_list_dni"/>
 
     <TextView
         android:layout_width="0dp"
@@ -28,10 +26,11 @@
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:text="Nombre Completo"
+        android:hint="Nombre Completo"
         android:gravity="center"
-        android:background="@color/button_background"
-        android:textStyle="bold"/>
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:id="@+id/txt_list_nombre"/>
 
     <TextView
         android:layout_width="0dp"
@@ -41,10 +40,11 @@
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:text="Asistencia"
+        android:hint="Asistencia"
         android:gravity="center"
-        android:background="@color/button_background"
-        android:textStyle="bold"/>
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:id="@+id/txt_list_asistencia"/>
 
     <TextView
         android:layout_width="0dp"
@@ -54,10 +54,11 @@
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:text="Cargo"
+        android:hint="Cargo"
         android:gravity="center"
-        android:background="@color/button_background"
-        android:textStyle="bold"/>
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:id="@+id/txt_list_cargo"/>
 
     <TextView
         android:layout_width="0dp"
@@ -67,10 +68,11 @@
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:text="Nro DNI Reemplazo"
+        android:hint="Nro DNI Reemplazo"
         android:gravity="center"
-        android:background="@color/button_background"
-        android:textStyle="bold"/>
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:id="@+id/txt_list_dni_reemp"/>
     <TextView
         android:layout_width="0dp"
         android:layout_height="match_parent"
@@ -79,16 +81,10 @@
         android:paddingBottom="10dp"
         android:paddingLeft="4dp"
         android:paddingRight="4dp"
-        android:text="Nombre Completo Reemplazo"
+        android:hint="Nombre Completo Reemplazo"
         android:gravity="center"
-        android:background="@color/button_background"
-        android:textStyle="bold"/>
-        </LinearLayout>
-
-    <ListView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:id="@+id/list_view_personal" />
-
+        android:textSize="12sp"
+        android:textStyle="bold"
+        android:id="@+id/txt_list_nombre_reemp"/>
 
 </LinearLayout>

@@ -46,10 +46,28 @@ public class PersonalE implements Parcelable {
     private int status;
     private LocalE localE;
     private CargoE cargoE;
+    private String cargo;
 
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
 
     public PersonalE() { super();
     }
+
+    public PersonalE(String dni, String nombre_completo, String asistencia, String cargo, String r_dni, String r_nombre_completo) {
+        this.dni = dni;
+        this.nombre_completo = nombre_completo;
+        this.r_dni = r_dni;
+        this.r_nombre_completo = r_nombre_completo;
+        this.asistencia = asistencia;
+        this.cargo = cargo;
+    }
+
     public PersonalE(Parcel parcel) {
         dni = parcel.readString();
         ape_pat  = parcel.readString();
@@ -71,6 +89,7 @@ public class PersonalE implements Parcelable {
         status = parcel.readInt();
         localE = parcel.readParcelable(LocalE.class.getClassLoader());
         cargoE = parcel.readParcelable(CargoE.class.getClassLoader());
+        cargo = parcel.readString();
 
     }
 
@@ -101,6 +120,7 @@ public class PersonalE implements Parcelable {
         dest.writeInt(status);
         dest.writeParcelable(localE,flags);
         dest.writeParcelable(cargoE, flags);
+        dest.writeString(cargo);
     }
 
     public LocalE getLocalE() {

@@ -18,6 +18,8 @@ public class ConstantsUtils {
     public static final String URL_REPORTE = "http://webinei.inei.gob.pe/oted/monitoreo/";
     public static final String URL_REPORTE_ACCESS = URL_REPORTE + "login";
     public static final String URL_REPORTE_SEARCH_DOCENTE = URL_REPORTE + "search-docente";
+    public static final String URL_SEARCH = "http://" + IP_SERVER + "/ednom2015i/login";
+    public static final String URL_REPORTE_SEARCH_PERSONAL = URL_SEARCH + "search-personal";
     public static String getPass = "pass";
     public static int getRol = 0;
 

@@ -65,11 +65,12 @@ public class UbigeoVerify extends Activity {
         items.add(new Item(R.drawable.user, "Usuario", Usuario));
         items.add(new Item(R.drawable.school, "Local de Aplicación", NombreLocal));
         items.add(new Item(R.drawable.location, "Dirección", Direccion));
+        /*
         items.add(new Item(R.drawable.classroom, "Número Totales de Aulas", Integer.toString(NAulas_t)));
         items.add(new Item(R.drawable.classroom, "Número de Aulas de Profesores sin Discapacidad", Integer.toString(NAulas_n)));
         items.add(new Item(R.drawable.classroom, "Número de Aulas de Profesores con Discapacidad", Integer.toString(NAulas_disc)));
         items.add(new Item(R.drawable.classroom, "Número de Aulas de Contingencia", Integer.toString(NAulas_contin)));
-
+        */
         listView.setAdapter(new ItemAdapter(this, items));
 
         if ( error > 0 )

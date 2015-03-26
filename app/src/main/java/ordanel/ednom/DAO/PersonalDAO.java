@@ -2,9 +2,12 @@ package ordanel.ednom.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseLockedException;
 import android.util.Log;
+
+import org.apache.http.impl.io.AbstractSessionInputBuffer;
 
 import java.util.ArrayList;
 
@@ -205,6 +208,7 @@ public class PersonalDAO extends BaseDAO {
                 contentValues.put(PersonalE.R_DNI, dniCambio.toUpperCase());
                 contentValues.put(PersonalE.ID_CARGO_CAMBIO, cargoCambio);
                 contentValues.put(PersonalE.HORA_INGRESO, ConstantsUtils.fecha_registro());
+                contentValues.put(PersonalE.ASISTENCIA, "");
                 SQL = "dni = '" + dni + "'";
 
                 valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, SQL, null, SQLiteDatabase.CONFLICT_IGNORE);
@@ -322,5 +326,70 @@ public class PersonalDAO extends BaseDAO {
         Log.e( TAG, "end cambiarCargo" );
 
         return valueInteger;
+    }
+
+    public ArrayList<PersonalE> listadoPersonal() {
+        Log.e( TAG, "start listadoPersonal" );
+
+        personalEArrayList = new ArrayList<>();
+
+        try {
+            openDBHelper();
+            SQL = "SELECT dni, nombre_completo, asistencia, r_dni, r_nombre_completo, id_cargo, id_cargo_cambio FROM personal";
+            cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+            if (cursor.moveToFirst()){
+                while (!cursor.isAfterLast()){
+                    personalE = new PersonalE();
+                    personalE.setDni(cursor.getString(cursor.getColumnIndex(PersonalE.DNI)));
+                    personalE.setNombre_completo(cursor.getString(cursor.getColumnIndex(PersonalE.NOMBRE_COMPLETO)));
+                    String asistencia = cursor.getString(cursor.getColumnIndex(PersonalE.ASISTENCIA));
+                    Log.e(TAG, asistencia);
+                    if (asistencia.equals("1") || asistencia.equals("2")){
+                        personalE.setAsistencia("SI");
+                    } else {
+                        personalE.setAsistencia("NO");
+                    }
+
+                    personalE.setR_dni(cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
+                    personalE.setR_nombre_completo(cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
+
+                    int idCargoCambio = cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO));
+                    int idCargo = cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO));
+
+                    if (idCargoCambio != 0){
+                        String sql = "SELECT cargo_res FROM cargo WHERE id_cargo = " + idCargoCambio;
+                        Cursor c = dbHelper.getDatabase().rawQuery(sql, null);
+                        c.moveToFirst();
+                        personalE.setCargo(c.getString(c.getColumnIndex(CargoE.CARGORES)));
+                        c.close();
+                    } else {
+                        String sql = "SELECT cargo_res FROM cargo WHERE id_cargo = " + idCargo;
+                        Cursor c = dbHelper.getDatabase().rawQuery(sql, null);
+                        c.moveToFirst();
+                        personalE.setCargo(c.getString(c.getColumnIndex(CargoE.CARGORES)));
+                        c.close();
+                    }
+
+                    personalEArrayList.add(personalE);
+                    Log.e(TAG, personalE.getNombre_completo());
+                    cursor.moveToNext();
+                }
+            }
+            Log.e(TAG, String.valueOf(personalEArrayList.size()));
+        } catch ( Exception e )
+        {
+            e.printStackTrace();
+            Log.e( TAG, e.toString() );
+        }
+        finally
+        {
+            closeDBHelper();
+            cursor.close();
+        }
+
+        Log.e( TAG, "end listadoPersonal" );
+
+        return personalEArrayList;
+
     }
 }

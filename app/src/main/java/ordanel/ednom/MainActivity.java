@@ -650,7 +650,7 @@ public class MainActivity extends Activity
         View view = findViewById(R.id.layout_datos_cambio);
         personalE = personalBL.searchPersonalCambioCargo(nroDni);
         switch (personalE.getStatus()){
-            case 14: case 4:
+            case 13: case 4:
                 view.setVisibility(View.VISIBLE);
                 break;
             default:
