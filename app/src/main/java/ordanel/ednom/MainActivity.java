@@ -660,6 +660,11 @@ public class MainActivity extends Activity
         this.showPersonal(personalE);
     }
 
+    @Override
+    public String searchNombreReserva(String nroDni) {
+        return personalBL.searchNombreReserva(nroDni);
+    }
+
     private void showPersonal(PersonalE personalE) {
         progressDialog.dismiss();
 

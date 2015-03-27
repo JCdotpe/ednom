@@ -19,6 +19,7 @@ public class PadronE implements Parcelable {
     private List<UsuarioLocalE> usuarioLocalEList = new ArrayList<UsuarioLocalE>();
     private List<PersonalE> personalEList = new ArrayList<PersonalE>();
     private List<CargoE> cargoEList = new ArrayList<CargoE>();
+    private List<PersonalE> supervisorEList = new ArrayList<PersonalE>();
 
     public List<CargoE> getCargoEList() {
         return cargoEList;
@@ -60,6 +61,7 @@ public class PadronE implements Parcelable {
         parcel.readTypedList( instrumentoEList, InstrumentoE.CREATOR );
         parcel.readTypedList( usuarioLocalEList, UsuarioLocalE.CREATOR );
         parcel.readTypedList( personalEList, PersonalE.CREATOR );
+        parcel.readTypedList( supervisorEList, PersonalE.CREATOR);
         status = parcel.readInt();
 
     }
@@ -79,8 +81,17 @@ public class PadronE implements Parcelable {
         dest.writeTypedList(instrumentoEList);
         dest.writeTypedList(usuarioLocalEList);
         dest.writeTypedList(personalEList);
+        dest.writeTypedList(supervisorEList);
         dest.writeInt( status );
 
+    }
+
+    public List<PersonalE> getSupervisorEList() {
+        return supervisorEList;
+    }
+
+    public void setSupervisorEList(List<PersonalE> supervisorEList) {
+        this.supervisorEList = supervisorEList;
     }
 
     public static final Creator<PadronE> CREATOR = new Creator<PadronE>() {

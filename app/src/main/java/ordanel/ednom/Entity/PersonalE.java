@@ -25,6 +25,9 @@ public class PersonalE implements Parcelable {
     public static final String R_DNI = "r_dni";
     public static final String R_NOMBRE_COMPLETO = "r_nombre_completo";
     public static final String ID_CARGO_CAMBIO = "id_cargo_cambio";
+    public static final String NRO_AULA = "nro_aula";
+    public static final String NIVEL = "nivel";
+    public static final String RESERVA = "reserva";
 
     private String dni;
     private String ape_pat ;
@@ -47,14 +50,9 @@ public class PersonalE implements Parcelable {
     private LocalE localE;
     private CargoE cargoE;
     private String cargo;
-
-    public String getCargo() {
-        return cargo;
-    }
-
-    public void setCargo(String cargo) {
-        this.cargo = cargo;
-    }
+    private int nro_aula;
+    private String nivel;
+    private String reserva;
 
     public PersonalE() { super();
     }
@@ -90,7 +88,9 @@ public class PersonalE implements Parcelable {
         localE = parcel.readParcelable(LocalE.class.getClassLoader());
         cargoE = parcel.readParcelable(CargoE.class.getClassLoader());
         cargo = parcel.readString();
-
+        nro_aula = parcel.readInt();
+        nivel = parcel.readString();
+        reserva = parcel.readString();
     }
 
     @Override
@@ -121,6 +121,9 @@ public class PersonalE implements Parcelable {
         dest.writeParcelable(localE,flags);
         dest.writeParcelable(cargoE, flags);
         dest.writeString(cargo);
+        dest.writeInt(nro_aula);
+        dest.writeString(nivel);
+        dest.writeString(reserva);
     }
 
     public LocalE getLocalE() {
@@ -298,4 +301,36 @@ public class PersonalE implements Parcelable {
     public void setId_cargo_cambio(int id_cargo_cambio) {
         this.id_cargo_cambio = id_cargo_cambio;
     }
+
+    public int getNro_aula() {
+        return nro_aula;
+    }
+
+    public void setNro_aula(int nro_aula) {
+        this.nro_aula = nro_aula;
+    }
+
+    public String getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(String nivel) {
+        this.nivel = nivel;
+    }
+
+    public String getReserva() {
+        return reserva;
+    }
+
+    public void setReserva(String reserva) {
+        this.reserva = reserva;
+    }
+    public String getCargo() {
+        return cargo;
+    }
+
+    public void setCargo(String cargo) {
+        this.cargo = cargo;
+    }
+
 }

@@ -22,4 +22,6 @@ public interface MainI {
     public void registrarCambioCargo(String nroDni, String cargo);
 
     public void searchPersonalCambioCargo(String nroDni);
+
+    public String searchNombreReserva(String nroDni);
 }

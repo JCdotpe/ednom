@@ -87,6 +87,26 @@ public class ReemplazarPersonal extends Fragment {
                 }
             }
         });
+        txtDniCambio.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s.length() == 8){
+                    nroDni = s.toString();
+                    nombreCambio = mListener.searchNombreReserva(nroDni);
+                    txtNombreCambio.setText(nombreCambio);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
 
         btnReemplazar = (Button) view.findViewById(R.id.btn_reemplazar);
         btnReemplazar.setOnClickListener(new View.OnClickListener() {

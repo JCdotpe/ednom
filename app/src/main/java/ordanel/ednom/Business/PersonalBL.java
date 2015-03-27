@@ -65,7 +65,7 @@ public class PersonalBL {
     public PersonalE searchPersonalCambioCargo(String nroDni){
         conditional = "dni = '" + nroDni + "'";
         personalE = personalDAO.searchPersonal(conditional);
-        if (personalE.getStatus() == 1 || !personalE.getEstadoCambio().isEmpty()) {
+        if (personalE.getStatus() == 1 || !personalE.getEstadoReemplazo().equals("") || !personalE.getEstadoReemplazo().isEmpty() ) {
             conditional = personalE.getStatus() == 1 ? "r_dni = '" + nroDni + "'" : "r_dni = '" + personalE.getR_dni() + "'";
             personalE = personalDAO.searchPersonalCambioCargo(conditional);
             if (personalE.getStatus() == 0){
@@ -93,9 +93,13 @@ public class PersonalBL {
         return personalE;
     }
 
-    public ArrayList<PersonalE> listadoAsitencia(){
+    public ArrayList<PersonalE> listadoAsistencia(){
         personalEArrayList = new ArrayList<PersonalE>();
         personalEArrayList = personalDAO.listadoPersonal();
         return personalEArrayList;
+    }
+
+    public String searchNombreReserva(String nroDni) {
+        return personalDAO.searchNombreReserva(nroDni);
     }
 }

@@ -77,10 +77,9 @@ public class ReporteAsistencia extends Fragment {
         txtCargo = (TextView) view.findViewById(R.id.txt_list_cargo);
         txtDniReemplazo = (TextView) view.findViewById(R.id.txt_list_dni_reemp);
         txtNombreReemplazo = (TextView) view.findViewById(R.id.txt_list_nombre_reemp);
-        ArrayList<PersonalE> personalEArrayList = personalBL.listadoAsitencia();
+        ArrayList<PersonalE> personalEArrayList = personalBL.listadoAsistencia();
         for (PersonalE personalE : personalEArrayList){
             items.add(new PersonalE(personalE.getDni(), personalE.getNombre_completo(), personalE.getAsistencia(), personalE.getCargo(), personalE.getR_dni(), personalE.getR_nombre_completo()));
-            Log.e("ReporteAsistencia", personalE.getNombre_completo());
         }
         listView.setAdapter(new ItemAdapter(getActivity(), items));
 
