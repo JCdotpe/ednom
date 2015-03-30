@@ -64,7 +64,7 @@
                 android:textSize="24sp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
-                android:drawableLeft="@drawable/incorrect"
+                android:drawableLeft="@drawable/close"
                 android:layout_toRightOf="@+id/btnCorrecto"
                 android:layout_toEndOf="@+id/btnCorrecto"
                 android:layout_marginTop="10dp"

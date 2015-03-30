@@ -2,10 +2,12 @@ package ordanel.ednom;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
@@ -17,14 +19,19 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import ordanel.ednom.Asyncs.SyncAsync;
 import ordanel.ednom.Business.DocentesBL;
 import ordanel.ednom.Business.InstrumentoBL;
+import ordanel.ednom.Business.PersonalBL;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
+import ordanel.ednom.Entity.PersonalE;
 import ordanel.ednom.Fragments.AsistenciaAula;
 import ordanel.ednom.Fragments.BusquedaDocentes;
+import ordanel.ednom.Fragments.CambiarCargo;
+import ordanel.ednom.Fragments.ConsultaPersonal;
 import ordanel.ednom.Fragments.IngresoLocal;
 import ordanel.ednom.Fragments.InventarioCuadernillo;
 import ordanel.ednom.Fragments.InventarioFicha;
@@ -32,6 +39,9 @@ import ordanel.ednom.Fragments.ListadoAsistenciaAula;
 import ordanel.ednom.Fragments.ListadoIngresoLocal;
 import ordanel.ednom.Fragments.ListadoInventarioCuadernillo;
 import ordanel.ednom.Fragments.ListadoInventarioFicha;
+import ordanel.ednom.Fragments.RedAdministrativa;
+import ordanel.ednom.Fragments.ReemplazarPersonal;
+import ordanel.ednom.Fragments.ReporteAsistencia;
 import ordanel.ednom.Fragments.ReporteGeneral;
 import ordanel.ednom.Fragments.Welcome;
 import ordanel.ednom.Interfaces.MainI;
@@ -46,6 +56,9 @@ public class MainActivity extends Activity
     DocentesBL docentesBL;
     InstrumentoE instrumentoE;
     InstrumentoBL instrumentoBL;
+    PersonalE personalE;
+    PersonalBL personalBL;
+    String dni;
 
     /**
      * Fragment managing the behaviors, interactions and presentation of the navigation drawer.
@@ -64,6 +77,7 @@ public class MainActivity extends Activity
 
         docentesBL = new DocentesBL( MainActivity.this );
         instrumentoBL = new InstrumentoBL( MainActivity.this );
+        personalBL = new PersonalBL(MainActivity.this);
 
        /* newData = getIntent().getParcelableArrayListExtra( "listadoInventarioFicha" );
         if ( newData != null )
@@ -180,6 +194,24 @@ public class MainActivity extends Activity
                     fragment =  BusquedaDocentes.newInstance(position + 1);
                     break;
             }
+        } else if (ConstantsUtils.getRol == 9) {
+            switch (position) {
+                case 0:
+                    fragment = RedAdministrativa.newInstance(position + 1);
+                    break;
+                case 1:
+                    fragment = ReemplazarPersonal.newInstance(position + 1);
+                    break;
+                case 2:
+                    fragment = CambiarCargo.newInstance(position + 1);
+                    break;
+                case 3:
+                    fragment =  ReporteAsistencia.newInstance(position + 1);
+                    break;
+                case 4:
+                    fragment = ConsultaPersonal.newInstance(position + 1);
+                    break;
+            }
         }
 
         fragmentManager.beginTransaction()
@@ -275,6 +307,24 @@ public class MainActivity extends Activity
                     mTitle = getString(R.string.title_section11);
                     break;
             }
+        } else if (ConstantsUtils.getRol == 9){
+            switch (number) {
+                case 1:
+                    mTitle = getString(R.string.title_section_12);
+                    break;
+                case 2:
+                    mTitle = getString(R.string.title_section_13);
+                    break;
+                case 3:
+                    mTitle = getString(R.string.title_section_14);
+                    break;
+                case 4:
+                    mTitle = getString(R.string.title_section_15);
+                    break;
+                case 5:
+                    mTitle = getString(R.string.title_section_16);
+                    break;
+            }
         }
     }
 
@@ -320,11 +370,13 @@ public class MainActivity extends Activity
         switch (id){
             case R.id.action_logout:
                 logOut();
+                break;
             case R.id.action_settings:
                 settings();
+                break;
             case R.id.action_sync:
                 new SyncAsync( this ).execute();
-
+                break;
         }
 
         return super.onOptionsItemSelected(item);
@@ -492,7 +544,7 @@ public class MainActivity extends Activity
             case 7:
                 msg = getString(R.string.docente_sync);
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
-                ProgressDialog progressDialog = ProgressDialog.show(getApplicationContext(), "Sincronizando", "Sincronizando datos");
+                ProgressDialog progressDialog = ProgressDialog.show(getApplicationContext(), "Sincronizando", msg);
                 progressDialog.setMax(12000);
                 progressDialog.dismiss();
                 break;
@@ -550,6 +602,263 @@ public class MainActivity extends Activity
 
     }
 
+    @Override
+    public void asistenciaPersonal(String nroDni) {
+        this.showDialog( "Buscando personal..." );
+        personalE = personalBL.asistenciaPersonal(nroDni);
+        this.showPersonal(personalE);
+
+    }
+
+    @Override
+    public void reemplazarPersonal(String nroDni, String dniCambio, String nombreCambio) {
+        personalBL.reemplazarPersonal(dni, dniCambio, nombreCambio);
+        this.showPersonal(personalE);
+    }
+
+    @Override
+    public void searchPersonalCambio(String nroDni) {
+        this.showDialog( "Buscando personal..." );
+        personalE = personalBL.searchPersonalCambio(nroDni);
+        this.showPersonal(personalE);
+        View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
+        if ( personalE.getStatus() == 4) {
+            layoutDatosCambio.setVisibility(View.VISIBLE);
+        } else {
+            layoutDatosCambio.setVisibility(View.INVISIBLE);
+        }
+    }
+
+    @Override
+    public void registrarCambioCargo(String nroDni, String cargo) {
+        this.showDialog( "Registrando personal..." );
+        View view = findViewById(R.id.layout_datos_cambio);
+        personalE = personalBL.registrarCambioCargo(nroDni, cargo);
+        if (personalE.getStatus() == 0){
+            view.setVisibility(View.INVISIBLE);
+            Toast.makeText(getApplicationContext(), "Se cambio de cargo correctamente", Toast.LENGTH_SHORT).show();
+        } else {
+            Toast.makeText(getApplicationContext(), "No se pudo cambiar de cargo", Toast.LENGTH_SHORT).show();
+        }
+        this.showPersonal(personalE);
+        progressDialog.dismiss();
+
+    }
+
+    @Override
+    public void searchPersonalCambioCargo(String nroDni) {
+        this.showDialog( "Buscando personal..." );
+        View view = findViewById(R.id.layout_datos_cambio);
+        personalE = personalBL.searchPersonalCambioCargo(nroDni);
+        switch (personalE.getStatus()){
+            case 13: case 4:
+                view.setVisibility(View.VISIBLE);
+                break;
+            default:
+                view.setVisibility(View.INVISIBLE);
+                break;
+        }
+        this.showPersonal(personalE);
+    }
+
+    @Override
+    public String searchNombreReserva(String nroDni) {
+        return personalBL.searchNombreReserva(nroDni);
+    }
+
+    private void showPersonal(PersonalE personalE) {
+        progressDialog.dismiss();
+
+        TextView txtDni = (TextView) findViewById( R.id.txtDNI );
+        TextView txtNombreCompleto = (TextView) findViewById( R.id.txt_nombre_completo );
+        TextView txtLocalAplicacion = (TextView) findViewById( R.id.txtLocalAplicacion );
+        TextView txtCargo = (TextView) findViewById( R.id.txt_cargo );
+        txtDni.setText( "" );
+        txtNombreCompleto.setText( "" );
+        txtCargo.setText( "" );
+        txtLocalAplicacion.setText( "" );
+        dni = personalE.getDni();
+        switch (personalE.getStatus()){
+            case 0: case 4: case 6: case 8: case 9: case 11: case 12: case 13: case 14: case 15: case 16:
+                txtDni.setText(dni);
+                txtNombreCompleto.setText( personalE.getNombre_completo() );
+                txtCargo.setText( personalE.getCargoE().getCargo());
+                txtLocalAplicacion.setText( personalE.getLocalE().getNombreLocal() );
+                break;
+        }
+        showMessagePersonal(personalE.getStatus());
+    }
+
+    private void showMessagePersonal(int status) {
+        String msg = "";
+        View view = findViewById(R.id.layout_datos);
+        View layoutDatosCambio = findViewById(R.id.layout_datos_cambio);
+        TextView textView = (TextView) findViewById(R.id.label_mensaje);
+        TextView textViewDniCambio = (TextView) findViewById(R.id.txt_dni_cambio);
+        TextView textViewNommbreCambio = (TextView) findViewById(R.id.txt_nombre_cambio);
+
+        switch ( status )
+        {
+            case 0:
+                msg = getString(R.string.personal_register);
+                view.setBackgroundColor(getResources().getColor(R.color.correct));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.correct));
+                textView.setText(msg);
+                break;
+
+            case 1:
+                msg = getString( R.string.personal_not_found );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                break;
+
+            case 2:
+                msg = getString( R.string.personal_not_access );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                break;
+
+            case 4:
+                msg = "Se encontro al personal";
+                view.setBackgroundColor(getResources().getColor(R.color.correct));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.correct));
+                textView.setText(msg);
+                break;
+
+            case 3:
+                msg = getString( R.string.personal_not_register_local );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                break;
+
+            case 5:
+                msg = getString( R.string.personal_not_register_local );
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                break;
+
+            case 6:
+                msg = getString(R.string.personal_double_register);
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
+
+            case 7:
+                msg = getString(R.string.personal_sync);
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                ProgressDialog progressDialog = ProgressDialog.show(getApplicationContext(), "Sincronizando", msg);
+                progressDialog.setMax(12000);
+                progressDialog.dismiss();
+                break;
+
+            case 8:
+                msg = getString(R.string.personal_correct);
+                view.setBackgroundColor(getResources().getColor(R.color.correct));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.correct));
+                textView.setText(msg);
+                break;
+
+            case 9:
+                msg = getString(R.string.personal_double_reemp);
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
+
+            case 10:
+                Toast.makeText(this.getApplicationContext(), "Se reemplazó correctamente al personal", Toast.LENGTH_SHORT).show();
+                textView.setVisibility(View.INVISIBLE);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
+                break;
+
+            case 11:
+                Toast.makeText(this.getApplicationContext(), "No se reemplazó al personal", Toast.LENGTH_SHORT).show();
+                textView.setVisibility(View.INVISIBLE);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
+                break;
+
+            case 12:
+                msg = "Este personal no puede reemplazar";
+                view.setBackgroundColor(getResources().getColor(R.color.error));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.error));
+                textView.setText(msg);
+                layoutDatosCambio.setVisibility(View.INVISIBLE);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
+                break;
+
+            case 13:
+                msg = "El personal de reemplazo es: ";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
+
+            case 14:
+                msg = "No se puede cambiar de cargo a este personal: ";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                layoutDatosCambio.setVisibility(View.INVISIBLE);
+                break;
+
+            case 15:
+                msg = "No se puede reeemplazar a este personal: ";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
+                break;
+
+            case 16:
+                msg = "Este personal ya fue reemplazado";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
+
+            case 17:
+                msg = "El personal de reserva no ha marcado asistencia";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
+                break;
+
+            case 18:
+                msg = "El personal no ha marcado asistencia";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
+        }
+    }
+
     public void showInstrumentoCuadernillo( InstrumentoE instrumentoE ) {
 
         progressDialog.dismiss();
@@ -568,9 +877,7 @@ public class MainActivity extends Activity
             txtAula.setText( instrumentoE.getNro_aula().toString() );
             txtLocalAplicacion.setText( instrumentoE.getLocalE().getNombreLocal() );
         }
-
          showMessageInstrumento( instrumentoE.getStatus() );
-
     }
 
     public void showMessageInstrumento( Integer status ) {
@@ -619,7 +926,6 @@ public class MainActivity extends Activity
                 textView.setText(msg);
                 break;
         }
-
     }
 
     @Override
@@ -629,10 +935,7 @@ public class MainActivity extends Activity
         {
             return true;
         }
-
         return super.onKeyDown( keyCode, event );
     }
-
-
 
 }

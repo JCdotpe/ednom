@@ -103,6 +103,14 @@ public class NavigationDrawerFragment extends Fragment {
                     getString(R.string.title_section11)};
         } else if (ConstantsUtils.getRol == 6){
             titles = new String[]{getString(R.string.title_section11)};
+        } else if (ConstantsUtils.getRol == 9){
+            titles = new String[]{
+                    getString(R.string.title_section_12),
+                    getString(R.string.title_section_13),
+                    getString(R.string.title_section_14),
+                    getString(R.string.title_section_15),
+                    getString(R.string.title_section_16),
+                    };
         };
 
         // Select either the default item (0) or the last selected item.

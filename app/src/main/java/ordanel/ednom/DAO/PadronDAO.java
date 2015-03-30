@@ -4,6 +4,7 @@ import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseLockedException;
+import android.nfc.Tag;
 import android.util.Log;
 
 import org.apache.http.NameValuePair;
@@ -14,19 +15,18 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 
 import ordanel.ednom.Entity.AulaLocalE;
+import ordanel.ednom.Entity.CargoE;
 import ordanel.ednom.Entity.DiscapacidadE;
 import ordanel.ednom.Entity.DocentesE;
 import ordanel.ednom.Entity.InstrumentoE;
 import ordanel.ednom.Entity.LocalE;
 import ordanel.ednom.Entity.ModalidadE;
 import ordanel.ednom.Entity.PadronE;
+import ordanel.ednom.Entity.PersonalE;
 import ordanel.ednom.Entity.SedeOperativaE;
 import ordanel.ednom.Entity.UsuarioLocalE;
 import ordanel.ednom.Library.ConstantsUtils;
 
-/**
- * Created by OrdNael on 30/10/2014.
- */
 public class PadronDAO extends BaseDAO {
 
     private static final String TAG = PadronDAO.class.getSimpleName();
@@ -35,7 +35,7 @@ public class PadronDAO extends BaseDAO {
     Integer nro_aula;
 
     JSONObject jsonObjectTemp;
-    JSONArray jsonArrayAulaLocal, jsonArrayDiscapacidad, jsonArrayModalidad, jsonArrayInstrumento, jsonArrayUsuarioLocal;
+    JSONArray jsonArrayAulaLocal, jsonArrayCargo, jsonArrayInstrumento, jsonArrayDiscapacidad, jsonArrayModalidad, jsonArrayPersonal, jsonArrayUsuarioLocal, jsonArraySupervisor;
 
     LocalE localE;
     PadronE padronE;
@@ -45,6 +45,8 @@ public class PadronDAO extends BaseDAO {
     DocentesE docentesE;
     InstrumentoE instrumentoE;
     UsuarioLocalE usuarioLocalE;
+    PersonalE personalE;
+    CargoE cargoE;
 
     ArrayList<AulaLocalE> aulaLocalEArrayList;
     ArrayList<DocentesE> docentesEArrayList;
@@ -52,6 +54,10 @@ public class PadronDAO extends BaseDAO {
     ArrayList<ModalidadE> modalidadEArrayList;
     ArrayList<InstrumentoE> instrumentoEArrayList;
     ArrayList<UsuarioLocalE> usuarioLocalEArrayList;
+    ArrayList<PersonalE> personalEArrayList;
+    ArrayList<CargoE> cargoEArrayList;
+    ArrayList<PersonalE> supervisorEArrayList;
+
 
 
     public synchronized static PadronDAO getInstance( Context paramContext ) {
@@ -143,6 +149,7 @@ public class PadronDAO extends BaseDAO {
                     jsonObject = jsonArray.getJSONObject(0);
 
                     // set array AULAS
+                    /*
                     jsonArrayAulaLocal = jsonObject.getJSONArray( "AULAS" );
                     aulaLocalEArrayList = new ArrayList<AulaLocalE>();
 
@@ -253,7 +260,34 @@ public class PadronDAO extends BaseDAO {
                     Log.e( TAG, "cantidad de modalidad : " + valueInteger.toString() );
                     padronE.setModalidadEList( modalidadEArrayList );
                     // .set array MODALIDAD
+                    */
 
+                    // set array USUARIOS
+                    jsonArrayUsuarioLocal = jsonObject.getJSONArray( "USUARIOS" );
+                    usuarioLocalEArrayList = new ArrayList<UsuarioLocalE>();
+
+                    for ( int i = 0; i < jsonArrayUsuarioLocal.length(); i++ )
+                    {
+                        jsonObjectTemp = (JSONObject) jsonArrayUsuarioLocal.get(i);
+
+                        usuarioLocalE = new UsuarioLocalE();
+                        usuarioLocalE.setIdUsuario( jsonObjectTemp.getInt( UsuarioLocalE.IDUSUARIO ) );
+                        usuarioLocalE.setClave( jsonObjectTemp.getString( UsuarioLocalE.CLAVE ) );
+                        usuarioLocalE.setRol( jsonObjectTemp.getInt( UsuarioLocalE.ROL ) );
+                        usuarioLocalE.setUsuario( jsonObjectTemp.getString( UsuarioLocalE.USUARIO ) );
+
+                        usuarioLocalE.setLocalE( paramLocalE );
+
+                        usuarioLocalEArrayList.add( usuarioLocalE );
+
+                    }
+
+                    valueInteger = usuarioLocalEArrayList.size();
+                    Log.e( TAG, "cantidad de usuarios : " + valueInteger.toString() );
+                    padronE.setUsuarioLocalEList(usuarioLocalEArrayList);
+                    // .set array USUARIOS
+
+                    /*
                     // set array INSTRUMENTO
                     jsonArrayInstrumento = jsonObject.getJSONArray( "INSTRUMENTO" );
                     instrumentoEArrayList = new ArrayList<InstrumentoE>();
@@ -282,31 +316,96 @@ public class PadronDAO extends BaseDAO {
                     Log.e( TAG, "cantidad de modalidad : " + valueInteger.toString() );
                     padronE.setInstrumentoEList(instrumentoEArrayList);
                     // .set array INSTRUMENTO
+                    */
+                    // set array PERSONAL
+                    jsonArrayPersonal = jsonObject.getJSONArray("PERSONAL");
+                    personalEArrayList = new ArrayList<PersonalE>();
 
-                    // set array USUARIOS
-                    jsonArrayUsuarioLocal = jsonObject.getJSONArray( "USUARIOS" );
-                    usuarioLocalEArrayList = new ArrayList<UsuarioLocalE>();
+                    for ( int i = 0; i < jsonArrayPersonal.length(); i++ ){
+                        jsonObjectTemp = (JSONObject) jsonArrayPersonal.get(i);
 
-                    for ( int i = 0; i < jsonArrayUsuarioLocal.length(); i++ )
-                    {
-                        jsonObjectTemp = (JSONObject) jsonArrayUsuarioLocal.get(i);
+                        personalE = new PersonalE();
+                        personalE.setDni(jsonObjectTemp.getString(PersonalE.DNI));
+                        personalE.setApe_pat(jsonObjectTemp.getString(PersonalE.APE_PAT));
+                        personalE.setApe_mat(jsonObjectTemp.getString(PersonalE.APE_MAT));
+                        personalE.setNombres(jsonObjectTemp.getString(PersonalE.NOMBRES));
+                        personalE.setNombre_completo(jsonObjectTemp.getString(PersonalE.NOMBRE_COMPLETO));
+                        personalE.setId_cargo(jsonObjectTemp.getInt(PersonalE.ID_CARGO));
+                        personalE.setCod_sede_operativa(jsonObjectTemp.getInt(PersonalE.COD_SEDE_OPERATIVA));
+                        personalE.setCod_local_sede(jsonObjectTemp.getInt(PersonalE.COD_LOCAL_SEDE));
+                        personalE.setAsistencia(jsonObjectTemp.getString(PersonalE.ASISTENCIA));
+                        personalE.setHora_ingreso(jsonObjectTemp.getString(PersonalE.HORA_INGRESO));
+                        personalE.setHora_salida(jsonObjectTemp.getString(PersonalE.HORA_SALIDA));
+                        personalE.setObservaciones(jsonObjectTemp.getString(PersonalE.OBSERVACIONES));
+                        personalE.setEstadoCambio(jsonObjectTemp.getString(PersonalE.ESTADOCAMBIO));
+                        personalE.setEstadoReemplazo(jsonObjectTemp.getString(PersonalE.ESTADOREEMPLAZO));
+                        personalE.setR_dni(jsonObjectTemp.getString(PersonalE.R_DNI));
+                        personalE.setR_nombre_completo(jsonObjectTemp.getString(PersonalE.R_NOMBRE_COMPLETO));
+                        personalE.setId_cargo_cambio(jsonObjectTemp.getInt(PersonalE.ID_CARGO_CAMBIO));
+                        personalE.setNivel(jsonObjectTemp.getString(PersonalE.NIVEL));
+                        personalE.setReserva(jsonObjectTemp.getString(PersonalE.RESERVA));
 
-                        usuarioLocalE = new UsuarioLocalE();
-                        usuarioLocalE.setIdUsuario( jsonObjectTemp.getInt( UsuarioLocalE.IDUSUARIO ) );
-                        usuarioLocalE.setClave( jsonObjectTemp.getString( UsuarioLocalE.CLAVE ) );
-                        usuarioLocalE.setRol( jsonObjectTemp.getInt( UsuarioLocalE.ROL ) );
-                        usuarioLocalE.setUsuario( jsonObjectTemp.getString( UsuarioLocalE.USUARIO ) );
+                        personalEArrayList.add(personalE);
+                    }
+                    valueInteger = personalEArrayList.size();
+                    Log.e( TAG, "cantidad de personal : " + valueInteger.toString() );
+                    padronE.setPersonalEList(personalEArrayList);
+                    // .set array personal
 
-                        usuarioLocalE.setLocalE( paramLocalE );
+                    // supervisor nacional
+                    jsonArraySupervisor = jsonObject.getJSONArray("SUPERNACIONAL");
+                    supervisorEArrayList = new ArrayList<PersonalE>();
 
-                        usuarioLocalEArrayList.add( usuarioLocalE );
+                    for ( int i = 0; i < jsonArraySupervisor.length(); i++ ){
+                        jsonObjectTemp = (JSONObject) jsonArraySupervisor.get(i);
 
+                        personalE = new PersonalE();
+                        personalE.setDni(jsonObjectTemp.getString(PersonalE.DNI));
+                        personalE.setApe_pat(jsonObjectTemp.getString(PersonalE.APE_PAT));
+                        personalE.setApe_mat(jsonObjectTemp.getString(PersonalE.APE_MAT));
+                        personalE.setNombres(jsonObjectTemp.getString(PersonalE.NOMBRES));
+                        personalE.setNombre_completo(jsonObjectTemp.getString(PersonalE.NOMBRE_COMPLETO));
+                        personalE.setId_cargo(jsonObjectTemp.getInt(PersonalE.ID_CARGO));
+                        personalE.setCod_sede_operativa(jsonObjectTemp.getInt(PersonalE.COD_SEDE_OPERATIVA));
+                        personalE.setCod_local_sede(jsonObjectTemp.getInt(PersonalE.COD_LOCAL_SEDE));
+                        personalE.setAsistencia(jsonObjectTemp.getString(PersonalE.ASISTENCIA));
+                        personalE.setHora_ingreso(jsonObjectTemp.getString(PersonalE.HORA_INGRESO));
+                        personalE.setHora_salida(jsonObjectTemp.getString(PersonalE.HORA_SALIDA));
+                        personalE.setObservaciones(jsonObjectTemp.getString(PersonalE.OBSERVACIONES));
+                        personalE.setEstadoCambio(jsonObjectTemp.getString(PersonalE.ESTADOCAMBIO));
+                        personalE.setEstadoReemplazo(jsonObjectTemp.getString(PersonalE.ESTADOREEMPLAZO));
+                        personalE.setR_dni(jsonObjectTemp.getString(PersonalE.R_DNI));
+                        personalE.setR_nombre_completo(jsonObjectTemp.getString(PersonalE.R_NOMBRE_COMPLETO));
+                        personalE.setId_cargo_cambio(jsonObjectTemp.getInt(PersonalE.ID_CARGO_CAMBIO));
+                        personalE.setNivel(jsonObjectTemp.getString(PersonalE.NIVEL));
+                        personalE.setReserva(jsonObjectTemp.getString(PersonalE.RESERVA));
+
+                        supervisorEArrayList.add(personalE);
+                    }
+                    valueInteger = supervisorEArrayList.size();
+                    Log.e( TAG, "cantidad de supervisores : " + valueInteger.toString() );
+                    padronE.setSupervisorEList(supervisorEArrayList);
+                    // supervisor nacional
+
+                    // set array CARGO
+                    jsonArrayCargo = jsonObject.getJSONArray("CARGO");
+                    cargoEArrayList = new ArrayList<CargoE>();
+
+                    for (int i = 0; i <jsonArrayCargo.length(); i++){
+                        jsonObjectTemp = (JSONObject) jsonArrayCargo.get(i);
+
+                        cargoE = new CargoE();
+                        cargoE.setIdCargo(jsonObjectTemp.getInt(CargoE.IDCARGO));
+                        cargoE.setCargo(jsonObjectTemp.getString(CargoE.CARGO));
+                        cargoE.setCargoRes(jsonObjectTemp.getString(CargoE.CARGORES));
+
+                        cargoEArrayList.add(cargoE);
                     }
 
-                    valueInteger = usuarioLocalEArrayList.size();
-                    Log.e( TAG, "cantidad de usuarios : " + valueInteger.toString() );
-                    padronE.setUsuarioLocalEList(usuarioLocalEArrayList);
-                    // .set array USUARIOS
+                    valueInteger = cargoEArrayList.size();
+                    Log.e(TAG, "cantidad de cargos : " + valueInteger.toString());
+                    padronE.setCargoEList(cargoEArrayList);
+                    // .set array CARGO
 
                     padronE.setStatus( 0 );
 
@@ -351,8 +450,10 @@ public class PadronDAO extends BaseDAO {
                 modalidadEArrayList = (ArrayList<ModalidadE>) paramPadronE.getModalidadEList();
                 instrumentoEArrayList = (ArrayList<InstrumentoE>) paramPadronE.getInstrumentoEList();
                 usuarioLocalEArrayList = (ArrayList<UsuarioLocalE>) paramPadronE.getUsuarioLocalEList();
+                personalEArrayList = (ArrayList<PersonalE>) paramPadronE.getPersonalEList();
+                supervisorEArrayList = (ArrayList<PersonalE>) paramPadronE.getSupervisorEList();
                 // .set de Arrays
-
+                /*
                 // registro de AULAS
                 for ( AulaLocalE aulaLocalE : aulaLocalEArrayList )
                 {
@@ -439,7 +540,6 @@ public class PadronDAO extends BaseDAO {
                 }
                 // .registro de MODALIDAD
 
-
                 // registro de INSTRUMENTO
                 for ( InstrumentoE instrumentoE : instrumentoEArrayList )
                 {
@@ -460,27 +560,97 @@ public class PadronDAO extends BaseDAO {
                     Log.e( TAG, "instrumento insert : " + String.valueOf(valueLong) );
                 }
                 // .registro de INSTRUMENTO
+                */
 
                 // registrar Usuario_Local
-                for (UsuarioLocalE usuarioLocalE : usuarioLocalEArrayList){
+                for (UsuarioLocalE usuarioLocalE : usuarioLocalEArrayList) {
                     cod_sede_operativa = usuarioLocalE.getLocalE().getSedeOperativaE().getCod_sede_operativa();
-                    cod_local_sede = aulaLocalE.getLocalE().getCod_local_sede();
+                    cod_local_sede = usuarioLocalE.getLocalE().getCod_local_sede();
 
                     contentValues = new ContentValues();
 
-                    contentValues.put( SedeOperativaE.COD_SEDE_OPERATIVA, cod_sede_operativa );
-                    contentValues.put( LocalE.COD_LOCAL_SEDE, cod_local_sede);
-                    contentValues.put( UsuarioLocalE.IDUSUARIO, usuarioLocalE.getIdUsuario());
-                    contentValues.put( UsuarioLocalE.CLAVE, usuarioLocalE.getClave());
-                    contentValues.put( UsuarioLocalE.ROL, usuarioLocalE.getRol());
-                    contentValues.put( UsuarioLocalE.USUARIO, usuarioLocalE.getUsuario());
+                    contentValues.put(SedeOperativaE.COD_SEDE_OPERATIVA, cod_sede_operativa);
+                    contentValues.put(LocalE.COD_LOCAL_SEDE, cod_local_sede);
+                    contentValues.put(UsuarioLocalE.IDUSUARIO, usuarioLocalE.getIdUsuario());
+                    contentValues.put(UsuarioLocalE.CLAVE, usuarioLocalE.getClave());
+                    contentValues.put(UsuarioLocalE.ROL, usuarioLocalE.getRol());
+                    contentValues.put(UsuarioLocalE.USUARIO, usuarioLocalE.getUsuario());
 
-                    valueLong = dbHelper.getDatabase().insertOrThrow( "usuario_local", null, contentValues );
-                    Log.e( TAG, "usuario_local insert : " + String.valueOf(valueLong) );
+                    valueLong = dbHelper.getDatabase().insertOrThrow("usuario_local", null, contentValues);
+                    Log.e(TAG, "usuario_local insert : " + String.valueOf(valueLong));
 
                 }
-
                 // registrar Usuario_Local
+
+                // registrar Personal
+                for (PersonalE personalE : personalEArrayList) {
+                    contentValues = new ContentValues();
+
+                    contentValues.put(PersonalE.DNI, personalE.getDni());
+                    contentValues.put(PersonalE.APE_PAT, personalE.getApe_pat());
+                    contentValues.put(PersonalE.APE_MAT, personalE.getApe_mat());
+                    contentValues.put(PersonalE.NOMBRES, personalE.getNombres());
+                    contentValues.put(PersonalE.NOMBRE_COMPLETO, personalE.getNombre_completo());
+                    contentValues.put(PersonalE.ID_CARGO, personalE.getId_cargo());
+                    contentValues.put(PersonalE.COD_SEDE_OPERATIVA, personalE.getCod_sede_operativa());
+                    contentValues.put(PersonalE.COD_LOCAL_SEDE, personalE.getCod_local_sede());
+                    contentValues.put(PersonalE.ASISTENCIA, personalE.getAsistencia());
+                    contentValues.put(PersonalE.HORA_INGRESO, personalE.getHora_ingreso());
+                    contentValues.put(PersonalE.HORA_SALIDA, personalE.getHora_salida());
+                    contentValues.put(PersonalE.OBSERVACIONES, personalE.getObservaciones());
+                    contentValues.put(PersonalE.ESTADOCAMBIO, personalE.getEstadoCambio());
+                    contentValues.put(PersonalE.ESTADOREEMPLAZO, personalE.getEstadoReemplazo());
+                    contentValues.put(PersonalE.R_DNI, personalE.getR_dni());
+                    contentValues.put(PersonalE.R_NOMBRE_COMPLETO, personalE.getR_nombre_completo());
+                    contentValues.put(PersonalE.ID_CARGO_CAMBIO, personalE.getId_cargo_cambio());
+                    contentValues.put(PersonalE.NIVEL, personalE.getNivel());
+                    contentValues.put(PersonalE.RESERVA, personalE.getReserva());
+
+                    valueLong = dbHelper.getDatabase().insertOrThrow("personal", null, contentValues);
+                    Log.e(TAG, "personal insert : " + String.valueOf(valueLong));
+                }
+                // . registrar Personal
+
+                // supervisor nacional
+                for (PersonalE personalE1 : supervisorEArrayList){
+                    contentValues = new ContentValues();
+                    contentValues.put(PersonalE.DNI, personalE1.getDni());
+                    contentValues.put(PersonalE.APE_PAT, personalE1.getApe_pat());
+                    contentValues.put(PersonalE.APE_MAT, personalE1.getApe_mat());
+                    contentValues.put(PersonalE.NOMBRES, personalE1.getNombres());
+                    contentValues.put(PersonalE.NOMBRE_COMPLETO, personalE1.getNombre_completo());
+                    contentValues.put(PersonalE.ID_CARGO, personalE1.getId_cargo());
+                    contentValues.put(PersonalE.COD_SEDE_OPERATIVA, personalE1.getCod_sede_operativa());
+                    contentValues.put(PersonalE.COD_LOCAL_SEDE, personalE1.getCod_local_sede());
+                    contentValues.put(PersonalE.ASISTENCIA, personalE1.getAsistencia());
+                    contentValues.put(PersonalE.HORA_INGRESO, personalE1.getHora_ingreso());
+                    contentValues.put(PersonalE.HORA_SALIDA, personalE1.getHora_salida());
+                    contentValues.put(PersonalE.OBSERVACIONES, personalE1.getObservaciones());
+                    contentValues.put(PersonalE.ESTADOCAMBIO, personalE1.getEstadoCambio());
+                    contentValues.put(PersonalE.ESTADOREEMPLAZO, personalE1.getEstadoReemplazo());
+                    contentValues.put(PersonalE.R_DNI, personalE1.getR_dni());
+                    contentValues.put(PersonalE.R_NOMBRE_COMPLETO, personalE1.getR_nombre_completo());
+                    contentValues.put(PersonalE.ID_CARGO_CAMBIO, personalE1.getId_cargo_cambio());
+                    contentValues.put(PersonalE.NIVEL, personalE1.getNivel());
+                    contentValues.put(PersonalE.RESERVA, personalE1.getReserva());
+
+                    valueLong = dbHelper.getDatabase().insertOrThrow("personal", null, contentValues);
+                    Log.e( TAG, "supervisor insert : " + String.valueOf(valueLong) );
+                }
+                // supervisor nacional
+
+                // registrar Cargo
+                for (CargoE cargoE : cargoEArrayList) {
+                    contentValues = new ContentValues();
+                    contentValues.put(CargoE.IDCARGO, cargoE.getIdCargo());
+                    contentValues.put(CargoE.CARGO, cargoE.getCargo());
+                    contentValues.put(CargoE.CARGORES, cargoE.getCargoRes());
+
+                    valueLong = dbHelper.getDatabase().insertOrThrow("cargo", null, contentValues);
+                    Log.e(TAG, "cargo insert : " + String.valueOf(valueLong));
+                }
+
+                // .registrar Cargo
 
                 dbHelper.setTransactionSuccessful();
 
@@ -517,7 +687,8 @@ public class PadronDAO extends BaseDAO {
         try
         {
             openDBHelper();
-
+            Boolean syncronizar = false;
+            /*
             SQL = "SELECT nro_doc, estado, f_registro, estado_aula, f_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla, nro_aula_cambio FROM docentes WHERE estado = 1 or estado_aula = 1 or estado_ficha = 1 or estado_cartilla = 1";
             Log.e( TAG, "string sql docentes : " + SQL );
             cursor = dbHelper.getDatabase().rawQuery( SQL, null );
@@ -526,7 +697,7 @@ public class PadronDAO extends BaseDAO {
 
             jsonArray = new JSONArray();
 
-            Boolean syncronizar = false;
+
 
             if ( cursor.moveToFirst() )
             {
@@ -555,7 +726,6 @@ public class PadronDAO extends BaseDAO {
                 syncronizar = true;
             }
             Log.e(TAG, "DOCENTES: " + jsonArray.toString());
-
 
             SQL = "SELECT id_inst, cod_sede_operativa, cod_local_sede, cod_ficha, cod_cartilla, nro_aula, estado_ficha, f_ficha, estado_cartilla, f_cartilla FROM instrumento WHERE estado_ficha = 1 or estado_cartilla = 1";
             Log.e( TAG, "string sql instrumento : " + SQL );
@@ -592,7 +762,77 @@ public class PadronDAO extends BaseDAO {
                 syncronizar = true;
             }
             Log.e(TAG, "INSTRUMENTO: " + jsonArray.toString());
+            */
+            jsonObject = new JSONObject();
 
+            jsonArray = new JSONArray();
+            SQL = "SELECT dni, id_cargo, cod_sede_operativa, hora_salida, cod_local_sede, asistencia, hora_ingreso, estado_cambio, estado_reemp, r_dni, r_nombre_completo, id_cargo_cambio, reserva FROM personal WHERE  asistencia = '1' OR estado_cambio = '1' OR estado_reemp = '1'";
+            Log.e(TAG, "string sql personal: " + SQL);
+
+            cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+            jsonArray = new JSONArray();
+
+            if (cursor.moveToFirst()){
+                while (!cursor.isAfterLast()){
+                    JSONObject jsonObjectTemp = new JSONObject();
+
+                    jsonObjectTemp.put(PersonalE.DNI, cursor.getString(cursor.getColumnIndex(PersonalE.DNI)));
+                    jsonObjectTemp.put(PersonalE.ID_CARGO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO)));
+                    jsonObjectTemp.put(PersonalE.COD_SEDE_OPERATIVA, cursor.getInt(cursor.getColumnIndex(PersonalE.COD_SEDE_OPERATIVA)));
+                    jsonObjectTemp.put(PersonalE.COD_LOCAL_SEDE, cursor.getInt(cursor.getColumnIndex(PersonalE.COD_LOCAL_SEDE)));
+                    jsonObjectTemp.put(PersonalE.ASISTENCIA, cursor.getString(cursor.getColumnIndex(PersonalE.ASISTENCIA)));
+                    jsonObjectTemp.put(PersonalE.HORA_INGRESO, cursor.getString(cursor.getColumnIndex(PersonalE.HORA_INGRESO)));
+                    jsonObjectTemp.put(PersonalE.ESTADOCAMBIO, cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOCAMBIO)));
+                    jsonObjectTemp.put(PersonalE.ESTADOREEMPLAZO, cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOREEMPLAZO)));
+                    jsonObjectTemp.put(PersonalE.HORA_SALIDA, cursor.getString(cursor.getColumnIndex(PersonalE.HORA_SALIDA)));
+                    jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO)));
+                    jsonObjectTemp.put(PersonalE.R_DNI, cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
+                    jsonObjectTemp.put(PersonalE.R_NOMBRE_COMPLETO, cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
+                    jsonObjectTemp.put(PersonalE.RESERVA, cursor.getString(cursor.getColumnIndex(PersonalE.RESERVA)));
+                    Log.e(TAG, cursor.getString(cursor.getColumnIndex(PersonalE.ASISTENCIA)));
+                    jsonArray.put(jsonObjectTemp);
+                    cursor.moveToNext();
+
+                }
+                Log.e(TAG, "PERSONAL: " + jsonArray.toString());
+                jsonObject.put( "PERSONAL", jsonArray );
+
+                syncronizar = true;
+            }
+
+            SQL = "SELECT dni, id_cargo, cod_sede_operativa, hora_salida, cod_local_sede, asistencia, hora_ingreso, estado_cambio, estado_reemp, r_dni, r_nombre_completo, id_cargo_cambio, reserva FROM personal WHERE nivel = '1' and (asistencia = '1' OR estado_cambio = '1' OR estado_reemp = '1')";
+            Log.e(TAG, "string sql personal: " + SQL);
+
+            cursor = dbHelper.getDatabase().rawQuery(SQL, null);
+            jsonArray = new JSONArray();
+
+            if (cursor.moveToFirst()){
+                while (!cursor.isAfterLast()){
+                    JSONObject jsonObjectTemp = new JSONObject();
+
+                    jsonObjectTemp.put(PersonalE.DNI, cursor.getString(cursor.getColumnIndex(PersonalE.DNI)));
+                    jsonObjectTemp.put(PersonalE.ID_CARGO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO)));
+                    jsonObjectTemp.put(PersonalE.COD_SEDE_OPERATIVA, cursor.getInt(cursor.getColumnIndex(PersonalE.COD_SEDE_OPERATIVA)));
+                    jsonObjectTemp.put(PersonalE.COD_LOCAL_SEDE, cursor.getInt(cursor.getColumnIndex(PersonalE.COD_LOCAL_SEDE)));
+                    jsonObjectTemp.put(PersonalE.ASISTENCIA, cursor.getString(cursor.getColumnIndex(PersonalE.ASISTENCIA)));
+                    jsonObjectTemp.put(PersonalE.HORA_INGRESO, cursor.getString(cursor.getColumnIndex(PersonalE.HORA_INGRESO)));
+                    jsonObjectTemp.put(PersonalE.ESTADOCAMBIO, cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOCAMBIO)));
+                    jsonObjectTemp.put(PersonalE.ESTADOREEMPLAZO, cursor.getString(cursor.getColumnIndex(PersonalE.ESTADOREEMPLAZO)));
+                    jsonObjectTemp.put(PersonalE.ID_CARGO_CAMBIO, cursor.getInt(cursor.getColumnIndex(PersonalE.ID_CARGO_CAMBIO)));
+                    jsonObjectTemp.put(PersonalE.R_DNI, cursor.getString(cursor.getColumnIndex(PersonalE.R_DNI)));
+                    jsonObjectTemp.put(PersonalE.R_NOMBRE_COMPLETO, cursor.getString(cursor.getColumnIndex(PersonalE.R_NOMBRE_COMPLETO)));
+                    jsonObjectTemp.put(PersonalE.RESERVA, cursor.getString(cursor.getColumnIndex(PersonalE.RESERVA)));
+                    Log.e(TAG, cursor.getString(cursor.getColumnIndex(PersonalE.ASISTENCIA)));
+                    jsonArray.put(jsonObjectTemp);
+                    cursor.moveToNext();
+
+                }
+                Log.e(TAG, "SUPERVISOR: " + jsonArray.toString());
+                jsonObject.put( "SUPERNACIONAL", jsonArray );
+
+                syncronizar = true;
+            }
+            Log.e(TAG, "SUPERNACIONAL: " + jsonArray.toString());
 
             if ( syncronizar )
             {
@@ -613,7 +853,7 @@ public class PadronDAO extends BaseDAO {
                 if ( jsonArrayGet.length() > 0 )
                 {
                     jsonObject = jsonArrayGet.getJSONObject(0);
-
+                    /*
                     // set array DOCENTES
                     jsonArray = jsonObject.getJSONArray( "DOCENTE" );
 
@@ -635,7 +875,6 @@ public class PadronDAO extends BaseDAO {
 
                     }
                     // .set array DOCENTES
-
 
                     // set array INSTRUMENTOS
                     jsonArray = jsonObject.getJSONArray( "INSTRUMENTO" );
@@ -659,6 +898,53 @@ public class PadronDAO extends BaseDAO {
 
                     }
                     // .set array INSTRUMENTOS
+                    */
+
+                    // set array PERSONAL
+
+                    jsonArray = jsonObject.getJSONArray("PERSONAL");
+                    for (int i = 0; i < jsonArray.length(); i++){
+                        jsonObjectTemp = (JSONObject) jsonArray.get(i);
+
+                        contentValues = new ContentValues();
+                        contentValues.put( PersonalE.ASISTENCIA, jsonObjectTemp.getString( PersonalE.ASISTENCIA));
+                        contentValues.put( PersonalE.ESTADOCAMBIO, jsonObjectTemp.getString( PersonalE.ESTADOCAMBIO));
+                        contentValues.put( PersonalE.ESTADOREEMPLAZO, jsonObjectTemp.getString( PersonalE.ESTADOREEMPLAZO));
+                        contentValues.put( PersonalE.R_DNI, jsonObjectTemp.getString( PersonalE.R_DNI ) );
+                        contentValues.put( PersonalE.R_NOMBRE_COMPLETO, jsonObjectTemp.getString( PersonalE.R_NOMBRE_COMPLETO ) );
+                        contentValues.put( PersonalE.ID_CARGO_CAMBIO, jsonObjectTemp.getInt( PersonalE.ID_CARGO_CAMBIO ) );
+                        contentValues.put( PersonalE.RESERVA, jsonObjectTemp.getString( PersonalE.RESERVA));
+                        String dni = jsonObjectTemp.getString(PersonalE.DNI);
+                        Where = PersonalE.DNI + " = '" + dni + "'";
+                        Log.e(TAG, "where : " +  Where);
+                        valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE);
+                        Log.e(TAG, "sync update personal : " + String.valueOf(valueInteger));
+
+                    }
+                    // .set array PERSONAL
+
+                    // set array SUPERNACIONAL
+
+                    jsonArray = jsonObject.getJSONArray("SUPERNACIONAL");
+                    for (int i = 0; i < jsonArray.length(); i++){
+                        jsonObjectTemp = (JSONObject) jsonArray.get(i);
+
+                        contentValues = new ContentValues();
+                        contentValues.put( PersonalE.ASISTENCIA, jsonObjectTemp.getString( PersonalE.ASISTENCIA));
+                        contentValues.put( PersonalE.ESTADOCAMBIO, jsonObjectTemp.getString( PersonalE.ESTADOCAMBIO));
+                        contentValues.put( PersonalE.ESTADOREEMPLAZO, jsonObjectTemp.getString( PersonalE.ESTADOREEMPLAZO));
+                        contentValues.put( PersonalE.R_DNI, jsonObjectTemp.getString( PersonalE.R_DNI ) );
+                        contentValues.put( PersonalE.R_NOMBRE_COMPLETO, jsonObjectTemp.getString( PersonalE.R_NOMBRE_COMPLETO ) );
+                        contentValues.put( PersonalE.ID_CARGO_CAMBIO, jsonObjectTemp.getInt( PersonalE.ID_CARGO_CAMBIO ) );
+                        contentValues.put( PersonalE.RESERVA, jsonObjectTemp.getString( PersonalE.RESERVA));
+                        String dni = jsonObjectTemp.getString(PersonalE.DNI);
+                        Where = PersonalE.DNI + " = '" + dni + "'";
+                        Log.e(TAG, "where : " +  Where);
+                        valueInteger = dbHelper.getDatabase().updateWithOnConflict("personal", contentValues, Where, null, SQLiteDatabase.CONFLICT_IGNORE);
+                        Log.e(TAG, "sync update personal : " + String.valueOf(valueInteger));
+
+                    }
+                    // .set array SUPERNACIONAL
 
                     dbHelper.setTransactionSuccessful();
                 }
@@ -702,6 +988,12 @@ public class PadronDAO extends BaseDAO {
 
             dbHelper.getDatabase().delete( "modalidad", null, null );
             Log.e( TAG, "Se elimino modalidad!" );
+
+            dbHelper.getDatabase().delete( "personal", null, null );
+            Log.e( TAG, "Se elimino personal!" );
+
+            dbHelper.getDatabase().delete( "cargo", null, null );
+            Log.e( TAG, "Se elimino cargo!" );
 
             return true;
 
