@@ -612,7 +612,7 @@ public class MainActivity extends Activity
 
     @Override
     public void reemplazarPersonal(String nroDni, String dniCambio, String nombreCambio) {
-        personalBL.reemplazarPersonal(dni, dniCambio, nombreCambio, personalE.getId_cargo());
+        personalBL.reemplazarPersonal(dni, dniCambio, nombreCambio);
         this.showPersonal(personalE);
     }
 
@@ -640,6 +640,7 @@ public class MainActivity extends Activity
         } else {
             Toast.makeText(getApplicationContext(), "No se pudo cambiar de cargo", Toast.LENGTH_SHORT).show();
         }
+        this.showPersonal(personalE);
         progressDialog.dismiss();
 
     }
@@ -793,7 +794,7 @@ public class MainActivity extends Activity
                 break;
 
             case 12:
-                msg = "El personal ya existe en la BD";
+                msg = "Este personal no puede reemplazar";
                 view.setBackgroundColor(getResources().getColor(R.color.error));
                 textView.setVisibility(View.VISIBLE);
                 textView.setTextColor(getResources().getColor(R.color.error));
@@ -832,6 +833,24 @@ public class MainActivity extends Activity
 
             case 16:
                 msg = "Este personal ya fue reemplazado";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                break;
+
+            case 17:
+                msg = "El personal de reserva no ha marcado asistencia";
+                view.setBackgroundColor(getResources().getColor(R.color.warning));
+                textView.setVisibility(View.VISIBLE);
+                textView.setTextColor(getResources().getColor(R.color.warning));
+                textView.setText(msg);
+                textViewDniCambio.setText("");
+                textViewNommbreCambio.setText("");
+                break;
+
+            case 18:
+                msg = "El personal no ha marcado asistencia";
                 view.setBackgroundColor(getResources().getColor(R.color.warning));
                 textView.setVisibility(View.VISIBLE);
                 textView.setTextColor(getResources().getColor(R.color.warning));

@@ -1,6 +1,7 @@
 package ordanel.ednom.Business;
 
 import android.content.Context;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -51,8 +52,8 @@ public class PersonalBL {
     }
 
 
-    public PersonalE reemplazarPersonal(String dni, String dniCambio, String nombreCambio, int cargoCambio) {
-        personalE.setStatus(personalDAO.reemplazarPersonal(dni, dniCambio, nombreCambio, cargoCambio));
+    public PersonalE reemplazarPersonal(String dni, String dniCambio, String nombreCambio) {
+        personalE.setStatus(personalDAO.reemplazarPersonal(dni, dniCambio, nombreCambio));
         return personalE;
     }
 
@@ -65,9 +66,11 @@ public class PersonalBL {
     public PersonalE searchPersonalCambioCargo(String nroDni){
         conditional = "dni = '" + nroDni + "'";
         personalE = personalDAO.searchPersonal(conditional);
-        if (personalE.getStatus() == 1 || !personalE.getEstadoReemplazo().equals("") || !personalE.getEstadoReemplazo().isEmpty() ) {
+        Log.e("searchPersonalCambioBL:", String.valueOf(personalE.getStatus()) + " " + personalE.getEstadoReemplazo() );
+        if (personalE.getStatus() == 1 || (!personalE.getEstadoReemplazo().equals("0") && !personalE.getEstadoReemplazo().equals("") )) {
             conditional = personalE.getStatus() == 1 ? "r_dni = '" + nroDni + "'" : "r_dni = '" + personalE.getR_dni() + "'";
             personalE = personalDAO.searchPersonalCambioCargo(conditional);
+            Log.e("searchPersonalCambioBL:", "Paso" );
             if (personalE.getStatus() == 0){
                 switch (personalE.getId_cargo()){
                     case 11:case 12: case 13:

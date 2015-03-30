@@ -60,7 +60,7 @@ public class ConsultaPersonal extends Fragment {
         webview.setWebViewClient(new WebViewClient(){
             @Override
             public boolean shouldOverrideUrlLoading(WebView view, String url) {
-                if (url.startsWith(ConstantsUtils.URL_SEARCH)){
+                if (url.startsWith(ConstantsUtils.URL_REPORTE + "/asistencia")){
                     url = ConstantsUtils.URL_REPORTE_SEARCH_PERSONAL;
                 }
                 view.loadUrl(url);

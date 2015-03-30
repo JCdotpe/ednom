@@ -13,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ public class CambiarCargo extends Fragment {
     private static final String ARG_SECTION_NUMBER = "section_number";
     private MainI mListener;
     EditText editTextDni;
+    TextView txtDni;
     Button btnCambioCargo;
     private String nroDni;
     private String cargo;
@@ -68,6 +70,7 @@ public class CambiarCargo extends Fragment {
         mListener.onSectionAttached(getArguments().getInt(ARG_SECTION_NUMBER));
         editTextDni = (EditText) view.findViewById(R.id.edtDNI);
         btnCambioCargo = (Button) view.findViewById(R.id.btn_cambio_cargo);
+        txtDni = (TextView) view.findViewById(R.id.txtDNI);
 
         final Spinner spinner = (Spinner) view.findViewById( R.id.spinner );
 
@@ -107,7 +110,7 @@ public class CambiarCargo extends Fragment {
             @Override
             public void onClick(View v) {
                 cargo = spinner.getSelectedItem().toString();
-                mListener.registrarCambioCargo(nroDni, cargo);
+                mListener.registrarCambioCargo(txtDni.getText().toString(), cargo);
             }
         });
 
